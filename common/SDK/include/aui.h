@@ -5,24 +5,24 @@
 
 struct aui_register_callback;
 
-/* aui±ØĞë±©Â¶µÄAPIÔ­ĞÍ */
+/* auiå¿…é¡»æš´éœ²çš„APIåŸå‹ */
 typedef int (CALLBACK *register_aui_t)(struct aui_register_callback *callback);
 ///typedef void (CALLBACK *unregister_aui_t)(struct aui_unregister_callback *callback);
 typedef void (CALLBACK *show_aui_info_t)(struct acui_information *info);
 
 struct aui_extension;
-/* auiĞÅÏ¢£¨aui´úÂëÖĞ²»ÒªÖ±½Ó²Ù×÷ÒÔÏÂÈÎºÎ³ÉÔ±£© */
+/* auiä¿¡æ¯ï¼ˆauiä»£ç ä¸­ä¸è¦ç›´æ¥æ“ä½œä»¥ä¸‹ä»»ä½•æˆå‘˜ï¼‰ */
 struct aui {
-	struct aui *prev;		/* auiÁ´±íµÄÇ°Ö¸Õë */
-	struct aui *next;		/* auiÁ´±íµÄºóÖ¸Õë */
-	HMODULE module;			/* auiÄ£¿é¾ä±ú */
-	TCHAR *name;			/* auiÄ£¿éÃû */
+	struct aui *prev;		/* auié“¾è¡¨çš„å‰æŒ‡é’ˆ */
+	struct aui *next;		/* auié“¾è¡¨çš„åæŒ‡é’ˆ */
+	HMODULE module;			/* auiæ¨¡å—å¥æŸ„ */
+	TCHAR *name;			/* auiæ¨¡å—å */
 	struct aui_extension *first_ext;
 	struct aui_extension *last_ext;		
-	unsigned int ext_count;	/* Ö§³ÖµÄÀ©Õ¹ÃûÊıÁ¿ */
+	unsigned int ext_count;	/* æ”¯æŒçš„æ‰©å±•åæ•°é‡ */
 };
 
-/* auiÀ©Õ¹ÃûĞÅÏ¢£¨aui´úÂëÖĞ²»ÒªÖ±½Ó²Ù×÷ÒÔÏÂÈÎºÎ³ÉÔ±£© */
+/* auiæ‰©å±•åä¿¡æ¯ï¼ˆauiä»£ç ä¸­ä¸è¦ç›´æ¥æ“ä½œä»¥ä¸‹ä»»ä½•æˆå‘˜ï¼‰ */
 struct aui_ext_operation;
 struct aui_extension {
 	struct aui_ext_operation *op;
@@ -35,42 +35,42 @@ struct aui_extension {
 	unsigned long flags;
 };
 
-/* Ã¿¸ö·â°üÀ©Õ¹Ãû»òÌØ¶¨·â°üÃû³ÆµÄ²Ù×÷º¯Êı */
+/* æ¯ä¸ªå°åŒ…æ‰©å±•åæˆ–ç‰¹å®šå°åŒ…åç§°çš„æ“ä½œå‡½æ•° */
 struct aui_ext_operation {	
-	int (*match)(struct resource *);				/* ×ÊÔ´ÊÇ·ñ·ûºÏ·â°üÌõ¼ş */
-	int (*collect_resource_info)(struct resource *,					/* »ñÈ¡×ÊÔ´ÎÄ¼şĞÅÏ¢ */
+	int (*match)(struct resource *);				/* èµ„æºæ˜¯å¦ç¬¦åˆå°åŒ…æ¡ä»¶ */
+	int (*collect_resource_info)(struct resource *,					/* è·å–èµ„æºæ–‡ä»¶ä¿¡æ¯ */
 		struct package_resource *);
-	int (*repacking_resource)(struct resource *,					/* ·â×°×ÊÔ´ÎÄ¼ş */
+	int (*repacking_resource)(struct resource *,					/* å°è£…èµ„æºæ–‡ä»¶ */
 		struct package *, struct package_resource *, struct package_directory *);
-	int (*repacking)(struct package *, struct package_directory *);	/* ±£´æ·â°ü */
+	int (*repacking)(struct package *, struct package_directory *);	/* ä¿å­˜å°åŒ… */
 };
 
-/* aui×¢²áÊ±assageÌá¹©µÄ»Øµ÷º¯Êı */
+/* auiæ³¨å†Œæ—¶assageæä¾›çš„å›è°ƒå‡½æ•° */
 struct aui_register_callback {
 	struct aui *aui;
-	/* Ìí¼ÓÀ©Õ¹ÃûÒÔÖ§³ÖÏàÓ¦µÄ·â°üÎÄ¼ş¡£
-	 * @handle: ²Ù×÷¾ä±ú¡£
-	 * @extension: Ö§³ÖµÄ·â°üÀ©Õ¹Ãû£¬ÒÔ"."¿ªÍ·£¨´óĞ¡Ğ´²»Ãô¸Ğ£©¡£
-	 * @replace_extension: £¨¿ÉÑ¡£©Ìæ»»ÓÃµÄÀ©Õ¹Ãû£¬ÒÔ"."¿ªÍ·¡£
-	 * @description: £¨¿ÉÑ¡£©·â°üĞÅÏ¢¡£
-	 * @operation: ½â°ü¹ı³ÌÖĞÊ¹ÓÃµÄ¸÷ÖÖ»Øµ÷²Ù×÷¡£
-	 * @flags: ÊôĞÔÎ»¶Î¶¨Òå¡£
+	/* æ·»åŠ æ‰©å±•åä»¥æ”¯æŒç›¸åº”çš„å°åŒ…æ–‡ä»¶ã€‚
+	 * @handle: æ“ä½œå¥æŸ„ã€‚
+	 * @extension: æ”¯æŒçš„å°åŒ…æ‰©å±•åï¼Œä»¥"."å¼€å¤´ï¼ˆå¤§å°å†™ä¸æ•æ„Ÿï¼‰ã€‚
+	 * @replace_extension: ï¼ˆå¯é€‰ï¼‰æ›¿æ¢ç”¨çš„æ‰©å±•åï¼Œä»¥"."å¼€å¤´ã€‚
+	 * @description: ï¼ˆå¯é€‰ï¼‰å°åŒ…ä¿¡æ¯ã€‚
+	 * @operation: è§£åŒ…è¿‡ç¨‹ä¸­ä½¿ç”¨çš„å„ç§å›è°ƒæ“ä½œã€‚
+	 * @flags: å±æ€§ä½æ®µå®šä¹‰ã€‚
 	 *
-	 * Èç¹û´ı½âµÄ·â°üÊÇÒ»¸ö°üº¬directoryµÄ·â°ü£¬
-	 * ÄÇÃ´rep_extÎª¿Õ¡£
-	 * Èç¹û´ı½âµÄ·â°üÊÇÒ»¸ö²»°üº¬directoryµÄ·â°ü£¬
-	 * Ò²¾ÍËµÊÇÒ»¸ö±àÂë×ÊÔ´ÎÄ¼ş£¬ÇÒº¬À©Õ¹Ãû£¬ÄÇÃ´
-	 * extÎªÎÄ¼şÃû£¬ÇÒÆ¥ÅäÓÉmatch()À´×÷¡£
+	 * å¦‚æœå¾…è§£çš„å°åŒ…æ˜¯ä¸€ä¸ªåŒ…å«directoryçš„å°åŒ…ï¼Œ
+	 * é‚£ä¹ˆrep_extä¸ºç©ºã€‚
+	 * å¦‚æœå¾…è§£çš„å°åŒ…æ˜¯ä¸€ä¸ªä¸åŒ…å«directoryçš„å°åŒ…ï¼Œ
+	 * ä¹Ÿå°±è¯´æ˜¯ä¸€ä¸ªç¼–ç èµ„æºæ–‡ä»¶ï¼Œä¸”å«æ‰©å±•åï¼Œé‚£ä¹ˆ
+	 * extä¸ºæ–‡ä»¶åï¼Œä¸”åŒ¹é…ç”±match()æ¥ä½œã€‚
 	 */
 	int (*add_extension)(struct aui *aui, const TCHAR *extension, 
 		const TCHAR *replace_extension, const TCHAR *lst_extension, 
 		const TCHAR *description, struct aui_ext_operation *operation, unsigned long flags);
-/* flagsÎ»¶Î¶¨Òå */
-#define AUI_EXT_FLAG_PKG		0x00000001	/* ·â°üĞÍ */
-#define AUI_EXT_FLAG_RES		0x00000002	/* ×ÊÔ´ĞÍ */
-#define AUI_EXT_FLAG_NOEXT		0x00010000	/* ÎŞÀ©Õ¹Ãû */
-#define AUI_EXT_FLAG_DIR		0x00020000	/* º¬Ä¿Â¼ */
-#define AUI_EXT_FLAG_LST		0x00040000	/* ĞèÒª¶îÍâµÄË÷ÒıÎÄ¼ş */
+/* flagsä½æ®µå®šä¹‰ */
+#define AUI_EXT_FLAG_PKG		0x00000001	/* å°åŒ…å‹ */
+#define AUI_EXT_FLAG_RES		0x00000002	/* èµ„æºå‹ */
+#define AUI_EXT_FLAG_NOEXT		0x00010000	/* æ— æ‰©å±•å */
+#define AUI_EXT_FLAG_DIR		0x00020000	/* å«ç›®å½• */
+#define AUI_EXT_FLAG_LST		0x00040000	/* éœ€è¦é¢å¤–çš„ç´¢å¼•æ–‡ä»¶ */
 };
 	
 #endif /* AUI_H */

@@ -7,35 +7,35 @@
 #define IO_REQUEST_API __declspec(dllimport)
 #endif 
 
-/* initialize()µÄflagsÎ»¶Î¶¨Òå */
+/* initialize()çš„flagsä½æ®µå®šä¹‰ */
 #define IO_READWRITE	0x00000000UL
 #define IO_READONLY		0x00000001UL
 #define IO_CREATE		0x00000002UL
 
-/* seek()µÄmethod²ÎÊı¶¨Òå */
+/* seek()çš„methodå‚æ•°å®šä¹‰ */
 #define IO_SEEK_SET		0x00000000UL
 #define IO_SEEK_CUR		0x00000001UL
 #define IO_SEEK_END		0x00000002UL
 #define IO_SEEK_METHOD	0x00000003UL
 
-/* fioÇëÇóÃèÊö·û */
+/* fioè¯·æ±‚æè¿°ç¬¦ */
 struct fio_request {
-	HANDLE file;			/* [int]ÎÄ¼ş´ò¿ª¾ä±ú */
-	HANDLE mapping;			/* [int]ÎÄ¼şÄÚ´æÓ³Éä¾ä±ú */
-	void *ro_address;		/* [int]Ö»¶ÁÊ±µÄÓ³ÉäµØÖ· */
-//	int use_counts;			/* [int]ÎÄ¼ş´ò¿ª¼ÆÊı */
-	u64 base_offset;		/* [int]ÎÄ¼şµÄ×ÊÔ´»ùÖ·Æ«ÒÆ£¨¾ø¶ÔÖµ£© */
-	u64 base_length;		/* [int]ÎÄ¼şµÄÎÄ¼ş³¤¶È */
-	u64 current_offset;	/* [int]µ±Ç°·â°üÎÄ¼şµÄ×ÊÔ´Î»ÖÃÆ«ÒÆ£¨Ïà¶ÔÖµ£© */
-	unsigned long flags;	/* [int]±êÖ¾Î»¶Î */
+	HANDLE file;			/* [int]æ–‡ä»¶æ‰“å¼€å¥æŸ„ */
+	HANDLE mapping;			/* [int]æ–‡ä»¶å†…å­˜æ˜ å°„å¥æŸ„ */
+	void *ro_address;		/* [int]åªè¯»æ—¶çš„æ˜ å°„åœ°å€ */
+//	int use_counts;			/* [int]æ–‡ä»¶æ‰“å¼€è®¡æ•° */
+	u64 base_offset;		/* [int]æ–‡ä»¶çš„èµ„æºåŸºå€åç§»ï¼ˆç»å¯¹å€¼ï¼‰ */
+	u64 base_length;		/* [int]æ–‡ä»¶çš„æ–‡ä»¶é•¿åº¦ */
+	u64 current_offset;	/* [int]å½“å‰å°åŒ…æ–‡ä»¶çš„èµ„æºä½ç½®åç§»ï¼ˆç›¸å¯¹å€¼ï¼‰ */
+	unsigned long flags;	/* [int]æ ‡å¿—ä½æ®µ */
 };
 	
-/* bioÇëÇóÃèÊö·û */
+/* bioè¯·æ±‚æè¿°ç¬¦ */
 struct bio_request {
-	void *buffer;			/* £¨¾ø¶ÔÖµ£© */
-	u64 base_offset;		/* [int]×ÊÔ´»ùÖ·Æ«ÒÆ£¨¾ø¶ÔÖµ£© */
-	u64 base_length;		/* [int]ÎÄ¼ş³¤¶È */
-	u64 current_offset;	/* [int]µ±Ç°ÎÄ¼şµÄ×ÊÔ´Î»ÖÃÆ«ÒÆ£¨Ïà¶ÔÖµ£© */
+	void *buffer;			/* ï¼ˆç»å¯¹å€¼ï¼‰ */
+	u64 base_offset;		/* [int]èµ„æºåŸºå€åç§»ï¼ˆç»å¯¹å€¼ï¼‰ */
+	u64 base_length;		/* [int]æ–‡ä»¶é•¿åº¦ */
+	u64 current_offset;	/* [int]å½“å‰æ–‡ä»¶çš„èµ„æºä½ç½®åç§»ï¼ˆç›¸å¯¹å€¼ï¼‰ */
 };
 
 /* fio operations */

@@ -31,10 +31,10 @@ struct pkgres {
 	TCHAR *extension;
 	DWORD length_lo;
 	DWORD length_hi;
-	//int processed;				/* ÊÇ·ñÒÑ¾­±»´¦Àí¹ıµÄ±êÖ¾ */
+	//int processed;				/* æ˜¯å¦å·²ç»è¢«å¤„ç†è¿‡çš„æ ‡å¿— */
 	//unsigned long flags;
 	//int use_count;
-	void *priv;						/* ·â°üË½ÓĞĞÅÏ¢ */
+	void *priv;						/* å°åŒ…ç§æœ‰ä¿¡æ¯ */
 };
 #endif
 

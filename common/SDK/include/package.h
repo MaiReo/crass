@@ -4,7 +4,7 @@
 #include <crass_types.h>
 #include <crass/io_request.h>
 
-/* io²Ù×÷ */
+/* ioæ“ä½œ */
 struct package_io_operations {
 	int (*open)(struct package *pkg, unsigned long flags);
 	void (*close)(struct package *pkg);
@@ -30,30 +30,30 @@ struct package_io_operations {
 };
 
 struct package_context {
-	u64 base_offset;		/* [int]·â°üÎÄ¼şµÄ×ÊÔ´»ùÖ·Æ«ÒÆ£¨¾ø¶ÔÖµ£© */
-	u64 base_length;		/* [int]·â°üÎÄ¼şµÄÎÄ¼ş³¤¶È */
-	u64 current_offset;		/* [int]µ±Ç°·â°üÎÄ¼şµÄ×ÊÔ´Î»ÖÃÆ«ÒÆ£¨Ïà¶ÔÖµ£© */
+	u64 base_offset;		/* [int]å°åŒ…æ–‡ä»¶çš„èµ„æºåŸºå€åç§»ï¼ˆç»å¯¹å€¼ï¼‰ */
+	u64 base_length;		/* [int]å°åŒ…æ–‡ä»¶çš„æ–‡ä»¶é•¿åº¦ */
+	u64 current_offset;		/* [int]å½“å‰å°åŒ…æ–‡ä»¶çš„èµ„æºä½ç½®åç§»ï¼ˆç›¸å¯¹å€¼ï¼‰ */
 	//struct package_context *parent;
 };
 
-/* ·â°üÃèÊö·û */
+/* å°åŒ…æè¿°ç¬¦ */
 struct package {
-	struct package *lst;					/* [in] Íâ²¿Ë÷ÒıÎÄ¼ş */
-	const TCHAR *name;						/* [in] ·â°üÃû³Æ */
+	struct package *lst;					/* [in] å¤–éƒ¨ç´¢å¼•æ–‡ä»¶ */
+	const TCHAR *name;						/* [in] å°åŒ…åç§° */
 	struct package_io_operations *pio;		/* [in]  */
-	unsigned long context;					/* [out,in]·â°üË½ÓĞĞÅÏ¢ */
+	unsigned long context;					/* [out,in]å°åŒ…ç§æœ‰ä¿¡æ¯ */
 	union {
-		struct fio_request *fior;			/* [int]fioÇëÇóÃèÊö·û */
-		struct bio_request *bior;			/* [int]bioÇëÇóÃèÊö·û */	
+		struct fio_request *fior;			/* [int]fioè¯·æ±‚æè¿°ç¬¦ */
+		struct bio_request *bior;			/* [int]bioè¯·æ±‚æè¿°ç¬¦ */	
 	};
-	/* ÒÔÏÂ³ÉÔ±ĞÅÏ¢¶Ôcui/aui´úÂë²»Í¸Ã÷ */
-	const TCHAR *full_path;					/* [int]·â°üÈ«Â·¾¶ */
-	const TCHAR *path;						/* [int]·â°üÂ·¾¶ */
-	const TCHAR *extension;					/* [int]·â°üÀ©Õ¹Ãû */
+	/* ä»¥ä¸‹æˆå‘˜ä¿¡æ¯å¯¹cui/auiä»£ç ä¸é€æ˜ */
+	const TCHAR *full_path;					/* [int]å°åŒ…å…¨è·¯å¾„ */
+	const TCHAR *path;						/* [int]å°åŒ…è·¯å¾„ */
+	const TCHAR *extension;					/* [int]å°åŒ…æ‰©å±•å */
 	int use_counts;
 	void (*release)(struct package *);	
-	struct package *prev;					/* [int]Ç°Ò»¸ö·â°üĞÅÏ¢ */
-	struct package *next;					/* [int]ÏÂÒ»¸ö·â°üĞÅÏ¢ */
+	struct package *prev;					/* [int]å‰ä¸€ä¸ªå°åŒ…ä¿¡æ¯ */
+	struct package *next;					/* [int]ä¸‹ä¸€ä¸ªå°åŒ…ä¿¡æ¯ */
 	struct package_resource *pkg_res;
 	struct package *parent;
 	struct package_context *pkg_context;
@@ -62,42 +62,42 @@ struct package {
 #define package_get_private(pkg)	((pkg)->context)
 #define package_set_private(pkg, v)	((pkg)->context = (unsigned long)v)
 
-/* ·â°üÄ¿Â¼ĞÅÏ¢ */
+/* å°åŒ…ç›®å½•ä¿¡æ¯ */
 struct package_directory {
-	void *directory;						/* [out][out]Ë÷Òı¶ÎÊı¾İ */
-	unsigned long directory_length;			/* [out][out]Ë÷Òı¶ÎÊı¾İ³¤¶È */
-	unsigned long index_entries;			/* [in] [out]×ÊÔ´ÎÄ¼şµÄ¸öÊı */
-	unsigned long index_entry_length;		/* [out][out]Ë÷ÒıÏîµÄ³¤¶È */
-//	const TCHAR *lst_filename;				/* [in] Íâ²¿Ë÷ÒıÎÄ¼şÃû */
-//	struct io_request *lst;					/* [in] Íâ²¿Ë÷ÒıÎÄ¼şÃûio²Ù×÷·û */
-/* ±êÖ¾Î»¶Î¶¨Òå */
-#define PKG_DIR_FLAG_VARLEN				0x00000001	/* Ë÷ÒıÏîĞÅÏ¢±ä³¤ */
-#define PKG_DIR_FLAG_SKIP0				0x00000002	/* ºöÂÔ³¤¶ÈÎª0µÄÊı¾İ */
-#define PKG_DIR_FLAG_PRIVATE			0xff000000	/* cuiË½ÓÃÎ»¶Î */
-	unsigned long flags;					/* [out][out]±êÖ¾Î»¶Î */
+	void *directory;						/* [out][out]ç´¢å¼•æ®µæ•°æ® */
+	unsigned long directory_length;			/* [out][out]ç´¢å¼•æ®µæ•°æ®é•¿åº¦ */
+	unsigned long index_entries;			/* [in] [out]èµ„æºæ–‡ä»¶çš„ä¸ªæ•° */
+	unsigned long index_entry_length;		/* [out][out]ç´¢å¼•é¡¹çš„é•¿åº¦ */
+//	const TCHAR *lst_filename;				/* [in] å¤–éƒ¨ç´¢å¼•æ–‡ä»¶å */
+//	struct io_request *lst;					/* [in] å¤–éƒ¨ç´¢å¼•æ–‡ä»¶åioæ“ä½œç¬¦ */
+/* æ ‡å¿—ä½æ®µå®šä¹‰ */
+#define PKG_DIR_FLAG_VARLEN				0x00000001	/* ç´¢å¼•é¡¹ä¿¡æ¯å˜é•¿ */
+#define PKG_DIR_FLAG_SKIP0				0x00000002	/* å¿½ç•¥é•¿åº¦ä¸º0çš„æ•°æ® */
+#define PKG_DIR_FLAG_PRIVATE			0xff000000	/* cuiç§ç”¨ä½æ®µ */
+	unsigned long flags;					/* [out][out]æ ‡å¿—ä½æ®µ */
 };
 
 struct package_resource {
 	unsigned int index_number;
-	void *actual_index_entry;				/* [out][in] Ö¸Ïòµ±Ç°Ë÷ÒıÏî */
-	unsigned long actual_index_entry_length;/* [out][out]µ±Ç°Ë÷ÒıÏîµÄ³¤¶È£¨½ö±ä³¤Ë÷Òı¶ÎµÄÇé¿ö£© */
-	char name[256];							/* [in] [out]×ÊÔ´ÎÄ¼şÃû³Æ */
-	long name_length;						/* [in] [out]×ÊÔ´ÎÄ¼şÃû³Æ³¤¶È£¬-1±íÊ¾ÒÔNULL½áÎ² */
-	void *raw_data;							/* [out][out]Ô­Ê¼×ÊÔ´ÎÄ¼şÊı¾İ */
-	unsigned long raw_data_length;			/* [out][out]Ô­Ê¼×ÊÔ´ÎÄ¼şÊı¾İ³¤¶È */
-	unsigned long offset;					/* [in] [out]Æ«ÒÆÎ»ÖÃ */
-	void *actual_data;						/* [out][out]Êµ¼ÊµÄÊı¾İ */
-	unsigned long actual_data_length;		/* [in] [out]Êµ¼ÊµÄÊı¾İ³¤¶È */
+	void *actual_index_entry;				/* [out][in] æŒ‡å‘å½“å‰ç´¢å¼•é¡¹ */
+	unsigned long actual_index_entry_length;/* [out][out]å½“å‰ç´¢å¼•é¡¹çš„é•¿åº¦ï¼ˆä»…å˜é•¿ç´¢å¼•æ®µçš„æƒ…å†µï¼‰ */
+	char name[256];							/* [in] [out]èµ„æºæ–‡ä»¶åç§° */
+	long name_length;						/* [in] [out]èµ„æºæ–‡ä»¶åç§°é•¿åº¦ï¼Œ-1è¡¨ç¤ºä»¥NULLç»“å°¾ */
+	void *raw_data;							/* [out][out]åŸå§‹èµ„æºæ–‡ä»¶æ•°æ® */
+	unsigned long raw_data_length;			/* [out][out]åŸå§‹èµ„æºæ–‡ä»¶æ•°æ®é•¿åº¦ */
+	unsigned long offset;					/* [in] [out]åç§»ä½ç½® */
+	void *actual_data;						/* [out][out]å®é™…çš„æ•°æ® */
+	unsigned long actual_data_length;		/* [in] [out]å®é™…çš„æ•°æ®é•¿åº¦ */
 	const TCHAR *replace_extension;
-/* ±êÖ¾Î»¶Î¶¨Òå */
-#define PKG_RES_FLAG_RAW		0x00000001	/* Ö»ÌáÈ¡Ô­Ê¼Êı¾İ */
-#define PKG_RES_FLAG_LAST		0x00000002	/* ×îºóÒ»Ïî×ÊÔ´ */
-#define PKG_RES_FLAG_REEXT		0x00010000	/* ÖØĞÂ¶¨Òå×ÊÔ´ÎÄ¼şÀ©Õ¹Ãû */
-#define PKG_RES_FLAG_UNICODE	0x00020000	/* ×ÊÔ´ÎÄ¼şÃû³ÆÊÇUNICODE±àÂë */
-#define PKG_RES_FLAG_FIO		0x00040000	/* ÒÔFIO×ÊÔ´ÀàĞÍÌáÈ¡(±ÈÈçRESÊÇÄ¿Â¼ĞÍ·â°ü) */
-#define PKG_RES_FLAG_APEXT		0x00080000	/* ¸½¼ş×ÊÔ´ÎÄ¼şÀ©Õ¹Ãû */
-#define PKG_RES_FLAG_PRIVATE	0xff000000	/* cuiË½ÓÃÎ»¶ÎÑÚÂë */
-	unsigned long flags;					/* [in][out]±êÖ¾Î»¶Î */
+/* æ ‡å¿—ä½æ®µå®šä¹‰ */
+#define PKG_RES_FLAG_RAW		0x00000001	/* åªæå–åŸå§‹æ•°æ® */
+#define PKG_RES_FLAG_LAST		0x00000002	/* æœ€åä¸€é¡¹èµ„æº */
+#define PKG_RES_FLAG_REEXT		0x00010000	/* é‡æ–°å®šä¹‰èµ„æºæ–‡ä»¶æ‰©å±•å */
+#define PKG_RES_FLAG_UNICODE	0x00020000	/* èµ„æºæ–‡ä»¶åç§°æ˜¯UNICODEç¼–ç  */
+#define PKG_RES_FLAG_FIO		0x00040000	/* ä»¥FIOèµ„æºç±»å‹æå–(æ¯”å¦‚RESæ˜¯ç›®å½•å‹å°åŒ…) */
+#define PKG_RES_FLAG_APEXT		0x00080000	/* é™„ä»¶èµ„æºæ–‡ä»¶æ‰©å±•å */
+#define PKG_RES_FLAG_PRIVATE	0xff000000	/* cuiç§ç”¨ä½æ®µæ©ç  */
+	unsigned long flags;					/* [in][out]æ ‡å¿—ä½æ®µ */
 };
 
 #if 0

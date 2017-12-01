@@ -6,14 +6,14 @@
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted.
  *
- * ���Υץ������κ�Ԥ� jagarl �Ǥ���
+ * このプログラムの侯荚は jagarl です。
  *
- * ���Υץ�����ࡢ�ڤӥ���ѥ���ˤ�ä����������Х��ʥ��
- * �ץ��������ѹ����롢���ʤ��ˤ�����餺�����۲�ǽ�Ǥ���
- * ���κݡ��嵭 Copyright ɽ�����ݻ�����ʤɤξ��ϲݤ���
- * �����б������ݤʤΤǥХ�����������᡼���Ϣ���򤹤�
- * �ʤɤ�ɬ�פ⤢��ޤ��󡣥������ΰ�����ή�Ѥ��뤳�Ȥ�ޤᡢ
- * ����ͳ�ˤ��Ȥ�����������
+ * このプログラム、第びコンパイルによって栏喇したバイナリは
+ * プログラムを恃构する、しないにかかわらず浩芹邵材墙です。
+ * その狠、惧淡 Copyright 山绩を瘦积するなどの掘凤は草しま
+ * せん。滦炳が烫泡なのでバグ鼠桂を近き、メ〖ルで息晚をする
+ * などの涩妥もありません。ソ〖スの办婶を萎脱することを崔め、
+ * ご极统にお蝗いください。
  *
  * THIS SOFTWARE IS PROVIDED BY KAZUNORI 'jagarl' UENO ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE

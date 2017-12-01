@@ -7,13 +7,13 @@
 #define CRASS_API __declspec(dllimport)
 #endif 
 
-/* TCHAR»º³åÇøµÄ³¤¶È */
+/* TCHARç¼“å†²åŒºçš„é•¿åº¦ */
 #define SOT(x)	(sizeof(x) / sizeof(TCHAR))
 
-/*********** ¿ØÖÆÌ¨ĞÅÏ¢ÏÔÊ¾ **************/
+/*********** æ§åˆ¶å°ä¿¡æ¯æ˜¾ç¤º **************/
 
 #if 0
-/* ÏÔÊ¾ĞÅÏ¢¶¨Òå */
+/* æ˜¾ç¤ºä¿¡æ¯å®šä¹‰ */
 #define CRASS_VERBOSE_LEVEL_SLIENT		0
 #define CRASS_VERBOSE_LEVEL_DEBUG		1
 #define CRASS_VERBOSE_LEVEL_WARNING		2
@@ -24,41 +24,41 @@
 CRASS_API extern unsigned int crass_verbose_level;
 CRASS_API void crass_printf(unsigned int level, const TCHAR *fmt, ...);
 
-/* ÆÕÍ¨ĞÅÏ¢ */
+/* æ™®é€šä¿¡æ¯ */
 #define crass_message(fmt, arg...)	\
 	crass_printf(CRASS_VERBOSE_LEVEL_NORMAL, fmt, ##arg)
-/* µ÷ÊÔĞÅÏ¢ */
+/* è°ƒè¯•ä¿¡æ¯ */
 #define crass_debug(fmt, arg...)	\
 	crass_printf(CRASS_VERBOSE_LEVEL_DEBUG, fmt, ##arg)
-/* ·¢³ö¾¯¸æĞÅÏ¢ */
+/* å‘å‡ºè­¦å‘Šä¿¡æ¯ */
 #define crass_warning(fmt, arg...)	\
 	crass_printf(CRASS_VERBOSE_LEVEL_WARNING, fmt, ##arg)
-/* ·¢ÉúÁË´íÎó */
+/* å‘ç”Ÿäº†é”™è¯¯ */
 #define crass_error(fmt, arg...)	\
 	crass_printf(CRASS_VERBOSE_LEVEL_ERROR, fmt, ##arg)	
-/* ·¢ÉúÁËÍ¨³£²»¿ÉÄÜ·¢ÉúµÄÑÏÖØ´íÎó */
+/* å‘ç”Ÿäº†é€šå¸¸ä¸å¯èƒ½å‘ç”Ÿçš„ä¸¥é‡é”™è¯¯ */
 #define crass_fault(fmt, arg...)	\
 	crass_printf(CRASS_VERBOSE_LEVEL_FAULT, fmt, ##arg)
 #endif
-/* Í¨¹ıÈİÆ÷³ÉÔ±»ñµÃÈİÆ÷Ö¸Õë¡£
- * @pointer - ³ÉÔ±Ö¸Õë¡£
- * @type - ÈİÆ÷µÄÊı¾İÀàĞÍ¡£
- * @member - ³ÉÔ±±äÁ¿µÄÃû³Æ¡£
+/* é€šè¿‡å®¹å™¨æˆå‘˜è·å¾—å®¹å™¨æŒ‡é’ˆã€‚
+ * @pointer - æˆå‘˜æŒ‡é’ˆã€‚
+ * @type - å®¹å™¨çš„æ•°æ®ç±»å‹ã€‚
+ * @member - æˆå‘˜å˜é‡çš„åç§°ã€‚
  */
 #define container_of(pointer, type, member)	\
 	((type *)((char *)(pointer) - (char *)&(((type *)0)->member)))
 
 #define SOT(x)	(sizeof(x) / sizeof(TCHAR))
 	
-/*********** Í¨ÓÃË«ÏòÁ´±í **************/
+/*********** é€šç”¨åŒå‘é“¾è¡¨ **************/
 
-/* Á´±í½Úµã */
+/* é“¾è¡¨èŠ‚ç‚¹ */
 struct list_head {
-	struct list_head *prev;	/* Ç°ÏîÖ¸Õë */
-	struct list_head *next;	/* ºóÏîÖ¸Õë */
+	struct list_head *prev;	/* å‰é¡¹æŒ‡é’ˆ */
+	struct list_head *next;	/* åé¡¹æŒ‡é’ˆ */
 };
 
-/* Ìí¼ÓÁ´±í½ÚµãµÄÄÚ²¿ÊµÏÖ¡£*/
+/* æ·»åŠ é“¾è¡¨èŠ‚ç‚¹çš„å†…éƒ¨å®ç°ã€‚*/
 static inline void __list_add(struct list_head *prev, struct list_head *_new, struct list_head *next)
 {
 	_new->prev = prev;
@@ -67,49 +67,49 @@ static inline void __list_add(struct list_head *prev, struct list_head *_new, st
 	next->prev = _new;
 }
 
-/* É¾³ıÁ´±í½ÚµãµÄÄÚ²¿ÊµÏÖ¡£*/
+/* åˆ é™¤é“¾è¡¨èŠ‚ç‚¹çš„å†…éƒ¨å®ç°ã€‚*/
 static inline void __list_del(struct list_head *prev, struct list_head *next)
 {
 	prev->next = next;
 	next->prev = prev;
 }
 
-/* ³õÊ¼»¯Á´±í½Úµã¡£
- * @head - ±»³õÊ¼»¯µÄ½Úµã¡£
+/* åˆå§‹åŒ–é“¾è¡¨èŠ‚ç‚¹ã€‚
+ * @head - è¢«åˆå§‹åŒ–çš„èŠ‚ç‚¹ã€‚
  */
 static inline void list_init(struct list_head *head)
 {
 	head->prev = head->next = head;
 }
 
-/* Ìí¼ÓÁ´±í½Úµã¡£
- * @_new - ´ı¼ÓÈëµÄ½Úµã¡£
- * @head - ±»¼ÓÈëµÄÍ·½Úµã¡£
+/* æ·»åŠ é“¾è¡¨èŠ‚ç‚¹ã€‚
+ * @_new - å¾…åŠ å…¥çš„èŠ‚ç‚¹ã€‚
+ * @head - è¢«åŠ å…¥çš„å¤´èŠ‚ç‚¹ã€‚
  */
 static inline void list_add(struct list_head *_new, struct list_head *head)
 {
 	__list_add(head, _new, head->next);
 }
 
-/* ÔÚÁ´±í½áÎ²Ìí¼Ó½Úµã¡£
- * @_new - ´ı¼ÓÈëµÄ½Úµã¡£
- * @head - ±»¼ÓÈëµÄÍ·½Úµã¡£
+/* åœ¨é“¾è¡¨ç»“å°¾æ·»åŠ èŠ‚ç‚¹ã€‚
+ * @_new - å¾…åŠ å…¥çš„èŠ‚ç‚¹ã€‚
+ * @head - è¢«åŠ å…¥çš„å¤´èŠ‚ç‚¹ã€‚
  */
 static inline void list_add_tail(struct list_head *_new, struct list_head *head)
 {
 	__list_add(head->prev, _new, head);
 }
 
-/* É¾³ı½Úµã¡£
- * @head - ´ıÉ¾³ıµÄ½Úµã¡£
+/* åˆ é™¤èŠ‚ç‚¹ã€‚
+ * @head - å¾…åˆ é™¤çš„èŠ‚ç‚¹ã€‚
  */
 static inline void list_del(struct list_head *head)
 {
 	__list_del(head->prev, head->next);
 }
 
-/* É¾³ı²¢ÖØĞÂ³õÊ¼»¯½Úµã¡£
- * @head - ´ıÉ¾³ıµÄ½Úµã¡£
+/* åˆ é™¤å¹¶é‡æ–°åˆå§‹åŒ–èŠ‚ç‚¹ã€‚
+ * @head - å¾…åˆ é™¤çš„èŠ‚ç‚¹ã€‚
  */
 static inline void list_del_init(struct list_head *head)
 {
@@ -117,56 +117,56 @@ static inline void list_del_init(struct list_head *head)
 	list_init(head);
 }
 
-/* ÅĞ¶ÏÁ´±íÊÇ·ñÎª¿Õ¡£
- * @head - ´ı²âÊÔµÄµÄÁ´±íÍ·½Úµã¡£
+/* åˆ¤æ–­é“¾è¡¨æ˜¯å¦ä¸ºç©ºã€‚
+ * @head - å¾…æµ‹è¯•çš„çš„é“¾è¡¨å¤´èŠ‚ç‚¹ã€‚
  */
 static inline int list_empty(struct list_head *head)
 {
 	return head->next == head->prev ? (head->next == head ? 1 : 0) : 0;
 }
 
-/* ±éÀúÁ´±í½Úµã¡£
- * @pos - µ±Ç°½Úµã¡£
- * @head - Á´±íÍ·½Úµã¡£
+/* éå†é“¾è¡¨èŠ‚ç‚¹ã€‚
+ * @pos - å½“å‰èŠ‚ç‚¹ã€‚
+ * @head - é“¾è¡¨å¤´èŠ‚ç‚¹ã€‚
  */
 #define list_for_each(pos, head) \
 	for (pos = (head)->next; pos != (head); \
         	pos = pos->next)
   
-/* ·´Ïò±éÀúÁ´±í½Úµã¡£
- * @pos - µ±Ç°½Úµã¡£
- * @head - Á´±íÍ·½Úµã¡£
+/* åå‘éå†é“¾è¡¨èŠ‚ç‚¹ã€‚
+ * @pos - å½“å‰èŠ‚ç‚¹ã€‚
+ * @head - é“¾è¡¨å¤´èŠ‚ç‚¹ã€‚
  */
 #define list_for_each_reverse(pos, head) \
 	for (pos = (head)->prev; pos != (head); \
         	pos = pos->prev)   
         	
-/* °²È«±éÀúÁ´±í½Úµã¡£
- * @pos - µ±Ç°½Úµã¡£
- * @safe - Ô¤±£´æÏÂÒ»¸ö½Úµã¡£
- * @head - Á´±íÍ·½Úµã¡£
+/* å®‰å…¨éå†é“¾è¡¨èŠ‚ç‚¹ã€‚
+ * @pos - å½“å‰èŠ‚ç‚¹ã€‚
+ * @safe - é¢„ä¿å­˜ä¸‹ä¸€ä¸ªèŠ‚ç‚¹ã€‚
+ * @head - é“¾è¡¨å¤´èŠ‚ç‚¹ã€‚
  */        	
 #define list_for_each_safe(pos, safe, head) \
 	for (pos = (head)->next, safe = pos->next; pos != (head); \
         	pos = safe, safe = safe->next)   
     
-/* °²È«·´Ïò±éÀúÁ´±í½Úµã¡£
- * @pos - µ±Ç°½Úµã¡£
- * @safe - Ô¤±£´æÏÂÒ»¸ö½Úµã¡£
- * @head - Á´±íÍ·½Úµã¡£
+/* å®‰å…¨åå‘éå†é“¾è¡¨èŠ‚ç‚¹ã€‚
+ * @pos - å½“å‰èŠ‚ç‚¹ã€‚
+ * @safe - é¢„ä¿å­˜ä¸‹ä¸€ä¸ªèŠ‚ç‚¹ã€‚
+ * @head - é“¾è¡¨å¤´èŠ‚ç‚¹ã€‚
  */         	       	
 #define list_for_each_safe_reverse(pos, safe, head) \
 	for (pos = (head)->prev, safe = pos->prev; pos != (head); \
         	pos = safe, safe = safe->prev)  
    
-/* »ñµÃÁ´±íÏîÖ¸Õë¡£
+/* è·å¾—é“¾è¡¨é¡¹æŒ‡é’ˆã€‚
  */ 
 #define list_entry(p, type, member)	container_of(p, type, member)
 
-/*********** Í¬²½²Ù×÷ **************/
+/*********** åŒæ­¥æ“ä½œ **************/
 
 
-/*********** ÎÄ¼ş¶ÔÏó²Ù×÷ **************/
+/*********** æ–‡ä»¶å¯¹è±¡æ“ä½œ **************/
 
 struct file_object;
 struct io_request_operation {

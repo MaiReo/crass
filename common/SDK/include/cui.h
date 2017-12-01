@@ -3,24 +3,24 @@
 
 struct cui_register_callback;
 
-/* cui±ØĞë±©Â¶µÄAPIÔ­ĞÍ */
+/* cuiå¿…é¡»æš´éœ²çš„APIåŸå‹ */
 typedef int (CALLBACK *register_cui_t)(struct cui_register_callback *callback);
 //typedef void (CALLBACK *unregister_cui_t)(struct cui_unregister_callback *callback);
 typedef void (CALLBACK *show_cui_info_t)(struct acui_information *info);
 
 struct cui_extension;
-/* cuiĞÅÏ¢£¨cui´úÂëÖĞ²»ÒªÖ±½Ó²Ù×÷ÒÔÏÂÈÎºÎ³ÉÔ±£© */
+/* cuiä¿¡æ¯ï¼ˆcuiä»£ç ä¸­ä¸è¦ç›´æ¥æ“ä½œä»¥ä¸‹ä»»ä½•æˆå‘˜ï¼‰ */
 struct cui {
-	struct cui *prev;		/* cuiÁ´±íµÄÇ°Ö¸Õë */
-	struct cui *next;		/* cuiÁ´±íµÄºóÖ¸Õë */
-	HMODULE module;			/* cuiÄ£¿é¾ä±ú */
-	TCHAR *name;			/* cuiÄ£¿éÃû */
+	struct cui *prev;		/* cuié“¾è¡¨çš„å‰æŒ‡é’ˆ */
+	struct cui *next;		/* cuié“¾è¡¨çš„åæŒ‡é’ˆ */
+	HMODULE module;			/* cuiæ¨¡å—å¥æŸ„ */
+	TCHAR *name;			/* cuiæ¨¡å—å */
 	struct cui_extension *first_ext;
 	struct cui_extension *last_ext;		
-	unsigned int ext_count;	/* Ö§³ÖµÄÀ©Õ¹ÃûÊıÁ¿ */
+	unsigned int ext_count;	/* æ”¯æŒçš„æ‰©å±•åæ•°é‡ */
 };
 
-/* cuiÀ©Õ¹ÃûĞÅÏ¢£¨cui´úÂëÖĞ²»ÒªÖ±½Ó²Ù×÷ÒÔÏÂÈÎºÎ³ÉÔ±£© */
+/* cuiæ‰©å±•åä¿¡æ¯ï¼ˆcuiä»£ç ä¸­ä¸è¦ç›´æ¥æ“ä½œä»¥ä¸‹ä»»ä½•æˆå‘˜ï¼‰ */
 struct cui_extension {
 	struct cui_ext_operation *op;
 	const TCHAR *extension;
@@ -31,55 +31,55 @@ struct cui_extension {
 	unsigned long flags;
 };
 
-/* Ã¿¸ö·â°üÀ©Õ¹Ãû»òÌØ¶¨·â°üÃû³ÆµÄ²Ù×÷º¯Êı */
+/* æ¯ä¸ªå°åŒ…æ‰©å±•åæˆ–ç‰¹å®šå°åŒ…åç§°çš„æ“ä½œå‡½æ•° */
 struct cui_ext_operation {
-	int (*match)(struct package *);				/* ÊÇ·ñÖ§³Ö¸Ã·â°ü */
-	int (*extract_directory)(struct package *,	/* ÌáÈ¡directoryÊı¾İ */
+	int (*match)(struct package *);				/* æ˜¯å¦æ”¯æŒè¯¥å°åŒ… */
+	int (*extract_directory)(struct package *,	/* æå–directoryæ•°æ® */
 		struct package_directory *);
-	int (*parse_resource_info)(struct package *,/* ½âÎöresourceĞÅÏ¢ */
+	int (*parse_resource_info)(struct package *,/* è§£æresourceä¿¡æ¯ */
 		struct package_resource *);	
-	int (*extract_resource)(struct package *,	/* ÌáÈ¡×ÊÔ´ÎÄ¼şÊı¾İ */
+	int (*extract_resource)(struct package *,	/* æå–èµ„æºæ–‡ä»¶æ•°æ® */
 		struct package_resource *);	
-	int (*save_resource)(struct resource *,		/* ±£´æ×ÊÔ´Êı¾İ */
+	int (*save_resource)(struct resource *,		/* ä¿å­˜èµ„æºæ•°æ® */
 		struct package_resource *);	
-	void (*release_resource)(struct package *,	/* ÊÍ·ÅÏà¹Ø×ÊÔ´ */
+	void (*release_resource)(struct package *,	/* é‡Šæ”¾ç›¸å…³èµ„æº */
 		struct package_resource *);
-	void (*release)(struct package *,			/* ÊÍ·ÅÏà¹Ø×ÊÔ´ */
+	void (*release)(struct package *,			/* é‡Šæ”¾ç›¸å…³èµ„æº */
 		struct package_directory *);
 };
 
-/* cui×¢²áÊ±crageÌá¹©µÄ»Øµ÷º¯Êı */
+/* cuiæ³¨å†Œæ—¶crageæä¾›çš„å›è°ƒå‡½æ•° */
 struct cui_register_callback {
 	struct cui *cui;
-	/* Ìí¼ÓÀ©Õ¹ÃûÒÔÖ§³ÖÏàÓ¦µÄ·â°üÎÄ¼ş¡£
-	 * @handle: ²Ù×÷¾ä±ú¡£
-	 * @extension: Ö§³ÖµÄ·â°üÀ©Õ¹Ãû£¬ÒÔ"."¿ªÍ·£¨´óĞ¡Ğ´²»Ãô¸Ğ£©¡£
-	 * @replace_extension: £¨¿ÉÑ¡£©Ìæ»»ÓÃµÄÀ©Õ¹Ãû£¬ÒÔ"."¿ªÍ·¡£
-	 * @description: £¨¿ÉÑ¡£©·â°üĞÅÏ¢¡£
-	 * @operation: ½â°ü¹ı³ÌÖĞÊ¹ÓÃµÄ¸÷ÖÖ»Øµ÷²Ù×÷¡£
-	 * @flags: ÊôĞÔÎ»¶Î¶¨Òå¡£
+	/* æ·»åŠ æ‰©å±•åä»¥æ”¯æŒç›¸åº”çš„å°åŒ…æ–‡ä»¶ã€‚
+	 * @handle: æ“ä½œå¥æŸ„ã€‚
+	 * @extension: æ”¯æŒçš„å°åŒ…æ‰©å±•åï¼Œä»¥"."å¼€å¤´ï¼ˆå¤§å°å†™ä¸æ•æ„Ÿï¼‰ã€‚
+	 * @replace_extension: ï¼ˆå¯é€‰ï¼‰æ›¿æ¢ç”¨çš„æ‰©å±•åï¼Œä»¥"."å¼€å¤´ã€‚
+	 * @description: ï¼ˆå¯é€‰ï¼‰å°åŒ…ä¿¡æ¯ã€‚
+	 * @operation: è§£åŒ…è¿‡ç¨‹ä¸­ä½¿ç”¨çš„å„ç§å›è°ƒæ“ä½œã€‚
+	 * @flags: å±æ€§ä½æ®µå®šä¹‰ã€‚
 	 *
-	 * Èç¹û´ı½âµÄ·â°üÊÇÒ»¸ö°üº¬directoryµÄ·â°ü£¬
-	 * ÄÇÃ´rep_extÎª¿Õ¡£
-	 * Èç¹û´ı½âµÄ·â°üÊÇÒ»¸ö²»°üº¬directoryµÄ·â°ü£¬
-	 * Ò²¾ÍËµÊÇÒ»¸ö±àÂë×ÊÔ´ÎÄ¼ş£¬ÇÒº¬À©Õ¹Ãû£¬ÄÇÃ´
-	 * extÎªÎÄ¼şÃû£¬ÇÒÆ¥ÅäÓÉmatch()À´×÷¡£
+	 * å¦‚æœå¾…è§£çš„å°åŒ…æ˜¯ä¸€ä¸ªåŒ…å«directoryçš„å°åŒ…ï¼Œ
+	 * é‚£ä¹ˆrep_extä¸ºç©ºã€‚
+	 * å¦‚æœå¾…è§£çš„å°åŒ…æ˜¯ä¸€ä¸ªä¸åŒ…å«directoryçš„å°åŒ…ï¼Œ
+	 * ä¹Ÿå°±è¯´æ˜¯ä¸€ä¸ªç¼–ç èµ„æºæ–‡ä»¶ï¼Œä¸”å«æ‰©å±•åï¼Œé‚£ä¹ˆ
+	 * extä¸ºæ–‡ä»¶åï¼Œä¸”åŒ¹é…ç”±match()æ¥ä½œã€‚
 	 */
 	int (*add_extension)(struct cui *cui, const TCHAR *extension, 
 		const TCHAR *replace_extension, const TCHAR *description,
 		struct cui_ext_operation *operation, unsigned long flags);
-/* flagsÎ»¶Î¶¨Òå */
-#define CUI_EXT_FLAG_PKG		0x00000001	/* ·â°üĞÍ */
-#define CUI_EXT_FLAG_RES		0x00000002	/* ×ÊÔ´ĞÍ */
-#define CUI_EXT_FLAG_NOEXT		0x00010000	/* ÎŞÀ©Õ¹Ãû */
-#define CUI_EXT_FLAG_DIR		0x00020000	/* º¬Ä¿Â¼ */
-#define CUI_EXT_FLAG_LST		0x00040000	/* ĞèÒª¶îÍâµÄË÷ÒıÎÄ¼ş */
-#define CUI_EXT_FLAG_OPTION		0x00080000	/* ĞèÒª»ñµÃ¶îÍâµÄÅäÖÃ²ÎÊı */
-#define CUI_EXT_FLAG_NO_MAGIC	0x00100000	/* Ã»ÓĞmagicÆ¥Åä */
-#define CUI_EXT_FLAG_WEAK_MAGIC	0x00200000	/* ¾¡¹ÜÃ»ÓĞmagicÆ¥Åä£¬µ«ÊÇÀ©Õ¹ÃûÏà¶Ô¶ÀÌØ */
-//#define CUI_EXT_FLAG_IMPACT		0x00400000	/* ¶ÔÓÚmagicÏàÍ¬µÄcui£¬ÔÚextract_dirºÍextract_resource½×¶Î¶¼²»Ëã´íÎó */
-#define CUI_EXT_FLAG_SUFFIX_SENSE	0x00400000	/* ºó×ºÃû´óĞ¡Ğ´Ãô¸Ğ */
-#define CUI_EXT_FLAG_RECURSION		0x00800000	/* ×ÊÔ´µİ¹é´¦Àí */
+/* flagsä½æ®µå®šä¹‰ */
+#define CUI_EXT_FLAG_PKG		0x00000001	/* å°åŒ…å‹ */
+#define CUI_EXT_FLAG_RES		0x00000002	/* èµ„æºå‹ */
+#define CUI_EXT_FLAG_NOEXT		0x00010000	/* æ— æ‰©å±•å */
+#define CUI_EXT_FLAG_DIR		0x00020000	/* å«ç›®å½• */
+#define CUI_EXT_FLAG_LST		0x00040000	/* éœ€è¦é¢å¤–çš„ç´¢å¼•æ–‡ä»¶ */
+#define CUI_EXT_FLAG_OPTION		0x00080000	/* éœ€è¦è·å¾—é¢å¤–çš„é…ç½®å‚æ•° */
+#define CUI_EXT_FLAG_NO_MAGIC	0x00100000	/* æ²¡æœ‰magicåŒ¹é… */
+#define CUI_EXT_FLAG_WEAK_MAGIC	0x00200000	/* å°½ç®¡æ²¡æœ‰magicåŒ¹é…ï¼Œä½†æ˜¯æ‰©å±•åç›¸å¯¹ç‹¬ç‰¹ */
+//#define CUI_EXT_FLAG_IMPACT		0x00400000	/* å¯¹äºmagicç›¸åŒçš„cuiï¼Œåœ¨extract_dirå’Œextract_resourceé˜¶æ®µéƒ½ä¸ç®—é”™è¯¯ */
+#define CUI_EXT_FLAG_SUFFIX_SENSE	0x00400000	/* åç¼€åå¤§å°å†™æ•æ„Ÿ */
+#define CUI_EXT_FLAG_RECURSION		0x00800000	/* èµ„æºé€’å½’å¤„ç† */
 };
 
 #endif /* CUI_H */

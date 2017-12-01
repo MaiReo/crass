@@ -1,23 +1,23 @@
 #ifndef CUI_ERROR_H
 #define CUI_ERROR_H
 
-#define CUI_EPARA			1	/* ²ÎÊı´íÎó */
-#define CUI_EOPEN			2	/* ³õÊ¼»¯Ê§°Ü */
-#define CUI_EREAD			3	/* ¶Á²Ù×÷Ê§°Ü */
-#define CUI_EWRITE			4	/* Ğ´²Ù×÷Ê§°Ü */
-#define CUI_ESEEK			5	/* ¶¨Î»²Ù×÷Ê§°Ü */
+#define CUI_EPARA			1	/* å‚æ•°é”™è¯¯ */
+#define CUI_EOPEN			2	/* åˆå§‹åŒ–å¤±è´¥ */
+#define CUI_EREAD			3	/* è¯»æ“ä½œå¤±è´¥ */
+#define CUI_EWRITE			4	/* å†™æ“ä½œå¤±è´¥ */
+#define CUI_ESEEK			5	/* å®šä½æ“ä½œå¤±è´¥ */
 #define CUI_EREADVEC		6
 #define CUI_EWRITEVEC		7
-#define CUI_EMATCH			8	/* ²»Ö§³ÖµÄ·â°üÎÄ¼ş */
-#define CUI_EMEM			9	/* ÄÚ´æ·ÖÅäÊ§°Ü */
-#define CUI_EUNCOMPR		10	/* ½âÑ¹ËõÊ§°Ü */
-#define CUI_ECOMPR			11	/* Ñ¹ËõÊ§°Ü */
+#define CUI_EMATCH			8	/* ä¸æ”¯æŒçš„å°åŒ…æ–‡ä»¶ */
+#define CUI_EMEM			9	/* å†…å­˜åˆ†é…å¤±è´¥ */
+#define CUI_EUNCOMPR		10	/* è§£å‹ç¼©å¤±è´¥ */
+#define CUI_ECOMPR			11	/* å‹ç¼©å¤±è´¥ */
 #define CUI_ELEN			12
 #define CUI_ECREATE			13
 #define CUI_ELOC			14
 #define CUI_EREADONLY		15
 #define CUI_EREADVECONLY	16
-#define CUI_EIMPACT			17	/* ·¢Éú´íÎó,µ«¼ÌĞøÌáÈ¡ */
+#define CUI_EIMPACT			17	/* å‘ç”Ÿé”™è¯¯,ä½†ç»§ç»­æå– */
 	
 #endif	/* CUI_ERROR_H */
 	

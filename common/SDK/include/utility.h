@@ -72,13 +72,13 @@ UTILITY_API int MySaveBMPFile(TCHAR *name, BYTE *buf, DWORD len,
 			DWORD width, DWORD height, DWORD bits_count,
 			DWORD need_align);
 
-/* ·ÏÆú£¡ */
+/* åºŸå¼ƒï¼ */
 UTILITY_API int MyBuildBMPFile(BYTE *dib, DWORD dib_length, 
 			BYTE *palette, DWORD palette_length,
 			DWORD width, DWORD height, DWORD bits_count,
 			BYTE **ret, DWORD *ret_length, void *(*alloc)(DWORD));
 
-/* ·ÏÆú£¡´´½¨16 bit BMPÎÄ¼ş */
+/* åºŸå¼ƒï¼åˆ›å»º16 bit BMPæ–‡ä»¶ */
 #define RGB555		1
 #define RGB565		2
 UTILITY_API int MyBuildBMP16File(BYTE *dib, DWORD dib_length,

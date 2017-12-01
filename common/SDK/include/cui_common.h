@@ -27,7 +27,7 @@ static int cui_common_save_resource(struct resource *res,
 	return 0;
 }
 
-/* 封包资源释放函数 */
+/* 灏佸寘璧勬簮閲婃斁鍑芥暟 */
 static void cui_common_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -41,7 +41,7 @@ static void cui_common_release_resource(struct package *pkg,
 	}
 }
 
-/* 封包卸载函数 */
+/* 灏佸寘鍗歌浇鍑芥暟 */
 static void cui_common_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {

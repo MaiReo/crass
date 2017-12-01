@@ -13,21 +13,21 @@ typedef struct
 
 typedef struct
 {
-	DWORD   TotalSize;      // Total size of the picture data in bytes(²»°üº¬TIM2_FILEHEADER)
-	DWORD   ClutSize;       // CLUT data size in bytes(µ÷É«°å£©
-	DWORD   ImageSize;      // Image data size in bytes£¨RGBAÊı¾İ³¤¶È£¬²»°üº¬ClutSize£©
-	WORD    HeaderSize;     // Header size in bytes£¨TIM2_PICTUREHEADER³¤¶È£©
-	WORD    ClutColors;     // Total color number in CLUT data£¨µ÷É«°æÑÕÉ«Êı£©
+	DWORD   TotalSize;      // Total size of the picture data in bytes(ä¸åŒ…å«TIM2_FILEHEADER)
+	DWORD   ClutSize;       // CLUT data size in bytes(è°ƒè‰²æ¿ï¼‰
+	DWORD   ImageSize;      // Image data size in bytesï¼ˆRGBAæ•°æ®é•¿åº¦ï¼Œä¸åŒ…å«ClutSizeï¼‰
+	WORD    HeaderSize;     // Header size in bytesï¼ˆTIM2_PICTUREHEADERé•¿åº¦ï¼‰
+	WORD    ClutColors;     // Total color number in CLUT dataï¼ˆè°ƒè‰²ç‰ˆé¢œè‰²æ•°ï¼‰
 	BYTE    PictFormat;     // ID of the picture format (must be 0)
-	BYTE    MipMapTextures; // Number of MIPMAP texture£¨1£¿£©
-	BYTE    ClutType;       // Type of the CLUT data£¨3£¿0?£©
+	BYTE    MipMapTextures; // Number of MIPMAP textureï¼ˆ1ï¼Ÿï¼‰
+	BYTE    ClutType;       // Type of the CLUT dataï¼ˆ3ï¼Ÿ0?ï¼‰
 	BYTE    ImageType;      // Type of the Image data
 	WORD    ImageWidth;     // Width of the picture
 	WORD    ImageHeight;    // Height of the picture
-	BYTE    GsTex0[8];      // Data for GS TEX0 register£¨£¿£©
-	BYTE    GsTex1[8];      // Data for GS TEX1 register£¨£¿£©
-	DWORD   GsRegs;         // Data for GS TEXA, FBA, PABE register£¨£¿£©
-	DWORD   GsTexClut;      // Data for GS TEXCLUT register£¨£¿£©
+	BYTE    GsTex0[8];      // Data for GS TEX0 registerï¼ˆï¼Ÿï¼‰
+	BYTE    GsTex1[8];      // Data for GS TEX1 registerï¼ˆï¼Ÿï¼‰
+	DWORD   GsRegs;         // Data for GS TEXA, FBA, PABE registerï¼ˆï¼Ÿï¼‰
+	DWORD   GsTexClut;      // Data for GS TEXCLUT registerï¼ˆï¼Ÿï¼‰
 } TIM2_PICTUREHEADER;
 #pragma pack ()
 

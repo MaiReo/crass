@@ -16,19 +16,19 @@ struct package_directory_operation {
 
 struct package_directory_entry {
 	struct package_directory_entry_operation *op;
-	struct list_head entry;							/* Ä¿Â¼ÏîÁ´±í½Úµã */
-	unsigned int ref_count;							/* ÒıÓÃ¼ÆÊı */
-	struct __package_directory *pd;					/* ËùÊôµÄÄ¿Â¼Ïî */
-	void *data;										/* Ä¿Â¼ÏîÊı¾İ */
-	unsigned int data_length;						/* Ä¿Â¼ÏîÊı¾İ³¤¶È */
+	struct list_head entry;							/* ç›®å½•é¡¹é“¾è¡¨èŠ‚ç‚¹ */
+	unsigned int ref_count;							/* å¼•ç”¨è®¡æ•° */
+	struct __package_directory *pd;					/* æ‰€å±çš„ç›®å½•é¡¹ */
+	void *data;										/* ç›®å½•é¡¹æ•°æ® */
+	unsigned int data_length;						/* ç›®å½•é¡¹æ•°æ®é•¿åº¦ */
 };
 
 struct __package_directory {
 	struct package_directory_operation *op;
-	unsigned int entries;					/* Ë÷Òı½ÚµãÊı */
-	struct list_head link;					/* Ë÷Òı½ÚµãÁ´±í */
-	unsigned int ref_count;					/* ÒıÓÃ¼ÆÊı */
-	struct package *pkg;					/* ËùÊôµÄ·â°ü */
+	unsigned int entries;					/* ç´¢å¼•èŠ‚ç‚¹æ•° */
+	struct list_head link;					/* ç´¢å¼•èŠ‚ç‚¹é“¾è¡¨ */
+	unsigned int ref_count;					/* å¼•ç”¨è®¡æ•° */
+	struct package *pkg;					/* æ‰€å±çš„å°åŒ… */
 	//lock_t lock;
 };
 	

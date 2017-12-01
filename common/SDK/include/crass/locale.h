@@ -12,7 +12,7 @@ LOCALE_API const TCHAR *locale_load_string(DWORD id);
 LOCALE_API int locale_app_register(struct locale_configuration *config, DWORD count);
 LOCALE_API const TCHAR *locale_app_load_string(DWORD cid, DWORD id);
 
-// Ã¿¸ölangurage dll×¢²áµÄÊı¾İ½á¹¹
+// æ¯ä¸ªlangurage dllæ³¨å†Œçš„æ•°æ®ç»“æ„
 struct locale_configuration {
 	unsigned int acp;
 	const TCHAR **string_table;

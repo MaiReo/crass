@@ -6,7 +6,7 @@
 #include <package.h>
 #include <resource.h>
 
-/* io²Ù×÷ */
+/* ioæ“ä½œ */
 struct resource_io_operations {
 	int (*create)(struct resource *res);
 	void (*close)(struct resource *res);
@@ -32,21 +32,21 @@ struct resource_io_operations {
 };
 
 struct package_resource;
-/* ×ÊÔ´ÃèÊö·û */
+/* èµ„æºæè¿°ç¬¦ */
 struct resource {
-	const TCHAR *name;						/* [in] ×ÊÔ´Ãû³Æ */
+	const TCHAR *name;						/* [in] èµ„æºåç§° */
 	struct resource_io_operations *rio;		/* [in] */
-	void *context;							/* [out,in]×ÊÔ´Ë½ÓĞĞÅÏ¢ */
-	/* ÒÔÏÂ³ÉÔ±ĞÅÏ¢¶Ôcui/aui´úÂë²»Í¸Ã÷ */
-	struct fio_request *ior;				/* [int]ioÇëÇóÃèÊö·û */
+	void *context;							/* [out,in]èµ„æºç§æœ‰ä¿¡æ¯ */
+	/* ä»¥ä¸‹æˆå‘˜ä¿¡æ¯å¯¹cui/auiä»£ç ä¸é€æ˜ */
+	struct fio_request *ior;				/* [int]ioè¯·æ±‚æè¿°ç¬¦ */
 	struct package_resource *pkg_res;		/* [int] */
-	const TCHAR *full_path;					/* [int]·â°üÈ«Â·¾¶ */
-	const TCHAR *path;						/* [int]·â°üÂ·¾¶ */
-	const TCHAR *extension;					/* [int]·â°üÀ©Õ¹Ãû */
+	const TCHAR *full_path;					/* [int]å°åŒ…å…¨è·¯å¾„ */
+	const TCHAR *path;						/* [int]å°åŒ…è·¯å¾„ */
+	const TCHAR *extension;					/* [int]å°åŒ…æ‰©å±•å */
 	int use_counts;
 	void (*release)(struct resource *);	
-	struct resource *prev;					/* [int]Ç°Ò»¸ö·â°üĞÅÏ¢ */
-	struct resource *next;					/* [int]ÏÂÒ»¸ö·â°üĞÅÏ¢ */
+	struct resource *prev;					/* [int]å‰ä¸€ä¸ªå°åŒ…ä¿¡æ¯ */
+	struct resource *next;					/* [int]ä¸‹ä¸€ä¸ªå°åŒ…ä¿¡æ¯ */
 };
 
 #endif	/* RESOURCE_H */
