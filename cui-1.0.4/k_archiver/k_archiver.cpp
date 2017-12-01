@@ -16,7 +16,7 @@ struct acui_information k_archiver_cui_information = {
 	NULL,					/* system */
 	_T(".arc"),				/* package */
 	_T("0.0.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-12-13 14:26"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -24,18 +24,18 @@ struct acui_information k_archiver_cui_information = {
 
 
 static const TCHAR *simplified_chinese_strings[] = {
-	_T("ÄãÓ¦¸ÃÊ¹ÓÃunarcÀ´ÌáÈ¡<%s>£¬")
-			_T("Äã¿ÉÒÔÔÚtools\\unarcÕÒµ½Ëü¡£\n")
+	_T("ä½ åº”è¯¥ä½¿ç”¨unarcæ¥æå–<%s>ï¼Œ")
+			_T("ä½ å¯ä»¥åœ¨tools\\unarcæ‰¾åˆ°å®ƒã€‚\n")
 };
 
 static const TCHAR *traditional_chinese_strings[] = {
-	_T("Äã‘ªÔ“Ê¹ÓÃunarcíÌáÈ¡<%s>£¬")
-			_T("Äã¿ÉÒÔÔÚtools\\unarcÕÒµ½Ëü¡£\n")
+	_T("ä½ æ‡‰è©²ä½¿ç”¨unarcä¾†æå–<%s>ï¼Œ")
+			_T("ä½ å¯ä»¥åœ¨tools\\unarcæ‰¾åˆ°å®ƒã€‚\n")
 };
 
 static const TCHAR *japanese_strings[] = {
-	_T("<%s>¤ò³é³ö¤¹¤ë¤Ë¤Ïunarc¤òÊ¹¤¦¤Ù¤­¤Ç¤¹¡¢")
-			_T("tools\\unarc¤ËÒŠ¤Ä¤«¤é¤ì¤Ş¤¹¡£\n")
+	_T("<%s>ã‚’æŠ½å‡ºã™ã‚‹ã«ã¯unarcã‚’ä½¿ã†ã¹ãã§ã™ã€")
+			_T("tools\\unarcã«è¦‹ã¤ã‹ã‚‰ã‚Œã¾ã™ã€‚\n")
 };
 
 static const TCHAR *default_strings[] = {
@@ -133,4 +133,5 @@ int CALLBACK k_archiver_register_cui(struct cui_register_callback *callback)
 	k_archiver_locale_id = locale_app_register(k_archiver_locale_configurations, 3);
 
 	return 0;
+}
 }

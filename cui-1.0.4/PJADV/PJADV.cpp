@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information PJADV_cui_information = {
-	_T("¤Ü¤È¤à¤ì¤¹"),					/* copyright */
+	_T("ã¼ã¨ã‚€ã‚Œã™"),					/* copyright */
 	_T("PajamasSoft Adventure Engine"),	/* system */
 	_T(".dat .pak .epa .bin"),			/* package */
 	_T("1.0.1"),						/* revision */
-	_T("³Õºº¹«Ôô"),						/* author */
+	_T("ç—´æ±‰å…¬è´¼"),						/* author */
 	_T("2008-1-25 0:19"),				/* date */
 	NULL,								/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[12];		/* "GAMEDAT PACK" or "GAMEDAT PAC2" */
@@ -34,21 +34,21 @@ typedef struct {
 } pack_entry_t;
 
 /*
- archive.datÌáÈ¡³öÀ´ºóÓĞ¸ögraphic.def£¬ÀïÃæÏêÏ¸¶¨ÒåÁËÃ¿¸öÍ¼ÏñµÄÓÃÍ¾¡£
+ archive.datæå–å‡ºæ¥åæœ‰ä¸ªgraphic.defï¼Œé‡Œé¢è¯¦ç»†å®šä¹‰äº†æ¯ä¸ªå›¾åƒçš„ç”¨é€”ã€‚
  */
 
-/* modeµÄÓÃÍ¾ÊÇ£º
- * Á¢»æÍ¼µÄÈËÎï£¬Í¨³£Ö»ÓĞ±íÇé±ä»¯¡£Òò´ËÈÃmode==2µÄÍ¼ÊÇ±íÇéÍ¼£¬ÔÚËüµÄepa
- * ÖĞ¼ÇÂ¼ÍêÕûÍ¼µÄepaÎÄ¼şÃû£¬²¢¼ÇÂ¼ÏÂÔÚÔ­Í¼ÖĞµÄÎ»ÖÃ */
+/* modeçš„ç”¨é€”æ˜¯ï¼š
+ * ç«‹ç»˜å›¾çš„äººç‰©ï¼Œé€šå¸¸åªæœ‰è¡¨æƒ…å˜åŒ–ã€‚å› æ­¤è®©mode==2çš„å›¾æ˜¯è¡¨æƒ…å›¾ï¼Œåœ¨å®ƒçš„epa
+ * ä¸­è®°å½•å®Œæ•´å›¾çš„epaæ–‡ä»¶åï¼Œå¹¶è®°å½•ä¸‹åœ¨åŸå›¾ä¸­çš„ä½ç½® */
 
-/* epa½âÑ¹ºó×îÖÕ¶¼»á×ª»»Îª32Î»Î»Í¼£¬Ã»ÓĞ¦Á×Ö¶ÎµÄÍ¼µÄAlphaÌî0xff */
+/* epaè§£å‹åæœ€ç»ˆéƒ½ä¼šè½¬æ¢ä¸º32ä½ä½å›¾ï¼Œæ²¡æœ‰Î±å­—æ®µçš„å›¾çš„Alphaå¡«0xff */
 typedef struct {
 	s8 magic[2];		/* "EP" */
 	u8 version;			/* must be 0x01 */
 	u8 mode;			/* 0x01, have no XY */
 	u8 color_type;		/* 0 - 8bit without alpha; 1 - 24 bit; 2 - 32bit; 4 - 8bit width alpha */
-	u8 unknown0;		/* only used in 8bit */	// £¿£¿£¨8bitsÄ£Ê½ÏÂÓĞÓÃ£º0 £­ Ä¬ÈÏ256£»·Ç0 £­ Êµ¼ÊµÄÑÕÉ«Êı£©
-	u8 unknown1;		/* only used in 8bit */	// £¿£¿£¨8bitsÄ£Ê½ÏÂÓĞÓÃ£º0 £­ Ä¬ÈÏ256£»·Ç0 £­ Êµ¼ÊµÄ£¿£¿£©	
+	u8 unknown0;		/* only used in 8bit */	// ï¼Ÿï¼Ÿï¼ˆ8bitsæ¨¡å¼ä¸‹æœ‰ç”¨ï¼š0 ï¼ é»˜è®¤256ï¼›é0 ï¼ å®é™…çš„é¢œè‰²æ•°ï¼‰
+	u8 unknown1;		/* only used in 8bit */	// ï¼Ÿï¼Ÿï¼ˆ8bitsæ¨¡å¼ä¸‹æœ‰ç”¨ï¼š0 ï¼ é»˜è®¤256ï¼›é0 ï¼ å®é™…çš„ï¼Ÿï¼Ÿï¼‰	
 	u8 reserved;	
 	u32 width;
 	u32 height;
@@ -61,12 +61,12 @@ typedef struct {
 	u8 version;			/* must be 0x01 */
 	u8 mode;			/* 0x02, have XY */
 	u8 color_type;		/* 0 - 8bit without alpha; 1 - 24 bit; 2 - 32bit; 3 - 16 BIT; 4 - 8bit width alpha */
-	u8 unknown0;		/* only used in 8bit */	// £¿£¿£¨8bitsÄ£Ê½ÏÂÓĞÓÃ£º0 £­ Ä¬ÈÏ256£»·Ç0 £­ Êµ¼ÊµÄÑÕÉ«Êı£©
-	u8 unknown1;		/* only used in 8bit */	// £¿£¿£¨8bitsÄ£Ê½ÏÂÓĞÓÃ£º0 £­ Ä¬ÈÏ256£»·Ç0 £­ Êµ¼ÊµÄ£¿£¿£©	
+	u8 unknown0;		/* only used in 8bit */	// ï¼Ÿï¼Ÿï¼ˆ8bitsæ¨¡å¼ä¸‹æœ‰ç”¨ï¼š0 ï¼ é»˜è®¤256ï¼›é0 ï¼ å®é™…çš„é¢œè‰²æ•°ï¼‰
+	u8 unknown1;		/* only used in 8bit */	// ï¼Ÿï¼Ÿï¼ˆ8bitsæ¨¡å¼ä¸‹æœ‰ç”¨ï¼š0 ï¼ é»˜è®¤256ï¼›é0 ï¼ å®é™…çš„ï¼Ÿï¼Ÿï¼‰	
 	u8 reserved;		
 	u32 width;
 	u32 height;
-	u32 X;				/* ÌùÍ¼×ø±ê(×óÉÏ½Ç) */
+	u32 X;				/* è´´å›¾åæ ‡(å·¦ä¸Šè§’) */
 	u32 Y;
 	s8 name[32];
 } epa2_header_t;
@@ -116,8 +116,8 @@ static int epa_decompress(BYTE *uncompr, DWORD *max_uncomprlen,
 	step_table[14] = width * 3;
 	step_table[15] = 4;	
 	
-	/* ÕâÀïÇ§Íò²»ÒªĞÄÑªÀ´³±µÄÓÃmemcpy()£¬Ô­ÒòÊÇmemecpy()»á¸ù¾İsrcºÍdst
-	 * µÄÎ»ÖÃ½øĞĞ¡°ÕıÈ·¡±¿½±´¡£µ«Õâ¸ö¿½±´Êµ¼ÊÉÏÔÚÕâÀïÈ´ÊÇ²»ÕıÈ·µÄ
+	/* è¿™é‡Œåƒä¸‡ä¸è¦å¿ƒè¡€æ¥æ½®çš„ç”¨memcpy()ï¼ŒåŸå› æ˜¯memecpy()ä¼šæ ¹æ®srcå’Œdst
+	 * çš„ä½ç½®è¿›è¡Œâ€œæ­£ç¡®â€æ‹·è´ã€‚ä½†è¿™ä¸ªæ‹·è´å®é™…ä¸Šåœ¨è¿™é‡Œå´æ˜¯ä¸æ­£ç¡®çš„
 	 */
 	while (act_uncomprlen < uncomprlen) {
 		u8 flag;
@@ -158,7 +158,7 @@ static int epa_decompress(BYTE *uncompr, DWORD *max_uncomprlen,
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int PJADV_dat_match(struct package *pkg)
 {
 	s8 magic[12];
@@ -179,7 +179,7 @@ static int PJADV_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int PJADV_dat_extract_directory(struct package *pkg,
 									   struct package_directory *pkg_dir)
 {
@@ -241,7 +241,7 @@ static int PJADV_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int PJADV_dat_parse_resource_info(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -249,15 +249,15 @@ static int PJADV_dat_parse_resource_info(struct package *pkg,
 
 	my_pack_entry = (my_pack_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_pack_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_pack_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_pack_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int PJADV_dat_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -275,7 +275,7 @@ static int PJADV_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int PJADV_dat_save_resource(struct resource *res, 
 								   struct package_resource *pkg_res)
 {
@@ -294,7 +294,7 @@ static int PJADV_dat_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void PJADV_dat_release_resource(struct package *pkg, 
 									   struct package_resource *pkg_res)
 {
@@ -304,7 +304,7 @@ static void PJADV_dat_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void PJADV_dat_release(struct package *pkg, 
 							  struct package_directory *pkg_dir)
 {
@@ -316,7 +316,7 @@ static void PJADV_dat_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation PJADV_dat_operation = {
 	PJADV_dat_match,				/* match */
 	PJADV_dat_extract_directory,	/* extract_directory */
@@ -329,7 +329,7 @@ static cui_ext_operation PJADV_dat_operation = {
 
 /********************* epa *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int PJADV_epa_match(struct package *pkg)
 {
 	s8 magic[2];
@@ -361,7 +361,7 @@ static int PJADV_epa_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int PJADV_epa_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -425,7 +425,7 @@ static int PJADV_epa_extract_resource(struct package *pkg,
 //		palette_length = 0;
 //		break;
 	case 4:
-		pixel_bytes = 1;	// Êµ¼Ê½âÑ¹Ê±ºò£¬±Ècase0µÄÇé¿ö¶à³öheight * widthµÄÊı¾İ£¬Õâ¶ÎÊı¾İ¾ÍÊÇ¦Á
+		pixel_bytes = 1;	// å®é™…è§£å‹æ—¶å€™ï¼Œæ¯”case0çš„æƒ…å†µå¤šå‡ºheight * widthçš„æ•°æ®ï¼Œè¿™æ®µæ•°æ®å°±æ˜¯Î±
 		palette_length = 768;
 		have_alpha = 1;
 		break;
@@ -481,7 +481,7 @@ static int PJADV_epa_extract_resource(struct package *pkg,
 		return -CUI_EUNCOMPR;
 	}
 
-	/* ½«RGBAÊı¾İÖØĞÂÕûÀí */
+	/* å°†RGBAæ•°æ®é‡æ–°æ•´ç† */
 	if (pixel_bytes > 1) {
 		BYTE *tmp = (BYTE *)malloc(uncomprlen);
 		if (!tmp) {
@@ -528,7 +528,7 @@ static int PJADV_epa_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int PJADV_epa_save_resource(struct resource *res, 
 								   struct package_resource *pkg_res)
 {
@@ -547,7 +547,7 @@ static int PJADV_epa_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void PJADV_epa_release_resource(struct package *pkg, 
 									   struct package_resource *pkg_res)
 {
@@ -557,14 +557,14 @@ static void PJADV_epa_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void PJADV_epa_release(struct package *pkg, 
 							  struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation PJADV_epa_operation = {
 	PJADV_epa_match,			/* match */
 	NULL,						/* extract_directory */
@@ -577,7 +577,7 @@ static cui_ext_operation PJADV_epa_operation = {
 
 /********************* textdata.bin *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int PJADV_bin_match(struct package *pkg)
 {
 	s8 magic[12];
@@ -601,7 +601,7 @@ static int PJADV_bin_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int PJADV_bin_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -634,7 +634,7 @@ static int PJADV_bin_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation PJADV_bin_operation = {
 	PJADV_bin_match,			/* match */
 	NULL,						/* extract_directory */
@@ -645,10 +645,10 @@ static cui_ext_operation PJADV_bin_operation = {
 	PJADV_epa_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK PJADV_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".dat"), NULL, 
 		NULL, &PJADV_dat_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -666,4 +666,5 @@ int CALLBACK PJADV_register_cui(struct cui_register_callback *callback)
 			return -1;	
 
 	return 0;
+}
 }

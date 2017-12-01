@@ -105,7 +105,7 @@ static int xp3filter_decode_tpm2_init(const char *tpm_path)
 
 static xp3filter_decode_tpm(struct xp3filter *xp3filter)
 {
-	// ִֻ��post decode
+	// 只执行post decode
 	if (crage_TVPXP3ArchiveExtractionFilter && xp3filter->length) {
 		tTVPXP3ExtractionFilterInfo info;
 		info.SizeOfSelf = sizeof(info);
@@ -129,4 +129,5 @@ void xp3filter_decode_tpm2(struct xp3filter *xp3filter)
 	if (!crage_TVPXP3ArchiveExtractionFilter)
 		xp3filter_decode_tpm2_init(xp3filter->parameter);
 	xp3filter_decode_tpm(xp3filter);
+}
 }

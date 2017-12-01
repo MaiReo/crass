@@ -12,18 +12,18 @@
 
 //NeXAS Ver.0.903
 
-//TODO: Xross Scramble BF-Re-Action & Xross Scramble ¥²©`¥à´ó»áÓÃÌåòY°æ
-//bmp.arc: spr, ani, spm(¿ÉÄÜÓÃÓÚÃè»æÁ³²¿ÒõÓ°ÓÃµÄ£©
+//TODO: Xross Scramble BF-Re-Action & Xross Scramble ã‚²ãƒ¼ãƒ å¤§ä¼šç”¨ä½“é¨“ç‰ˆ
+//bmp.arc: spr, ani, spm(å¯èƒ½ç”¨äºŽæç»˜è„¸éƒ¨é˜´å½±ç”¨çš„ï¼‰
 
-//TODO: virsul.arcÀïµÄhcg£¬¶¼ÊÇÄÇ¸öÑù×Ó....orz
-// ÍÆ²â²»ÍêÕûÍ¼ÀïµÄÏóËØÖµÎªffµÄ»°£¬¾ÍÊ¹ÓÃÍêÕûÍ¼µÄÏóËØÖµ¡£
+//TODO: virsul.arcé‡Œçš„hcgï¼Œéƒ½æ˜¯é‚£ä¸ªæ ·å­....orz
+// æŽ¨æµ‹ä¸å®Œæ•´å›¾é‡Œçš„è±¡ç´ å€¼ä¸ºffçš„è¯ï¼Œå°±ä½¿ç”¨å®Œæ•´å›¾çš„è±¡ç´ å€¼ã€‚
 	
 struct acui_information NeXAS_cui_information = {
 	_T("GIGA"),				/* copyright */
 	_T("NeXAS"),			/* system */
 	_T(".pac"),				/* package */
 	_T("1.0.1"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2009-7-30 20:16"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -33,7 +33,7 @@ struct acui_information NeXAS_cui_information = {
 typedef struct {
 	s8 magic[4];	// "PAC" or "PACw"
 	u32 entries;	// 76 bytes per entry
-	u32 cmode;		// 0ºÍ4£ºÎÞÑ¹Ëõ£¿ £»> 4: default(may error)
+	u32 cmode;		// 0å’Œ4ï¼šæ— åŽ‹ç¼©ï¼Ÿ ï¼›> 4: default(may error)
 } pac_header_t;
 
 typedef struct {
@@ -113,7 +113,7 @@ static int huffman_uncompress(unsigned char *uncompr, unsigned long *uncomprlen,
 	if (retval != 256)
 		return -1;
 
-	index = 0;	/* ´Ó¸ù½áµã¿ªÊ¼±éÀú */
+	index = 0;	/* ä»Žæ ¹ç»“ç‚¹å¼€å§‹éåŽ† */
 	act_uncomprlen = 0;
 	max_uncomprlen = *uncomprlen;
 	while (!bit_get_high(&bits, &bitval)) {
@@ -128,7 +128,7 @@ static int huffman_uncompress(unsigned char *uncompr, unsigned long *uncomprlen,
 			if (act_uncomprlen >= max_uncomprlen)
 				break;
 			uncompr[act_uncomprlen++] = (u8)retval;
-			index = 0;	/* ·µ»Øµ½¸ù½áµã */
+			index = 0;	/* è¿”å›žåˆ°æ ¹ç»“ç‚¹ */
 		}
 	}
 	*uncomprlen = act_uncomprlen;
@@ -145,9 +145,9 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 							unsigned char *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -155,7 +155,7 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 	
 	memset(win, 0, nCurWindowByte);
 	while (1) {
-		/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+		/* å¦‚æžœä¸º0, è¡¨ç¤ºæŽ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŽŸæ ·è¾“å‡º */
 		BYTE flag;
 
 		if (curbyte >= comprlen)
@@ -174,7 +174,7 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 				data = compr[curbyte++];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;
 			} else {
@@ -200,7 +200,7 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 					data = win[(win_offset + i) & (win_size - 1)];
 					uncompr[act_uncomprlen++] = data;		
-					/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+					/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 					win[nCurWindowByte++] = data;
 					nCurWindowByte &= win_size - 1;	
 				}
@@ -290,11 +290,11 @@ static int NeXAS_pac_match(struct package *pkg)
 		return -CUI_EMATCH;	
 	}
 
-	/* Õë¶ÔXross ScrambleµÄSavorµÄUpdate.pac£º*/
+	/* é’ˆå¯¹Xross Scrambleçš„Savorçš„Update.pacï¼š*/
 	if (pkg->pio->read(pkg, &pac_entry, sizeof(pac_entry)))
 		goto out;
 
-	/* ºÍbaldrX×ö»¥³â */
+	/* å’ŒbaldrXåšäº’æ–¥ */
 	if (pac_entry.offset == sizeof(pac_header_t) + sizeof(pac_entry_t) * pac_header->entries) {
 		pkg->pio->close(pkg);
 		free(pac_header);
@@ -430,7 +430,7 @@ static int NeXAS_pac_extract_resource(struct package *pkg,
 				free(uncompr);
 			return -CUI_EPARA;
 		}
-		/* ÓÐµÄÊý¾Ý¹ý¶Ì£¬µ¼ÖÂ·µ»Ø-3¡£Òò´Ë¸ù±¾²»Àí»á·µ»ØÖµ */
+		/* æœ‰çš„æ•°æ®è¿‡çŸ­ï¼Œå¯¼è‡´è¿”å›ž-3ã€‚å› æ­¤æ ¹æœ¬ä¸ç†ä¼šè¿”å›žå€¼ */
 		uncompress(uncompr, &act_uncomprLen, compr, comprlen);
 	} else if (pac_header->cmode == 1) {
 		if (!uncompr || !uncomprlen) {
@@ -782,4 +782,6 @@ int CALLBACK NeXAS_register_cui(struct cui_register_callback *callback)
 
 	return 0;
 }
+
+
 

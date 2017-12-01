@@ -9,8 +9,8 @@
 #include <utility.h>
 
 struct aui_core {
-	struct aui root;	/* 根aui */
-	unsigned int count;	/* 已注册的aui个数 */
+	struct aui root;	/* 鏍筧ui */
+	unsigned int count;	/* 宸叉敞鍐岀殑aui涓暟 */
 };
 
 static struct aui_core aui_core;
@@ -87,7 +87,7 @@ static inline void aui_list_add_core(struct aui *aui)
 
 /*********** register_aui API **************/
 
-/* 允许添加具有相同扩展名的extension结构 */
+/* 鍏佽娣诲姞鍏锋湁鐩稿悓鎵╁睍鍚嶇殑extension缁撴瀯 */
 static int aui_add_extension(struct aui *aui, const TCHAR *extension, 
 		const TCHAR *replace_extension, const TCHAR *lst_extension, const TCHAR *description,
 		struct aui_ext_operation *operation, unsigned long flags)
@@ -95,41 +95,41 @@ static int aui_add_extension(struct aui *aui, const TCHAR *extension,
 	struct aui_extension *ext;
 
 	if (!aui || !operation) {
-		crass_printf(_T("%s: 注册extension时发生错误\n"), aui->name);
+		crass_printf(_T("%s: 娉ㄥ唽extension鏃跺彂鐢熼敊璇痋n"), aui->name);
 	
 		return -1;
 	}
 
 	if ((flags & AUI_EXT_FLAG_NOEXT) && !extension) {
-		crass_printf( _T("%s: 必须指定AUI_EXT_FLAG_NOEXT标志\n"), aui->name);
+		crass_printf( _T("%s: 蹇呴』鎸囧畾AUI_EXT_FLAG_NOEXT鏍囧織\n"), aui->name);
 		return -1;	
 	}
 
 	if ((flags & AUI_EXT_FLAG_LST) && !lst_extension) {
-		crass_printf(_T("%s: 必须指定lst_extension参数\n"));
+		crass_printf(_T("%s: 蹇呴』鎸囧畾lst_extension鍙傛暟\n"));
 		return -1;	
 	}
 
 	if (flags & AUI_EXT_FLAG_DIR) {
 		if (!operation->collect_resource_info) {
-			crass_printf(_T("%s: 目录型封包必须支持collect_resource_info()\n"), aui->name);
+			crass_printf(_T("%s: 鐩綍鍨嬪皝鍖呭繀椤绘敮鎸乧ollect_resource_info()\n"), aui->name);
 			return -1;	
 		}
 	}
 
 	if (!operation->repacking_resource) {
-		crass_printf(_T("%s: 必须支持repacking_resource()\n"), aui->name);
+		crass_printf(_T("%s: 蹇呴』鏀寔repacking_resource()\n"), aui->name);
 		return -1;
 	}
 
 	if (!operation->repacking) {
-		crass_printf(_T("%s: 必须支持repacking()\n"), aui->name);
+		crass_printf(_T("%s: 蹇呴』鏀寔repacking()\n"), aui->name);
 		return -1;
 	}
 
 	ext = (struct aui_extension *)GlobalAlloc(GPTR, sizeof(*ext));
 	if (!ext) {
-		crass_printf(_T("%s: 分配extension时发生错误\n"), aui->name);
+		crass_printf(_T("%s: 鍒嗛厤extension鏃跺彂鐢熼敊璇痋n"), aui->name);
 		return -1;
 	}
 	ext->op = operation;
@@ -160,7 +160,7 @@ static struct aui *aui_alloc(const TCHAR *aui_name)
 	alloc_len = (_tcslen(aui_name) + 1) * sizeof(TCHAR) + sizeof(*aui);		
 	aui = (struct aui *)GlobalAlloc(GPTR, alloc_len);
 	if (!aui) {
-		crass_printf(_T("%s: 分配aui时发生错误\n"), aui_name);
+		crass_printf(_T("%s: 鍒嗛厤aui鏃跺彂鐢熼敊璇痋n"), aui_name);
 		return NULL;		
 	}
 	aui->name = (TCHAR *)(aui + 1);
@@ -184,12 +184,12 @@ static int aui_register(const TCHAR *path)
 
 	name = PathFindFileName(path);
 	if (!name) {
-		crass_printf(_T("%s: 无效的aui路径\n"), path);
+		crass_printf(_T("%s: 鏃犳晥鐨刟ui璺緞\n"), path);
 		return -1;
 	}
 	_tcscpy(aui_name, name);
 	if (!PathRenameExtension(aui_name, _T(""))) {
-		crass_printf(_T("%s: 无效的aui名称\n"), aui_name);
+		crass_printf(_T("%s: 鏃犳晥鐨刟ui鍚嶇О\n"), aui_name);
 		return -1;
 	}
 
@@ -199,7 +199,7 @@ static int aui_register(const TCHAR *path)
 
 	aui->module = LoadLibrary(path);
 	if (!aui->module) {		
-		crass_printf(_T("%s: 加载aui时发生错误\n"), aui_name);
+		crass_printf(_T("%s: 鍔犺浇aui鏃跺彂鐢熼敊璇痋n"), aui_name);
 		aui_free(aui);
 		return -1;
 	}
@@ -207,7 +207,7 @@ static int aui_register(const TCHAR *path)
 
 	reg_aui = (register_aui_t)aui_import(aui, _T("register_aui"));
 	if (!reg_aui) {
-		crass_printf(_T("%s: aui不支持register_aui()\n"), aui_name);
+		crass_printf(_T("%s: aui涓嶆敮鎸乺egister_aui()\n"), aui_name);
 		FreeLibrary(aui->module);
 		aui_free(aui);
 		return -1;
@@ -216,7 +216,7 @@ static int aui_register(const TCHAR *path)
 	aui_register_callback.aui = aui;
 	aui_register_callback.add_extension = aui_add_extension;
 	if (reg_aui(&aui_register_callback)) {
-		crass_printf(_T("%s: aui注册失败\n"), aui_name);
+		crass_printf(_T("%s: aui娉ㄥ唽澶辫触\n"), aui_name);
 		FreeLibrary(aui->module);
 		aui_free(aui);
 		return -1;		
@@ -257,7 +257,7 @@ static int aui_load(const TCHAR *dir)
 	_stprintf(search, _T("%s\\*.aui"), dir);	
 	find_file = FindFirstFile(search, &find_data);
 	if (find_file == INVALID_HANDLE_VALUE) {
-		crass_printf(_T("%s: 搜寻aui时发生错误\n"), dir);
+		crass_printf(_T("%s: 鎼滃aui鏃跺彂鐢熼敊璇痋n"), dir);
 		return -1;
 	}
 
@@ -265,12 +265,12 @@ static int aui_load(const TCHAR *dir)
 	_stprintf(path, _T("%s\\%s"), dir, find_data.cFileName);
 	if (!aui_register(path))
 		count++;
-	/* 忽略注册失败的aui */
+	/* 蹇界暐娉ㄥ唽澶辫触鐨刟ui */
 
 	while (FindNextFile(find_file, &find_data)) {
 		_stprintf(path, _T("%s\\%s"), dir, find_data.cFileName);
 		if (aui_register(path)) {
-			crass_printf(_T("%s: 注册失败\n"), find_data.cFileName);
+			crass_printf(_T("%s: 娉ㄥ唽澶辫触\n"), find_data.cFileName);
 		} else
 			count++;
 	}
@@ -339,11 +339,11 @@ ACUI_CORE_API int aui_core_init(const TCHAR *aui_dir)
 	struct aui *root_aui;
 
 	if (!aui_dir) {
-		crass_printf(_T("%s: 无效的aui目录\n"), aui_dir);
+		crass_printf(_T("%s: 鏃犳晥鐨刟ui鐩綍\n"), aui_dir);
 		return -1;
 	}
 	memset(&aui_core, 0, sizeof(aui_core));
-	/* 初始化根aui */
+	/* 鍒濆鍖栨牴aui */
 	root_aui = &aui_core.root;
 	aui_list_init(root_aui);
 	root_aui->name = _T("root");
@@ -380,4 +380,5 @@ ACUI_CORE_API void aui_print_information(struct aui *aui)
 		locale_printf(LOC_ID_CRASS_CUI_TIME, info->date);
 	if (info->notion)
 		locale_printf(LOC_ID_CRASS_CUI_NOTICE, info->notion);
+}
 }

@@ -463,3 +463,4 @@ struct cxdec_callback ojo2_cxdec_callback = {
 	{ 0x2c2, 0x7a7 },
 	xcode_building_stage1
 };
+;

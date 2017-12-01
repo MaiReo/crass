@@ -8,19 +8,19 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information SHSystem_cui_information = {
 	_T(""),					/* copyright */
 	_T("SHSystem"),			/* system */
 	_T(".hxp"),				/* package */
 	_T("1.0.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-6-17 21:28"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// "Him4"
@@ -48,20 +48,20 @@ typedef struct {
 } SHS7_entry_t;
 
 struct TargaTail_s {
-    ULONG eao;		// À©Õ¹ÇøÆ«ÒÆ 
-    ULONG ddo;		// ¿ª·¢ÕßÇøÆ«ÒÆ 
-    UCHAR info[16];	// TRUEVISION-XFILE ÉÌ±ê×Ö·û´® 
-    UCHAR period;	// ×Ö·û"." 
+    ULONG eao;		// æ‰©å±•åŒºåç§» 
+    ULONG ddo;		// å¼€å‘è€…åŒºåç§» 
+    UCHAR info[16];	// TRUEVISION-XFILE å•†æ ‡å­—ç¬¦ä¸² 
+    UCHAR period;	// å­—ç¬¦"." 
     UCHAR zero;		// 0 
 };
 #pragma pack ()
 
-/* .dat·â°üµÄË÷ÒıÏî½á¹¹ */
+/* .datå°åŒ…çš„ç´¢å¼•é¡¹ç»“æ„ */
 typedef struct {
 	s8 name[MAX_PATH];
 	u32 offset;
-	u32 comprlen;		// Îª0±íÊ¾ÎŞÑ¹Ëõ
-	u32 uncomprlen;		// ²»Îª0
+	u32 comprlen;		// ä¸º0è¡¨ç¤ºæ— å‹ç¼©
+	u32 uncomprlen;		// ä¸ä¸º0
 } SHS_entry_t;
 
 #define SWAP32(v)	((((v) & 0xff) << 24) | (((v) & 0xff00) << 8) | (((v) & 0xff0000) >> 8) | (((v) & 0xff000000) >> 24))
@@ -134,7 +134,7 @@ static void shs_uncompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr)
 
 /********************* hxp *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int SHSystem_hxp_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -163,7 +163,7 @@ static int SHSystem_hxp_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int SHSystem_hxp_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -318,7 +318,7 @@ static int SHSystem_hxp_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int SHSystem_hxp_parse_resource_info(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -326,7 +326,7 @@ static int SHSystem_hxp_parse_resource_info(struct package *pkg,
 
 	SHS_entry = (SHS_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, SHS_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = SHS_entry->comprlen;
 	pkg_res->actual_data_length = SHS_entry->uncomprlen;
 	if (!pkg_res->raw_data_length) {
@@ -338,7 +338,7 @@ static int SHSystem_hxp_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int SHSystem_hxp_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -413,7 +413,7 @@ static int SHSystem_hxp_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int SHSystem_hxp_save_resource(struct resource *res, 
 									  struct package_resource *pkg_res)
 {
@@ -437,7 +437,7 @@ static int SHSystem_hxp_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void SHSystem_hxp_release_resource(struct package *pkg, 
 										  struct package_resource *pkg_res)
 {
@@ -451,7 +451,7 @@ static void SHSystem_hxp_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void SHSystem_hxp_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
@@ -463,7 +463,7 @@ static void SHSystem_hxp_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation SHSystem_hxp_operation = {
 	SHSystem_hxp_match,					/* match */
 	SHSystem_hxp_extract_directory,		/* extract_directory */
@@ -474,13 +474,14 @@ static cui_ext_operation SHSystem_hxp_operation = {
 	SHSystem_hxp_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK SHSystem_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".hxp"), NULL, 
 		NULL, &SHSystem_hxp_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
 
 	return 0;
+}
 }

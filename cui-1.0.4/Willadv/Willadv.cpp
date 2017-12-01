@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Willadv_cui_information = {
 	_T("WILL"),				/* copyright */
 	_T("Willadv"),			/* system */
 	_T(".arc"),				/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-7-12 15:35"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	u32 types;
@@ -48,9 +48,9 @@ typedef struct {
 typedef struct {
 	u32 width;
 	u32 height;
-	u32 orig_x;		/* ×óÉÏ½ÇÎª¶¥µã */
+	u32 orig_x;		/* å·¦ä¸Šè§’ä¸ºé¡¶ç‚¹ */
 	u32 orig_y;
-	u32 orig_z;		// ÏëÏóÒ»ÏÂWillÆìÏÂµÄÖÆ×÷3DÓÎÏ·µÄ¹«Ë¾
+	u32 orig_z;		// æƒ³è±¡ä¸€ä¸‹Willæ——ä¸‹çš„åˆ¶ä½œ3Dæ¸¸æˆçš„å…¬å¸
 	u32 length;
 } wipf_entry_t;
 
@@ -89,7 +89,7 @@ static void lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	DWORD act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	DWORD curbyte = 0;
 	DWORD nCurWindowByte = 1;
 	DWORD win_size = 4096;
@@ -102,13 +102,13 @@ static void lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 
 		flag = compr[curbyte++];
 		for (curbit = 0; curbit < 8; curbit++) {
-			/* Èç¹ûÎª1, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+			/* å¦‚æœä¸º1, è¡¨ç¤ºæ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŸæ ·è¾“å‡º */
 			if (getbit_le(flag, curbit)) {
 				unsigned char data;
 
 				data = compr[curbyte++];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;
 			} else {
@@ -132,7 +132,7 @@ static void lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 
 					data = win[(win_offset + i) & (win_size - 1)];
 					uncompr[act_uncomprlen++] = data;		
-					/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+					/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 					win[nCurWindowByte++] = data;
 					nCurWindowByte &= win_size - 1;	
 				}
@@ -160,7 +160,7 @@ static void rgba_swap(BYTE *buf, BYTE *dib_buf, DWORD width, DWORD height, DWORD
 
 /********************* arc *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Willadv_arc_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -169,7 +169,7 @@ static int Willadv_arc_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Willadv_arc_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -251,7 +251,7 @@ static int Willadv_arc_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Willadv_arc_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -259,15 +259,15 @@ static int Willadv_arc_parse_resource_info(struct package *pkg,
 
 	my_arc_entry = (my_arc_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_arc_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_arc_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_arc_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Willadv_arc_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -368,7 +368,7 @@ static int Willadv_arc_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Willadv_arc_save_resource(struct resource *res, 
 									 struct package_resource *pkg_res)
 {
@@ -392,7 +392,7 @@ static int Willadv_arc_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Willadv_arc_release_resource(struct package *pkg, 
 										 struct package_resource *pkg_res)
 {
@@ -406,7 +406,7 @@ static void Willadv_arc_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Willadv_arc_release(struct package *pkg, 
 								struct package_directory *pkg_dir)
 {
@@ -418,7 +418,7 @@ static void Willadv_arc_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Willadv_arc_operation = {
 	Willadv_arc_match,					/* match */
 	Willadv_arc_extract_directory,		/* extract_directory */
@@ -432,7 +432,7 @@ static cui_ext_operation Willadv_arc_operation = {
 
 /********************* wipf *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Willadv_wipf_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -453,7 +453,7 @@ static int Willadv_wipf_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Willadv_wipf_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -505,7 +505,7 @@ static int Willadv_wipf_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Willadv_wipf_parse_resource_info(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -514,15 +514,15 @@ static int Willadv_wipf_parse_resource_info(struct package *pkg,
 	my_wipf_entry = (my_wipf_entry_t *)pkg_res->actual_index_entry;
 	_tcscpy((TCHAR *)pkg_res->name, my_wipf_entry->name);
 	pkg_res->flags |= PKG_RES_FLAG_UNICODE;
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_wipf_entry->wipf_entry.length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_wipf_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Willadv_wipf_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -607,7 +607,7 @@ static int Willadv_wipf_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Willadv_wipf_save_resource(struct resource *res, 
 									  struct package_resource *pkg_res)
 {
@@ -626,7 +626,7 @@ static int Willadv_wipf_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Willadv_wipf_release_resource(struct package *pkg, 
 										  struct package_resource *pkg_res)
 {
@@ -636,7 +636,7 @@ static void Willadv_wipf_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Willadv_wipf_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
@@ -648,7 +648,7 @@ static void Willadv_wipf_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Willadv_wipf_operation = {
 	Willadv_wipf_match,					/* match */
 	Willadv_wipf_extract_directory,		/* extract_directory */
@@ -659,10 +659,10 @@ static cui_ext_operation Willadv_wipf_operation = {
 	Willadv_wipf_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK Willadv_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".arc"), NULL, 
 		NULL, &Willadv_arc_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_NO_MAGIC))
 			return -1;
@@ -676,4 +676,5 @@ int CALLBACK Willadv_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

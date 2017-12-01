@@ -719,3 +719,4 @@ struct cxdec_callback beniten_cxdec_callback = {
 	{ 0x15b, 0x660 },
 	xcode_building_stage1
 };
+;

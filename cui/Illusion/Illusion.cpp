@@ -15,7 +15,7 @@ struct acui_information Illusion_cui_information = {
 	NULL,							/* system */
 	_T(".pp"),						/* package */
 	_T("0.0.2"),					/* revision */
-	_T("³Õºº¹«Ôô"),					/* author */
+	_T("ç—´æ±‰å…¬è´¼"),					/* author */
 	_T("2007-11-15 22:18"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -106,7 +106,7 @@ static js3_decode_resource(WORD *enc_buf, DWORD enc_buf_len)
 
 static void decode_resource(DWORD *enc_buf, DWORD enc_buf_len)
 {
-	// SchoolMateÌåÑé°æ
+	// SchoolMateä½“éªŒç‰ˆ
 	//u32 decode_tbl[8] = { 0x7735F27C, 0x6E201854, 0x859E7B9C, 0x4071B51F, 
 	//	0x4371AD25, 0x7E202064, 0xC085E3CF, 0x1223DE41 };	// ver2
 	// SchoolMate
@@ -200,9 +200,9 @@ static int Illusion_pp_parse_resource_info(struct package *pkg,
 
 	pp_entry = (pp_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, pp_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = pp_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = pp_entry->offset;
 
 	return 0;
@@ -417,9 +417,9 @@ static int Illusion_js3_base_pp_parse_resource_info(struct package *pkg,
 
 	my_js3_base_pp_entry = (my_js3_base_pp_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_js3_base_pp_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_js3_base_pp_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_js3_base_pp_entry->offset;
 
 	return 0;
@@ -469,4 +469,5 @@ int CALLBACK Illusion_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

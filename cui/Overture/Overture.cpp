@@ -14,14 +14,14 @@ struct acui_information Overture_cui_information = {
 	_T("Advanced System \"Overture\""),					/* system */
 	_T(".MGR"),					/* package */
 	_T("0.01"),					/* revision */
-	_T("³Õºº¹«Ôô"),				/* author */
+	_T("ç—´æ±‰å…¬è´¼"),				/* author */
 	_T(""),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
 #pragma pack (1)
-/* ÌåÑé°æ */
+/* ä½“éªŒç‰ˆ */
 typedef struct {
 	s8 magic[12];
 	u16 entries;
@@ -38,7 +38,7 @@ typedef struct {
 typedef struct {
 	s8 magic[12];
 	u16 entries;
-	u16 mode;		/* bit0 - ÊÇ·ñÓÃ¶þ·Ö·¨¶¨Î»Ö¸¶¨µÄ×ÊÔ´£»bit15 - ÊÇ·ñÐèÒª¶ÔË÷Òý¶Î½âÃÜ */
+	u16 mode;		/* bit0 - æ˜¯å¦ç”¨äºŒåˆ†æ³•å®šä½æŒ‡å®šçš„èµ„æºï¼›bit15 - æ˜¯å¦éœ€è¦å¯¹ç´¢å¼•æ®µè§£å¯† */
 } isa_header_t;
 
 typedef struct {
@@ -125,9 +125,9 @@ static int Overture_MRG_parse_resource_info(struct package *pkg,
 
 	isa_entry = (isa_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, isa_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length_lo = isa_entry->length;
-	pkg_res->actual_data_length_lo = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length_lo = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset_lo = isa_entry->offset;
 
 	return 0;
@@ -150,7 +150,7 @@ static int Overture_MRG_extract_resource(struct package *pkg,
 			return -CUI_EREADVEC;
 	}
 
-#if 0	// ÌåÑé°æ
+#if 0	// ä½“éªŒç‰ˆ
 	char *ext = PathFindExtensionA(pkg_res->name);
 	if (!ext || (ext[0] != '.') || (ext[1] == '\x0')) {
 		if (!memcmp(pkg_res->raw_data, "OggS", 4)) {
@@ -227,4 +227,5 @@ int CALLBACK Overture_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

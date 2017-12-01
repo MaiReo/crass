@@ -11,11 +11,11 @@
 #include <stdio.h>
 	
 struct acui_information BaldrX_cui_information = {
-	_T("‘ï»­(GIGA)"),		/* copyright */
+	_T("æˆ¯ç”»(GIGA)"),		/* copyright */
 	_T(""),					/* system */
 	_T(".pac, .grp .spr .dat"),	/* package */
 	_T("0.9.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-3-13 22:24"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -113,7 +113,7 @@ static int huffman_tree_create(struct bits *bits, u16 children[2][255],
 	if (bit_get_high(bits, &bitval))
 		return -1;
 	
-	/* ·ÇÒ¶½Úµã */
+	/* éå¶èŠ‚ç‚¹ */
 	if (bitval) {
 		unsigned int parent;
 
@@ -162,7 +162,7 @@ static int huffman_decompress(unsigned char *uncompr, unsigned long *uncomprlen,
 	if (retval != 256)
 		return -1;
 
-	index = 0;	/* ´Ó¸ù½áµã¿ªÊ¼±éÀú */
+	index = 0;	/* ä»æ ¹ç»“ç‚¹å¼€å§‹éå† */
 	act_uncomprlen = 0;
 	max_uncomprlen = *uncomprlen;
 	while (!bit_get_high(&bits, &bitval)) {
@@ -177,7 +177,7 @@ static int huffman_decompress(unsigned char *uncompr, unsigned long *uncomprlen,
 			if (act_uncomprlen >= max_uncomprlen)
 				break;
 			uncompr[act_uncomprlen++] = (u8)retval;
-			index = 0;	/* ·µ»Øµ½¸ù½áµã */
+			index = 0;	/* è¿”å›åˆ°æ ¹ç»“ç‚¹ */
 		}
 	}
 	*uncomprlen = act_uncomprlen;
@@ -194,9 +194,9 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 							unsigned char *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -204,7 +204,7 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 	
 	memset(win, 0, nCurWindowByte);
 	while (1) {
-		/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+		/* å¦‚æœä¸º0, è¡¨ç¤ºæ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŸæ ·è¾“å‡º */
 		BYTE flag;
 
 		if (curbyte >= comprlen)
@@ -223,7 +223,7 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 				data = compr[curbyte++];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;
 			} else {
@@ -249,7 +249,7 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 					data = win[(win_offset + i) & (win_size - 1)];
 					uncompr[act_uncomprlen++] = data;		
-					/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+					/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 					win[nCurWindowByte++] = data;
 					nCurWindowByte &= win_size - 1;	
 				}
@@ -492,7 +492,7 @@ static cui_ext_operation BaldrX_pac_old_operation = {
 static int BaldrX_pac_match(struct package *pkg)
 {
 	pac_header_t *pac_header;
-	pac_entry_t pac_entry;	/* ÓÃÓÚºÍNeXAS»¥³â */
+	pac_entry_t pac_entry;	/* ç”¨äºå’ŒNeXASäº’æ–¥ */
 
 	if (pkg->pio->open(pkg, IO_READONLY))
 		return -CUI_EOPEN;
@@ -707,7 +707,7 @@ static cui_ext_operation BaldrX_pac_operation = {
 static int BaldrX_pac_match2(struct package *pkg)
 {
 	pac_header_t *pac_header;
-	pac_entry2_t pac_entry;	/* ÓÃÓÚºÍNeXAS»¥³â */
+	pac_entry2_t pac_entry;	/* ç”¨äºå’ŒNeXASäº’æ–¥ */
 
 	if (pkg->pio->open(pkg, IO_READONLY))
 		return -CUI_EOPEN;
@@ -942,7 +942,7 @@ static int BaldrX_grp_extract_resource(struct package *pkg,
 	if (grp_header.bits_count == 16) {
 		DWORD flag;
 
-		// BALDR BULLET ¥Ğ¥ë¥É¥Ğ¥ì¥Ã¥ÈµÄ16Î»Í¼¶¼ÊÇRGB555µÄ
+		// BALDR BULLET ãƒãƒ«ãƒ‰ãƒãƒ¬ãƒƒãƒˆçš„16ä½å›¾éƒ½æ˜¯RGB555çš„
 		if (get_options("force_rgb555"))
 			flag = RGB555;
 		else
@@ -1246,4 +1246,6 @@ int CALLBACK BaldrX_register_cui(struct cui_register_callback *callback)
 
 	return 0;
 }
+
+
 

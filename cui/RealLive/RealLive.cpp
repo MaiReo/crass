@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <utility.h>
 
-//Q:\[trial]\¡¾RealLive¡¿
+//Q:\[trial]\ã€RealLiveã€‘
 
 /*
 VisualArt's. Version 1.0 was called AVG2000
@@ -29,7 +29,7 @@ each (naturally) with their own advantages and disadvantages:
 0	24-bit RGB, no mask
 1	8-bit paletted; palette is ARGB
 2	32-bit ARGB, plus extra features (see below)
-Format 2 G00 bitmaps can contain multiple sub-bitmaps, termed ¡°regions¡±.
+Format 2 G00 bitmaps can contain multiple sub-bitmaps, termed â€œregionsâ€.
 
 A RealLive game is made up of four main parts: 
 the interpreter (avg2000.exe, reallive.exe, or kinetic.exe), 
@@ -57,29 +57,29 @@ operations in what appears to be a futile attempt to make
 reverse-engineering harder.
 */
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information RealLive_cui_information = {
 	_T("VisualArt"),		/* copyright */
 	_T("VisualArt's ScriptEngine RealLive"),	/* system */
 	_T(".g00 .nwk .txt .ovk .cgm .dat .nwk .dbs"),	/* package */
 	_T("0.7.7"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-7-21 15:24"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[16];		// "CGTABLE"
-	u32 index_entries;	// Ã¿Ïî36×Ö½Ú
+	u32 index_entries;	// æ¯é¡¹36å­—èŠ‚
 	u32 unknown[3];
 } cgm_header_t;
 
 typedef struct {
 	s8 name[32];
-	u32 id;				// ´Ó0¿ªÊ¼
+	u32 id;				// ä»0å¼€å§‹
 } cgm_entry_t;
 
 typedef struct {
@@ -88,15 +88,15 @@ typedef struct {
 	u32 unknown[4];		// 0
 } dat_header_t;
 
-/* seen×ÓÎÄ¼ş±àºÅ£º
-±ÈÈçAIR ±àºÅÊÇÓĞ¹æÂÉµÄ ÓÎÏ·µÄÈÕÆÚ¶ÔÓ¦SEENµÄID
-È»ºóÃ¿Ò»¸ö½ÇÉ«µÄ·Ö¾çÇéµ¥¶À·ÅÔÚÒ»Ì×ÈıÎ»ÊıµÄSEENÀïÃæ
-Ò»°ãÀ´Ëµ£¬¸ßºÅÊıµÄµÄSEENÊÇÓÃÀ´·Å¸¨Öú½Å±¾µÄ£¬±ÈÈçLoad/Save CG/ÒôÀÖÒ³µÈ
+/* seenå­æ–‡ä»¶ç¼–å·ï¼š
+æ¯”å¦‚AIR ç¼–å·æ˜¯æœ‰è§„å¾‹çš„ æ¸¸æˆçš„æ—¥æœŸå¯¹åº”SEENçš„ID
+ç„¶åæ¯ä¸€ä¸ªè§’è‰²çš„åˆ†å‰§æƒ…å•ç‹¬æ”¾åœ¨ä¸€å¥—ä¸‰ä½æ•°çš„SEENé‡Œé¢
+ä¸€èˆ¬æ¥è¯´ï¼Œé«˜å·æ•°çš„çš„SEENæ˜¯ç”¨æ¥æ”¾è¾…åŠ©è„šæœ¬çš„ï¼Œæ¯”å¦‚Load/Save CG/éŸ³ä¹é¡µç­‰
 
-ÀÏÓÎÏ·Õâ¸öµØ·½¶¼ÊÇ10002
-µ«ÊÇ×î½üĞÂµÄÓÎÏ·£¬Õâ¸öµØ·½±ê¼ÇÎª110002
-ÕâĞ©SEEN²ÉÓÃÁË¸ü¶àÒ»²ãµÄ¼ÓÃÜ¡£
-µ½ÏÖÔÚÎªÖ¹Ö»ÓĞÎÒËµµÄÁ½¸öÊı³öÏÖ¹ı£¬¶øÇÒ¶à1000000µÄÄÇ¸ö¾ÍÊÇ¼ÓÃÜµÄ
+è€æ¸¸æˆè¿™ä¸ªåœ°æ–¹éƒ½æ˜¯10002
+ä½†æ˜¯æœ€è¿‘æ–°çš„æ¸¸æˆï¼Œè¿™ä¸ªåœ°æ–¹æ ‡è®°ä¸º110002
+è¿™äº›SEENé‡‡ç”¨äº†æ›´å¤šä¸€å±‚çš„åŠ å¯†ã€‚
+åˆ°ç°åœ¨ä¸ºæ­¢åªæœ‰æˆ‘è¯´çš„ä¸¤ä¸ªæ•°å‡ºç°è¿‡ï¼Œè€Œä¸”å¤š1000000çš„é‚£ä¸ªå°±æ˜¯åŠ å¯†çš„
 */
 typedef struct {
 	u32 offset;
@@ -104,39 +104,39 @@ typedef struct {
 } seen_entry_t;
 
 /*
-×ÓSEEN·ÖÁ½¶Î´¢´æ
-Í·²¿²»¼ÓÃÜ²»Ñ¹Ëõ£¬½Å±¾Ö¸Áî²¿·ÖÑ¹Ëõ²¢¼ÓÃÜ
+å­SEENåˆ†ä¸¤æ®µå‚¨å­˜
+å¤´éƒ¨ä¸åŠ å¯†ä¸å‹ç¼©ï¼Œè„šæœ¬æŒ‡ä»¤éƒ¨åˆ†å‹ç¼©å¹¶åŠ å¯†
  */
 typedef struct {
 	u32 header_size;			// [no used]0x1d0
 	u32 compile_version;		// 10002
-	// AVG_READ_FLAG:ÊÇÓĞ¹ØÓÎÏ·ÎÄ±¾Ë÷ÒıµÄ
-	// µÚÒ»¸ö×ÜÊÇ1000000,½ÓÏÂÀ´µÄ¾ÍÊÇÎÄ±¾¶ÔÓ¦µÄ½Å±¾ĞĞºÅ,Ò»¾äÎÄ±¾Ò»¸öint
-	// ·Ö±ğÊÇË÷ÒıµÄOffset,ÊıÁ¿ºÍ³¤¶È
-	// RealliveµÄÖ¸ÁîÁ÷ºÜÆæ¹Ö£¬ÀïÃæ¾ÓÈ»¼ĞÔÓÁËĞĞºÅ£¬ºÍÄÚ²¿Ê¹ÓÃµÄ±à³Ì½Å±¾¶ÔÓ¦ 
-	// ¶ø¶¨Î»ÒÑ¶ÁÎÄ±¾Ê¹ÓÃµÄÒ²ÊÇÕâ¸öĞĞºÅ
-	// ¿ÉÄÜÊÇdebugÓÃ£¬Ò²¿ÉÄÜÊÇ·½±ã¶Áµµ´æµµÓÃ
+	// AVG_READ_FLAG:æ˜¯æœ‰å…³æ¸¸æˆæ–‡æœ¬ç´¢å¼•çš„
+	// ç¬¬ä¸€ä¸ªæ€»æ˜¯1000000,æ¥ä¸‹æ¥çš„å°±æ˜¯æ–‡æœ¬å¯¹åº”çš„è„šæœ¬è¡Œå·,ä¸€å¥æ–‡æœ¬ä¸€ä¸ªint
+	// åˆ†åˆ«æ˜¯ç´¢å¼•çš„Offset,æ•°é‡å’Œé•¿åº¦
+	// Realliveçš„æŒ‡ä»¤æµå¾ˆå¥‡æ€ªï¼Œé‡Œé¢å±…ç„¶å¤¹æ‚äº†è¡Œå·ï¼Œå’Œå†…éƒ¨ä½¿ç”¨çš„ç¼–ç¨‹è„šæœ¬å¯¹åº” 
+	// è€Œå®šä½å·²è¯»æ–‡æœ¬ä½¿ç”¨çš„ä¹Ÿæ˜¯è¿™ä¸ªè¡Œå·
+	// å¯èƒ½æ˜¯debugç”¨ï¼Œä¹Ÿå¯èƒ½æ˜¯æ–¹ä¾¿è¯»æ¡£å­˜æ¡£ç”¨
 	u32 AVG_READ_FLAG_offset;
-	u32 AVG_READ_FLAG_count;	// Ã¿Ïî4×Ö½Ú
+	u32 AVG_READ_FLAG_count;	// æ¯é¡¹4å­—èŠ‚
 	u32 AVG_READ_FLAG_size;
-	//µÚ6,7,8¸öÊÇÓĞ¹Ø½Å±¾ÖĞ³ö³¡ÈËÎïÃû³ÆË÷ÒıµÄ
-	//·Ö±ğÊÇË÷ÒıµÄOffset,ÊıÁ¿ºÍ³¤¶È
+	//ç¬¬6,7,8ä¸ªæ˜¯æœ‰å…³è„šæœ¬ä¸­å‡ºåœºäººç‰©åç§°ç´¢å¼•çš„
+	//åˆ†åˆ«æ˜¯ç´¢å¼•çš„Offset,æ•°é‡å’Œé•¿åº¦
 	u32 character_name_offset;
 	u32 character_name_count;
 	u32 character_name_size;
-	// ¹ØÓÚ½Å±¾Ö¸Áî¶ÎµÄ
+	// å…³äºè„šæœ¬æŒ‡ä»¤æ®µçš„
 	u32 instruction_offset;
-	u32 instruction_ORGINAL_size;// [no used]½âÑ¹ËõºóµÄ³¤¶È
-	u32 instruction_size;		// Ñ¹ËõµÄÊı¾İ³¤¶È
-	//Á½¸öint×÷ÓÃ²»Ã÷£¬ÊÂÊµÉÏÎÒ¾õµÃ¸ù±¾¾ÍÃ»ÓĞÊ¹ÓÃ£¬Ö»ÊÇÌîÁËµãÊı½øÈ¥¶øÒÑ
-	//»òÕß¸úÏÂÃæµÄË÷ÒıÓĞ¹Ø
-	u32 unknown[2];	// 0ºÍ3
+	u32 instruction_ORGINAL_size;// [no used]è§£å‹ç¼©åçš„é•¿åº¦
+	u32 instruction_size;		// å‹ç¼©çš„æ•°æ®é•¿åº¦
+	//ä¸¤ä¸ªintä½œç”¨ä¸æ˜ï¼Œäº‹å®ä¸Šæˆ‘è§‰å¾—æ ¹æœ¬å°±æ²¡æœ‰ä½¿ç”¨ï¼Œåªæ˜¯å¡«äº†ç‚¹æ•°è¿›å»è€Œå·²
+	//æˆ–è€…è·Ÿä¸‹é¢çš„ç´¢å¼•æœ‰å…³
+	u32 unknown[2];	// 0å’Œ3
 	/*
-	½ÓÏÂÀ´100¸öintÊÇ½Å±¾Ö¸Áî¶Î·Ö½ÚµÄË÷Òı
-	Ò»¸ö½Å±¾¿ÉÒÔ±»·ÖÎª¶à¸ö½Ú£¬ÔÚ½Å±¾Ö¸ÁîÖĞ»á³öÏÖ(Ìøµ½SEENxxxxµÄµÚn½Ú)ÕâÑùµÄÖ¸Áî
-	ÕâÀïµÄË÷Òı¾ÍÊÇÓÃÀ´¶¨Î»½ÚµÄ£¬ÄÚÈİÎªOffset£¬ÒÔ½Å±¾Ö¸Áî¶ÎµÄ¿ªÊ¼×÷Îª0
-	Ã²ËÆÔ­Ê¼ÖÆ×÷³ÌĞòÒ»¿ªÊ¼°ÑËùÓĞµÄ½Ú¶¼³õÊ¼»¯µ½µÚÒ»½ÚµÄOffset£¬Òò´ËÃ»ÓĞÊ¹ÓÃµÄ½ÚºÍµÚÒ»½ÚOffsetÊÇÒ»ÑùµÄ
-	È»ºó½ÓÏÂÀ´Èı¸öintÃ²ËÆÃ»ÓĞÊ¹ÓÃ£¬Ê¼ÖÕÊÇ0
+	æ¥ä¸‹æ¥100ä¸ªintæ˜¯è„šæœ¬æŒ‡ä»¤æ®µåˆ†èŠ‚çš„ç´¢å¼•
+	ä¸€ä¸ªè„šæœ¬å¯ä»¥è¢«åˆ†ä¸ºå¤šä¸ªèŠ‚ï¼Œåœ¨è„šæœ¬æŒ‡ä»¤ä¸­ä¼šå‡ºç°(è·³åˆ°SEENxxxxçš„ç¬¬nèŠ‚)è¿™æ ·çš„æŒ‡ä»¤
+	è¿™é‡Œçš„ç´¢å¼•å°±æ˜¯ç”¨æ¥å®šä½èŠ‚çš„ï¼Œå†…å®¹ä¸ºOffsetï¼Œä»¥è„šæœ¬æŒ‡ä»¤æ®µçš„å¼€å§‹ä½œä¸º0
+	è²Œä¼¼åŸå§‹åˆ¶ä½œç¨‹åºä¸€å¼€å§‹æŠŠæ‰€æœ‰çš„èŠ‚éƒ½åˆå§‹åŒ–åˆ°ç¬¬ä¸€èŠ‚çš„Offsetï¼Œå› æ­¤æ²¡æœ‰ä½¿ç”¨çš„èŠ‚å’Œç¬¬ä¸€èŠ‚Offsetæ˜¯ä¸€æ ·çš„
+	ç„¶åæ¥ä¸‹æ¥ä¸‰ä¸ªintè²Œä¼¼æ²¡æœ‰ä½¿ç”¨ï¼Œå§‹ç»ˆæ˜¯0
 	*/
 	u32 segment_offset[100];
 	u32 reserved[3];
@@ -149,9 +149,9 @@ typedef struct {
 } g00_header_t;
 
 typedef struct {
-	u32 orig_x;			// Ô­µãÔÚÆÁÄ»ÖĞµÄÎ»ÖÃ
+	u32 orig_x;			// åŸç‚¹åœ¨å±å¹•ä¸­çš„ä½ç½®
 	u32 orig_y;
-	u32 end_x;			// ÖÕµãÔÚÆÁÄ»ÖĞµÄÎ»ÖÃ
+	u32 end_x;			// ç»ˆç‚¹åœ¨å±å¹•ä¸­çš„ä½ç½®
 	u32 end_y;
 	u32 unknown[2];		// 0
 } g02_info_t;
@@ -167,40 +167,40 @@ typedef struct {
 
 typedef struct {			// 0x74
 	u16 unknown0;			// 1
-	u16 blocks;				// ÃèÊöÈÈµãÇøÓòµÄ¿éÊı
-	u32 hs_orig_x;			// ¸ÃpartµÄÈÈµãÇøÓò(ÈÈµãÇøÓòÓÉN¸öblockÃèÊö)µÄÔÚ¸ÃpartÖĞµÄÎ»ÖÃ
+	u16 blocks;				// æè¿°çƒ­ç‚¹åŒºåŸŸçš„å—æ•°
+	u32 hs_orig_x;			// è¯¥partçš„çƒ­ç‚¹åŒºåŸŸ(çƒ­ç‚¹åŒºåŸŸç”±Nä¸ªblockæè¿°)çš„åœ¨è¯¥partä¸­çš„ä½ç½®
 	u32 hs_orig_y;			
-	u32 hs_width;			// ¸ÃpartµÄÈÈµãÇøÓòµÄ¿í¶È
-	u32 hs_height;			// ¸ÃpartµÄÈÈµãÇøÓòµÄ¸ß¶È
-	u32 screen_orig_x;		// ÏÔÊ¾Ê±,ÆÁÄ»µÄÔ­µãÔÚ¸ÃpartÖĞµÄÎ»ÖÃ
+	u32 hs_width;			// è¯¥partçš„çƒ­ç‚¹åŒºåŸŸçš„å®½åº¦
+	u32 hs_height;			// è¯¥partçš„çƒ­ç‚¹åŒºåŸŸçš„é«˜åº¦
+	u32 screen_orig_x;		// æ˜¾ç¤ºæ—¶,å±å¹•çš„åŸç‚¹åœ¨è¯¥partä¸­çš„ä½ç½®
 	u32	screen_orig_y;
-	u32 width;				// partÍ¼µÄ¿í¶È
-	u32 height;				// partÍ¼µÄ¸ß¶È
+	u32 width;				// partå›¾çš„å®½åº¦
+	u32 height;				// partå›¾çš„é«˜åº¦
 	u8 unknown1[80];
 } g02p_header_t;
 
 typedef struct {		// 0x5c
-	u16 start_x;		// ¸ÃblockÔÚpartÍ¼ÖĞµÄÎ»ÖÃ
+	u16 start_x;		// è¯¥blockåœ¨partå›¾ä¸­çš„ä½ç½®
 	u16 start_y;
-	u16 flag;			// 0 - ÖĞĞÄ²¿·Ö ·Ç0 - ±ßÔµ²¿·Ö
-	u16 width;			// ¸ÃblockÍ¼ÖĞµÄ¿í¶È
-	u16 height;			// ¸ÃblockÍ¼ÖĞµÄ¸ß¶È
+	u16 flag;			// 0 - ä¸­å¿ƒéƒ¨åˆ† é0 - è¾¹ç¼˜éƒ¨åˆ†
+	u16 width;			// è¯¥blockå›¾ä¸­çš„å®½åº¦
+	u16 height;			// è¯¥blockå›¾ä¸­çš„é«˜åº¦
 	u8 reserved[82];
 } g02b_header_t;
 
-// Èç¹ûÊÇraw PCM¸ñÊ½,Ôò½ô½ÓÍ·²¿µÄ¾ÍÊÇPCMÊı¾İ
+// å¦‚æœæ˜¯raw PCMæ ¼å¼,åˆ™ç´§æ¥å¤´éƒ¨çš„å°±æ˜¯PCMæ•°æ®
 typedef struct {			// PCMstruct
 	u16 channels;			// @00
 	u16 bps;				// @02 BitsPerSample
 	u32 freq;				// @04
-	s32 compr_level;		// @08 -1(raw PCM)£¬ 2
+	s32 compr_level;		// @08 -1(raw PCM)ï¼Œ 2
 	u32 UseRunLength;		// @0c 0
-	u32 NWAtable_len;		// @10 block×ÜÊı¡£¼ÇÂ¼Æ«ÒÆµÄ±í£¬Ã¿Ïî4×Ö½Ú,(raw PCM: 0)
-	u32 data_size;			// @14 PCMÊı¾İ³¤¶È
-	u32 compr_data_size;	// @18 NWAÎÄ¼şµÄ×Ü³¤¶È£¬Èç¹ûcompleve==-1£¬ÔòÑ¹Ëõ³¤¶ÈÎª0
-	u32 sample_count;		// @1c ×Ü²ÉÑùÊı
-	u32 block_size;			// @20 Ã¿¿é°üº¬µÄ²ÉÑùÊı(raw PCM: 0)
-	u32 rest_size;			// @24 ²»×ãÒ»¿éµÄ²ÉÑùÊı(raw PCM: 0)
+	u32 NWAtable_len;		// @10 blockæ€»æ•°ã€‚è®°å½•åç§»çš„è¡¨ï¼Œæ¯é¡¹4å­—èŠ‚,(raw PCM: 0)
+	u32 data_size;			// @14 PCMæ•°æ®é•¿åº¦
+	u32 compr_data_size;	// @18 NWAæ–‡ä»¶çš„æ€»é•¿åº¦ï¼Œå¦‚æœcompleve==-1ï¼Œåˆ™å‹ç¼©é•¿åº¦ä¸º0
+	u32 sample_count;		// @1c æ€»é‡‡æ ·æ•°
+	u32 block_size;			// @20 æ¯å—åŒ…å«çš„é‡‡æ ·æ•°(raw PCM: 0)
+	u32 rest_size;			// @24 ä¸è¶³ä¸€å—çš„é‡‡æ ·æ•°(raw PCM: 0)
 	u32 dummy2;				// @28 rest_compr_size?(raw PCM: 0)
 } nwa_header_t;
 
@@ -321,10 +321,10 @@ static void nwa_expand_block(BYTE *data, BYTE *&out_data,
 				else
 					d[flip_flag] += (b & MASK2) << SHIFT;
 #else
-				/* 7 : Âç¤­¤Êº¹Ê¬ */
-				/* RunLength() Í­¸ú»ş¡Êcompr_level==5, ²»À¼¥Õ¥¡¥¤¥ë) ¤Ç¤ÏÌµ¸ú */
+				/* 7 : ç»œããªæ±—å°¸ */
+				/* RunLength() é“œè·Ÿç®•âˆˆcompr_level==5, ä¸å…°ãƒ•ã‚¡ã‚¤ãƒ«) ã§ã¯ç—°è·Ÿ */
 				if (getbits(data, shift, 1) == 1) {
-					d[flip_flag] = 0; /* Ì¤»ÈÍÑ */
+					d[flip_flag] = 0; /* è¸è—è„± */
 				} else {
 					int BITS, SHIFT;
 					if (compr_level >= 3) {
@@ -810,7 +810,7 @@ static int RealLive_seen_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int RealLive_seen_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -855,7 +855,7 @@ static int RealLive_seen_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int RealLive_seen_parse_resource_info(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -863,7 +863,7 @@ static int RealLive_seen_parse_resource_info(struct package *pkg,
 
 	gen_entry = (RealLive_generic_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, gen_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = gen_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = gen_entry->offset;
@@ -1320,7 +1320,7 @@ static int RealLive_g00_2_dir_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int RealLive_g00_2_dir_extract_directory(struct package *pkg,
 												struct package_directory *pkg_dir)
 {
@@ -1353,7 +1353,7 @@ static int RealLive_g00_2_dir_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int RealLive_g00_2_dir_resource_info(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -1361,7 +1361,7 @@ static int RealLive_g00_2_dir_resource_info(struct package *pkg,
 
 	g02_info = (g02_info_t *)pkg_res->actual_index_entry;
 	sprintf(pkg_res->name, "%04d", pkg_res->index_number);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = 1;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = package_get_private(pkg);
@@ -1519,7 +1519,7 @@ static cui_ext_operation RealLive_g00_2_dir_operation = {
 	RealLive_cgm_release					/* release */
 };
 
-#if 0	// Ã»ÓĞÊµ¼ÊÊı¾İ
+#if 0	// æ²¡æœ‰å®é™…æ•°æ®
 /********************* gan *********************/
 
 static int RealLive_gan_match(struct package *pkg)
@@ -1542,7 +1542,7 @@ static int RealLive_gan_match(struct package *pkg)
 	return 0;
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int RealLive_gan_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -1706,7 +1706,7 @@ static int RealLive_g02p_match(struct package *pkg)
 	return 0;
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int RealLive_g02p_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -2205,4 +2205,5 @@ int CALLBACK RealLive_register_cui(struct cui_register_callback *callback)
 		debug = 0;
 
 	return 0;
+}
 }

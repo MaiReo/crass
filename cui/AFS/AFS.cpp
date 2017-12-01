@@ -16,7 +16,7 @@ struct acui_information AFS_cui_information = {
 	NULL,					/* system */
 	_T(".AFS .pak"),		/* package */
 	_T("0.5.1"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2009-6-18 19:04"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -208,7 +208,7 @@ static int pngfile_process(BYTE *png, DWORD png_size, BYTE **ret_png, DWORD *ret
 	BYTE *idat_compr, *zlib_compr, *zlib_uncompr, *actual_data;
 	DWORD i, crc;
 	
-	/* µÚÒ»¿éIDAT»Ö¸´Íê±Ï£¬ÊÕ¼¯ËùÓĞIDAT×é³ÉÍêÕûµÄzlib stream */
+	/* ç¬¬ä¸€å—IDATæ¢å¤å®Œæ¯•ï¼Œæ”¶é›†æ‰€æœ‰IDATç»„æˆå®Œæ•´çš„zlib stream */
 	curbyte = 0;
 	zlib_compr = NULL;
 	zlib_comprlen = 0;
@@ -218,17 +218,17 @@ static int pngfile_process(BYTE *png, DWORD png_size, BYTE **ret_png, DWORD *ret
 		BYTE *sub_idat_compr;
 		DWORD sub_idat_comprlen;
 
-		/* »ñµÃIDAT³¤¶È */
+		/* è·å¾—IDATé•¿åº¦ */
 		sub_idat_comprlen = SWAP32(*(u32 *)(&idat_compr[curbyte]));
 		curbyte += 4;
 
-		/* ·ÇIDAT */
+		/* éIDAT */
 		if (memcmp("IDAT", &idat_compr[curbyte], 4))
 			break;
 
-		sub_idat_compr = &idat_compr[curbyte];	/* Ö¸ÏòIDAT±êÊ¶ */
+		sub_idat_compr = &idat_compr[curbyte];	/* æŒ‡å‘IDATæ ‡è¯† */
 
-		/* ¼ì²écrc */
+		/* æ£€æŸ¥crc */
 		if (crc32(0L, sub_idat_compr, sub_idat_comprlen + 4) != SWAP32(*(u32 *)(&sub_idat_compr[4 + sub_idat_comprlen])))
 			break;
 
@@ -250,7 +250,7 @@ static int pngfile_process(BYTE *png, DWORD png_size, BYTE **ret_png, DWORD *ret
 		return -CUI_EUNCOMPR;
 	}
 
-	/* ½âÑ¹zlib stream */
+	/* è§£å‹zlib stream */
 	for (i = 1; ; i++) {	
 		zlib_uncomprlen = zlib_comprlen << i;
 		zlib_uncompr = (BYTE *)malloc(zlib_uncomprlen);
@@ -296,7 +296,7 @@ static int pngfile_process(BYTE *png, DWORD png_size, BYTE **ret_png, DWORD *ret
 		line = zlib_uncompr + h * (width * 4 + 1);
 		rgba = line + 1;
 
-		/* ½»»»RºÍB·ÖÁ¿ */
+		/* äº¤æ¢Rå’ŒBåˆ†é‡ */
 		for (DWORD w = 0; w < width; w++) {
 			BYTE tmp;
 
@@ -306,11 +306,11 @@ static int pngfile_process(BYTE *png, DWORD png_size, BYTE **ret_png, DWORD *ret
 			rgba[3] = 255;
 			rgba += 4;	
 		}
-		/* ×îÖÕ±£´æµÄPNG²»×öfiltering´¦Àí */
+		/* æœ€ç»ˆä¿å­˜çš„PNGä¸åšfilteringå¤„ç† */
 		line[0] = 0;
 	}
 
-	/* ÏÖÔÚµÃµ½Ô­Ê¼µÄRGB(A)Êı¾İ, È»ºóÖØĞÂÑ¹Ëõ */
+	/* ç°åœ¨å¾—åˆ°åŸå§‹çš„RGB(A)æ•°æ®, ç„¶åé‡æ–°å‹ç¼© */
 	for (i = 1; ; i++) {
 		zlib_comprlen = zlib_uncomprlen << i;			
 		zlib_compr = (BYTE *)malloc(zlib_comprlen);
@@ -325,8 +325,8 @@ static int pngfile_process(BYTE *png, DWORD png_size, BYTE **ret_png, DWORD *ret
 	if (!zlib_compr)
 		return -CUI_EUNCOMPR;
 
-	/* ´´½¨×îÖÕ¾­¹ı¡°ĞŞÕıµÄ¡±PNGÍ¼Ïñ»º³åÇø(·ÇÀ¨ºÅ²¿·ÖÀ´×ÔampÎÄ¼ş) */
-	actual_data_len = 0x21 + (4 /* IDAT length */ + 4/* "IDAT" */ + zlib_comprlen /* IDATÊı¾İ */ + 4 /* IDAT crc */) + 12;
+	/* åˆ›å»ºæœ€ç»ˆç»è¿‡â€œä¿®æ­£çš„â€PNGå›¾åƒç¼“å†²åŒº(éæ‹¬å·éƒ¨åˆ†æ¥è‡ªampæ–‡ä»¶) */
+	actual_data_len = 0x21 + (4 /* IDAT length */ + 4/* "IDAT" */ + zlib_comprlen /* IDATæ•°æ® */ + 4 /* IDAT crc */) + 12;
 	actual_data = (BYTE *)malloc(actual_data_len);
 	if (!actual_data) {
 		free(zlib_compr);
@@ -334,22 +334,22 @@ static int pngfile_process(BYTE *png, DWORD png_size, BYTE **ret_png, DWORD *ret
 	}
 
 	memcpy(actual_data, png, 0x21);
-	/* Ğ´ÈëIDAT³¤¶È */
+	/* å†™å…¥IDATé•¿åº¦ */
 	*(u32 *)(&actual_data[33]) = SWAP32(zlib_comprlen);
-	/* Ğ´ÈëIDAT±êÊ¶ */
+	/* å†™å…¥IDATæ ‡è¯† */
 	actual_data[37] = 'I';
 	actual_data[38] = 'D';
 	actual_data[39] = 'A';
 	actual_data[40] = 'T';
-	/* Ğ´ÈëIDATÊı¾İ */
+	/* å†™å…¥IDATæ•°æ® */
 	memcpy(actual_data + 41, zlib_compr, zlib_comprlen);
 	free(zlib_compr);
-	/* ¼ÆËãIDAT crc */
+	/* è®¡ç®—IDAT crc */
 	crc = crc32(0L, &actual_data[37], zlib_comprlen + 4);
 	free(zlib_compr);
-	/* Ğ´Èëcrc */
+	/* å†™å…¥crc */
 	*(u32 *)(&actual_data[actual_data_len - 16]) = SWAP32(crc);
-	/* Ğ´ÈëIENDĞÅÏ¢ */
+	/* å†™å…¥IENDä¿¡æ¯ */
 	memcpy(actual_data + actual_data_len - 12, png + png_size - 12, 12);
 
 	*ret_png = actual_data;
@@ -462,9 +462,9 @@ static int AFS_tm2_parse_resource_info(struct package *pkg,
 
 	tm2_entry = (tm2_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, tm2_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = tm2_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = tm2_entry->offset;
 
 	return 0;
@@ -526,7 +526,7 @@ static int AFS_tm2_extract_resource(struct package *pkg,
 	memcpy(MipMapPicture, Image, MipMapPictureSize);
 
 	switch (PictHdr->ImageType) {
-	case TIM2_RGB16:	// Êµ¼ÊÉÏÊÇBGR555£¬×î¸ßÎ»Îª1±íÊ¾¦ÁÎª0xff£¬Îª0±íÊ¾¦ÁÎª0
+	case TIM2_RGB16:	// å®é™…ä¸Šæ˜¯BGR555ï¼Œæœ€é«˜ä½ä¸º1è¡¨ç¤ºÎ±ä¸º0xffï¼Œä¸º0è¡¨ç¤ºÎ±ä¸º0
 		bpp = 16;
 		break;
 	case TIM2_RGB24:
@@ -767,9 +767,9 @@ static int AFS_afs_parse_resource_info(struct package *pkg,
 
 	my_afs_entry = (my_afs_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_afs_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_afs_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_afs_entry->offset;
 
 	return 0;
@@ -903,4 +903,5 @@ int CALLBACK AFS_register_cui(struct cui_register_callback *callback)
 			return -1;
 	
 	return 0;
+}
 }

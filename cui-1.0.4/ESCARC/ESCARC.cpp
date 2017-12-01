@@ -10,11 +10,11 @@
 #include <utility.h>
 
 struct acui_information ESCARC_cui_information = {
-	_T("¥¨¥¹¥¯©`¥É"),			/* copyright */
+	_T("ã‚¨ã‚¹ã‚¯ãƒ¼ãƒ‰"),			/* copyright */
 	NULL,						/* system */
 	_T(".bin .c .h .dat .bmp .txt .mot .db .dif .zip"),	/* package */
 	_T("1.0.1"),				/* revision */
-	_T("³Õºº¹«Ôô"),				/* author */
+	_T("ç—´æ±‰å…¬è´¼"),				/* author */
 	_T("2009-1-10 12:31"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -149,7 +149,7 @@ static int lzw_decode(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* bin *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int ESCARC_bin_match(struct package *pkg)
 {
 	s8 magic[8];
@@ -267,7 +267,7 @@ static int ESCARC_bin_parse_resource_info(struct package *pkg,
 
 	bin_entry = (bin_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, bin_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = bin_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = bin_entry->offset;
@@ -349,7 +349,7 @@ static cui_ext_operation ESCARC_bin_operation = {
 
 /********************* old bin *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int ESCARC_old_bin_match(struct package *pkg)
 {
 	s8 magic[8];
@@ -403,7 +403,7 @@ static int ESCARC_old_bin_parse_resource_info(struct package *pkg,
 
 	bin_entry = (old_bin_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, bin_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = bin_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = bin_entry->offset;
@@ -440,7 +440,7 @@ static cui_ext_operation ESCARC_old_bin_operation = {
 
 /********************* acp *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int ESCARC_acp_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -563,4 +563,6 @@ int CALLBACK ESCARC_register_cui(struct cui_register_callback *callback)
 
 	return 0;
 }
+
+
 

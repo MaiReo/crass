@@ -466,3 +466,4 @@ struct cxdec_callback fanta_cxdec_callback = {
 	{ 0x276, 0x75 },
 	xcode_building_stage1
 };
+;

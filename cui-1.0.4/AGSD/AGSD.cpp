@@ -17,7 +17,7 @@ struct acui_information AGSD_cui_information = {
 	_T("Advanced Game Script Decoder"),	/* system */
 	_T(".gsp .bmz"),					/* package */
 	_T("1.0.2"),						/* revison */
-	_T("≥’ùhπ´Ÿ\"),						/* author */
+	_T("Áó¥Êº¢ÂÖ¨Ë≥ä"),						/* author */
 	_T("2008-4-26 11:43"),				/* date */
 	NULL,								/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -516,4 +516,5 @@ int CALLBACK AGSD_register_cui(struct cui_register_callback *callback)
 			return -1;
 	
 	return 0;
+}
 }

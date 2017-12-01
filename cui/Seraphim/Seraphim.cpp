@@ -10,19 +10,19 @@
 #include <zlib.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Seraphim_cui_information = {
 	_T("Assemblage Corporation / A.Sumeragi&Fantom"),		/* copyright */
 	_T("Seraphim"),			/* system */
 	_T(".dat .wav"),		/* package */
 	_T("1.0.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-3-24 8:52"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	u32 index_entries;
@@ -106,7 +106,7 @@ static int ScnPac_rle_uncompress(BYTE **ret_uncompr, DWORD *ret_uncomprlen,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Seraphim_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -130,7 +130,7 @@ static int Seraphim_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Seraphim_release_resource(struct package *pkg, 
 									struct package_resource *pkg_res)
 {
@@ -144,7 +144,7 @@ static void Seraphim_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Seraphim_release(struct package *pkg, 
 						   struct package_directory *pkg_dir)
 {
@@ -158,7 +158,7 @@ static void Seraphim_release(struct package *pkg,
 
 /********************* ScnPac.dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Seraphim_ScnPac_match(struct package *pkg)
 {
 	if (lstrcmpi(pkg->name, _T("ScnPac.Dat")))
@@ -170,7 +170,7 @@ static int Seraphim_ScnPac_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Seraphim_ScnPac_extract_directory(struct package *pkg,
 											 struct package_directory *pkg_dir)
 {
@@ -209,7 +209,7 @@ static int Seraphim_ScnPac_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int Seraphim_ScnPac_parse_resource_info(struct package *pkg,
 											   struct package_resource *pkg_res)
 {
@@ -217,15 +217,15 @@ static int Seraphim_ScnPac_parse_resource_info(struct package *pkg,
 
 	my_ScnPac_entry = (my_ScnPac_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_ScnPac_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_ScnPac_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_ScnPac_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Seraphim_ScnPac_extract_resource(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -283,7 +283,7 @@ static int Seraphim_ScnPac_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Seraphim_ScnPac_operation = {
 	Seraphim_ScnPac_match,				/* match */
 	Seraphim_ScnPac_extract_directory,	/* extract_directory */
@@ -296,7 +296,7 @@ static cui_ext_operation Seraphim_ScnPac_operation = {
 
 /********************* VoiceX.dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Seraphim_Voice_match(struct package *pkg)
 {
 	if (!_tcsstr(pkg->name, _T("Voice")))
@@ -308,7 +308,7 @@ static int Seraphim_Voice_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Seraphim_Voice_extract_directory(struct package *pkg,
 											struct package_directory *pkg_dir)
 {
@@ -332,7 +332,7 @@ static int Seraphim_Voice_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int Seraphim_Voice_parse_resource_info(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -340,15 +340,15 @@ static int Seraphim_Voice_parse_resource_info(struct package *pkg,
 
 	Voice_entry = (Voice_entry_t *)pkg_res->actual_index_entry;
 	sprintf(pkg_res->name, "%04d", pkg_res->index_number);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = Voice_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = Voice_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Seraphim_Voice_extract_resource(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -372,7 +372,7 @@ static int Seraphim_Voice_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Seraphim_Voice_operation = {
 	Seraphim_Voice_match,				/* match */
 	Seraphim_Voice_extract_directory,	/* extract_directory */
@@ -385,7 +385,7 @@ static cui_ext_operation Seraphim_Voice_operation = {
 
 /********************* ArchPac.dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Seraphim_ArchPac_match(struct package *pkg)
 {
 	if (lstrcmpi(pkg->name, _T("ArchPac.dat")))
@@ -397,7 +397,7 @@ static int Seraphim_ArchPac_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Seraphim_ArchPac_extract_directory(struct package *pkg,
 											  struct package_directory *pkg_dir)
 {
@@ -444,7 +444,7 @@ static int Seraphim_ArchPac_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int Seraphim_ArchPac_parse_resource_info(struct package *pkg,
 												struct package_resource *pkg_res)
 {
@@ -452,15 +452,15 @@ static int Seraphim_ArchPac_parse_resource_info(struct package *pkg,
 
 	Voice_entry = (Voice_entry_t *)pkg_res->actual_index_entry;
 	sprintf(pkg_res->name, "%04d", pkg_res->index_number);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = Voice_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = Voice_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Seraphim_ArchPac_extract_resource(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -484,7 +484,7 @@ static int Seraphim_ArchPac_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Seraphim_ArchPac_operation = {
 	Seraphim_ArchPac_match,					/* match */
 	Seraphim_ArchPac_extract_directory,		/* extract_directory */
@@ -494,7 +494,7 @@ static cui_ext_operation Seraphim_ArchPac_operation = {
 	Seraphim_release_resource,				/* release_resource */
 	Seraphim_release						/* release */
 };
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK Seraphim_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".dat"), NULL, 
@@ -513,4 +513,5 @@ int CALLBACK Seraphim_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

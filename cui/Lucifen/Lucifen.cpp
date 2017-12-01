@@ -17,15 +17,15 @@ using namespace std;
 using std::vector;
 
 /*
-ÎªgameÕÒkeyµÄ·½·¨£º
-ÓÃa5b9ac6bºÍ9a639de5×ö¹Ø¼ü×Ö
-ÍùÏÂÕÒ´úÂë£º
-0048CA9C   . /75 15         JNZ SHORT ^—ÂŠï‚Q.0048CAB3
+ä¸ºgameæ‰¾keyçš„æ–¹æ³•ï¼š
+ç”¨a5b9ac6bå’Œ9a639de5åšå…³é”®å­—
+å¾€ä¸‹æ‰¾ä»£ç ï¼š
+0048CA9C   . /75 15         JNZ SHORT æ€æ¤”å©ä¿€.0048CAB3
 0048CA9E   . |8D55 A4       LEA EDX,DWORD PTR SS:[EBP-5C]
-0048CAA1   . |68 C0AC4F00   PUSH ^—ÂŠï‚Q.004FACC0                       ; /Arg2 = 004FACC0
+0048CAA1   . |68 C0AC4F00   PUSH æ€æ¤”å©ä¿€.004FACC0                       ; /Arg2 = 004FACC0
 0048CAA6   . |52            PUSH EDX                                 ; |Arg1
 0048CAA7   . |C745 A4 08000>MOV DWORD PTR SS:[EBP-5C],8              ; |
-0048CAAE   . |E8 4F400500   CALL ^—ÂŠï‚Q.004E0B02                       ; \^—ÂŠï‚Q.004E0B02
+0048CAAE   . |E8 4F400500   CALL æ€æ¤”å©ä¿€.004E0B02                       ; \æ€æ¤”å©ä¿€.004E0B02
 0048CAB3   > \A1 C0935000   MOV EAX,DWORD PTR DS:[5093C0]   <---key0
 0048CAB8   .  8B75 EC       MOV ESI,DWORD PTR SS:[EBP-14]
 0048CABB   .  33C6          XOR EAX,ESI
@@ -42,34 +42,34 @@ using std::vector;
 
 
 Lucifen Library & Tools Version:
-°³¤¿¤Á¤ËÒí¤Ï¤Ê¤¤
+ä¿ºãŸã¡ã«ç¿¼ã¯ãªã„
 1.2.2
-¤Í¡«PON£¿¡Á¤é¤¤PON£¡
+ã­ï½žPONï¼ŸÃ—ã‚‰ã„PONï¼
 1.2.1
-¤ê¤³¤ê¤¹ £­lycoris radiata£­ ÌåòY°æ
+ã‚Šã“ã‚Šã™ ï¼lycoris radiataï¼ ä½“é¨“ç‰ˆ
 1.2.0
-DokiDoki¤ë¡«¤ß¤ó¤° ÌåòY°æ
+DokiDokiã‚‹ï½žã¿ã‚“ã ä½“é¨“ç‰ˆ
 1.2.2
 
 
 E:\Program Files\NaponLipon
-Q:\Program Files\Terios\¤ê¤³¤ê¤¹ÌåòY°æ
-Q:\sin_ryouki2_trial\^à —ÂŠï‚ÌŸB ‘æ‚QÍ ‘ÌŒ±”Å   (ÒÀ¿¿sob_parse("terios03.sob")²úÉúkey£¬ºÜÂé·³£©
+Q:\Program Files\Terios\ã‚Šã“ã‚Šã™ä½“é¨“ç‰ˆ
+Q:\sin_ryouki2_trial\æ€æ„¢ æ¤”å©åºçƒž æˆžä¿€å¾© æ‡±å°¡æ–‰   (ä¾é sob_parse("terios03.sob")äº§ç”Ÿkeyï¼Œå¾ˆéº»çƒ¦ï¼‰
  */
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Lucifen_cui_information = {
 	_T("Lucifen"),			/* copyright */
 	_T("Lucifen Library"),	/* system */
 	_T(".LPK"),				/* package */
 	_T("0.8.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-4-30 22:49"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// "LPK1"
@@ -100,7 +100,7 @@ typedef struct {
 	u32 uncomprlen;
 } LPK_entry_t;
 
-// ¶ÔÓÚÕâÖÖÀàÐÍ£¬ÆäÊµ¼Êuncomprlen±»ÉèÖÃÎªcomprlen
+// å¯¹äºŽè¿™ç§ç±»åž‹ï¼Œå…¶å®žé™…uncomprlenè¢«è®¾ç½®ä¸ºcomprlen
 typedef struct {
 	u8 is_crypted;
 	u32 offset;
@@ -135,24 +135,24 @@ typedef struct {
 
 #if 1
 static const TCHAR *simplified_chinese_strings[] = {
-	_T("[×¢Òâ] ±ØÐëÖ¸¶¨\"script\"²ÎÊý²ÅÄÜÌáÈ¡%s£¬Ïê¼ûdocument\\cn\\Lucifen.txt\n"),
-	_T("[´íÎó] Ñ°ÕÒkeyÊ±·¢Éú´íÎó\n"),
-	_T("[´íÎó] Ã»ÓÐÕÒµ½Óë%s¶ÔÓ¦µÄkey\n"),	
-	_T("[´íÎó] \"script\"²ÎÊýÖ¸¶¨µÄÎÄ¼þÄÚ²»º¬ÓÐkey\n"),
+	_T("[æ³¨æ„] å¿…é¡»æŒ‡å®š\"script\"å‚æ•°æ‰èƒ½æå–%sï¼Œè¯¦è§document\\cn\\Lucifen.txt\n"),
+	_T("[é”™è¯¯] å¯»æ‰¾keyæ—¶å‘ç”Ÿé”™è¯¯\n"),
+	_T("[é”™è¯¯] æ²¡æœ‰æ‰¾åˆ°ä¸Ž%så¯¹åº”çš„key\n"),	
+	_T("[é”™è¯¯] \"script\"å‚æ•°æŒ‡å®šçš„æ–‡ä»¶å†…ä¸å«æœ‰key\n"),
 };
 
 static const TCHAR *traditional_chinese_strings[] = {
-	_T("[×¢Òâ] ±ØíšÖ¸¶¨\"script\"…¢”µ²ÅÄÜÌáÈ¡%s£¬Ô”ÒŠdocument\\cn\\Lucifen.txt\n"),
-	_T("[åeÕ`] Œ¤ÕÒkey•r°lÉúåeÕ`\n"),
-	_T("[åeÕ`] ›]ÓÐÕÒµ½Åc%sŒ¦‘ªµÄkey\n"),	
-	_T("[åeÕ`] \"script\"…¢”µÖ¸¶¨µÄÎÄ¼þƒÈ²»º¬ÓÐkey\n"),
+	_T("[æ³¨æ„] å¿…é ˆæŒ‡å®š\"script\"åƒæ•¸æ‰èƒ½æå–%sï¼Œè©³è¦‹document\\cn\\Lucifen.txt\n"),
+	_T("[éŒ¯èª¤] å°‹æ‰¾keyæ™‚ç™¼ç”ŸéŒ¯èª¤\n"),
+	_T("[éŒ¯èª¤] æ²’æœ‰æ‰¾åˆ°èˆ‡%så°æ‡‰çš„key\n"),	
+	_T("[éŒ¯èª¤] \"script\"åƒæ•¸æŒ‡å®šçš„æ–‡ä»¶å…§ä¸å«æœ‰key\n"),
 };
 
 static const TCHAR *japanese_strings[] = {
-	_T("[×¢Òâ] %s¤ò³é³ö¤¹¤ë¤¿¤á¤Ë¤Ï¥Ñ¥é¥á©`¥¿©`\"script\"¤òÖ¸¶¨¤·¤Ê¤±¤ì¤Ð¤Ê¤ê¤Þ¤»¤ó¡¢Ô”¤·¤¯¤Ïdocument\\cn\\Lucifen.txt¤òÒŠ¤Æ¤¯¤À¤µ¤¤¡£\n"),
-	_T("[¥¨¥é©`] ¥­©`¤òÌ½¤·¤Æ¤¤¤ë•r¤Ë¥¨¥é©`¤¬°kÉú¤·¤Þ¤¹\n"),
-	_T("[¥¨¥é©`] %s¤ËŒê¤·¤¿¥­©`¤¬ÒŠ¤Ä¤«¤ê¤Þ¤»¤ó\n"),	
-	_T("[¥¨¥é©`] ¥Ñ¥é¥á©`¥¿©`\"script\"¤ËÖ¸¶¨¤µ¤ì¤¿¥Õ¥¡¥¤¥ë¤Ë¥­©`¤¬º¬¤Þ¤ì¤Æ¤¤¤Þ¤»¤ó\n"),
+	_T("[æ³¨æ„] %sã‚’æŠ½å‡ºã™ã‚‹ãŸã‚ã«ã¯ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼\"script\"ã‚’æŒ‡å®šã—ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€è©³ã—ãã¯document\\cn\\Lucifen.txtã‚’è¦‹ã¦ãã ã•ã„ã€‚\n"),
+	_T("[ã‚¨ãƒ©ãƒ¼] ã‚­ãƒ¼ã‚’æŽ¢ã—ã¦ã„ã‚‹æ™‚ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã™\n"),
+	_T("[ã‚¨ãƒ©ãƒ¼] %sã«å¯¾å¿œã—ãŸã‚­ãƒ¼ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“\n"),	
+	_T("[ã‚¨ãƒ©ãƒ¼] ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼\"script\"ã«æŒ‡å®šã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚­ãƒ¼ãŒå«ã¾ã‚Œã¦ã„ã¾ã›ã‚“\n"),
 };
 
 static const TCHAR *default_strings[] = {
@@ -180,15 +180,15 @@ static struct locale_configuration app_locale_configurations[4] = {
 #else
 
 static const TCHAR *simplified_chinese_strings[] = {
-	_T("[×¢Òâ] ±ØÐëÖ¸¶¨\"game\"²ÎÊý²ÅÄÜÌáÈ¡%s£¬Ïê¼ûdocument\\cn\\Lucifen.txt\n"),
-	_T("[´íÎó] ²»Ö§³Ö²ÎÊý\"game=%s\"£¬Ïê¼ûdocument\\cn\\Lucifen.txt\n"),
-	_T("[´íÎó] ÎÞ·¨ÌáÈ¡ÌáÈ¡%s\n"),
+	_T("[æ³¨æ„] å¿…é¡»æŒ‡å®š\"game\"å‚æ•°æ‰èƒ½æå–%sï¼Œè¯¦è§document\\cn\\Lucifen.txt\n"),
+	_T("[é”™è¯¯] ä¸æ”¯æŒå‚æ•°\"game=%s\"ï¼Œè¯¦è§document\\cn\\Lucifen.txt\n"),
+	_T("[é”™è¯¯] æ— æ³•æå–æå–%s\n"),
 };
 
 static const TCHAR *traditional_chinese_strings[] = {
-	_T("[×¢Òâ] ±ØíšÖ¸¶¨\"game\"…¢”µ²ÅÄÜÌáÈ¡%s£¬Ô”ÒŠdocument\\cn\\Lucifen.txt\n"),
-	_T("[åeÕ`] ²»Ö§³Ö…¢”µ\"game=%s\"£¬Ô”ÒŠdocument\\cn\\Lucifen.txt\n"),
-	_T("[åeÕ`] Ÿo·¨ÌáÈ¡ÌáÈ¡%s\n"),
+	_T("[æ³¨æ„] å¿…é ˆæŒ‡å®š\"game\"åƒæ•¸æ‰èƒ½æå–%sï¼Œè©³è¦‹document\\cn\\Lucifen.txt\n"),
+	_T("[éŒ¯èª¤] ä¸æ”¯æŒåƒæ•¸\"game=%s\"ï¼Œè©³è¦‹document\\cn\\Lucifen.txt\n"),
+	_T("[éŒ¯èª¤] ç„¡æ³•æå–æå–%s\n"),
 };
 
 static const TCHAR *default_strings[] = {
@@ -387,9 +387,9 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							BYTE *compr)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -410,7 +410,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 				break;
 			win[nCurWindowByte++] = data;
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			nCurWindowByte &= win_size - 1;
 		} else {
 			unsigned int copy_bytes, win_offset;
@@ -429,7 +429,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 					return;
 				data = win[(win_offset + i) & (win_size - 1)];				
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -798,8 +798,8 @@ static int Lucifen_gameinit_parser(BYTE *sob, DWORD len)
 	return 0;
 }
 
-/* gameinit.sobÀï²ØÓÐ½âÃÜkey£¬µ«½â¶Á·½·¨²»Ã÷ */
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* gameinit.sobé‡Œè—æœ‰è§£å¯†keyï¼Œä½†è§£è¯»æ–¹æ³•ä¸æ˜Ž */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Lucifen_LPK_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir);
 static int Lucifen_LPK_parse_resource_info(struct package *pkg,
@@ -905,7 +905,7 @@ static int sob0_parse(BYTE *sob)
 
 	entries = *(u32 *)sob;
 	sob += 4;
-	// ¸¨Öúfunc_addr, src_offsetÖ¸ÏòµÄÊÇexeÖÐµÄÊý¾ÝÇø
+	// è¾…åŠ©func_addr, src_offsetæŒ‡å‘çš„æ˜¯exeä¸­çš„æ•°æ®åŒº
 	for (i = 0; i < entries; ++i) {
 		u32 offset = *(u32 *)sob;
 		sob += 4;
@@ -928,7 +928,7 @@ static int sob0_parse(BYTE *sob)
 
 	entries = *(u32 *)sob;
 	sob += 4;
-	// Æäsrc_offsetÊÇÏà¶ÔÓÚsob_data¿ªÊ¼µÄ
+	// å…¶src_offsetæ˜¯ç›¸å¯¹äºŽsob_dataå¼€å§‹çš„
 	for (i = 0; i < entries; ++i) {
 		u32 offset = *(u32 *)sob;
 		sob += 4;
@@ -940,7 +940,7 @@ static int sob0_parse(BYTE *sob)
 
 	entries = *(u32 *)sob;
 	sob += 4;
-	// Æäsrc_offsetÊÇÏà¶ÔÓÚsob_data¿ªÊ¼µÄ
+	// å…¶src_offsetæ˜¯ç›¸å¯¹äºŽsob_dataå¼€å§‹çš„
 	for (i = 0; i < entries; ++i) {
 		u32 offset = *(u32 *)sob;
 		sob += 4;
@@ -958,7 +958,7 @@ static int sob0_parse(BYTE *sob)
 
 /********************* LPK *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Lucifen_LPK_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -1049,7 +1049,7 @@ static int Lucifen_LPK_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Lucifen_LPK_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -1116,7 +1116,7 @@ static int Lucifen_LPK_extract_directory(struct package *pkg,
 	BYTE *p_index = (BYTE *)index_buffer;
 	u32 index_entries = *(u32 *)p_index;
 	p_index += 4;
-	u8 plain_data_length = *p_index++;		// ¸½¼ÓÔÚÃ¿¸ö×ÊÔ´Ç°ÃæµÄ¹«¹²Êý¾Ý³¤¶È
+	u8 plain_data_length = *p_index++;		// é™„åŠ åœ¨æ¯ä¸ªèµ„æºå‰é¢çš„å…¬å…±æ•°æ®é•¿åº¦
 	lpk_crypt.plain_data_length = plain_data_length;
 	memcpy(lpk_crypt.plain_data, p_index, plain_data_length);
 	p_index += plain_data_length;
@@ -1132,7 +1132,7 @@ static int Lucifen_LPK_extract_directory(struct package *pkg,
 			return -CUI_EMEM;
 		}
 
-		// ¶ÔÃ¿¸ö×ÊÔ´Ãû³ÆµÄÃ¿Ò»¸ö×ÖÄ¸×öÒ»¼¶±àÂë
+		// å¯¹æ¯ä¸ªèµ„æºåç§°çš„æ¯ä¸€ä¸ªå­—æ¯åšä¸€çº§ç¼–ç 
 		DWORD count = 0;
 		BYTE name[MAX_PATH];
 		LPK_index_searching(mode, p_index, name, 0, p_entry_list, 
@@ -1158,7 +1158,7 @@ static int Lucifen_LPK_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int Lucifen_LPK_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -1166,7 +1166,7 @@ static int Lucifen_LPK_parse_resource_info(struct package *pkg,
 
 	LPK_entry = (my_LPK_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, LPK_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = LPK_entry->comprlen;
 	pkg_res->actual_data_length = LPK_entry->uncomprlen;
 	pkg_res->offset = LPK_entry->offset;
@@ -1174,7 +1174,7 @@ static int Lucifen_LPK_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Lucifen_LPK_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1295,7 +1295,7 @@ static void Lucifen_LPK_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Lucifen_LPK_operation = {
 	Lucifen_LPK_match,					/* match */
 	Lucifen_LPK_extract_directory,		/* extract_directory */
@@ -1308,7 +1308,7 @@ static cui_ext_operation Lucifen_LPK_operation = {
 
 /********************* elg *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Lucifen_elg_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -1346,7 +1346,7 @@ static int Lucifen_elg_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Lucifen_elg_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1411,7 +1411,7 @@ static int Lucifen_elg_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Lucifen_elg_operation = {
 	Lucifen_elg_match,				/* match */
 	NULL,							/* extract_directory */
@@ -1422,10 +1422,10 @@ static cui_ext_operation Lucifen_elg_operation = {
 	Lucifen_LPK_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK Lucifen_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".LPK"), NULL, 
 		NULL, &Lucifen_LPK_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -1437,4 +1437,5 @@ int CALLBACK Lucifen_register_cui(struct cui_register_callback *callback)
 	app_locale_id = locale_app_register(app_locale_configurations, 3);
 
 	return 0;
+}
 }

@@ -188,3 +188,4 @@ void qsupdate( qsmodel *m, int sym )
     m->left--;
     m->newf[sym] += m->incr;
 }
+}

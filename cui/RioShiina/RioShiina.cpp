@@ -15,9 +15,9 @@
 #include "rangecod.h"
 
 /*
- ½Å±¾ÏµÍ³ÊÇ2×Ö½ÚÃüÁîºó½Ó²ÎÊı£¨fdÊÇReadREG)
+ è„šæœ¬ç³»ç»Ÿæ˜¯2å­—èŠ‚å‘½ä»¤åæ¥å‚æ•°ï¼ˆfdæ˜¯ReadREG)
 
-  iÊÇÈë¿Ú²ÎÊı
+  iæ˜¯å…¥å£å‚æ•°
 ((_Z000>>({i}*8))&0xff)*_Z001f+_Z002f
 
 ({b[0]}<<24)|(({b[0]}&0xff00)<<8)|(({b[0]}&0xff0000)>>8)|({b[0]}>>24)
@@ -25,108 +25,108 @@
  */
 /* examples:
 WARC 1.2:
-Q:\Program Files\foster\‰Ô‚Ì‹L‰¯ ‚í‚ñE‚Â‚¤E‚·‚è`
+Q:\Program Files\foster\å£´åºå©°å£‡ å‚¢å‚«ä¸’å®å†ä¸’å¡å‚ä¹£
 
 WARC 1.3:
 Q:\Program Files\BeF\PIANO
-Q:\Program Files\foster\ƒVƒJƒGƒV
+Q:\Program Files\foster\åƒ”åƒ‡åƒ„åƒ”
 
 WARC 1.4:
-Q:\Program Files\foster\‚r‚s‚`‚f‚d
+Q:\Program Files\foster\ä¿½ä¿¿ä¿™ä¿§ä¿¤
 
 WARC 1.5:
-Q:\Program Files\LUCHA!\ONE™BOKU‘ÌŒ±”Å
+Q:\Program Files\LUCHA!\ONEä»šBOKUæ‡±å°¡æ–‰
 
 WARC 1.6:
-K:\Program Files\luchaI\wONE™BOKUx
+K:\Program Files\luchaä¸¡\äº€ONEä»šBOKUäº
 
-WARC1.7£º
-Q:\Program Files\LUCHA\‘ãX–ØlÈê–åŠw‰@@lÈî–‘ÌŒ±”Å
-Q:\Program Files\Guilty\w—Öã©x‘ÌŒ±”Å
+WARC1.7ï¼š
+Q:\Program Files\LUCHA\æˆ™ä¹†æ ˜æ–åµ¢æ„±æ §å¦›å ¾ä¸‚æ–åµ¢å¿£å¸ æ‡±å°¡æ–‰
+Q:\Program Files\Guilty\äº€æ¤«æ‚Œäºæ‡±å°¡æ–‰
 
  */
 /*
-E:\[trial]\[WAR}éLÑ¥¤ò¤Ï¤¤¤¿¥Ç¥³ ÌåòY°æ (LOSTSCRIPT).zip
-H:\trial\[WAR]¥Ä¥¤¡î¤Æ¤ë C_drive
-H:\trial\[WARC]CC¥Û¥¹¥Ô¥¿¥ë.exe
-H:\trial\[WARC]Love¡îDrops.zip
-H:\trial\[WARC]¤×¤ê_¥×¥ê ¡«PRINCE¡ÁPRINCE¡«.exe
-H:\document\¸¡µãÊı\maiden\w‰³—æøçW—V‹Y‘ÌŒ±”Åx
+E:\[trial]\[WAR}é•·é´ã‚’ã¯ã„ãŸãƒ‡ã‚³ ä½“é¨“ç‰ˆ (LOSTSCRIPT).zip
+H:\trial\[WAR]ãƒ„ã‚¤â˜†ã¦ã‚‹ C_drive
+H:\trial\[WARC]CCãƒ›ã‚¹ãƒ”ã‚¿ãƒ«.exe
+H:\trial\[WARC]Loveâ˜†Drops.zip
+H:\trial\[WARC]ã·ã‚Š_ãƒ—ãƒª ï½PRINCEÃ—PRINCEï½.exe
+H:\document\æµ®ç‚¹æ•°\maiden\äº€å£‹å½ˆéª§é¦æ¢€åªƒæ‡±å°¡æ–‰äº
 J:\Program Files\Future-Digi\CLEAVAGE
-K:\[WAR]¤É¤³¤Ç¤â¤¹¤­¤·¤Æ¤¤¤Ä¤Ç¤â¤¹¤­¤·¤Æ[trial].zip
-m:\[¤á¤í¤á¤í¥­¥å©`¥È][WAR][trial]¥ß¥ó¥Ê¥Î¥¦¥¿.zip
-M:\trial\[Gracious][WAR]uÈè»ÊŒm ¡«·x¤µ¤ì¤¿Íõ×å¡«.zip
-M:\[trial]\[WAR]¥É¥é¥¯¥ê¥¦¥¹ ¥×¥ìÌåòY°æ (¤á¤í¤á¤í¥­¥å©`¥È).zip
-M:\[trial]\[WAR]¥É¥é¥¯¥ê¥¦¥¹ ÌåòY°æ (¤á¤í¤á¤í¥­¥å©`¥È).zip
-M:\[trial]\[WAR]¥É¥é¥¯¥ê¥¦¥¹ ÌåòY°æver1.01 (¤á¤í¤á¤í¥­¥å©`¥È) .zip
-M:\[trial]\[×µÃûÀï¾w]¤Ä¤¯¤È¤ê ÌåòY°æ (ruf).exe
-M:\[trial]\[×µÃûÀï¾w]Ï‰Éù¤ÎÍõ [¥µ¥Ğ¥¨¥Î¥ª¥¦] ÌåòY°æ (LOSTSCRIPT) .zip
-q:\[Mischievous][war]¤Ä¤è¤¤¤â¤è¤ï¤¤¤â ŠÃÃ¡ÁÈõÃÃ.zip
-Q:\¡¾WAR¡¿
-Q:\U\[WAR]¤Ä¤¯¤·¤Æ£¡£¿ My¥·¥¹¥¿©`¥º ¤¹¤â¤â .zip
+K:\[WAR]ã©ã“ã§ã‚‚ã™ãã—ã¦ã„ã¤ã§ã‚‚ã™ãã—ã¦[trial].zip
+m:\[ã‚ã‚ã‚ã‚ã‚­ãƒ¥ãƒ¼ãƒˆ][WAR][trial]ãƒŸãƒ³ãƒŠãƒã‚¦ã‚¿.zip
+M:\trial\[Gracious][WAR]æ¥è¾±çš‡å®® ï½ç©¢ã•ã‚ŒãŸç‹æ—ï½.zip
+M:\[trial]\[WAR]ãƒ‰ãƒ©ã‚¯ãƒªã‚¦ã‚¹ ãƒ—ãƒ¬ä½“é¨“ç‰ˆ (ã‚ã‚ã‚ã‚ã‚­ãƒ¥ãƒ¼ãƒˆ).zip
+M:\[trial]\[WAR]ãƒ‰ãƒ©ã‚¯ãƒªã‚¦ã‚¹ ä½“é¨“ç‰ˆ (ã‚ã‚ã‚ã‚ã‚­ãƒ¥ãƒ¼ãƒˆ).zip
+M:\[trial]\[WAR]ãƒ‰ãƒ©ã‚¯ãƒªã‚¦ã‚¹ ä½“é¨“ç‰ˆver1.01 (ã‚ã‚ã‚ã‚ã‚­ãƒ¥ãƒ¼ãƒˆ) .zip
+M:\[trial]\[æ¤åé‡Œç·’]ã¤ãã¨ã‚Š ä½“é¨“ç‰ˆ (ruf).exe
+M:\[trial]\[æ¤åé‡Œç·’]è …å£°ã®ç‹ [ã‚µãƒã‚¨ãƒã‚ªã‚¦] ä½“é¨“ç‰ˆ (LOSTSCRIPT) .zip
+q:\[Mischievous][war]ã¤ã‚ˆã„ã‚‚ã‚ˆã‚ã„ã‚‚ å¼·å¦¹Ã—å¼±å¦¹.zip
+Q:\ã€WARã€‘
+Q:\U\[WAR]ã¤ãã—ã¦ï¼ï¼Ÿ Myã‚·ã‚¹ã‚¿ãƒ¼ã‚º ã™ã‚‚ã‚‚ .zip
 */
 
 /*
 ruf
-—ÊË÷½Y¹û£¨¥Ö¥é¥ó¥ÉÃû£© [Ïû¤¹]
+æ¤œç´¢çµæœï¼ˆãƒ–ãƒ©ãƒ³ãƒ‰åï¼‰ [æ¶ˆã™]
 ?ruf
-Î´¶¨
-Å«ë_ÊĞˆöII
+æœªå®š
+å¥´éš·å¸‚å ´II
 2007/05/25
-¤Ä¤¯¤È¤ê
+ã¤ãã¨ã‚Š
 2007/04/20
-ÂİĞı»ØÀÈ Í¿Ì°æ
+èºæ—‹å›å»Š å¾©åˆ»ç‰ˆ
 2006/03/10
-¤¦¤Ä¤¯¤·¤Ò¤á Á®ı°æ
-Å«ë_ÊĞˆö ¥ë¥Í¥Ã¥µ¥ó¥¹ Á®ı°æ
+ã†ã¤ãã—ã²ã‚ å»‰ä¾¡ç‰ˆ
+å¥´éš·å¸‚å ´ ãƒ«ãƒãƒƒã‚µãƒ³ã‚¹ å»‰ä¾¡ç‰ˆ
 2005/12/22
-¥æ¥á¥ß¥ë¥¯¥¹¥ê
+ãƒ¦ãƒ¡ãƒŸãƒ«ã‚¯ã‚¹ãƒª
 2003/08/08
-¥»¥¤¥ì¥à¤ÎÄ§Å®¤¿¤Á
+ã‚»ã‚¤ãƒ¬ãƒ ã®é­”å¥³ãŸã¡
 2003/07/31
-±³Ô DVDPG DVDPG
+èƒŒå¾³ DVDPG DVDPG
 2003/04/25
-ÉúÙ—¤Î½ÌÊÒ
+ç”Ÿè´„ã®æ•™å®¤
 2002/10/25
-ĞßÖĞu¯ŸÊÒ
+ç¾ä¸­æ¥ç™‚å®¤
 2002/06/07
-±³Ô
+èƒŒå¾³
 2001/12/14
-ÂİĞı»ØÀÈ2
-Å«ë_ÊĞˆö Renaissance (DVD ÍêÈ«°æ)
+èºæ—‹å›å»Š2
+å¥´éš·å¸‚å ´ Renaissance (DVD å®Œå…¨ç‰ˆ)
 2001/08/03
-¿şÀÜ¤Î½ÌÊÒ ¡«HAPPYEND¡«	
+å‚€å„¡ã®æ•™å®¤ ï½HAPPYENDï½	
 2001/06/15
-¶ÀÕ¼
+ç‹¬å 
 2001/05/18
-ÚH×ï¤Î½ÌÊÒ ¡«BADEND¡«
+è´–ç½ªã®æ•™å®¤ ï½BADENDï½
 2000/12/22
-Å«ë_ÊĞˆö
+å¥´éš·å¸‚å ´
 2000/11/10
-¿şÀÜ¤Î½ÌÊÒ
+å‚€å„¡ã®æ•™å®¤
 2000/08/25
-¤¤¤Ê¤ª¤ê
+ã„ãªãŠã‚Š
 2000/04/14
-ÚH×ï¤Î½ÌÊÒ	.PD FlyingShine
+è´–ç½ªã®æ•™å®¤	.PD FlyingShine
 2000/01/14
-ÂİĞı»ØÀÈ	.rio
+èºæ—‹å›å»Š	.rio
 1999/12/03
-POW ¡«²¶Ì”¡« .PD FlyingShine
+POW ï½æ•è™œï½ .PD FlyingShine
 */
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information RioShiina_cui_information = {
-	_T("Y.Yamada/STUDIO ¤è¤·¤¯¤ó"),	/* copyright */
-	_T("×µÃûÀï¾w"),					/* system */
+	_T("Y.Yamada/STUDIO ã‚ˆã—ãã‚“"),	/* copyright */
+	_T("æ¤åé‡Œç·’"),					/* system */
 	_T(".WAR .WAA .S25 .MI4 .OGV"),	/* package */
 	_T("0.4.1"),					/* revision */
-	_T("³Õºº¹«Ôô"),					/* author */
+	_T("ç—´æ±‰å…¬è´¼"),					/* author */
 	_T("2009-2-15 10:49"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[8];		// "WARC 1.X(1-7)"
@@ -193,7 +193,7 @@ static DWORD inline warc_max_index_length(unsigned long WARC_version)
 static char WARC_key[MAX_PATH];
 static inline const char *WARC_key_string(DWORD WARC_version)
 {
-	const char *key = "Crypt Type %s - Copyright(C) 2000 Y.Yamada/STUDIO ‚æ‚µ‚­‚ñ";
+	const char *key = "Crypt Type %s - Copyright(C) 2000 Y.Yamada/STUDIO å‚›åŸå”å‚«";
 
 	if (WARC_version <= 120)
 		sprintf(WARC_key, key, "20000823");
@@ -278,7 +278,7 @@ static DWORD huffman_create_tree(struct huffman_state *hstat)
 		index = hstat->index++;
 		hstat->left[index] = huffman_create_tree(hstat);
 		hstat->right[index] = huffman_create_tree(hstat);
-	} else	// ·µ»Ø×Ö·û
+	} else	// è¿”å›å­—ç¬¦
 		index = huffman_get_bits(hstat, 8);
 
 	return index;
@@ -773,14 +773,14 @@ static void S25_decompress(BYTE *out, BYTE **compr_line_table,
 	for (DWORD y = 0; y < height; ++y) {
 		BYTE b, g, r, a;
 		BYTE *compr_line = *compr_line_table++;
-		DWORD compr_line_len = *(u16 *)compr_line;	// ²»°üº¬¶ÔÆëÓÃ×Ö½Ú
+		DWORD compr_line_len = *(u16 *)compr_line;	// ä¸åŒ…å«å¯¹é½ç”¨å­—èŠ‚
 		DWORD compr_line_pos = 2;
 		compr_line += 2;
 		DWORD cnt;
 
 		for (DWORD x = width; (int)x > 0; ) {
 			compr_line_pos += (u32)compr_line & 1;
-			compr_line = (BYTE *)((u32)(compr_line + 1) & ~1);	// 2×Ö½Ú¶ÔÆë
+			compr_line = (BYTE *)((u32)(compr_line + 1) & ~1);	// 2å­—èŠ‚å¯¹é½
 			cnt = *(u16 *)compr_line;
 			compr_line += 2;
 			compr_line_pos += 2;
@@ -941,7 +941,7 @@ static double decrypt_helper1(double a)
 
 		for (int i = 3; i < 1000; i += 2) {
 			v1 *= v2 / (i * (i - 1));
-			/* ¿É¶ÁĞÔ²»Ç¿
+			/* å¯è¯»æ€§ä¸å¼º
 			double tmp = v1 / i;
 			if (!tmp)
 				break;
@@ -1046,8 +1046,8 @@ static DWORD decrypt_helper2(DWORD WARC_version, double a)
 // 433B70
 static DWORD decrypt_helper3(BYTE *buf)
 {
-	// ¤È¤ó¤¬¤êÃ±×Ó¤Î¥á¥â¥Î¥ì
-	char decrypt_string[] = "‚Æ‚ñ‚ª‚è–Xq‚Ìƒƒ‚ÉÚ";
+	// ã¨ã‚“ãŒã‚Šå¸½å­ã®ãƒ¡ãƒ¢ãƒãƒ¬
+	char decrypt_string[] = "å²å‚«å‘å‚æœ®å·•åºå„Šå„Œå“¨";
 	char UserName[MAX_PATH];
 	DWORD UserNameLen = sizeof(UserName);
 	u32 code[80], v39[64], v42[64];
@@ -1252,7 +1252,7 @@ static void decrypt(unsigned long WARC_version, BYTE *cipher, unsigned int ciphe
 			dword_4A45D4 = 1;
 
 			dword_4A45D8 = (1566083941 * _cipher_length + 1) + RioShiina_png[(unsigned long)(rnd * -1.159263774752617e-5)];
-			//func_4237C0(256);	// ¸Ãº¯ÊıĞŞ¸ÄÁËdword_4A45D4µÄÖµ
+			//func_4237C0(256);	// è¯¥å‡½æ•°ä¿®æ”¹äº†dword_4A45D4çš„å€¼
 			v5 = 0xcd0da955 & 0xFFFFFFF;
 			if (cipher_length > 128) {
 				func_440940(cipher + 4, &unk_478108);
@@ -1375,7 +1375,7 @@ static int decode_init_sc(void)
 
 /********************* WAR *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int RioShiina_WAR_match(struct package *pkg)
 {
 	WAR_header_t WAR_header;
@@ -1405,9 +1405,9 @@ static int RioShiina_WAR_match(struct package *pkg)
 			&& strncmp(WAR_header.magic, "WARC 1.6", 8)
 			&& strncmp(WAR_header.magic, "WARC 1.7", 8)
 			) {
-		printf("²»Ö§³Ö¸ÃWARCÎÄ¼ş¡£Çë½«±¾ÓÎÏ·Ãû×Ö¡¢RIO.ini£¨»òÓëÓÎÏ·exeÍ¬ÃûµÄ.ini£©"
-			"ÎÄ¼şÖĞµÚÒ»ĞĞÖĞÄÚÈİÎª[’Å–¼—¢ vX.XX]ÖĞµÄX.XX°æ±¾ºÅºÍÇ°ÃæÏÔÊ¾µÄWARC versionÕâ3¸öĞÅÏ¢Ò»Æğ"
-			"±¨¸æµ½https://www.yukict.com/bbs/thread-20582-1-1.html£¨¿ÉÄäÃû·¢Ìû£©.Ğ»Ğ»");
+		printf("ä¸æ”¯æŒè¯¥WARCæ–‡ä»¶ã€‚è¯·å°†æœ¬æ¸¸æˆåå­—ã€RIO.iniï¼ˆæˆ–ä¸æ¸¸æˆexeåŒåçš„.iniï¼‰"
+			"æ–‡ä»¶ä¸­ç¬¬ä¸€è¡Œä¸­å†…å®¹ä¸º[æ™æŸ¤æ£¦å¼¿ vX.XX]ä¸­çš„X.XXç‰ˆæœ¬å·å’Œå‰é¢æ˜¾ç¤ºçš„WARC versionè¿™3ä¸ªä¿¡æ¯ä¸€èµ·"
+			"æŠ¥å‘Šåˆ°https://www.yukict.com/bbs/thread-20582-1-1.htmlï¼ˆå¯åŒ¿åå‘å¸–ï¼‰.è°¢è°¢");
 		pkg->pio->close(pkg);
 		return -CUI_EMATCH;	
 	}
@@ -1415,7 +1415,7 @@ static int RioShiina_WAR_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int RioShiina_WAR_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -1433,7 +1433,7 @@ static int RioShiina_WAR_extract_directory(struct package *pkg,
     else
 		WARC_version = (WAR_header.magic[5] - '0') * 100 + (WAR_header.magic[6] - '0') * 10 + (WAR_header.magic[7] - '0');
 
-	WAR_header.index_offset ^= 0xF182AD82;	// "¤¯¤ó"
+	WAR_header.index_offset ^= 0xF182AD82;	// "ãã‚“"
 
 	pkg->pio->length_of(pkg, &WAR_size);
 
@@ -1489,7 +1489,7 @@ static int RioShiina_WAR_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int RioShiina_WAR_parse_resource_info(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -1505,7 +1505,7 @@ static int RioShiina_WAR_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int RioShiina_WAR_extract_resource(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -1576,7 +1576,7 @@ static int RioShiina_WAR_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int RioShiina_WAR_save_resource(struct resource *res, 
 									   struct package_resource *pkg_res)
 {	
@@ -1600,7 +1600,7 @@ static int RioShiina_WAR_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void RioShiina_WAR_release_resource(struct package *pkg, 
 										   struct package_resource *pkg_res)
 {
@@ -1614,7 +1614,7 @@ static void RioShiina_WAR_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void RioShiina_WAR_release(struct package *pkg, 
 								  struct package_directory *pkg_dir)
 {
@@ -1626,7 +1626,7 @@ static void RioShiina_WAR_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation RioShiina_WAR_operation = {
 	RioShiina_WAR_match,				/* match */
 	RioShiina_WAR_extract_directory,	/* extract_directory */
@@ -1714,7 +1714,7 @@ static int RioShiina_S25_extract_directory(struct package *pkg,
 		index[p].length = offset_table[i] - offset_table[p];
 	delete [] offset_table;
 
-	/* ÒòÎªºóÃæµÄÍ¼Ïñ¿ÉÄÜÒıÓÃÇ°ÃæÍ¼ÏñµÄcompr_lineÊı¾İ */
+	/* å› ä¸ºåé¢çš„å›¾åƒå¯èƒ½å¼•ç”¨å‰é¢å›¾åƒçš„compr_lineæ•°æ® */
 	u32 s25_size;
 	pkg->pio->length_of(pkg, &s25_size);
 
@@ -1747,7 +1747,7 @@ static int RioShiina_S25_parse_resource_info(struct package *pkg,
 
 	entry = (my_s25_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = entry->offset;
@@ -1795,7 +1795,7 @@ static int RioShiina_S25_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void RioShiina_S25_release(struct package *pkg, 
 								  struct package_directory *pkg_dir)
 {
@@ -1943,10 +1943,10 @@ static cui_ext_operation RioShiina_OGV_operation = {
 	RioShiina_WAR_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK RioShiina_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".WAR"), NULL, 
 		NULL, &RioShiina_WAR_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -1975,4 +1975,5 @@ int CALLBACK RioShiina_register_cui(struct cui_register_callback *callback)
 		resource_decrypt_flag = 1;
 
 	return 0;
+}
 }

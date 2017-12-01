@@ -195,3 +195,4 @@ STREAMFILE * open_foo_streamfile_buffer(const char * const filename, size_t buff
 
     return streamFile;
 }
+}

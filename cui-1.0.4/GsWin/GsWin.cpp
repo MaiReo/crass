@@ -11,11 +11,11 @@
 #include <stdio.h>
 
 struct acui_information GsWin_cui_information = {
-	_T("ÖêÊ½»áÉç¤Á¤§¤ê©`¤½¤Õ¤È"),	/* copyright */
+	_T("æ ªå¼ä¼šç¤¾ã¡ã‡ã‚Šãƒ¼ããµã¨"),	/* copyright */
 	_T("GsWin"),					/* system */
 	_T(".pak .pa_ .dat"),			/* package */
 	_T("1.1.0"),					/* revision */
-	_T("³Õh¹«Ù\"),					/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),					/* author */
 	_T("2009-2-14 14:05"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -27,18 +27,18 @@ typedef struct {
 	s8 description[32];	/* "GsPackFile5" or "GsPackFile4" */
 	u16 minor_version;
 	u16 major_version;
-	u32 index_length;	/* Ñ¹ËõµÄË÷Òı¶Î³¤¶È */
+	u32 index_length;	/* å‹ç¼©çš„ç´¢å¼•æ®µé•¿åº¦ */
 	u32 decode_key;	
 	u32 index_entries;		
 	u32 data_offset;
-	u32 index_offset;	/* Ñ¹ËõµÄË÷Òı¶Î³¤¶È */
+	u32 index_offset;	/* å‹ç¼©çš„ç´¢å¼•æ®µé•¿åº¦ */
 } pak_header_t;
 
 typedef struct {
 	s8 name[64];
-	u32 offset;		/* ¾àÀëÊı¾İ¶ÎµÄÆ«ÒÆ */
-	u32 length;		/* 4×Ö½Ú¶ÔÆë */
-	u32 unknown0;	// ·Çv5Ã»ÓĞÕâĞ©×Ö¶Î
+	u32 offset;		/* è·ç¦»æ•°æ®æ®µçš„åç§» */
+	u32 length;		/* 4å­—èŠ‚å¯¹é½ */
+	u32 unknown0;	// év5æ²¡æœ‰è¿™äº›å­—æ®µ
 	u32 unknown1;
 	BYTE pad[24];
 } pak_entry_t;
@@ -63,12 +63,12 @@ typedef struct {	// 0x1c8
 	u32 uncomprlen;
 	u32 comprlen;	
 	u32 always_1;					// 1
-	u32 instruction_table_entries;	// ½Å±¾Ö¸ÁîµÄ¸öÊı
-	u32 string_table_entries;		// ×Ö·û´®µÄ¸öÊı
-	u32 unknown_table_entries;		// £¿£¿µÄ¸öÊı
-	u32 instruction_data_length;	// ½Å±¾Êı¾İ×Ü³¤¶È
-	u32 string_data_length;			// ×Ö·û´®Êı¾İ×Ü³¤¶È
-	u32 unknown_data_length;		// £¿£¿Êı¾İ×Ü³¤¶È
+	u32 instruction_table_entries;	// è„šæœ¬æŒ‡ä»¤çš„ä¸ªæ•°
+	u32 string_table_entries;		// å­—ç¬¦ä¸²çš„ä¸ªæ•°
+	u32 unknown_table_entries;		// ï¼Ÿï¼Ÿçš„ä¸ªæ•°
+	u32 instruction_data_length;	// è„šæœ¬æ•°æ®æ€»é•¿åº¦
+	u32 string_data_length;			// å­—ç¬¦ä¸²æ•°æ®æ€»é•¿åº¦
+	u32 unknown_data_length;		// ï¼Ÿï¼Ÿæ•°æ®æ€»é•¿åº¦
 	u8 pad[0x18c];
 } scw5_header_t;
 
@@ -80,12 +80,12 @@ typedef struct {	// 0x1c4
 	u32 uncomprlen;
 	u32 comprlen;	
 	u32 always_1;					// 1
-	u32 instruction_table_entries;	// ½Å±¾Ö¸ÁîµÄ¸öÊı
-	u32 string_table_entries;		// ×Ö·û´®µÄ¸öÊı
-	u32 unknown_table_entries;		// £¿£¿µÄ¸öÊı
-	u32 instruction_data_length;	// ½Å±¾Êı¾İ×Ü³¤¶È
-	u32 string_data_length;			// ×Ö·û´®Êı¾İ×Ü³¤¶È
-	u32 unknown_data_length;		// £¿£¿Êı¾İ×Ü³¤¶È
+	u32 instruction_table_entries;	// è„šæœ¬æŒ‡ä»¤çš„ä¸ªæ•°
+	u32 string_table_entries;		// å­—ç¬¦ä¸²çš„ä¸ªæ•°
+	u32 unknown_table_entries;		// ï¼Ÿï¼Ÿçš„ä¸ªæ•°
+	u32 instruction_data_length;	// è„šæœ¬æ•°æ®æ€»é•¿åº¦
+	u32 string_data_length;			// å­—ç¬¦ä¸²æ•°æ®æ€»é•¿åº¦
+	u32 unknown_data_length;		// ï¼Ÿï¼Ÿæ•°æ®æ€»é•¿åº¦
 	u8 pad[0x188];
 } scw4_header_t;
 
@@ -96,30 +96,30 @@ typedef struct {	// 0x100
 	u32 is_compr;
 	u32 uncomprlen;
 	u32 always_1;					// 1
-	u32 instruction_table_entries;	// ½Å±¾Ö¸ÁîµÄ¸öÊı(GsWin3: x16)
-	u32 string_table_entries;		// ×Ö·û´®µÄ¸öÊı(GsWin3: x16)
-	u32 unknown_table_entries;		// £¿£¿µÄ¸öÊı(GsWin3: x16)
-	u32 instruction_data_length;	// ½Å±¾Êı¾İ×Ü³¤¶È
-	u32 string_data_length;			// ×Ö·û´®Êı¾İ×Ü³¤¶È
-	u32 unknown_data_length;		// £¿£¿Êı¾İ×Ü³¤¶È
-	u32 unknown_data1_entries;		// £¿£¿(GsWin3: x8)
-	u32 unknown_data2_entries;		// £¿£¿(GsWin3: x8)
+	u32 instruction_table_entries;	// è„šæœ¬æŒ‡ä»¤çš„ä¸ªæ•°(GsWin3: x16)
+	u32 string_table_entries;		// å­—ç¬¦ä¸²çš„ä¸ªæ•°(GsWin3: x16)
+	u32 unknown_table_entries;		// ï¼Ÿï¼Ÿçš„ä¸ªæ•°(GsWin3: x16)
+	u32 instruction_data_length;	// è„šæœ¬æ•°æ®æ€»é•¿åº¦
+	u32 string_data_length;			// å­—ç¬¦ä¸²æ•°æ®æ€»é•¿åº¦
+	u32 unknown_data_length;		// ï¼Ÿï¼Ÿæ•°æ®æ€»é•¿åº¦
+	u32 unknown_data1_entries;		// ï¼Ÿï¼Ÿ(GsWin3: x8)
+	u32 unknown_data2_entries;		// ï¼Ÿï¼Ÿ(GsWin3: x8)
 	u8 pad[0xc0];
 } scw3_header_t;
 
-typedef struct {	// ½Å±¾Ö¸Áî±í
-	u32 offset;		// ½Å±¾Ö¸ÁîµÄÆ«ÒÆ£¨ Ïà¶ÔÓÚ½Å±¾Ö¸Áî±íÆğÊ¼£©
-	u32 length;		// ½Å±¾Ö¸ÁîµÄ³¤¶È
+typedef struct {	// è„šæœ¬æŒ‡ä»¤è¡¨
+	u32 offset;		// è„šæœ¬æŒ‡ä»¤çš„åç§»ï¼ˆ ç›¸å¯¹äºè„šæœ¬æŒ‡ä»¤è¡¨èµ·å§‹ï¼‰
+	u32 length;		// è„šæœ¬æŒ‡ä»¤çš„é•¿åº¦
 } instruction_table_entry_t;
 
-typedef struct {	// ×Ö·û´®±í
-	u32 offset;		// ×Ö·û´®µÄÆ«ÒÆ£¨Ïà¶ÔÓÚ½Å±¾Ö¸Áî±íÆğÊ¼£©
-	u32 length;		// ×Ö·û´®µÄ³¤¶È£¨°üº¬NULL£©
+typedef struct {	// å­—ç¬¦ä¸²è¡¨
+	u32 offset;		// å­—ç¬¦ä¸²çš„åç§»ï¼ˆç›¸å¯¹äºè„šæœ¬æŒ‡ä»¤è¡¨èµ·å§‹ï¼‰
+	u32 length;		// å­—ç¬¦ä¸²çš„é•¿åº¦ï¼ˆåŒ…å«NULLï¼‰
 } string_table_entry_t;
 
-typedef struct {	// £¿£¿±í
-	u32 offset;		// £¿£¿µÄÆ«ÒÆ£¨Ïà¶ÔÓÚ£¿£¿±íÆğÊ¼£©
-	u32 length;		// £¿£¿µÄ³¤¶È
+typedef struct {	// ï¼Ÿï¼Ÿè¡¨
+	u32 offset;		// ï¼Ÿï¼Ÿçš„åç§»ï¼ˆç›¸å¯¹äºï¼Ÿï¼Ÿè¡¨èµ·å§‹ï¼‰
+	u32 length;		// ï¼Ÿï¼Ÿçš„é•¿åº¦
 } unknown_table_entry_t;
 
 typedef struct {			// 0x118
@@ -167,11 +167,11 @@ typedef struct {
 	u32 width;
 	u32 height;
 	u32 color_depth;
-	u16 orig_x;		// ºÏ³ÉÍ¼(±ÈÈçÑÛÉñÍ¼)ÔÚ»ù´¡Í¼ÖĞµÄÎ»ÖÃ
+	u16 orig_x;		// åˆæˆå›¾(æ¯”å¦‚çœ¼ç¥å›¾)åœ¨åŸºç¡€å›¾ä¸­çš„ä½ç½®
 	u16 orig_y;
-	u16 x;			// (ÑÛÉñÍ¼µÄ)³ß´ç
+	u16 x;			// (çœ¼ç¥å›¾çš„)å°ºå¯¸
 	u16 y;
-	u32 pics;		// ¿ÉÑ¡µÄ±íÇéÊı(×ÜÊı-1£¬ÒòÎªµÚÒ»¸ö±íÇé×ÜÊÇºÍ»ù´¡Í¼Ò»ÖÂ)
+	u32 pics;		// å¯é€‰çš„è¡¨æƒ…æ•°(æ€»æ•°-1ï¼Œå› ä¸ºç¬¬ä¸€ä¸ªè¡¨æƒ…æ€»æ˜¯å’ŒåŸºç¡€å›¾ä¸€è‡´)
 } grp3_header_t;
 #pragma pack ()		
 	
@@ -195,13 +195,13 @@ static int lzss_decompress(unsigned char *uncompr, unsigned int uncomprlen,
 				unsigned char *compr, unsigned int comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	unsigned int curbyte = 0;		/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	unsigned int curbyte = 0;		/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int nCurWindowByte = 0x0fee;
 	unsigned char win[4096];
 	unsigned int win_size = 4096;
 	
 	memset(win, 0, win_size);
-	/* ÒòÎªflagµÄÊµ¼ÊÎ»Êı²»Ã÷£¬Òò´ËÓÉflagÒıÆğµÄcomprÏÂÒçµÄÎÊÌâ¶¼²»Ëã´íÎó */
+	/* å› ä¸ºflagçš„å®é™…ä½æ•°ä¸æ˜ï¼Œå› æ­¤ç”±flagå¼•èµ·çš„comprä¸‹æº¢çš„é—®é¢˜éƒ½ä¸ç®—é”™è¯¯ */
 	while (1) {
 		unsigned char bitmap;
 		
@@ -210,7 +210,7 @@ static int lzss_decompress(unsigned char *uncompr, unsigned int uncomprlen,
 
 		bitmap = getbyte_le(compr[curbyte++]);
 		for (unsigned int curbit_bitmap = 0; curbit_bitmap < 8; curbit_bitmap++) {
-			/* Èç¹ûÎª1, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+			/* å¦‚æœä¸º1, è¡¨ç¤ºæ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŸæ ·è¾“å‡º */
 			if (getbit_le(bitmap, curbit_bitmap)) {
 				unsigned char data;
 
@@ -222,9 +222,9 @@ static int lzss_decompress(unsigned char *uncompr, unsigned int uncomprlen,
 				if (act_uncomprlen >= uncomprlen)
 					goto out;
 
-				/* Êä³ö1×Ö½Ú·ÇÑ¹ËõÊı¾İ */
+				/* è¾“å‡º1å­—èŠ‚éå‹ç¼©æ•°æ® */
 				uncompr[act_uncomprlen++] = data;		
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;
 			} else {
@@ -250,9 +250,9 @@ static int lzss_decompress(unsigned char *uncompr, unsigned int uncomprlen,
 					if (act_uncomprlen >= uncomprlen)
 						goto out;
 	
-					/* Êä³ö1×Ö½Ú·ÇÑ¹ËõÊı¾İ */
+					/* è¾“å‡º1å­—èŠ‚éå‹ç¼©æ•°æ® */
 					uncompr[act_uncomprlen++] = data;		
-					/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+					/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 					win[nCurWindowByte++] = data;
 					nCurWindowByte &= win_size - 1;		
 				}
@@ -293,7 +293,7 @@ static int GsWin_pak_extract_directory(struct package *pkg,
 	u32 compr_index_buffer_len, decode_key, index_entries, data_offset, index_offset;
 	void *index_buffer;
 
-	/* ¿ç¹ıÃèÊö×Ö¶Î */
+	/* è·¨è¿‡æè¿°å­—æ®µ */
 	if (pkg->pio->seek(pkg, 48, IO_SEEK_SET))
 		return -CUI_EREAD;
 	
@@ -370,7 +370,7 @@ static int GsWin_pak_parse_resource_info(struct package *pkg,
 	pak_entry_t *pak_entry;
 
 	pak_entry = (pak_entry_t *)pkg_res->actual_index_entry;
-	if (!pak_entry->name[0])	// fix for ¥á¥µ¥¤¥¢ and ¥Õ¥¡¥Ê¥Æ¥£¥« scr.pak
+	if (!pak_entry->name[0])	// fix for ãƒ¡ã‚µã‚¤ã‚¢ and ãƒ•ã‚¡ãƒŠãƒ†ã‚£ã‚« scr.pak
 		pak_entry->name[0] = 'S';
 	strncpy(pkg_res->name, pak_entry->name, 64);
 	pkg_res->name[64] = 0;
@@ -807,7 +807,7 @@ static int GsWin3_PAK_parse_resource_info(struct package *pkg,
 
 	pak_entry = (pak3_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, pak_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = pak_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = pak_entry->offset;
@@ -914,4 +914,5 @@ int CALLBACK GsWin_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

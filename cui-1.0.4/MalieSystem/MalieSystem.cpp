@@ -12,7 +12,7 @@
 #include "camellia.h"
 
 /*
-ÕÒmbs_tolowerµÄËã·¨£º
+æ‰¾mbs_tolowerçš„ç®—æ³•ï¼š
 
 tools.dll:
 01043D67    68 4C010000     PUSH 14C
@@ -33,7 +33,7 @@ tools.dll:
 01043D95    8D4424 10       LEA EAX,DWORD PTR SS:[ESP+10]
 01043D99    52              PUSH EDX
 01043D9A    50              PUSH EAX
-01043D9B    68 80000000     PUSH 80 ¡¶-- ¹Ø¼ü×Ö
+01043D9B    68 80000000     PUSH 80 ã€Š-- å…³é”®å­—
 01043DA0    E8 9BE30000     CALL tools.01052140
 */
 
@@ -42,7 +42,7 @@ struct acui_information MalieSystem_cui_information = {
 	_T("MalieSystem"),		/* system */
 	_T(".lib .mgf .mls"),	/* package */
 	_T("3.1.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-6-1 16:54"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -301,7 +301,7 @@ static int MalieSystem_lib_match(struct package *pkg)
 				rotate16bytes(0, (DWORD *)_cipher);
 				Camellia_DecryptBlock(128, _cipher, keyTable, plain);
 	
-				// ÒòÎª"LIB"µÄË÷ÒýÏî²»ÊÇ16×Ö½Ú¶ÔÆë,ËùÒÔÖ»ÓÐLIBUÐÍ²Å¿ÉÄÜÓÐ¼ÓÃÜ
+				// å› ä¸º"LIB"çš„ç´¢å¼•é¡¹ä¸æ˜¯16å­—èŠ‚å¯¹é½,æ‰€ä»¥åªæœ‰LIBUåž‹æ‰å¯èƒ½æœ‰åŠ å¯†
 				if (!memcmp(plain, "LIBU", 4)) {		
 					is_libu = 1;
 					is_encryption = 1;
@@ -318,7 +318,7 @@ static int MalieSystem_lib_match(struct package *pkg)
 			rotate16bytes((unsigned int)pkg->fior->base_offset + 16, (DWORD *)(cipher + 16));
 			Camellia_DecryptBlock(128, cipher + 16, keyTable, plain + 16);
 
-			// ÒòÎª"LIB"µÄË÷ÒýÏî²»ÊÇ16×Ö½Ú¶ÔÆë,ËùÒÔÖ»ÓÐLIBUÐÍ²Å¿ÉÄÜÓÐ¼ÓÃÜ
+			// å› ä¸º"LIB"çš„ç´¢å¼•é¡¹ä¸æ˜¯16å­—èŠ‚å¯¹é½,æ‰€ä»¥åªæœ‰LIBUåž‹æ‰å¯èƒ½æœ‰åŠ å¯†
 			plain_lib_header = (lib_header_t *)memstr(plain, sizeof(plain), "LIBU");
 			if (plain_lib_header) {		
 				is_libu = 1;
@@ -406,7 +406,7 @@ static int MalieSystem_lib_parse_resource_info(struct package *pkg,
 		pkg_res->raw_data_length = lib_entry->length;
 		pkg_res->offset = lib_entry->offset;
 	}
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */	
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */	
 	pkg_res->actual_data_length = 0;
 
 	return 0;
@@ -697,4 +697,5 @@ int CALLBACK MalieSystem_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

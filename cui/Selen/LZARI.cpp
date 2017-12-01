@@ -238,3 +238,4 @@ int lzari_decompress(unsigned char *data_in, unsigned char *cpage_out,
 {
     return Decode(data_in, cpage_out, srclen, destlen);
 }
+}

@@ -10,19 +10,19 @@
 #include <utility.h>
 #include <cui_common.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information route2_cui_information = {
 	_T(""),					/* copyright */
 	_T(""),					/* system */
 	_T(".MHU .CGF .CG .IAF .SUD .WPF"),		/* package */
 	_T("1.0.5"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-3-31 15:56"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	u32 uncomprlen;				
@@ -101,9 +101,9 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -123,7 +123,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 			uncompr[act_uncomprlen++] = data;
 			if (act_uncomprlen >= uncomprlen)
 				break;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -143,7 +143,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 				uncompr[act_uncomprlen++] = data;
 				if (act_uncomprlen >= uncomprlen)
 					return act_uncomprlen;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -154,7 +154,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 }
 
 #if 1
-// ¼û¹í£¡
+// è§é¬¼ï¼
 static int rle_uncompress(BYTE *uncompr, DWORD uncomprLen, 
 						  BYTE *compr, DWORD comprLen)
 {
@@ -230,7 +230,7 @@ static int rle_uncompress(BYTE *uncompr, DWORD uncomprLen,
 
 /********************* MHU *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int route2_MHU_match(struct package *pkg)
 {
 	s32 uncomprlen;
@@ -249,7 +249,7 @@ static int route2_MHU_match(struct package *pkg)
 		return -CUI_EREAD;
 	}
 
-	// ÎªÁËÇø·ÖMKSF.MHU£¨ÄÚÈİºÍ´æÔÚÒâÒå²»Ã÷£©
+	// ä¸ºäº†åŒºåˆ†MKSF.MHUï¼ˆå†…å®¹å’Œå­˜åœ¨æ„ä¹‰ä¸æ˜ï¼‰
 	if (uncomprlen <= 0 || tmp != 0xff) {
 		pkg->pio->close(pkg);
 		return -CUI_EMATCH;	
@@ -258,7 +258,7 @@ static int route2_MHU_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int route2_MHU_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -295,7 +295,7 @@ static int route2_MHU_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation route2_MHU_operation = {
 	route2_MHU_match,			/* match */
 	NULL,						/* extract_directory */
@@ -307,7 +307,7 @@ static cui_ext_operation route2_MHU_operation = {
 #if 0
 /********************* SD *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int route2_SD_match(struct package *pkg)
 {
 	if (!get_options("decSD"))
@@ -319,7 +319,7 @@ static int route2_SD_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int route2_SD_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -346,7 +346,7 @@ static int route2_SD_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation route2_SD_operation = {
 	route2_SD_match,			/* match */
 	NULL,						/* extract_directory */
@@ -358,7 +358,7 @@ static cui_ext_operation route2_SD_operation = {
 
 /********************* CGF *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int route2_CGF_match(struct package *pkg)
 {
 	u32 index_entries;
@@ -379,7 +379,7 @@ static int route2_CGF_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int route2_CGF_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
@@ -467,7 +467,7 @@ static int route2_CGF_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int route2_CGF_parse_resource_info(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -475,15 +475,15 @@ static int route2_CGF_parse_resource_info(struct package *pkg,
 
 	CGF_entry = (my_cgf_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, CGF_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = CGF_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = CGF_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int route2_CGF_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -540,7 +540,7 @@ static int route2_CGF_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Lambda_CGF_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -552,7 +552,7 @@ static void Lambda_CGF_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation route2_CGF_operation = {
 	route2_CGF_match,					/* match */
 	route2_CGF_extract_directory,		/* extract_directory */
@@ -578,19 +578,19 @@ static int route2_CG_extract_directory(struct package *pkg,
 			0, IO_SEEK_SET))
 		return -CUI_EREADVEC;
 
-	// ×ÔÌ½²âÃ¿¸öentryµÄ³¤¶È
+	// è‡ªæ¢æµ‹æ¯ä¸ªentryçš„é•¿åº¦
 	BYTE tmp[96];
 	if (pkg->pio->read(pkg, tmp, sizeof(tmp)))
 		return -CUI_EREADVEC;
 
-	// ¼Ù¶¨Ãû×Ö×Ö¶ÎÖÁÉÙ8×Ö½Ú³¤
+	// å‡å®šåå­—å­—æ®µè‡³å°‘8å­—èŠ‚é•¿
 	int name_len = 8;
 	while (1) {
-		// name×Ö¶ÎÖ®ºóÓ¦¸ÃÊÇÊı¾İÆ«ÒÆ
+		// nameå­—æ®µä¹‹ååº”è¯¥æ˜¯æ•°æ®åç§»
 		if (*(u32 *)&tmp[name_len] == sizeof(CGF_header) 
 				+ CGF_header.index_entries * (name_len + 4))
 			break;
-		// ¼Ù¶¨Ãû×Ö×Ö¶ÎÒ»¶¨4×Ö½Ú¶ÔÆë
+		// å‡å®šåå­—å­—æ®µä¸€å®š4å­—èŠ‚å¯¹é½
 		name_len += 4;
 	}
 	DWORD entry_size = name_len + 4;
@@ -671,7 +671,7 @@ static cui_ext_operation route2_CG_operation = {
 
 /********************* WPF *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int route2_WPF_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -755,7 +755,7 @@ static cui_ext_operation route2_WPF_operation = {
 
 /********************* IAF *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int route2_IAF_match(struct package *pkg)
 {
 	u32 IAF_size;
@@ -790,7 +790,7 @@ static int route2_IAF_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int route2_IAF_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -831,7 +831,7 @@ static int route2_IAF_extract_resource(struct package *pkg,
 
 		comprlen = IAF_old_header->comprLen;
 		uncomprlen = IAF_old_tailer->uncomprLen;
-		//compr = (BYTE *)(IAF_old_tailer + 1);	// ÊÖÎó»¹ÊÇ£¿
+		//compr = (BYTE *)(IAF_old_tailer + 1);	// æ‰‹è¯¯è¿˜æ˜¯ï¼Ÿ
 		compr = (BYTE *)(IAF_old_header + 1);
 	}
 
@@ -870,7 +870,7 @@ static int route2_IAF_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation route2_IAF_operation = {
 	route2_IAF_match,			/* match */
 	NULL,						/* extract_directory */
@@ -881,7 +881,7 @@ static cui_ext_operation route2_IAF_operation = {
 
 /********************* SUD *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int route2_SUD_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -890,7 +890,7 @@ static int route2_SUD_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int route2_SUD_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
@@ -938,7 +938,7 @@ static int route2_SUD_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int route2_SUD_parse_resource_info(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -946,15 +946,15 @@ static int route2_SUD_parse_resource_info(struct package *pkg,
 
 	SUD_entry = (SUD_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, SUD_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = SUD_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = SUD_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int route2_SUD_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -968,7 +968,7 @@ static int route2_SUD_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Lambda_SUD_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -976,7 +976,7 @@ static void Lambda_SUD_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation route2_SUD_operation = {
 	route2_SUD_match,					/* match */
 	route2_SUD_extract_directory,		/* extract_directory */
@@ -989,7 +989,7 @@ static cui_ext_operation route2_SUD_operation = {
 
 /********************* IAF *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int route2_IAFd_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -1121,7 +1121,7 @@ static int route2_IAFd_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int route2_IAFd_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -1129,7 +1129,7 @@ static int route2_IAFd_parse_resource_info(struct package *pkg,
 
 	my_iaf_entry = (my_iaf_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_iaf_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_iaf_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = my_iaf_entry->offset;
@@ -1163,7 +1163,7 @@ static cui_ext_operation route2_IAFd_operation = {
 	CUI_COMMON_OPERATION
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK route2_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".CGF"), NULL, 
@@ -1199,4 +1199,5 @@ int CALLBACK route2_register_cui(struct cui_register_callback *callback)
 //			return -1;
 
 	return 0;
+}
 }

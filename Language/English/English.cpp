@@ -32,7 +32,7 @@ static const TCHAR *string_table[] = {
  	_T("%s: extracting resource %ld / %ld %c\r"),
  	_T("%s: extracted resource %ld / %ld\n"),
  	_T("%s: fail to extract the %dth resource\n"),
-	_T("\n%s£ºfail to extract the resource from %s(%d)\n"),
+	_T("\n%sï¼šfail to extract the resource from %s(%d)\n"),
  	_T("%s: extracting package of resource %d %c\r"),
  	_T("%s: extracted %d packages                  \n\n"),
  	_T("%s: the specified cui doesn\'t exist\n"),
@@ -45,7 +45,7 @@ static const TCHAR *string_table[] = {
 	_T("Reading %d packages ...\n"),
 	_T("\nStart the extraction ...\n\n"),
 	_T("\n\n\t\t\t\t\t\t... Finish the extraction\n\n"),
-	_T("Copyright£º\t%s\n"),
+	_T("Copyrightï¼š\t%s\n"),
 	_T("System: \t%s\n"),
 	_T("Package: \t%s\n"),
 	_T("Version: \t%s\n"),
@@ -61,5 +61,7 @@ __declspec(dllexport) struct locale_configuration English_locale_configuration =
 	0,
 	string_table
 };
+
+
 
 

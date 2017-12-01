@@ -8,19 +8,19 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information YukaScript_cui_information = {
 	_T(""),					/* copyright */
 	_T("YukaScript"),		/* system */
 	_T(".ykc .dat"),		/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2008-10-11 10:21"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[8];			/* "YKC001" */
@@ -76,7 +76,7 @@ typedef struct {
 
 /********************* ykc *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int YukaScript_ykc_match(struct package *pkg)
 {
 	s8 magic[8];
@@ -100,7 +100,7 @@ static int YukaScript_ykc_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int YukaScript_ykc_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -161,7 +161,7 @@ static int YukaScript_ykc_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int YukaScript_ykc_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -172,15 +172,15 @@ static int YukaScript_ykc_parse_resource_info(struct package *pkg,
 
 	my_ykc_entry = (my_ykc_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_ykc_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_ykc_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_ykc_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int YukaScript_ykc_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -210,7 +210,7 @@ static int YukaScript_ykc_extract_resource(struct package *pkg,
 			for (DWORD e = 0; e < yks->text_length; e++)
 				text[e] ^= 0xaa;
 		}
-	// for FairlyLife WEBÌåòY°æ01: ll02_mn_ev01_gr_w.ykg
+	// for FairlyLife WEBä½“é¨“ç‰ˆ01: ll02_mn_ev01_gr_w.ykg
 	//} else if (!strncmp((char *)raw, "YKG000", 8)) {
 	} else if (!strncmp((char *)raw, "YKG000", 8) && (
 		*(u32 *)(&raw[0x2c]) && !*(u32 *)(&raw[0x34]) && !*(u32 *)(&raw[0x3c])
@@ -248,7 +248,7 @@ static int YukaScript_ykc_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int YukaScript_ykc_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -272,7 +272,7 @@ static int YukaScript_ykc_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void YukaScript_ykc_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -286,7 +286,7 @@ static void YukaScript_ykc_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void YukaScript_ykc_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
@@ -298,7 +298,7 @@ static void YukaScript_ykc_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation YukaScript_ykc_operation = {
 	YukaScript_ykc_match,					/* match */
 	YukaScript_ykc_extract_directory,		/* extract_directory */
@@ -311,7 +311,7 @@ static cui_ext_operation YukaScript_ykc_operation = {
 
 /********************* ykg *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int YukaScript_ykg_match(struct package *pkg)
 {
 	s8 magic[8];
@@ -332,7 +332,7 @@ static int YukaScript_ykg_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int YukaScript_ykg_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -352,7 +352,7 @@ static int YukaScript_ykg_extract_directory(struct package *pkg,
 	index_buffer[0].length = ykg_header.length0;
 	index_buffer[1].offset = ykg_header.offset1;
 	index_buffer[1].length = ykg_header.length1;
-	/* coordinateÊı¾İ */
+	/* coordinateæ•°æ® */
 	index_buffer[2].offset = ykg_header.offset2;
 	index_buffer[2].length = ykg_header.length2;
 
@@ -365,7 +365,7 @@ static int YukaScript_ykg_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int YukaScript_ykg_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -376,15 +376,15 @@ static int YukaScript_ykg_parse_resource_info(struct package *pkg,
 		sprintf(pkg_res->name, "%d", pkg_res->index_number);
 	else
 		strcpy(pkg_res->name, "coordinate");		
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = ykg_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = ykg_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int YukaScript_ykg_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -420,7 +420,7 @@ static int YukaScript_ykg_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int YukaScript_ykg_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -439,7 +439,7 @@ static int YukaScript_ykg_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void YukaScript_ykg_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -449,14 +449,14 @@ static void YukaScript_ykg_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void YukaScript_ykg_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation YukaScript_ykg_operation = {
 	YukaScript_ykg_match,					/* match */
 	YukaScript_ykg_extract_directory,		/* extract_directory */
@@ -467,10 +467,10 @@ static cui_ext_operation YukaScript_ykg_operation = {
 	YukaScript_ykg_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK YukaScript_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".ykc"), NULL, 
 		NULL, &YukaScript_ykc_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -484,4 +484,5 @@ int CALLBACK YukaScript_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

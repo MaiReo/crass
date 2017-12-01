@@ -8,19 +8,19 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information gmf_cui_information = {
 	NULL,					/* copyright */
 	NULL,					/* system */
 	_T(".mma .pak .dat .arc .nsa .ypf .fpk .odn .alm .ngs .mpk .bin .yukke .wav .dow .TCD .hxp .mp_ .sfd .hum"),		/* package */
 	_T("0.3.8"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-6-27 23:14"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];
@@ -28,7 +28,7 @@ typedef struct {
 } dat_header_t;
 #pragma pack ()
 
-/* .dat·â°üµÄË÷ÒýÏî½á¹¹ */
+/* .datå°åŒ…çš„ç´¢å¼•é¡¹ç»“æž„ */
 typedef struct {
 	s8 name[256];
 	u32 name_length;
@@ -38,7 +38,7 @@ typedef struct {
 
 /********************* mpg *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int gmf_mpg_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -60,7 +60,7 @@ static int gmf_mpg_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int gmf_extract_resource(struct package *pkg,
 								struct package_resource *pkg_res)
 {
@@ -82,7 +82,7 @@ static int gmf_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int gmf_save_resource(struct resource *res, 
 							 struct package_resource *pkg_res)
 {
@@ -106,7 +106,7 @@ static int gmf_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void gmf_release_resource(struct package *pkg, 
 								 struct package_resource *pkg_res)
 {
@@ -120,14 +120,14 @@ static void gmf_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void gmf_release(struct package *pkg, 
 						struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation gmf_mpg_operation = {
 	gmf_mpg_match,				/* match */
 	NULL,						/* extract_directory */
@@ -140,7 +140,7 @@ static cui_ext_operation gmf_mpg_operation = {
 
 /********************* wmv *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int gmf_wmv_match(struct package *pkg)
 {
 	s8 magic[10];
@@ -161,7 +161,7 @@ static int gmf_wmv_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation gmf_wmv_operation = {
 	gmf_wmv_match,				/* match */
 	NULL,						/* extract_directory */
@@ -174,7 +174,7 @@ static cui_ext_operation gmf_wmv_operation = {
 
 /********************* ogg *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int gmf_ogg_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -195,7 +195,7 @@ static int gmf_ogg_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation gmf_ogg_operation = {
 	gmf_ogg_match,			/* match */
 	NULL,					/* extract_directory */
@@ -208,7 +208,7 @@ static cui_ext_operation gmf_ogg_operation = {
 
 /********************* wav *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int gmf_wav_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -229,7 +229,7 @@ static int gmf_wav_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation gmf_wav_operation = {
 	gmf_wav_match,			/* match */
 	NULL,					/* extract_directory */
@@ -242,7 +242,7 @@ static cui_ext_operation gmf_wav_operation = {
 
 /********************* dds *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int gmf_dds_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -263,7 +263,7 @@ static int gmf_dds_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation gmf_dds_operation = {
 	gmf_dds_match,			/* match */
 	NULL,					/* extract_directory */
@@ -276,7 +276,7 @@ static cui_ext_operation gmf_dds_operation = {
 
 /********************* png *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int gmf_png_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -297,7 +297,7 @@ static int gmf_png_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation gmf_png_operation = {
 	gmf_png_match,			/* match */
 	NULL,					/* extract_directory */
@@ -310,7 +310,7 @@ static cui_ext_operation gmf_png_operation = {
 
 /********************* avi *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int gmf_avi_match(struct package *pkg)
 {
 	s8 magic[16];
@@ -331,7 +331,7 @@ static int gmf_avi_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation gmf_avi_operation = {
 	gmf_avi_match,			/* match */
 	NULL,					/* extract_directory */
@@ -344,7 +344,7 @@ static cui_ext_operation gmf_avi_operation = {
 
 /********************* mpga *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int gmf_mpga_match(struct package *pkg)
 {
 	u32 magic;
@@ -365,7 +365,7 @@ static int gmf_mpga_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation gmf_mpga_operation = {
 	gmf_mpga_match,			/* match */
 	NULL,					/* extract_directory */
@@ -376,7 +376,7 @@ static cui_ext_operation gmf_mpga_operation = {
 	gmf_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK gmf_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".hum"), _T(".ogg"), 
@@ -482,12 +482,12 @@ int CALLBACK gmf_register_cui(struct cui_register_callback *callback)
 		NULL, &gmf_wmv_operation, CUI_EXT_FLAG_PKG))
 			return -1;
 
-	// (Í¬ÈË¥²©`¥à)[081227][Ã·Âé…Î3D]Ë«×Ó¤ÎÐ¡™Ä§
+	// (åŒäººã‚²ãƒ¼ãƒ )[081227][æ¢…éº»å‘‚3D]åŒå­ã®å°æ‚ªé­”
 	if (callback->add_extension(callback->cui, _T(".mp_"), _T(".mpg"), 
 		NULL, &gmf_mpg_operation, CUI_EXT_FLAG_PKG))
 			return -1;
 
-	// ¥ô¥¡¥ë¥­¥ê©`¥³¥ó¥×¥ì¥Ã¥¯¥¹
+	// ãƒ´ã‚¡ãƒ«ã‚­ãƒªãƒ¼ã‚³ãƒ³ãƒ—ãƒ¬ãƒƒã‚¯ã‚¹
 	if (callback->add_extension(callback->cui, _T(".pak"), _T(".mpg"), 
 		NULL, &gmf_mpg_operation, CUI_EXT_FLAG_PKG))
 			return -1;
@@ -497,7 +497,7 @@ int CALLBACK gmf_register_cui(struct cui_register_callback *callback)
 		NULL, &gmf_mpg_operation, CUI_EXT_FLAG_PKG))
 			return -1;
 
-	// (C75)(Í¬ÈË)±¬ÁÑÉúÍ½»á ÌåòY°æ ver.1.02
+	// (C75)(åŒäºº)çˆ†è£‚ç”Ÿå¾’ä¼š ä½“é¨“ç‰ˆ ver.1.02
 	if (callback->add_extension(callback->cui, _T(".arc"), _T(".dds"), 
 		NULL, &gmf_dds_operation, CUI_EXT_FLAG_PKG))
 			return -1;
@@ -515,4 +515,5 @@ int CALLBACK gmf_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

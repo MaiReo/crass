@@ -9,15 +9,15 @@
 #include <zlib.h>
 #include <stdio.h>
 	
-/*ÕÒÃÜÔ¿µÄ·½·¨£º
-ÓÃ³£Á¿'n'×öËÑË÷£¬·²ÊÇMOV BYTE [], 6eµÄ¶¼ÓÐ¿ÉÄÜ¡£ 
+/*æ‰¾å¯†é’¥çš„æ–¹æ³•ï¼š
+ç”¨å¸¸é‡'n'åšæœç´¢ï¼Œå‡¡æ˜¯MOV BYTE [], 6eçš„éƒ½æœ‰å¯èƒ½ã€‚ 
 */
 struct acui_information yuLib_cui_information = {
 	_T(""),					/* copyright */
 	NULL,					/* system */
 	_T(".arc .kthb .kmap"),	/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2007-11-24 21:53"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -138,9 +138,9 @@ static int yuLib_arc_parse_resource_info(struct package *pkg,
 
 	my_arc_entry = (my_arc_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_arc_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_arc_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_arc_entry->offset;
 
 	return 0;
@@ -463,4 +463,5 @@ int CALLBACK yuLib_register_cui(struct cui_register_callback *callback)
 			return -1;	
 
 	return 0;
+}
 }

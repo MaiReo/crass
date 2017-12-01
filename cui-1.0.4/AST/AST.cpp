@@ -14,7 +14,7 @@ struct acui_information AST_cui_information = {
 	_T("AST"),			/* system */
 	NULL,				/* package */
 	_T("1.1.4"),		/* revision */
-	_T("³Õh¹«Ù\"),		/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),		/* author */
 	_T("2008-10-2 22:01"),/* date */
 	NULL,				/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -49,7 +49,7 @@ static int lzss_decompress(BYTE *uncompr, DWORD uncomprLen,
 						   BYTE *compr, DWORD comprLen)
 {
 	unsigned int act_uncomprlen = 0;
-	unsigned int curbyte = 0;		/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	unsigned int curbyte = 0;		/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned char window[4096];
 	unsigned int win_size = 4096;
@@ -63,7 +63,7 @@ static int lzss_decompress(BYTE *uncompr, DWORD uncomprLen,
 		
 		bitmap = getbyte_le(compr[curbyte++]);
 		for (unsigned int curbit_bitmap = 0; curbit_bitmap < 8; curbit_bitmap++) {
-			/* Èç¹ûÎª1, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+			/* å¦‚æœä¸º1, è¡¨ç¤ºæ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŸæ ·è¾“å‡º */
 			if (getbit_le(bitmap, curbit_bitmap)) {
 				unsigned char data;
 
@@ -74,9 +74,9 @@ static int lzss_decompress(BYTE *uncompr, DWORD uncomprLen,
 					goto out;
 
 				data = ~getbyte_le(compr[curbyte++]);
-				/* Êä³ö1×Ö½Ú·ÇÑ¹ËõÊı¾İ */
+				/* è¾“å‡º1å­—èŠ‚éå‹ç¼©æ•°æ® */
 				uncompr[act_uncomprlen++] = data;		
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				window[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;
 			} else {
@@ -93,9 +93,9 @@ static int lzss_decompress(BYTE *uncompr, DWORD uncomprLen,
 				win_offset |= (copy_bytes >> 4) << 8;
 				copy_bytes &= 0x0f;
 				copy_bytes += 3;
-				/* Ô­ÒòºÜ¼òµ¥£ºÈç¹û¿½±´µÄÖ»ÓĞ1×Ö½ÚºÍ2×Ö½Ú£¬ÄÇÃ´±àÂëµÄÓÃÍ¾¾Í²»´óÁË
-				 * µ«ÊÇcopy_bytes¾Í4Î»£¬ËùÒÔ0ºÍ1±íÊ¾3ºÍ4£¬ËùÒÔÊµ¼ÊµÄcopy_bytes¶¼Òª
-				 * +3²Å¶Ô.
+				/* åŸå› å¾ˆç®€å•ï¼šå¦‚æœæ‹·è´çš„åªæœ‰1å­—èŠ‚å’Œ2å­—èŠ‚ï¼Œé‚£ä¹ˆç¼–ç çš„ç”¨é€”å°±ä¸å¤§äº†
+				 * ä½†æ˜¯copy_byteså°±4ä½ï¼Œæ‰€ä»¥0å’Œ1è¡¨ç¤º3å’Œ4ï¼Œæ‰€ä»¥å®é™…çš„copy_byteséƒ½è¦
+				 * +3æ‰å¯¹.
 				 */
 				for (unsigned int i = 0; i < copy_bytes; i++) {
 					unsigned char data;
@@ -105,7 +105,7 @@ static int lzss_decompress(BYTE *uncompr, DWORD uncomprLen,
 					
 					data = window[(win_offset + i) & (win_size - 1)];
 					uncompr[act_uncomprlen++] = data;		
-					/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+					/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 					window[nCurWindowByte++] = data;
 					nCurWindowByte &= win_size - 1;		
 				}
@@ -204,7 +204,7 @@ static int AST_extract_directory(struct package *pkg,
 		return -CUI_EREAD;
 	}
 
-	// ÔÚµÚÒ»¸ö³¬¹ı2GÆ«ÒÆµÄÎÄ¼şÖ®ºóµÄ×ÊÔ´,uncomprLenºÍoffset¶¼Îª0(»³ÒÉÊÇ·â°üÆ÷³ö´í)
+	// åœ¨ç¬¬ä¸€ä¸ªè¶…è¿‡2Gåç§»çš„æ–‡ä»¶ä¹‹åçš„èµ„æº,uncomprLenå’Œoffsetéƒ½ä¸º0(æ€€ç–‘æ˜¯å°åŒ…å™¨å‡ºé”™)
 	i = 0;
 	for (int n = 1; n < index_entries; ++n) {
 		if (index_buffer[i].offset && index_buffer[n].offset) {
@@ -355,4 +355,5 @@ int CALLBACK AST_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

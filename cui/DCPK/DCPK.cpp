@@ -9,52 +9,52 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information DCPK_cui_information = {
 	NULL,					/* copyright */
 	NULL,					/* system */
 	_T(".TCD .TSD"),				/* package */
 	_T("0.0.0"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
-/* ¾¡¹ÜÃ¿¸ö·â°ü¶¼ÓÐ5¸öÄ¿Â¼Ïî£¬µ«Êµ¼ÊÉÏÊÇËùÓÐ·â°ü¹²Í¬Õ¼ÓÃ5Ïî¡£
- * Ã¿¸öÄ¿Â¼ÏîÓÃÓÚÃèÊö³öÓÚÍ¬¼¶µÄ1¸ö»òÕß¶à¸öÄ¿Â¼£¬ÒÔ¼°ÕâÐ©Ä¿Â¼ÏÂµÄËùÓÐÎÄ¼þ¡£
+/* å°½ç®¡æ¯ä¸ªå°åŒ…éƒ½æœ‰5ä¸ªç›®å½•é¡¹ï¼Œä½†å®žé™…ä¸Šæ˜¯æ‰€æœ‰å°åŒ…å…±åŒå ç”¨5é¡¹ã€‚
+ * æ¯ä¸ªç›®å½•é¡¹ç”¨äºŽæè¿°å‡ºäºŽåŒçº§çš„1ä¸ªæˆ–è€…å¤šä¸ªç›®å½•ï¼Œä»¥åŠè¿™äº›ç›®å½•ä¸‹çš„æ‰€æœ‰æ–‡ä»¶ã€‚
  */
 typedef struct {
-	u32 data_length;				// ¸ÃÄ¿Â¼ÏîµÄËùÓÐÊý¾Ý²¿·ÖµÄ×Ü³¤¶È
+	u32 data_length;				// è¯¥ç›®å½•é¡¹çš„æ‰€æœ‰æ•°æ®éƒ¨åˆ†çš„æ€»é•¿åº¦
 	u32 index_offset;				
-	u32 dir_entries;				// ¸ÃÄ¿Â¼Ïî°üÀ¨µÄÄ¿Â¼Êý
-	u32 dir_name_length;			// Ä¿Â¼ÃûµÄÆ½¾ù³¤¶È(4×Ö½Ú¶ÔÆë)
-	u32 file_entries;				// ËùÓÐÄ¿Â¼ÏÂµÄÎÄ¼þ×ÜÊý
-	u32 file_name_length;			// ÎÄ¼þÃûµÄÆ½¾ù³¤¶È(4×Ö½Ú¶ÔÆë)
-	u32 root_file_entries;			// Ö»¶Ô¸ù·â°üÎÄ¼þµÄµÚ0Ä¿Â¼ÏîÓÐÐ§
-	u32 root_file_name_length;		// Ö»¶Ô¸ù·â°üÎÄ¼þµÄµÚ0Ä¿Â¼ÏîÓÐÐ§
+	u32 dir_entries;				// è¯¥ç›®å½•é¡¹åŒ…æ‹¬çš„ç›®å½•æ•°
+	u32 dir_name_length;			// ç›®å½•åçš„å¹³å‡é•¿åº¦(4å­—èŠ‚å¯¹é½)
+	u32 file_entries;				// æ‰€æœ‰ç›®å½•ä¸‹çš„æ–‡ä»¶æ€»æ•°
+	u32 file_name_length;			// æ–‡ä»¶åçš„å¹³å‡é•¿åº¦(4å­—èŠ‚å¯¹é½)
+	u32 root_file_entries;			// åªå¯¹æ ¹å°åŒ…æ–‡ä»¶çš„ç¬¬0ç›®å½•é¡¹æœ‰æ•ˆ
+	u32 root_file_name_length;		// åªå¯¹æ ¹å°åŒ…æ–‡ä»¶çš„ç¬¬0ç›®å½•é¡¹æœ‰æ•ˆ
 } TCD_info_t;
 
 typedef struct {
 	s8 magic[4];		// "TCD3"
-	u32 total_files;	// ×ÜÎÄ¼þÊý(¶ÔÓÚ0Ïî£¬¼ÇÂ¼µÄÔòÊÇ×ÓÄ¿Â¼¸öÊý)
-	TCD_info_t info[5];	// 1-4ÏîÖ»ÄÜÓÃÓÚÃèÊöÒ»¸ö×ÓÄ¿Â¼¼°ÆäÖÐµÄÎÄ¼þ£»0(¸ùÄ¿Â¼Ïî)ÓÃÓÚÃèÊö¸ùÄ¿Â¼ÏÂËùÓÐ×ÓÄ¿Â¼µÄ¼°ËùÓÐ×ÓÄ¿Â¼ÏÂµÄËùÓÐÎÄ¼þ
+	u32 total_files;	// æ€»æ–‡ä»¶æ•°(å¯¹äºŽ0é¡¹ï¼Œè®°å½•çš„åˆ™æ˜¯å­ç›®å½•ä¸ªæ•°)
+	TCD_info_t info[5];	// 1-4é¡¹åªèƒ½ç”¨äºŽæè¿°ä¸€ä¸ªå­ç›®å½•åŠå…¶ä¸­çš„æ–‡ä»¶ï¼›0(æ ¹ç›®å½•é¡¹)ç”¨äºŽæè¿°æ ¹ç›®å½•ä¸‹æ‰€æœ‰å­ç›®å½•çš„åŠæ‰€æœ‰å­ç›®å½•ä¸‹çš„æ‰€æœ‰æ–‡ä»¶
 } TCD_header_t;
 
-/* Ã¿¸öÄ¿Â¼µÄÐÅÏ¢ */
+/* æ¯ä¸ªç›®å½•çš„ä¿¡æ¯ */
 typedef struct {
-	u32 files;			// µ±Ç°Ä¿Â¼ÏÂµÄÎÄ¼þÊý
-	u32 first_file_name_offset_in_file_name_buffer;		// ¸ÃÄ¿Â¼ÏÂµÚÒ»¸öÎÄ¼þµÄÎÄ¼þÃûµÄÆ«ÒÆ
-	u32 first_file_data_offset_in_file_data_offset_buffer;	// ¸ÃÄ¿Â¼ÏÂµÚÒ»¸öÎÄ¼þµÄÊý¾ÝÆ«ÒÆÖµµÄÎ»ÖÃ£¬Õâ¸öÊý×éÃ¿Ïî4×Ö½Ú£¬¼ÇÂ¼ÁË¸ÃdirÏÂËùÓÐÎÄ¼þµÄÆ«ÒÆ
+	u32 files;			// å½“å‰ç›®å½•ä¸‹çš„æ–‡ä»¶æ•°
+	u32 first_file_name_offset_in_file_name_buffer;		// è¯¥ç›®å½•ä¸‹ç¬¬ä¸€ä¸ªæ–‡ä»¶çš„æ–‡ä»¶åçš„åç§»
+	u32 first_file_data_offset_in_file_data_offset_buffer;	// è¯¥ç›®å½•ä¸‹ç¬¬ä¸€ä¸ªæ–‡ä»¶çš„æ•°æ®åç§»å€¼çš„ä½ç½®ï¼Œè¿™ä¸ªæ•°ç»„æ¯é¡¹4å­—èŠ‚ï¼Œè®°å½•äº†è¯¥dirä¸‹æ‰€æœ‰æ–‡ä»¶çš„åç§»
 	u32 unknown;
 } TCD_dir_info_t;
 #pragma pack ()
 
 /********************* TCD *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int DCPK_TCD_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -78,7 +78,7 @@ static int DCPK_TCD_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int DCPK_TCD_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -205,7 +205,7 @@ static int DCPK_TCD_extract_directory(struct package *pkg,
 		}
 		printf("\n");
 
-		file_offset_buffer = (u32 *)malloc(4 * (TCD_header.info[i].file_entries + 1));// ¶àÒ»Ïî
+		file_offset_buffer = (u32 *)malloc(4 * (TCD_header.info[i].file_entries + 1));// å¤šä¸€é¡¹
 		if (!file_offset_buffer) {
 			free(file_name_buffer);
 			free(dir_info);
@@ -395,7 +395,7 @@ exit(0);
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int DCPK_TCD_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -408,7 +408,7 @@ static int DCPK_TCD_parse_resource_info(struct package *pkg,
 	arc_entry = (arc_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, arc_entry->name, 64);
 	pkg_res->name[64] = 0;
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = arc_entry->comprlen;
 	if (arc_entry->is_compressed)
 		pkg_res->actual_data_length = arc_entry->uncomprlen;
@@ -419,7 +419,7 @@ static int DCPK_TCD_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int DCPK_TCD_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -451,7 +451,7 @@ static int DCPK_TCD_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int DCPK_TCD_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -478,7 +478,7 @@ static int DCPK_TCD_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void DCPK_TCD_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -494,7 +494,7 @@ static void DCPK_TCD_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void DCPK_TCD_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
@@ -509,7 +509,7 @@ static void DCPK_TCD_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation DCPK_TCD_operation = {
 	DCPK_TCD_match,					/* match */
 	DCPK_TCD_extract_directory,		/* extract_directory */
@@ -522,7 +522,7 @@ static cui_ext_operation DCPK_TCD_operation = {
 
 /********************* TSD *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int DCPK_TSD_match(struct package *pkg)
 {
 	if (!pkg)
@@ -534,7 +534,7 @@ static int DCPK_TSD_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int DCPK_TSD_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -565,7 +565,7 @@ static int DCPK_TSD_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int DCPK_TSD_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -592,7 +592,7 @@ static int DCPK_TSD_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void DCPK_TSD_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -608,7 +608,7 @@ static void DCPK_TSD_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void DCPK_TSD_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
@@ -617,7 +617,7 @@ static void DCPK_TSD_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation DCPK_TSD_operation = {
 	DCPK_TSD_match,				/* match */
 	NULL,						/* extract_directory */
@@ -628,10 +628,10 @@ static cui_ext_operation DCPK_TSD_operation = {
 	DCPK_TSD_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK DCPK_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".TCD"), NULL, 
 		NULL, &DCPK_TCD_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -641,4 +641,5 @@ int CALLBACK DCPK_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

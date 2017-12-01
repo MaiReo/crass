@@ -9,21 +9,21 @@
 #include <stdio.h>
 #include <zlib.h>
 
-/* TODO: .FMF½âÎö */
+/* TODO: .FMFè§£æž */
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information AIMS_cui_information = {
 	_T("D.N.A. Softwares"),	/* copyright */
 	_T("Actor-based Integrated Multimedia Script system"),			/* system */
 	_T(".cfg"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("ç±²¨Î¢²½"),			/* author */
+	_T("ç»«æ³¢å¾®æ­¥"),			/* author */
 	_T("2009-1-26 13:05"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 maigc[4];
@@ -33,7 +33,7 @@ typedef struct {
 
 /********************* cfg *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int AIMS_cfg_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -54,7 +54,7 @@ static int AIMS_cfg_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int AIMS_cfg_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -95,7 +95,7 @@ static int AIMS_cfg_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int AIMS_cfg_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -118,7 +118,7 @@ static int AIMS_cfg_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void AIMS_cfg_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -132,14 +132,14 @@ static void AIMS_cfg_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void AIMS_cfg_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AIMS_cfg_operation = {
 	AIMS_cfg_match,				/* match */
 	NULL,						/* extract_directory */
@@ -150,7 +150,7 @@ static cui_ext_operation AIMS_cfg_operation = {
 	AIMS_cfg_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK AIMS_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".cfg"), NULL, 
@@ -158,4 +158,5 @@ int CALLBACK AIMS_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

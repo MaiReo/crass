@@ -11,41 +11,41 @@
 #include <stdio.h>
 #include <cui_common.h>
 
-// µ÷ÊÔ·½·¨£º
-// 1. ÔÚexeÖÐµÄ¼ÓÔØ×ÊÔ´µÄÎÄ¼þÃû´¦ÏÂ¶Ïµã
-// 2. ½øÈëAioLib.dllÏÂCreateFile¶Ïµã£¨ÔÚËùÓÐvfs·â°üÖÐÑ°ÕÒÖ¸¶¨µÄ×ÊÔ´ÎÄ¼þ£¬²»Ï¢Ã¿´ÎÖØÐÂ¶ÁÈ¡dir£©
-// 3, ½øÈëkernel32£¬ÏÂReadFileºÍSetFilePointer¶Ïµã
+// è°ƒè¯•æ–¹æ³•ï¼š
+// 1. åœ¨exeä¸­çš„åŠ è½½èµ„æºçš„æ–‡ä»¶åå¤„ä¸‹æ–­ç‚¹
+// 2. è¿›å…¥AioLib.dllä¸‹CreateFileæ–­ç‚¹ï¼ˆåœ¨æ‰€æœ‰vfså°åŒ…ä¸­å¯»æ‰¾æŒ‡å®šçš„èµ„æºæ–‡ä»¶ï¼Œä¸æ¯æ¯æ¬¡é‡æ–°è¯»å–dirï¼‰
+// 3, è¿›å…¥kernel32ï¼Œä¸‹ReadFileå’ŒSetFilePointeræ–­ç‚¹
 
 /*
-ÍõÙ\(ÌåòY°æ)
-¥°¥ê¥ó¥¹¥ô¥¡©`¥ë¤ÎÉ­¤ÎÖÐ
-¥À¥ó¥·¥ó¥°?¥¯¥ì¥¤¥¸©`¥º
-ÄÏ¹ú¥É¥ß¥Ë¥ª¥ó
-Žz×÷¤ê¥É¥é¥´¥ó
-¥ì¥Ù¥ë¥¸¥ã¥¹¥Æ¥£¥¹
-¥Ö¥é¥¦¥óÍ¨¤êÈý·¬Ä¿
-¥¢¥ë¥Õ¥ì¥Ã¥ÉÑ§ˆ@Ä§Îï´óê 
-ÕæÖç¤ËÓ»¤ë·¸×ïÕß
-º£Ù\Íõ¹Ú
-¤¦¤¨¤Ï¤¡¤¹¡«¤ªŠª˜”¤Ï½ñÈÕ¤âÎ£ê“¤Ç¤·¤¿¡«
-¿ûÎÝ¤Þ¤Ã¤·¤°¤é
+çŽ‹è³Š(ä½“é¨“ç‰ˆ)
+ã‚°ãƒªãƒ³ã‚¹ãƒ´ã‚¡ãƒ¼ãƒ«ã®æ£®ã®ä¸­
+ãƒ€ãƒ³ã‚·ãƒ³ã‚°?ã‚¯ãƒ¬ã‚¤ã‚¸ãƒ¼ã‚º
+å—å›½ãƒ‰ãƒŸãƒ‹ã‚ªãƒ³
+å·£ä½œã‚Šãƒ‰ãƒ©ã‚´ãƒ³
+ãƒ¬ãƒ™ãƒ«ã‚¸ãƒ£ã‚¹ãƒ†ã‚£ã‚¹
+ãƒ–ãƒ©ã‚¦ãƒ³é€šã‚Šä¸‰ç•ªç›®
+ã‚¢ãƒ«ãƒ•ãƒ¬ãƒƒãƒ‰å­¦åœ’é­”ç‰©å¤§éšŠ
+çœŸæ˜¼ã«è¸Šã‚‹çŠ¯ç½ªè€…
+æµ·è³ŠçŽ‹å† 
+ã†ãˆã¯ãã™ï½žãŠå§«æ§˜ã¯ä»Šæ—¥ã‚‚å±é™ºã§ã—ãŸï½ž
+è‘µå±‹ã¾ã£ã—ãã‚‰
 */
 
-/* ipf33: ¶ÁÈ¡iphÎÄ¼þµÄÇ°0x38×Ö½Úºó£º
-003F1ABE    81BC24 9C020000>CMP DWORD PTR SS:[ESP+29C],20001 <--- ÎÄ¼þÆ«ÒÆ0x14
+/* ipf33: è¯»å–iphæ–‡ä»¶çš„å‰0x38å­—èŠ‚åŽï¼š
+003F1ABE    81BC24 9C020000>CMP DWORD PTR SS:[ESP+29C],20001 <--- æ–‡ä»¶åç§»0x14
 003F1AC9    0F85 C9010000   JNZ ipf33.003F1C98
-003F1ACF    83BC24 A0020000>CMP DWORD PTR SS:[ESP+2A0],0 <--- ÎÄ¼þÆ«ÒÆ0x18
+003F1ACF    83BC24 A0020000>CMP DWORD PTR SS:[ESP+2A0],0 <--- æ–‡ä»¶åç§»0x18
 003F1AD7    0F85 22010000   JNZ ipf33.003F1BFF
-003F1ADD    83BC24 B0020000>CMP DWORD PTR SS:[ESP+2B0],0 <--- ÎÄ¼þÆ«ÒÆ0x28
+003F1ADD    83BC24 B0020000>CMP DWORD PTR SS:[ESP+2B0],0 <--- æ–‡ä»¶åç§»0x28
 003F1AE5    0F85 3E010000   JNZ ipf33.003F1C29
 003F1AEB    8B8424 44030000 MOV EAX,DWORD PTR SS:[ESP+344]
 */
 
-/* ipf33: ÔÙ¶ÁÈ¡32×Ö½Ú£º
-003F1CAC    66:8B8424 CA020>MOV AX,WORD PTR SS:[ESP+2CA] <--- ÎÄ¼þÆ«ÒÆ0x42£¨height£©
+/* ipf33: å†è¯»å–32å­—èŠ‚ï¼š
+003F1CAC    66:8B8424 CA020>MOV AX,WORD PTR SS:[ESP+2CA] <--- æ–‡ä»¶åç§»0x42ï¼ˆheightï¼‰
 003F1CB4    50              PUSH EAX
 003F1CB5    31C0            XOR EAX,EAX
-003F1CB7    66:8B8424 CC020>MOV AX,WORD PTR SS:[ESP+2CC] <--- ÎÄ¼þÆ«ÒÆ0x40£¨width£©
+003F1CB7    66:8B8424 CC020>MOV AX,WORD PTR SS:[ESP+2CC] <--- æ–‡ä»¶åç§»0x40ï¼ˆwidthï¼‰
 003F1CBF    50              PUSH EAX
 003F1CC0    8B8C24 4C030000 MOV ECX,DWORD PTR SS:[ESP+34C]
 003F1CC7    51              PUSH ECX
@@ -53,31 +53,31 @@
 
 malloc(width * 2 * height)
 
-003F1CD5    8B9424 DC020000 MOV EDX,DWORD PTR SS:[ESP+2DC] <--- ÎÄ¼þÆ«ÒÆ0x54
-003F1CDC    66:83FA FF      CMP DX,0FFFF £¡£¡£¡£¡£¡£¡£¡£¡£¡ÊÇ·ñÎª0xffff
+003F1CD5    8B9424 DC020000 MOV EDX,DWORD PTR SS:[ESP+2DC] <--- æ–‡ä»¶åç§»0x54
+003F1CDC    66:83FA FF      CMP DX,0FFFF ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼æ˜¯å¦ä¸º0xffff
 003F1CE0    0F85 DD010000   JNZ ipf33.003F1EC3
 003F1CE6    8B8424 44030000 MOV EAX,DWORD PTR SS:[ESP+344]
 003F1CED    C740 1C 0000008>MOV DWORD PTR DS:[EAX+1C],80000000
 003F1CF4    31C0            XOR EAX,EAX
 003F1CF6    8B9424 44030000 MOV EDX,DWORD PTR SS:[ESP+344]
-003F1CFD    66:8B8424 D0020>MOV AX,WORD PTR SS:[ESP+2D0] <--- ÎÄ¼þÆ«ÒÆ0x48
+003F1CFD    66:8B8424 D0020>MOV AX,WORD PTR SS:[ESP+2D0] <--- æ–‡ä»¶åç§»0x48
 003F1D05    8942 0C         MOV DWORD PTR DS:[EDX+C],EAX
 003F1D08    31C0            XOR EAX,EAX
-003F1D0A    66:8B8424 D2020>MOV AX,WORD PTR SS:[ESP+2D2] <--- ÎÄ¼þÆ«ÒÆ0x4a
+003F1D0A    66:8B8424 D2020>MOV AX,WORD PTR SS:[ESP+2D2] <--- æ–‡ä»¶åç§»0x4a
 003F1D12    8942 10         MOV DWORD PTR DS:[EDX+10],EAX
 003F1D15    31C0            XOR EAX,EAX
-003F1D17    66:8B8424 D4020>MOV AX,WORD PTR SS:[ESP+2D4] <--- ÎÄ¼þÆ«ÒÆ0x4c
+003F1D17    66:8B8424 D4020>MOV AX,WORD PTR SS:[ESP+2D4] <--- æ–‡ä»¶åç§»0x4c
 003F1D1F    8942 14         MOV DWORD PTR DS:[EDX+14],EAX
 003F1D22    31C0            XOR EAX,EAX
-003F1D24    66:8B8424 D6020>MOV AX,WORD PTR SS:[ESP+2D6] <--- ÎÄ¼þÆ«ÒÆ0x4e
+003F1D24    66:8B8424 D6020>MOV AX,WORD PTR SS:[ESP+2D6] <--- æ–‡ä»¶åç§»0x4e
 003F1D2C    C742 24 0000000>MOV DWORD PTR DS:[EDX+24],0
 003F1D33    8942 18         MOV DWORD PTR DS:[EDX+18],EAX
-003F1D36    66:83BC24 DA020>CMP WORD PTR SS:[ESP+2DA],0 <--- ÎÄ¼þÆ«ÒÆ0x52£¡£¡£¡£¡£¡£¡£¡£¡£¡ÊÇ·ñÎª1
+003F1D36    66:83BC24 DA020>CMP WORD PTR SS:[ESP+2DA],0 <--- æ–‡ä»¶åç§»0x52ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼æ˜¯å¦ä¸º1
 003F1D3F   /0F84 92010000   JE ipf33.003F1ED7
-003F1D45   |8B42 04         MOV EAX,DWORD PTR DS:[EDX+4] <--- width(ÎÄ¼þÆ«ÒÆ0x40)
-003F1D48   |8B9424 C4020000 MOV EDX,DWORD PTR SS:[ESP+2C4] <--- ÎÄ¼þÆ«ÒÆ0x3c
+003F1D45   |8B42 04         MOV EAX,DWORD PTR DS:[EDX+4] <--- width(æ–‡ä»¶åç§»0x40)
+003F1D48   |8B9424 C4020000 MOV EDX,DWORD PTR SS:[ESP+2C4] <--- æ–‡ä»¶åç§»0x3c
 003F1D4F   |01C0            ADD EAX,EAX
-003F1D51   |83EA 20         SUB EDX,20   size - 0x20 + width * 2 =  width * 2 + bmp_data_length£¨Êµ¼ÊÊý¾Ý¶ÁÔÚÕâÀï£© @ 1d2aff0
+003F1D51   |83EA 20         SUB EDX,20   size - 0x20 + width * 2 =  width * 2 + bmp_data_lengthï¼ˆå®žé™…æ•°æ®è¯»åœ¨è¿™é‡Œï¼‰ @ 1d2aff0
 003F1D54   |01D0            ADD EAX,EDX
 003F1D56   |50              PUSH EAX
 003F1D57   |E8 B4F3FFFF     CALL ipf33.003F1110 malloc()
@@ -147,13 +147,13 @@ repeat:
 				
 				code / 5;
 				//[ESP+308] = code % 5 - 2;
-rep_word = ÂÒÆð°ËÔâ
+rep_word = ä¹±èµ·å…«é­
 (((rep_word & 0x03e0) >> 5) + (code % 25 - 2)) << 5) 
 	| (((code % 5 - 2) + ((rep_word & 0x7c00) >> 10)) << 10)
 		| (rep_word & 0x001f) + (code % 125 - 2)
 			}
 
-*cur_p £½ (u16)ÂÒÆð°ËÔâ
+*cur_p ï¼ (u16)ä¹±èµ·å…«é­
 cur_line_act_uncomprlen += 2;
 goto repeat;
 		} else {	// 3f1efb
@@ -165,14 +165,14 @@ goto repeat;
 }
 #endif
 
-// ´Óse.vfs¿ªÊ¼µ÷ÊÔ
+// ä»Žse.vfså¼€å§‹è°ƒè¯•
 
 struct acui_information SystemAoi_cui_information = {
 	_T("SofthouseChara"),		/* copyright */
 	_T("SystemAoi Game System"),/* system */
 	_T(".vfs"),					/* package */
 	_T(""),					/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T(""),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -268,9 +268,9 @@ static int SystemAoi_vfs_parse_resource_info(struct package *pkg,
 
 	vfs_entry = (vfs_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, vfs_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = vfs_entry->comprlen;
-	pkg_res->actual_data_length = vfs_entry->uncomprlen;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = vfs_entry->uncomprlen;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = vfs_entry->offset;
 	if (vfs_entry->comprlen != vfs_entry->uncomprlen) {
 		printf("%d\n",vfs_entry->is_compr);
@@ -338,4 +338,5 @@ int CALLBACK SystemAoi_register_cui(struct cui_register_callback *callback)
 //			return -1;
 
 	return 0;
+}
 }

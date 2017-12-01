@@ -194,3 +194,4 @@ unsigned short decode_short(rangecoder *rc)
 void done_decoding( rangecoder *rc )
 {   dec_normalize(rc);      /* normalize to use up all bytes */
 }
+}

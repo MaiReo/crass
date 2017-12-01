@@ -20,33 +20,33 @@
 0044141E  |.  03D3          ADD     EDX, EBX
 */
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information YU_RIS_cui_information = {
 	_T("Firstia"),				/* copyright */
 	_T("YU-RIS Script Engine"),	/* system */
 	_T(".ypf .ybn .ymv"),		/* package */
 	_T("1.0.0"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2009-8-2 21:27"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
-// ¦Â3£º[0.256,0.271]
-// ¦Â2£º[0.203,0.255] 0.233, 0.237, 0.240, 0.247, 0.249(¥¢¥İ¥¯¥ê¥È¥¹-Íâµä-µÄÊµ¼Ê°æ±¾), 0.251 - 0.255, 0.290, 0.300£¨¥¢¥İ¥¯¥ê¥È¥¹-Íâµä-ÓÃµÄ´Û¸Ä°æ±¾£©
+// Î²3ï¼š[0.256,0.271]
+// Î²2ï¼š[0.203,0.255] 0.233, 0.237, 0.240, 0.247, 0.249(ã‚¢ãƒã‚¯ãƒªãƒˆã‚¹-å¤–å…¸-çš„å®é™…ç‰ˆæœ¬), 0.251 - 0.255, 0.290, 0.300ï¼ˆã‚¢ãƒã‚¯ãƒªãƒˆã‚¹-å¤–å…¸-ç”¨çš„ç¯¡æ”¹ç‰ˆæœ¬ï¼‰
 typedef struct {
 	s8 magic[4];			/* "YPF" */
 	u32 version;
 	u32 index_entries;		
-	u32 index_length;		// ÀÏµÄ°æ±¾ÊÇ0
+	u32 index_length;		// è€çš„ç‰ˆæœ¬æ˜¯0
 	u8 reserved[16];
 } ypf_header_t;
 
 typedef struct {
 	s8 name[264];
-	// Ã»Ê¹ÓÃ.
+	// æ²¡ä½¿ç”¨.
 	// cg: 0 - png,db, 1 - bmp; 
 	// audio: 0 - wav, 2 - ogg
 	// script: 0 - dat
@@ -82,18 +82,18 @@ typedef struct {
 } yser_header_t;
 #pragma pack ()
 
-/* .ypf·â°üµÄË÷ÒıÏî½á¹¹ */
+/* .ypfå°åŒ…çš„ç´¢å¼•é¡¹ç»“æ„ */
 typedef struct {
 	u32 name_crc;
 	u8 name_length;
 	s8 *name;
-	u8 type;			// 0 - ybn; 1 - cg(¦Â2); 2 - png(¦Â3); 7 - ogg
+	u8 type;			// 0 - ybn; 1 - cg(Î²2); 2 - png(Î²3); 7 - ogg
 	u8 is_compressed;
 	u32 uncomprLen;
 	u32 comprLen;
 	u32 offset;
 	u32 data_crc;
-	// 0.220(0.223)ºóÃæ2¸ö4×Ö½Ú£¬ÓÃÀ´µ±data crc²»Æ¥ÅäÊ±¼ÆËãĞÂcrcÓÃµÄ
+	// 0.220(0.223)åé¢2ä¸ª4å­—èŠ‚ï¼Œç”¨æ¥å½“data crcä¸åŒ¹é…æ—¶è®¡ç®—æ–°crcç”¨çš„
 } ypf_entry_t;
 
 typedef struct {
@@ -112,10 +112,10 @@ typedef struct {
 } ymv_entry_t;
 
 enum {
-	keitai = 0,		// ¥¢¥İ¥¯¥ê¥È¥¹-Íâµä-
-	MagusTale,		// MagusTale£¨¥Ş¥®¥¦¥¹¥Æ¥¤¥ë£©¡«ÊÀ½ç˜ä¤ÈÁµ¤¹¤ëÄ§·¨Ê¹¤¤¡«
-	itaFD,			// ¤¤¤Ê¡î¤³¤¤£¡ ¥Õ¥¡¥ó¥Ç¥£¥¹¥¯
-	rinjyoku,		// ÁİÈè¤Î³Ç ¿şÀÜ¤ÎÍõ ÌåòY°æ(0.271)
+	keitai = 0,		// ã‚¢ãƒã‚¯ãƒªãƒˆã‚¹-å¤–å…¸-
+	MagusTale,		// MagusTaleï¼ˆãƒã‚®ã‚¦ã‚¹ãƒ†ã‚¤ãƒ«ï¼‰ï½ä¸–ç•Œæ¨¹ã¨æ‹ã™ã‚‹é­”æ³•ä½¿ã„ï½
+	itaFD,			// ã„ãªâ˜†ã“ã„ï¼ ãƒ•ã‚¡ãƒ³ãƒ‡ã‚£ã‚¹ã‚¯
+	rinjyoku,		// å‡›è¾±ã®åŸ å‚€å„¡ã®ç‹ ä½“é¨“ç‰ˆ(0.271)
 };
 
 static u32 ypf_version;
@@ -309,7 +309,7 @@ static DWORD ypf_crc(BYTE *data, unsigned int data_length)
 	return seed_lo | (seed_hi << 16);
 }
 
-// 0.220(0.223)Êı¾İĞ£ÑéÓÃ
+// 0.220(0.223)æ•°æ®æ ¡éªŒç”¨
 static DWORD ypf_data_crc(BYTE *buf, DWORD len)
 {
 	DWORD crc = 0xffff;
@@ -349,7 +349,7 @@ static void ystb_decode(ystb_header_t *ystb, DWORD ystb_length,
 
 	if (ystb->version > 263)
 		__ystb_decode(ystb, ystb_length, dec_tbl2);
-	else if (ystb->version > 224)	// È·ÇĞµÄÉÏÏŞ±ß½ç²¢²»Çå³ş£¬Ö»²»¹ıÅöµ½ÁËÕâ¸ö°æ±¾¶ø
+	else if (ystb->version > 224)	// ç¡®åˆ‡çš„ä¸Šé™è¾¹ç•Œå¹¶ä¸æ¸…æ¥šï¼Œåªä¸è¿‡ç¢°åˆ°äº†è¿™ä¸ªç‰ˆæœ¬è€Œ
 		__ystb_decode(ystb, ystb_length, dec_tbl1);	
 	else if (ystb->version > 2)
 		__ystb_decode(ystb, ystb_length, dec_tbl0);
@@ -357,7 +357,7 @@ static void ystb_decode(ystb_header_t *ystb, DWORD ystb_length,
 
 /********************* ypf *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int YU_RIS_ypf_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -385,7 +385,7 @@ static int YU_RIS_ypf_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int YU_RIS_ypf_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
@@ -399,7 +399,7 @@ static int YU_RIS_ypf_extract_directory(struct package *pkg,
 	if (pkg->pio->read(pkg, &pkg_dir->directory_length, 4))
 		return -CUI_EREAD;
 
-	// È·ÇĞµÄÉÏÏŞ±ß½ç²¢²»Çå³ş£¬Ö»²»¹ıÅöµ½ÁËÕâ¸ö°æ±¾¶ø
+	// ç¡®åˆ‡çš„ä¸Šé™è¾¹ç•Œå¹¶ä¸æ¸…æ¥šï¼Œåªä¸è¿‡ç¢°åˆ°äº†è¿™ä¸ªç‰ˆæœ¬è€Œ
 	if (ypf_version <= 133) {
 		if (ypf_version == 133)
 			pkg_dir->directory_length = pkg_dir->index_entries * sizeof(ypf133_entry_t);
@@ -417,7 +417,7 @@ static int YU_RIS_ypf_extract_directory(struct package *pkg,
 	}
 
 	pkg_dir->directory = index_buffer;
-	// È·ÇĞµÄÉÏÏŞ±ß½ç²¢²»Çå³ş£¬Ö»²»¹ıÅöµ½ÁËÕâ¸ö°æ±¾¶ø
+	// ç¡®åˆ‡çš„ä¸Šé™è¾¹ç•Œå¹¶ä¸æ¸…æ¥šï¼Œåªä¸è¿‡ç¢°åˆ°äº†è¿™ä¸ªç‰ˆæœ¬è€Œ
 	if (ypf_version > 133) {
 		pkg_dir->flags = PKG_DIR_FLAG_VARLEN;
 	} else {
@@ -430,11 +430,11 @@ static int YU_RIS_ypf_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int YU_RIS_ypf_parse_resource_info(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
-	// È·ÇĞµÄÉÏÏŞ±ß½ç²¢²»Çå³ş£¬Ö»²»¹ıÅöµ½ÁËÕâ¸ö°æ±¾¶ø
+	// ç¡®åˆ‡çš„ä¸Šé™è¾¹ç•Œå¹¶ä¸æ¸…æ¥šï¼Œåªä¸è¿‡ç¢°åˆ°äº†è¿™ä¸ªç‰ˆæœ¬è€Œ
 	if (ypf_version <= 133) {
 		u32 is_compressed, uncomprlen, comprlen, offset;
 		char *name;
@@ -471,10 +471,10 @@ static int YU_RIS_ypf_parse_resource_info(struct package *pkg,
 		name_len = decode_table[255 - *ypf_entry_p++];
 
 #if 0
-		/* ÓÃÖ®Ç°µÄdecode_tableÉú³É´úÂë»áÓĞÕâ¸öÎÊÌâ£º
-		77 ¡«And, two stars meet again¡«
-		cgsys\option\sound2\btn_¥¯¥¤¥Ã¥¯¥»©`¥Ö¤Î´_ÕJ_over.png @ cgsys.ypf
-		Êµ¼ÊµÃµ½µÄname_lenÊÇ6: cgsys\
+		/* ç”¨ä¹‹å‰çš„decode_tableç”Ÿæˆä»£ç ä¼šæœ‰è¿™ä¸ªé—®é¢˜ï¼š
+		77 ï½And, two stars meet againï½
+		cgsys\option\sound2\btn_ã‚¯ã‚¤ãƒƒã‚¯ã‚»ãƒ¼ãƒ–ã®ç¢ºèª_over.png @ cgsys.ypf
+		å®é™…å¾—åˆ°çš„name_lenæ˜¯6: cgsys\
 		*/
 		if (name_len == 6) {
 			char tmp_name[6];
@@ -515,7 +515,7 @@ static int YU_RIS_ypf_parse_resource_info(struct package *pkg,
 #else
 		if ((crc32(0, (BYTE *)pkg_res->name, name_len) != name_crc)
 				&& (ypf_crc((BYTE *)pkg_res->name, name_len) != name_crc)) {
-			// ÀûÓÃºó×º"."À´²Â²âkey
+			// åˆ©ç”¨åç¼€"."æ¥çŒœæµ‹key
 			u8 key = pkg_res->name[name_len - 4] ^ '.';	
 			for (unsigned int i = 0; i < name_len; ++i)
 				pkg_res->name[i] ^= key;
@@ -538,11 +538,11 @@ static int YU_RIS_ypf_parse_resource_info(struct package *pkg,
 				pkg_res->name[i] ^= 0x40;
 		}
 
-		if (ypf_version >= 256)	{ // ¦Â3
+		if (ypf_version >= 256)	{ // Î²3
 			if (crc32(0, (BYTE *)pkg_res->name, name_len) != name_crc 
 					&& ypf_crc((BYTE *)pkg_res->name, name_len) != name_crc)
 				return -CUI_EMATCH;
-		} else {	// ¦Â2
+		} else {	// Î²2
 			if (ypf_crc((BYTE *)pkg_res->name, name_len) != name_crc)
 				return -CUI_EMATCH;
 		}
@@ -564,11 +564,11 @@ static int YU_RIS_ypf_parse_resource_info(struct package *pkg,
 		} else if (game == keitai && ypf_version == 300) {
 			if (ypf_crc((BYTE *)pkg_res->name, name_len) != name_crc)
 				return -CUI_EMATCH;
-		} else if (ypf_version >= 256)	{ // ¦Â3
+		} else if (ypf_version >= 256)	{ // Î²3
 			if (crc32(0, (BYTE *)pkg_res->name, name_len) != name_crc 
 					&& ypf_crc((BYTE *)pkg_res->name, name_len) != name_crc)
 				return -CUI_EMATCH;
-		} else {	// ¦Â2
+		} else {	// Î²2
 			if (ypf_crc((BYTE *)pkg_res->name, name_len) != name_crc)
 				return -CUI_EMATCH;
 		}
@@ -585,7 +585,7 @@ static int YU_RIS_ypf_parse_resource_info(struct package *pkg,
 		DWORD base_offset = package_get_private(pkg);
 		pkg_res->offset = *(u32 *)ypf_entry_p + base_offset;
 		ypf_entry_p += 4;
-		if (ypf_version <= 223)	// È·ÇĞµÄÉÏÏŞ±ß½ç²¢²»Çå³ş£¬Ö»²»¹ıÅöµ½ÁËÕâ¸ö°æ±¾¶ø
+		if (ypf_version <= 223)	// ç¡®åˆ‡çš„ä¸Šé™è¾¹ç•Œå¹¶ä¸æ¸…æ¥šï¼Œåªä¸è¿‡ç¢°åˆ°äº†è¿™ä¸ªç‰ˆæœ¬è€Œ
 			pkg_res->actual_index_entry_length = 31 + name_len;
 		else
 			pkg_res->actual_index_entry_length = 23 + name_len;
@@ -594,7 +594,7 @@ static int YU_RIS_ypf_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int YU_RIS_ypf_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -615,7 +615,7 @@ static int YU_RIS_ypf_extract_resource(struct package *pkg,
 		return -CUI_EREADVEC;
 	}
 
-	// È·ÇĞµÄÉÏÏŞ±ß½ç²¢²»Çå³ş£¬Ö»²»¹ıÅöµ½ÁËÕâ¸ö°æ±¾¶ø
+	// ç¡®åˆ‡çš„ä¸Šé™è¾¹ç•Œå¹¶ä¸æ¸…æ¥šï¼Œåªä¸è¿‡ç¢°åˆ°äº†è¿™ä¸ªç‰ˆæœ¬è€Œ
 	if (ypf_version > 133) {
 		ypf_entry_p = (BYTE *)pkg_res->actual_index_entry;
 		ypf_entry_p += 4 + 1 + pkg_res->name_length + 1;
@@ -667,7 +667,7 @@ static int YU_RIS_ypf_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int YU_RIS_ypf_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -691,7 +691,7 @@ static int YU_RIS_ypf_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void YU_RIS_ypf_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -705,7 +705,7 @@ static void YU_RIS_ypf_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void YU_RIS_ypf_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -717,7 +717,7 @@ static void YU_RIS_ypf_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation YU_RIS_ypf_operation = {
 	YU_RIS_ypf_match,					/* match */
 	YU_RIS_ypf_extract_directory,		/* extract_directory */
@@ -728,7 +728,7 @@ static cui_ext_operation YU_RIS_ypf_operation = {
 
 /********************* ymv *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int YU_RIS_ymv_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -749,7 +749,7 @@ static int YU_RIS_ymv_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int YU_RIS_ymv_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
@@ -789,7 +789,7 @@ static int YU_RIS_ymv_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int YU_RIS_ymv_parse_resource_info(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -797,15 +797,15 @@ static int YU_RIS_ymv_parse_resource_info(struct package *pkg,
 
 	ymv_entry = (ymv_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, ymv_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = ymv_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = ymv_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int YU_RIS_ymv_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -827,7 +827,7 @@ static int YU_RIS_ymv_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation YU_RIS_ymv_operation = {
 	YU_RIS_ymv_match,					/* match */
 	YU_RIS_ymv_extract_directory,		/* extract_directory */
@@ -838,7 +838,7 @@ static cui_ext_operation YU_RIS_ymv_operation = {
 
 /********************* ybn *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int YU_RIS_ybn_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -864,7 +864,7 @@ static int YU_RIS_ybn_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int YU_RIS_ybn_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -892,7 +892,7 @@ static int YU_RIS_ybn_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation YU_RIS_ybn_operation = {
 	YU_RIS_ybn_match,				/* match */
 	NULL,							/* extract_directory */
@@ -903,7 +903,7 @@ static cui_ext_operation YU_RIS_ybn_operation = {
 
 /********************* exe *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int YU_RIS_exe_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -972,7 +972,7 @@ static int YU_RIS_exe_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation YU_RIS_exe_operation = {
 	YU_RIS_exe_match,				/* match */
 	YU_RIS_ypf_extract_directory,	/* extract_directory */
@@ -982,12 +982,12 @@ static cui_ext_operation YU_RIS_exe_operation = {
 };
 
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK YU_RIS_register_cui(struct cui_register_callback *callback)
 {
 	const char *game_name;
 
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".ypf"), NULL, 
 		NULL, &YU_RIS_ypf_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -1013,4 +1013,5 @@ int CALLBACK YU_RIS_register_cui(struct cui_register_callback *callback)
 		game = -1;
 
 	return 0;
+}
 }

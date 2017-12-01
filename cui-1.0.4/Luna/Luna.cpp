@@ -9,11 +9,11 @@
 #include <stdio.h>
 
 struct acui_information Luna_cui_information = {
-	_T("È~åÇÙÁ"),			/* copyright */
+	_T("è‘‰è¿©å€­"),			/* copyright */
 	_T("DirectX Library \"Luna for DirectX 9.0c\""),	/* system */
 	_T(".bin .p .mus"),		/* package */
 	_T("1.0.1"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2009-1-26 13:04"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -125,9 +125,9 @@ static int Luna_bin_parse_resource_info(struct package *pkg,
 
 	bin_entry = (bin_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, bin_entry->name, 64);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = bin_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = bin_entry->offset;
 
 	return 0;
@@ -150,13 +150,13 @@ static int Luna_bin_extract_resource(struct package *pkg,
 		return -CUI_EMATCH;
 	
 	if (!strncmp((char *)compr, "LZSS", 4)) {
-#define LZSS_RING_LENGTH		4096					// ­h×´¥Ğ¥Ã¥Õ¥¡¤Î´ó¤­¤µ
-#define LZSS_LONGEST_MATCH		16						// ×îéLÒ»ÖÂéL
+#define LZSS_RING_LENGTH		4096					// ç’°çŠ¶ãƒãƒƒãƒ•ã‚¡ã®å¤§ãã•
+#define LZSS_LONGEST_MATCH		16						// æœ€é•·ä¸€è‡´é•·
 		lzss_header_t *lzss_header = (lzss_header_t *)compr;
 		long r = LZSS_RING_LENGTH - LZSS_LONGEST_MATCH;
 		unsigned long Flags = 0;
 		unsigned char c;
-		unsigned char text[LZSS_RING_LENGTH + LZSS_LONGEST_MATCH - 1];	///< ¥Æ¥­¥¹¥È¥Ç©`¥¿¥İ¥¤¥ó¥¿
+		unsigned char text[LZSS_RING_LENGTH + LZSS_LONGEST_MATCH - 1];	///< ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ã‚¿
 		
 		uncomprlen = lzss_header->uncomprlen;
 		uncompr = (BYTE *)malloc(uncomprlen);
@@ -169,12 +169,12 @@ static int Luna_bin_extract_resource(struct package *pkg,
 		memset(text, 0x00, sizeof(text));
 
 		//--------------------------------------------------------------
-		// Õ¹é_áá¥µ¥¤¥ºÈ¡µÃ
+		// å±•é–‹å¾Œã‚µã‚¤ã‚ºå–å¾—
 		//--------------------------------------------------------------
 		unsigned long DstSize = lzss_header->uncomprlen;
 
 		//--------------------------------------------------------------
-		// ¥Ç¥³©`¥É„IÀí
+		// ãƒ‡ã‚³ãƒ¼ãƒ‰å‡¦ç†
 		//--------------------------------------------------------------
 		while (1) {
 			Flags >>= 1;
@@ -296,4 +296,5 @@ int CALLBACK Luna_register_cui(struct cui_register_callback *callback)
 			return -1;
 	
 	return 0;
+}
 }

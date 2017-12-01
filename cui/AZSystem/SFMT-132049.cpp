@@ -619,3 +619,4 @@ void sfmt132049_init_by_array(uint32_t *init_key, int key_length) {
     period_certification();
     initialized = 1;
 }
+}

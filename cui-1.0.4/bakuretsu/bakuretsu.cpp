@@ -8,13 +8,13 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information bakuretsu_cui_information = {
 	_T("WHITE SNOW PROJECT"),	/* copyright */
-	_T("(C75)(Í¬ÈË)±¬ÁÑÉúÍ½»á ÌåòY°æ ver. 1.02"),	/* system */
+	_T("(C75)(åŒäºº)çˆ†è£‚ç”Ÿå¾’ä¼š ä½“é¨“ç‰ˆ ver. 1.02"),	/* system */
 	_T(".snr"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-1-11 20:03"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -22,7 +22,7 @@ struct acui_information bakuretsu_cui_information = {
 
 /********************* snr *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int bakuretsu_snr_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -31,7 +31,7 @@ static int bakuretsu_snr_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int bakuretsu_snr_extract_resource(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -57,7 +57,7 @@ static int bakuretsu_snr_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int bakuretsu_snr_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -81,7 +81,7 @@ static int bakuretsu_snr_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void bakuretsu_snr_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -95,7 +95,7 @@ static void bakuretsu_snr_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void bakuretsu_snr_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -107,7 +107,7 @@ static void bakuretsu_snr_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation bakuretsu_snr_operation = {
 	bakuretsu_snr_match,			/* match */
 	NULL,							/* extract_directory */
@@ -118,7 +118,7 @@ static cui_ext_operation bakuretsu_snr_operation = {
 	bakuretsu_snr_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK bakuretsu_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".snr"), NULL, 
@@ -126,4 +126,5 @@ int CALLBACK bakuretsu_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

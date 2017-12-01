@@ -759,3 +759,4 @@ void Camellia_DecryptBlock
     keyTable = 0;
 #endif
 }
+}

@@ -20,7 +20,7 @@ struct acui_information Ellefin_Game_System_cui_information = {
 	_T("Ellefin Game System"),			/* system */
 	_T(".EPK"),				/* package */
 	_T(""),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -76,9 +76,9 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -98,7 +98,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 			uncompr[act_uncomprlen++] = data;
 			if (act_uncomprlen >= uncomprlen)
 				break;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -118,7 +118,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 				uncompr[act_uncomprlen++] = data;
 				if (act_uncomprlen >= uncomprlen)
 					return;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -395,4 +395,5 @@ int CALLBACK Ellefin_Game_System_register_cui(struct cui_register_callback *call
 			return -1;
 
 	return 0;
+}
 }

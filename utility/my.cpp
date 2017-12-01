@@ -166,7 +166,7 @@ UTILITY_API int MyGetFilePosition(HANDLE file, PLONG offset_lo,
 	int ret = 0;
 	LONG hi = 0;
 	
-	/* Èç¹û²»Ìá¹©dummy£¬»á·µ»ØÊ§°Ü */
+	/* å¦‚æžœä¸æä¾›dummyï¼Œä¼šè¿”å›žå¤±è´¥ */
 	offset = SetFilePointer(file, 0, &hi, FILE_CURRENT);
 	if (offset == 0xffffffff && GetLastError() != NO_ERROR)
 			ret = -1;
@@ -560,7 +560,7 @@ UTILITY_API int MyBuildBMPFile(BYTE *dib, DWORD dib_length,
 	}
 
 	pdib = pal + act_palette_length;
-	/* ÓÐÐ©ÏµÍ³µÄbmp½áÎ²»á¶à³ö2×Ö½Ú */
+	/* æœ‰äº›ç³»ç»Ÿçš„bmpç»“å°¾ä¼šå¤šå‡º2å­—èŠ‚ */
 	if (dib_length > act_dib_length)
 		dib_length = act_dib_length;
 
@@ -709,9 +709,9 @@ UTILITY_API int MySaveAsWAVE(void *wave, DWORD wave_length,
 	wav_header.wBitsPerSample = BitsPerSample;
 	wav_header.nSamplesPerSec = SamplesPerSec;
 	wav_header.cbSize = cbSize;
-	/* Í¨µÀÊý¡ÁÃ¿Ñù±¾µÄÊý¾ÝÎ»Öµ£¯8 */
+	/* é€šé“æ•°Ã—æ¯æ ·æœ¬çš„æ•°æ®ä½å€¼ï¼8 */
 	wav_header.nBlockAlign = Channels * BitsPerSample / 8;
-	/* ²¨ÐÎÒôÆµÊý¾Ý´«ËÍËÙÂÊ£¬ÆäÖµÎªÍ¨µÀÊý¡Á²ÉÑùÂÊ¡ÁÃ¿Ñù±¾µÄÊý¾ÝÎ»Êý£¯8 */
+	/* æ³¢å½¢éŸ³é¢‘æ•°æ®ä¼ é€é€ŸçŽ‡ï¼Œå…¶å€¼ä¸ºé€šé“æ•°Ã—é‡‡æ ·çŽ‡Ã—æ¯æ ·æœ¬çš„æ•°æ®ä½æ•°ï¼8 */
 	wav_header.nAvgBytesPerSec = wav_header.nBlockAlign * SamplesPerSec;
 	wav_header.cbSize = cbSize;
 
@@ -840,7 +840,7 @@ static int MyBuildBMPFile2(BYTE *dib, DWORD dib_length,
 	}
 	
 	pdib = pal + act_palette_length;
-	/* ÓÐÐ©ÏµÍ³µÄbmp½áÎ²»á¶à³ö2×Ö½Ú */
+	/* æœ‰äº›ç³»ç»Ÿçš„bmpç»“å°¾ä¼šå¤šå‡º2å­—èŠ‚ */
 	if (dib_length > act_dib_length)
 		dib_length = act_dib_length;
 
@@ -893,4 +893,5 @@ UTILITY_API int MySaveAsBMP(BYTE *dib, DWORD dib_length,
 	else
 		return MyBuildBMP16File(dib, dib_length, width, height,
 			ret, ret_length, 0, NULL, alloc);
+}
 }

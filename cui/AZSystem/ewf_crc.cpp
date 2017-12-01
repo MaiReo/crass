@@ -70,3 +70,4 @@ u32 ewf_crc(void *buffer, u32 buffer_size, u32 previous_key)
 	}
 	return( ( d << 16 ) | b );
 }
+}

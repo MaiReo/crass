@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Touhou11_cui_information = {
-	_T("ÉÏº£¥¢¥ê¥¹»Ã˜·‡â"),	/* copyright */
+	_T("ä¸Šæµ·ã‚¢ãƒªã‚¹å¹»æ¨‚å›£"),	/* copyright */
 	NULL,					/* system */
 	_T(".dat"),				/* package */
 	_T("0.7.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-8-17 15:23"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];
@@ -32,7 +32,7 @@ typedef struct {
 
 #if 0
 typedef struct {
-	char *name;		// ÏòÉÏ4×Ö½Ú¶ÔÆë
+	char *name;		// å‘ä¸Š4å­—èŠ‚å¯¹é½
 	u32 offset;
 	u32 length;
 	u32 unknown;	// 0
@@ -56,7 +56,7 @@ typedef struct {
 	u32 uncomprlen;
 } score_dat_header_t;
 
-typedef struct {		// ¸Ã¸ñÊ½ÔÚ³ÌĞòÀïÍêÈ«Ã»ÓĞÈÎºÎ·ÃÎÊ
+typedef struct {		// è¯¥æ ¼å¼åœ¨ç¨‹åºé‡Œå®Œå…¨æ²¡æœ‰ä»»ä½•è®¿é—®
 	s8 magic[4];		// "ZWAV"
 	u8 unknown0;		// 1
 	u32 unknown1;		// 0
@@ -64,9 +64,9 @@ typedef struct {		// ¸Ã¸ñÊ½ÔÚ³ÌĞòÀïÍêÈ«Ã»ÓĞÈÎºÎ·ÃÎÊ
 	u8 unknown2[3];		// 0
 } zwav_dat_header_t;
 
-/* ÎªÁËÈÃÒôÀÖÑ­»·²¥·ÅÇÒÆ½»¬¹ı¶É£¬
- * length³¤¶ÈµÄÒôÀÖÊµ¼ÊÉÏ°üº¬ÁËÒ»²¿·Ö¿ªÍ·µÄÊı¾İ£¬
- * ËùÒÔ´Ósmooth_offset¿ªÊ¼µÄ²¿·ÖÊı¾İÑÓÉìµ½smooth_length³¤¶È¡£
+/* ä¸ºäº†è®©éŸ³ä¹å¾ªç¯æ’­æ”¾ä¸”å¹³æ»‘è¿‡æ¸¡ï¼Œ
+ * lengthé•¿åº¦çš„éŸ³ä¹å®é™…ä¸ŠåŒ…å«äº†ä¸€éƒ¨åˆ†å¼€å¤´çš„æ•°æ®ï¼Œ
+ * æ‰€ä»¥ä»smooth_offsetå¼€å§‹çš„éƒ¨åˆ†æ•°æ®å»¶ä¼¸åˆ°smooth_lengthé•¿åº¦ã€‚
  */
 typedef struct {
 	s8 name[16];
@@ -146,7 +146,7 @@ static int decode(BYTE *buf, DWORD len, DWORD blen, DWORD llen,
 
 	rem_len = len - (rem_len + (len & 1));
 	for (DWORD i = 0; i < rem_len && i < llen; ) {
-		if (rem_len < blen)	// ×îºóÒ»¿é
+		if (rem_len < blen)	// æœ€åä¸€å—
 			blen = rem_len;
 
 		BYTE *dst = &buf[blen - 1];
@@ -211,7 +211,7 @@ static DWORD Touhou11_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Touhou11_dat_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -236,7 +236,7 @@ static int Touhou11_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Touhou11_dat_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -320,7 +320,7 @@ static int Touhou11_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Touhou11_dat_parse_resource_info(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -336,7 +336,7 @@ static int Touhou11_dat_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Touhou11_dat_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -387,7 +387,7 @@ static int Touhou11_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Touhou11_dat_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -411,7 +411,7 @@ static int Touhou11_dat_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Touhou11_dat_release_resource(struct package *pkg, 
 										  struct package_resource *pkg_res)
 {
@@ -425,7 +425,7 @@ static void Touhou11_dat_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Touhou11_dat_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
@@ -437,7 +437,7 @@ static void Touhou11_dat_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Touhou11_dat_operation = {
 	Touhou11_dat_match,					/* match */
 	Touhou11_dat_extract_directory,		/* extract_directory */
@@ -450,7 +450,7 @@ static cui_ext_operation Touhou11_dat_operation = {
 
 /********************* score dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Touhou11_score_dat_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -470,7 +470,7 @@ static int Touhou11_score_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Touhou11_score_dat_extract_resource(struct package *pkg,
 											   struct package_resource *pkg_res)
 {
@@ -509,7 +509,7 @@ static int Touhou11_score_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Touhou11_score_dat_operation = {
 	Touhou11_score_dat_match,			/* match */
 	NULL,								/* extract_directory */
@@ -522,7 +522,7 @@ static cui_ext_operation Touhou11_score_dat_operation = {
 
 /********************* zwav dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Touhou11_zwav_dat_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -542,7 +542,7 @@ static int Touhou11_zwav_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Touhou11_zwav_dat_extract_directory(struct package *pkg,
 											   struct package_directory *pkg_dir)
 {
@@ -601,7 +601,7 @@ static int Touhou11_zwav_dat_extract_directory(struct package *pkg,
 	return ret;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Touhou11_zwav_dat_parse_resource_info(struct package *pkg,
 												 struct package_resource *pkg_res)
 {
@@ -617,7 +617,7 @@ static int Touhou11_zwav_dat_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Touhou11_zwav_dat_extract_resource(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -642,7 +642,7 @@ static int Touhou11_zwav_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Touhou11_zwav_dat_operation = {
 	Touhou11_zwav_dat_match,				/* match */
 	Touhou11_zwav_dat_extract_directory,	/* extract_directory */
@@ -653,7 +653,7 @@ static cui_ext_operation Touhou11_zwav_dat_operation = {
 	Touhou11_dat_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK Touhou11_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".dat"), NULL, 
@@ -664,10 +664,11 @@ int CALLBACK Touhou11_register_cui(struct cui_register_callback *callback)
 		NULL, &Touhou11_score_dat_operation, CUI_EXT_FLAG_PKG))
 			return -1;
 
-	// ¾ßÌåµÄÒôÀÖ·Ö¿éĞÅÏ¢ÔÚth11.datÀïµÄthbgm.fmtÖĞ
+	// å…·ä½“çš„éŸ³ä¹åˆ†å—ä¿¡æ¯åœ¨th11.daté‡Œçš„thbgm.fmtä¸­
 	if (callback->add_extension(callback->cui, _T(".dat"), _T(".wav"), 
 		NULL, &Touhou11_zwav_dat_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_LST))
 			return -1;
 
 	return 0;
+}
 }

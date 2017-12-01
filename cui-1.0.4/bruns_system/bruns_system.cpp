@@ -15,7 +15,7 @@ struct acui_information bruns_system_cui_information = {
 	_T("bruns-system"),					/* system */	
 	_T(".um3 .brs .bmp .scm .bso .dat .cfg .png .brs"),/* package */
 	_T("0.5.0"),								/* revision */
-	_T("³Õh¹«Ù\"),						/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),						/* author */
 	_T("2008-3-25 19:03"),				/* date */
 	NULL,								/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -78,7 +78,7 @@ static void xor_decode(BYTE *buffer, DWORD len, DWORD magic)
 #if 0
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int bruns_system_dat_match(struct package *pkg)
 {
 	if (!pkg)
@@ -90,7 +90,7 @@ static int bruns_system_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int bruns_system_dat_extract_directory(struct package *pkg,
 											  struct package_directory *pkg_dir)
 {
@@ -142,7 +142,7 @@ static int bruns_system_dat_extract_directory(struct package *pkg,
 			my_index_buffer[i].uncomprlen += 4 * colors;
 		} 
 
-		if ((u8)(dat_header.unknown_flag1) == 2)	// ÊÇ·ñÊÇÑ¹Ëõ
+		if ((u8)(dat_header.unknown_flag1) == 2)	// æ˜¯å¦æ˜¯åŽ‹ç¼©
 			my_index_buffer[i].comprlen = colors + (u16)dat_entry.bpp * 2;
 		else
 			my_index_buffer[i].comprlen = (u16)dat_entry.width * (u16)dat_entry.bpp * dat_entry.height + 4 * colors;
@@ -177,7 +177,7 @@ static int bruns_system_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int bruns_system_dat_parse_resource_info(struct package *pkg,
 												struct package_resource *pkg_res)
 {
@@ -188,9 +188,9 @@ static int bruns_system_dat_parse_resource_info(struct package *pkg,
 
 	my_dat_entry = (my_dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_dat_entry->offset;
 
 	return 0;
@@ -296,7 +296,7 @@ decompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD comprlen)
 	}
 }
 #endif
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int bruns_system_dat_extract_resource(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -347,7 +347,7 @@ static int bruns_system_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int bruns_system_dat_save_resource(struct resource *res, 
 										  struct package_resource *pkg_res)
 {
@@ -373,7 +373,7 @@ static int bruns_system_dat_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void bruns_system_dat_release_resource(struct package *pkg, 
 											  struct package_resource *pkg_res)
 {
@@ -390,7 +390,7 @@ static void bruns_system_dat_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void bruns_system_dat_release(struct package *pkg, 
 									 struct package_directory *pkg_dir)
 {
@@ -405,7 +405,7 @@ static void bruns_system_dat_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation bruns_system_dat_operation = {
 	bruns_system_dat_match,					/* match */
 	bruns_system_dat_extract_directory,		/* extract_directory */
@@ -850,7 +850,7 @@ static cui_ext_operation bruns_system_png_operation = {
 int CALLBACK bruns_system_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".um3"), _T(".ogg"), 
-		_T("Ultramarine3£­Ogg"), &bruns_system_um3_operation, CUI_EXT_FLAG_PKG))
+		_T("Ultramarine3ï¼Ogg"), &bruns_system_um3_operation, CUI_EXT_FLAG_PKG))
 			return -1;
 
 	if (callback->add_extension(callback->cui, _T(".brs"), _T(".bmp"), 
@@ -894,4 +894,5 @@ int CALLBACK bruns_system_register_cui(struct cui_register_callback *callback)
 //			return -1;
 
 	return 0;
+}
 }

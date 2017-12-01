@@ -10,27 +10,27 @@
 #include <utility.h>
 #include <cui_common.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information MAI_cui_information = {
 	_T(""),					/* copyright */
 	_T(""),					/* system */
 	_T(".arc"),				/* package */
 	_T("0.9.9"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2008-5-16 21:05"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];			// "MAI\xa"
 	u32 arc_size;
 	u32 index_entries;		
 	u8 reserved;			// 0
-	u8 dir_level;			// 1±íÊ¾Ö»ÓÐ1¼¶¸ùÄ¿Â¼£»2±íÊ¾ÓÐ×ÓÄ¿Â¼
-	u16 dir_entries;		// Ä¿Â¼Ïî¸öÊý
+	u8 dir_level;			// 1è¡¨ç¤ºåªæœ‰1çº§æ ¹ç›®å½•ï¼›2è¡¨ç¤ºæœ‰å­ç›®å½•
+	u16 dir_entries;		// ç›®å½•é¡¹ä¸ªæ•°
 } arc_header_t;
 
 typedef struct {
@@ -41,7 +41,7 @@ typedef struct {
 
 typedef struct {
 	s8 name[4];
-	u32 start_index;		// ÊôÓÚ¸ÃÄ¿Â¼µÄ×ÊÔ´ÆðÊ¼±àºÅ
+	u32 start_index;		// å±žäºŽè¯¥ç›®å½•çš„èµ„æºèµ·å§‹ç¼–å·
 } arc_dir_t;
 
 typedef struct {
@@ -158,7 +158,7 @@ out:
 
 /********************* arc *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int MAI_arc_match(struct package *pkg)
 {
 	arc_header_t arc_header;
@@ -184,7 +184,7 @@ static int MAI_arc_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int MAI_arc_extract_directory(struct package *pkg,
 									 struct package_directory *pkg_dir)
 {
@@ -267,7 +267,7 @@ static int MAI_arc_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int MAI_arc_parse_resource_info(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -275,7 +275,7 @@ static int MAI_arc_parse_resource_info(struct package *pkg,
 
 	my_arc_entry = (my_arc_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_arc_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_arc_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = my_arc_entry->offset;
@@ -283,7 +283,7 @@ static int MAI_arc_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MAI_arc_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {	
@@ -420,7 +420,7 @@ static int MAI_arc_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MAI_arc_operation = {
 	MAI_arc_match,				/* match */
 	MAI_arc_extract_directory,	/* extract_directory */
@@ -431,7 +431,7 @@ static cui_ext_operation MAI_arc_operation = {
 
 /********************* am *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int MAI_am_match(struct package *pkg)
 {
 	am_header_t am_header;
@@ -451,7 +451,7 @@ static int MAI_am_match(struct package *pkg)
 		exit(0);
 	}
 
-	// am typeÎª1µÄmaskÍ¼£¬ÓÃÄ¬ÈÏµÄµ÷É«°æ£¬×ÜÊÇÈ«ºÚ
+	// am typeä¸º1çš„maskå›¾ï¼Œç”¨é»˜è®¤çš„è°ƒè‰²ç‰ˆï¼Œæ€»æ˜¯å…¨é»‘
 	if (strncmp(am_header.magic, "AM", 2)
 			|| (am_header.am_type != 2 && am_header.am_type != 1)
 			|| am_header.type != 1) {
@@ -462,7 +462,7 @@ static int MAI_am_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int MAI_am_extract_directory(struct package *pkg,
 									struct package_directory *pkg_dir)
 {
@@ -505,7 +505,7 @@ static int MAI_am_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int MAI_am_parse_resource_info(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -513,7 +513,7 @@ static int MAI_am_parse_resource_info(struct package *pkg,
 
 	am_entry = (am_entry_t *)pkg_res->actual_index_entry;
 	wcscpy((WCHAR *)pkg_res->name, am_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = am_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = am_entry->offset;
@@ -522,7 +522,7 @@ static int MAI_am_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MAI_am_extract_resource(struct package *pkg,
 								   struct package_resource *pkg_res)
 {
@@ -625,7 +625,7 @@ static int MAI_am_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MAI_am_operation = {
 	MAI_am_match,				/* match */
 	MAI_am_extract_directory,	/* extract_directory */
@@ -634,10 +634,10 @@ static cui_ext_operation MAI_am_operation = {
 	CUI_COMMON_OPERATION
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK MAI_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".arc"), NULL, 
 		NULL, &MAI_arc_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -647,4 +647,5 @@ int CALLBACK MAI_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

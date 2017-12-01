@@ -9,21 +9,21 @@
 #include <stdio.h>
 #include <cui_common.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information MAIKA_cui_information = {
 	_T("MAIKA"),			/* copyright */
 	_T(""),					/* system */
 	_T(".DAT"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-4-4 19:52"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
-// ¹ØÓÚ¼ÓÃÜ²¿·Ö£¬ËüµÄ´úÂëÓÐÎÊÌâ
+// å…³äºŽåŠ å¯†éƒ¨åˆ†ï¼Œå®ƒçš„ä»£ç æœ‰é—®é¢˜
 typedef struct {
 	s8 magic[8];		// "MK2.0"
 	u16 date_offset;
@@ -31,13 +31,13 @@ typedef struct {
 	u32 index_offset;
 	u32 index_entries;
 	u16 reserved;		// 0
-	u16 flags;			// bit0 - Ë÷Òý¶ÎÊÇ·ñ¼ÓÃÜ
+	u16 flags;			// bit0 - ç´¢å¼•æ®µæ˜¯å¦åŠ å¯†
 	u16 crypt_data_length;
 } DAT_header_t;
 
-/* Ë÷Òý¶Î·Ö2¸ö²¿·Ö£ºÇ°²¿·Ö£¨¾ßÌå³¤¶È²»¶¨£©ÊÇ512ÏîÃ¿Ïî6×Ö½ÚµÄ
- * ¿ìËÙË÷Òý£¬Ö¸ÏòË÷Òý¶Îºó²¿·ÖµÄÕæÕýµÄË÷ÒýÏîÐÅÏ¢.counts×Ö¶Î±íÊ¾
- * ÓÐ¶àÉÙÁ¬ÐøµÄÓÐÐ§Ïî(countsÎª0±íÊ¾µ±Ç°fast indexÎÞÐ§)¡£
+/* ç´¢å¼•æ®µåˆ†2ä¸ªéƒ¨åˆ†ï¼šå‰éƒ¨åˆ†ï¼ˆå…·ä½“é•¿åº¦ä¸å®šï¼‰æ˜¯512é¡¹æ¯é¡¹6å­—èŠ‚çš„
+ * å¿«é€Ÿç´¢å¼•ï¼ŒæŒ‡å‘ç´¢å¼•æ®µåŽéƒ¨åˆ†çš„çœŸæ­£çš„ç´¢å¼•é¡¹ä¿¡æ¯.countså­—æ®µè¡¨ç¤º
+ * æœ‰å¤šå°‘è¿žç»­çš„æœ‰æ•ˆé¡¹(countsä¸º0è¡¨ç¤ºå½“å‰fast indexæ— æ•ˆ)ã€‚
  */
 typedef struct {
 	u32 offset;
@@ -51,7 +51,7 @@ typedef struct {
 } B1_header_t;
 #pragma pack ()
 
-/* .dat·â°üµÄË÷ÒýÏî½á¹¹ */
+/* .datå°åŒ…çš„ç´¢å¼•é¡¹ç»“æž„ */
 typedef struct {
 	s8 name[MAX_PATH];
 	u32 offset;
@@ -63,9 +63,9 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -83,7 +83,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 			data = compr[curbyte++];
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -101,7 +101,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 				data = win[(win_offset + i) & (win_size - 1)];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -138,7 +138,7 @@ static DWORD rle_uncompress(BYTE *uncompr, BYTE *compr)
 
 /********************* DAT *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int MAIKA_DAT_match(struct package *pkg)
 {
 	s8 magic[8];
@@ -159,7 +159,7 @@ static int MAIKA_DAT_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int MAIKA_DAT_extract_directory(struct package *pkg,
 									   struct package_directory *pkg_dir)
 {
@@ -227,7 +227,7 @@ static int MAIKA_DAT_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int MAIKA_DAT_parse_resource_info(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -235,15 +235,15 @@ static int MAIKA_DAT_parse_resource_info(struct package *pkg,
 
 	my_DAT_entry = (my_DAT_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_DAT_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_DAT_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_DAT_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MAIKA_DAT_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -309,7 +309,7 @@ static int MAIKA_DAT_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MAIKA_DAT_operation = {
 	MAIKA_DAT_match,				/* match */
 	MAIKA_DAT_extract_directory,	/* extract_directory */
@@ -318,7 +318,7 @@ static cui_ext_operation MAIKA_DAT_operation = {
 	CUI_COMMON_OPERATION
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK MAIKA_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".DAT"), NULL, 
@@ -326,4 +326,5 @@ int CALLBACK MAIKA_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

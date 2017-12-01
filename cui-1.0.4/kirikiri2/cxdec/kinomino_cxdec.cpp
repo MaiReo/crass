@@ -484,3 +484,4 @@ struct cxdec_callback hitozuma_cxdec_callback = {
 	{ 0x213, 0x473 },
 	xcode_building_stage1
 };
+;

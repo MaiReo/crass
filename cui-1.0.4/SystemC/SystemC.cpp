@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information SystemC_cui_information = {
 	_T("SystemC"),			/* copyright */
 	_T("INTERHEART"),		/* system */
 	_T(".fpk"),				/* package */
 	_T("1.1.3"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-5-30 10:37"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	u32 index_entries;
@@ -34,7 +34,7 @@ typedef struct {
 } fpk_entry_t;
 
 /*
-ÐÂµÄentry¸ñÊ½£º
+æ–°çš„entryæ ¼å¼ï¼š
 typedef struct {		
 	u32 offset;
 	u32 length;
@@ -86,14 +86,14 @@ static void lzxx_decompress(BYTE *uncompr, DWORD *uncomprlen,
 							BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	
 	memset(uncompr, 0, *uncomprlen);
 	while (1) {
-		/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+		/* å¦‚æžœä¸º0, è¡¨ç¤ºæŽ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŽŸæ ·è¾“å‡º */
 		BYTE flag;
 
 		if (curbyte >= comprlen)
@@ -184,13 +184,13 @@ static DWORD rle0_uncompress(BYTE *uncompr, DWORD uncomprlen,
 	return act_uncomprlen;
 }
 
-/* 32 bitÍ¼Ïñ½âÑ¹Ëõ */
+/* 32 bitå›¾åƒè§£åŽ‹ç¼© */
 static DWORD kg_decompress(BYTE *__uncompr, DWORD uncomprlen, BYTE *compr, DWORD comprlen)
 {
 	kg_header_t *kg = (kg_header_t *)compr;
-	u32 *offset = (u32 *)(kg + 1);	/* Ã¿Ò»¸öÆ«ÒÆÖµÖ¸ÏòÒ»×éÓÃÓÚ½âÑ¹width¸öÏóËØÊý¾ÝµÄ±àÂë */
+	u32 *offset = (u32 *)(kg + 1);	/* æ¯ä¸€ä¸ªåç§»å€¼æŒ‡å‘ä¸€ç»„ç”¨äºŽè§£åŽ‹widthä¸ªè±¡ç´ æ•°æ®çš„ç¼–ç  */
 	DWORD *uncompr = (DWORD *)__uncompr;
-	DWORD act_uncomprlen = 0;	/* Êµ¼Ê½âÑ¹µÄÏóËØÊý */
+	DWORD act_uncomprlen = 0;	/* å®žé™…è§£åŽ‹çš„è±¡ç´ æ•° */
 
 	compr = (BYTE *)(offset + kg->height);
 	for (unsigned int h = 0; h < kg->height; h++) {
@@ -231,7 +231,7 @@ static DWORD kg_decompress(BYTE *__uncompr, DWORD uncomprlen, BYTE *compr, DWORD
 static int SystemC_fpk_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir);
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int SystemC_fpk_match(struct package *pkg)
 {
 	if (!lstrcmpi(pkg->name, L"DM1.FPK"))
@@ -260,7 +260,7 @@ static int SystemC_fpk_match(struct package *pkg)
 	return ret;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int SystemC_fpk_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -342,7 +342,7 @@ static int SystemC_fpk_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int SystemC_fpk_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -354,15 +354,15 @@ static int SystemC_fpk_parse_resource_info(struct package *pkg,
 		strncpy(pkg_res->name, fpk_entry->name, 24);
 	else
 		strcpy(pkg_res->name, fpk_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = fpk_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = fpk_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int SystemC_fpk_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -465,7 +465,7 @@ static int SystemC_fpk_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int SystemC_fpk_save_resource(struct resource *res, 
 									 struct package_resource *pkg_res)
 {
@@ -489,7 +489,7 @@ static int SystemC_fpk_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void SystemC_fpk_release_resource(struct package *pkg, 
 										 struct package_resource *pkg_res)
 {
@@ -501,7 +501,7 @@ static void SystemC_fpk_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void SystemC_fpk_release(struct package *pkg, 
 								struct package_directory *pkg_dir)
 {
@@ -513,7 +513,7 @@ static void SystemC_fpk_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation SystemC_fpk_operation = {
 	SystemC_fpk_match,				/* match */
 	SystemC_fpk_extract_directory,	/* extract_directory */
@@ -524,7 +524,7 @@ static cui_ext_operation SystemC_fpk_operation = {
 	SystemC_fpk_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK SystemC_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".fpk"), NULL, 
@@ -532,4 +532,5 @@ int CALLBACK SystemC_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

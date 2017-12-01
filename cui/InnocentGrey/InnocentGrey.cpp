@@ -15,7 +15,7 @@ struct acui_information InnocentGrey_cui_information = {
 	NULL,					/* system */
 	_T(".dat .s .d"),		/* package */
 	_T("0.9.3"),			/* revision */
-	_T("≥’ùhπ´Ÿ\"),			/* author */
+	_T("Áó¥Êº¢ÂÖ¨Ë≥ä"),			/* author */
 	_T("2008-7-30 10:18"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -94,9 +94,9 @@ static int InnocentGrey_dat_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±Ì æ√˚≥∆“‘NULLΩ·Œ≤ */
+	pkg_res->name_length = -1;			/* -1Ë°®Á§∫ÂêçÁß∞‰ª•NULLÁªìÂ∞æ */
 	pkg_res->raw_data_length = dat_entry->comprlen;
-	pkg_res->actual_data_length = dat_entry->uncomprlen;	/*  ˝æ›∂º «√˜Œƒ */
+	pkg_res->actual_data_length = dat_entry->uncomprlen;	/* Êï∞ÊçÆÈÉΩÊòØÊòéÊñá */
 	pkg_res->offset = dat_entry->offset;
 
 	return 0;
@@ -125,7 +125,7 @@ static int InnocentGrey_dat_extract_resource(struct package *pkg,
 	magic = dat_entry->comprlen;
 	enc_buf = (u32 *)pkg_res->raw_data;
 	/* TODO:
-	00404DFE   . /0F84 43040000 JE ∫Õ§ﬂœª.00405247                          ;  if (!(type & 0xffffff))
+	00404DFE   . /0F84 43040000 JE Âíå„ÅøÂå£.00405247                          ;  if (!(type & 0xffffff))
 	00404E04   . |8B4424 50     MOV EAX,DWORD PTR SS:[ESP+50]            ;  comprlen
 	00404E08   . |8B53 04       MOV EDX,DWORD PTR DS:[EBX+4]             ;  compr
 	00404E0B   . |55            PUSH EBP
@@ -344,4 +344,5 @@ int CALLBACK InnocentGrey_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

@@ -463,3 +463,4 @@ struct cxdec_callback lovebattle_cxdec_callback = {
 	{ 0x101, 0x31d },
 	xcode_building_stage1
 };
+;

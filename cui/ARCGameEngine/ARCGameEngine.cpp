@@ -9,24 +9,24 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information ARCGameEngine_cui_information = {
 	_T("ARC Software Laboratory"),	/* copyright */
 	_T("ARCGameEngine"),			/* system */
 	_T(".ALF .BIN .AGF"),			/* package */
 	_T("0.9.8"),					/* revision */
-	_T("³Õh¹«Ù\"),					/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),					/* author */
 	_T("2009-5-22 23:30"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// "S3IC", "S3IN", "S4IC", "S4IN"
 	s8 version[4];		// "XXX "
-	u8 unknown[0x124];	// ¿ÉÄÜÊÇÒ»Ð©ÅäÖÃÓÃÐÅÏ¢£¨ÔËÐÐÊ±£©
+	u8 unknown[0x124];	// å¯èƒ½æ˜¯ä¸€äº›é…ç½®ç”¨ä¿¡æ¯ï¼ˆè¿è¡Œæ—¶ï¼‰
 } BIN_header_t;
 
 typedef struct {
@@ -36,7 +36,7 @@ typedef struct {
 } BIN_COMPRESSINFO_t;
 
 typedef struct {
-	u32 ALF_count;		// ALF·â°üµÄ¸öÊý
+	u32 ALF_count;		// ALFå°åŒ…çš„ä¸ªæ•°
 } BIN_index_header_t;
 
 typedef struct {
@@ -44,20 +44,20 @@ typedef struct {
 } BIN_index_entry_t;
 
 typedef struct {
-	u32 entries;		// ×ÊÔ´×Ü¸öÊý
+	u32 entries;		// èµ„æºæ€»ä¸ªæ•°
 } BIN_entry_header_t;
 
 typedef struct {
 	s8 name[64];
-	u32 ALF_id;		// ËùÊôµÄALF·â°ü±àºÅ£¨ALFÃû³ÆÃüÃû°´ÕÕBIN_index_entry_tÖÐµÄÃüÃû£©
-	u32 id;			// Ã»ÕÆÎÕµ½·ÖÅä¹æÔò
+	u32 ALF_id;		// æ‰€å±žçš„ALFå°åŒ…ç¼–å·ï¼ˆALFåç§°å‘½åæŒ‰ç…§BIN_index_entry_tä¸­çš„å‘½åï¼‰
+	u32 id;			// æ²¡æŽŒæ¡åˆ°åˆ†é…è§„åˆ™
 	u32 offset;
 	u32 length;
 } BIN_entry_t;
 
 typedef struct {
 	s8 magic[4];	// "ACGF"
-	u32 type;		// 1 or 2, etcÊÇ·Ç·¨(°ÑtypeÀí½âÎª¶îÍâÑ¹Ëõ¿éµÄ¸öÊýÊÇ·ñ¸üºÃÐ©?)
+	u32 type;		// 1 or 2, etcæ˜¯éžæ³•(æŠŠtypeç†è§£ä¸ºé¢å¤–åŽ‹ç¼©å—çš„ä¸ªæ•°æ˜¯å¦æ›´å¥½äº›?)
 	u32 zero;
 	BIN_COMPRESSINFO_t info;
 } AGF_header_t;
@@ -109,9 +109,9 @@ typedef struct {
 static DWORD lzss_uncompress(BYTE *compr, DWORD comprlen, BYTE *uncompr)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -135,7 +135,7 @@ static DWORD lzss_uncompress(BYTE *compr, DWORD comprlen, BYTE *uncompr)
 
 			data = compr[curbyte++];
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -158,7 +158,7 @@ static DWORD lzss_uncompress(BYTE *compr, DWORD comprlen, BYTE *uncompr)
 
 				data = win[(win_offset + i) & (win_size - 1)];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -170,7 +170,7 @@ static DWORD lzss_uncompress(BYTE *compr, DWORD comprlen, BYTE *uncompr)
 
 /********************* ALF *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int ARCGameEngine_ALF_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -213,7 +213,7 @@ static int ARCGameEngine_ALF_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int ARCGameEngine_ALF_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
@@ -331,7 +331,7 @@ static int ARCGameEngine_ALF_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int ARCGameEngine_ALF_parse_resource_info(struct package *pkg,
 												 struct package_resource *pkg_res)
 {
@@ -339,15 +339,15 @@ static int ARCGameEngine_ALF_parse_resource_info(struct package *pkg,
 
 	ALF_entry = (BIN_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, ALF_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = ALF_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = ALF_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int ARCGameEngine_ALF_extract_resource(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -365,7 +365,7 @@ static int ARCGameEngine_ALF_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int ARCGameEngine_ALF_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -389,7 +389,7 @@ static int ARCGameEngine_ALF_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void ARCGameEngine_ALF_release_resource(struct package *pkg, 
 											   struct package_resource *pkg_res)
 {
@@ -403,7 +403,7 @@ static void ARCGameEngine_ALF_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void ARCGameEngine_ALF_release(struct package *pkg, 
 									  struct package_directory *pkg_dir)
 {
@@ -415,7 +415,7 @@ static void ARCGameEngine_ALF_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ARCGameEngine_ALF_operation = {
 	ARCGameEngine_ALF_match,				/* match */
 	ARCGameEngine_ALF_extract_directory,	/* extract_directory */
@@ -428,7 +428,7 @@ static cui_ext_operation ARCGameEngine_ALF_operation = {
 
 /********************* ALF_idx *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int ARCGameEngine_ALF_idx_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -454,7 +454,7 @@ static int ARCGameEngine_ALF_idx_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int ARCGameEngine_ALF_idx_extract_directory(struct package *pkg,
 												   struct package_directory *pkg_dir)
 {
@@ -483,7 +483,7 @@ static int ARCGameEngine_ALF_idx_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int ARCGameEngine_ALF_idx_parse_resource_info(struct package *pkg,
 													 struct package_resource *pkg_res)
 {
@@ -491,14 +491,14 @@ static int ARCGameEngine_ALF_idx_parse_resource_info(struct package *pkg,
 
 	idx_entry = (idx_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, idx_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = idx_entry->length_lo;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = idx_entry->offset_lo;
 
 	return 0;
 }
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ARCGameEngine_ALF_idx_operation = {
 	ARCGameEngine_ALF_idx_match,				/* match */
 	ARCGameEngine_ALF_idx_extract_directory,	/* extract_directory */
@@ -511,7 +511,7 @@ static cui_ext_operation ARCGameEngine_ALF_idx_operation = {
 
 /********************* BIN *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int ARCGameEngine_AB_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -532,7 +532,7 @@ static int ARCGameEngine_AB_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int ARCGameEngine_AB_extract_resource(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -571,7 +571,7 @@ static int ARCGameEngine_AB_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ARCGameEngine_AB_operation = {
 	ARCGameEngine_AB_match,				/* match */
 	NULL,								/* extract_directory */
@@ -584,7 +584,7 @@ static cui_ext_operation ARCGameEngine_AB_operation = {
 
 /********************* AGF *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int ARCGameEngine_AGF_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -593,7 +593,7 @@ static int ARCGameEngine_AGF_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int ARCGameEngine_AGF_extract_resource(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -692,7 +692,7 @@ static int ARCGameEngine_AGF_extract_resource(struct package *pkg,
 		if (AGF->type == 2) {
 			BYTE *s = dib;
 			BYTE *d = act_data + bmp_header->offset;	
-			// maskÊÇ²»¶ÔÆëµÄ
+			// maskæ˜¯ä¸å¯¹é½çš„
 			DWORD m_line_len = bmp_header->info.biWidth;
 			BYTE *m = mask + (bmp_header->info.biHeight - 1) * m_line_len;
 			DWORD align;
@@ -700,7 +700,7 @@ static int ARCGameEngine_AGF_extract_resource(struct package *pkg,
 				align = (4 - ((bmp_header->info.biWidth * 3) & 3)) & 3;
 				for (int y = 0; y < bmp_header->info.biHeight; ++y) {
 					for (int x = 0; x < bmp_header->info.biWidth; ++x) {
-#if 0	// ²»×öblending ÒòÎªÄ³Ð©Í¼Ð§¹û·´¶ø²»ºÃÁË
+#if 0	// ä¸åšblending å› ä¸ºæŸäº›å›¾æ•ˆæžœåè€Œä¸å¥½äº†
 						BYTE a = *m++;
 						d[0] = s[0] * a / 255 + (255 - a);
 						d[1] = s[1] * a / 255 + (255 - a);
@@ -772,7 +772,7 @@ static int ARCGameEngine_AGF_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ARCGameEngine_AGF_operation = {
 	ARCGameEngine_AGF_match,				/* match */
 	NULL,									/* extract_directory */
@@ -783,10 +783,10 @@ static cui_ext_operation ARCGameEngine_AGF_operation = {
 	ARCGameEngine_ALF_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK ARCGameEngine_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".ALF"), NULL, NULL, 
 		&ARCGameEngine_ALF_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR 
 		| CUI_EXT_FLAG_LST | CUI_EXT_FLAG_WEAK_MAGIC))
@@ -807,4 +807,5 @@ int CALLBACK ARCGameEngine_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

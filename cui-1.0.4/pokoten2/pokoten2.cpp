@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information pokoten2_cui_information = {
-	_T("¤³¤É¤â¤Î¤³¤¨"),	/* copyright */
-	_T("(Í¬ÈË)¥¨¥í¥Á¥Ã¥¯¥´¥ó¥É¥é ¥Ê¥ó¥Ð©`2 ¡«Áµ¤ÎÒŠÁ•¤¤¥¦¥ó¥Ç¥£©`¥Í¡«"),	/* system */
+	_T("ã“ã©ã‚‚ã®ã“ãˆ"),	/* copyright */
+	_T("(åŒäºº)ã‚¨ãƒ­ãƒãƒƒã‚¯ã‚´ãƒ³ãƒ‰ãƒ© ãƒŠãƒ³ãƒãƒ¼2 ï½žæ‹ã®è¦‹ç¿’ã„ã‚¦ãƒ³ãƒ‡ã‚£ãƒ¼ãƒï½ž"),	/* system */
 	_T(".gpp .bm_ .mus .b"),	/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-1-17 22:31"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];
@@ -91,7 +91,7 @@ static DWORD gpp_uncompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD 
 
 /********************* gpp *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int pokoten2_gpp_match(struct package *pkg)
 {
 	s8 magic[2];
@@ -112,7 +112,7 @@ static int pokoten2_gpp_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int pokoten2_gpp_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -148,7 +148,7 @@ static int pokoten2_gpp_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int pokoten2_gpp_save_resource(struct resource *res, 
 									  struct package_resource *pkg_res)
 {
@@ -172,7 +172,7 @@ static int pokoten2_gpp_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void pokoten2_gpp_release_resource(struct package *pkg, 
 										  struct package_resource *pkg_res)
 {
@@ -186,7 +186,7 @@ static void pokoten2_gpp_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void pokoten2_gpp_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
@@ -198,7 +198,7 @@ static void pokoten2_gpp_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation pokoten2_gpp_operation = {
 	pokoten2_gpp_match,				/* match */
 	NULL,							/* extract_directory */
@@ -211,7 +211,7 @@ static cui_ext_operation pokoten2_gpp_operation = {
 
 /********************* mus *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int pokoten2_mus_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -232,7 +232,7 @@ static int pokoten2_mus_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int pokoten2_mus_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -254,7 +254,7 @@ static int pokoten2_mus_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation pokoten2_mus_operation = {
 	pokoten2_mus_match,				/* match */
 	NULL,							/* extract_directory */
@@ -267,7 +267,7 @@ static cui_ext_operation pokoten2_mus_operation = {
 
 /********************* b *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int pokoten2_b_match(struct package *pkg)
 {
 	if (lstrcmpi(pkg->name, L"config.b"))
@@ -279,7 +279,7 @@ static int pokoten2_b_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int pokoten2_b_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -303,7 +303,7 @@ static int pokoten2_b_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation pokoten2_b_operation = {
 	pokoten2_b_match,				/* match */
 	NULL,							/* extract_directory */
@@ -314,7 +314,7 @@ static cui_ext_operation pokoten2_b_operation = {
 	pokoten2_gpp_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK pokoten2_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".gpp"), _T(".bmp"), 
@@ -334,4 +334,5 @@ int CALLBACK pokoten2_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

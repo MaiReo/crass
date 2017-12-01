@@ -469,3 +469,4 @@ struct cxdec_callback yomibito_cxdec_callback = {
 	{ 0x3b5, 0x46b },
 	xcode_building_stage1
 };
+;

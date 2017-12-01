@@ -11,22 +11,22 @@
 #include <stdio.h>
 #include <zlib.h>
 
-/* ½âÃÜ×Ö·û´®ÔÚÕâ¸ö×Ö·û´®¸½½üÕÒ
+/* è§£å¯†å­—ç¬¦ä¸²åœ¨è¿™ä¸ªå­—ç¬¦ä¸²é™„è¿‘æ‰¾
 0058ED30                    6D 67 5F 64 61 74 61 2E 6D 62        mg_data.mb
 0058ED40  6C 00 72 62 00 6D 67 5F 64 61 74 61 32 2E 6D 62  l.rb.mg_data2.mb
 0058ED50  6C 00 72 62 00                                   l.rb.
 */
 
-/* ÑĞ¾¿wady£º
+/* ç ”ç©¶wadyï¼š
 E:\oooooooooooooooooooooooooooooooooo\[[[[[[[[[[[[[[[[[[[[[[[[[
  */
 
 struct acui_information MarbleEngine_cui_information = {
-	_T("¥Ş©`¥Ö¥ë¥½¥Õ¥È"),		/* copyright */
+	_T("ãƒãƒ¼ãƒ–ãƒ«ã‚½ãƒ•ãƒˆ"),		/* copyright */
 	_T("Marble Engine"),		/* system */
 	_T(".mbl"),					/* package */
 	_T("0.8.1"),				/* revision */
-	_T("³Õºº¹«Ôô"),				/* author */
+	_T("ç—´æ±‰å…¬è´¼"),				/* author */
 	_T("2008-6-11 23:34"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -64,21 +64,21 @@ typedef struct {			// 0x30 bytes
 	s8 magic[5];			/* "WADY" */
 	u8 factor;
 	u16 nChannels;		
-	u32 nSamplesPerSec;		/* ²ÉÑùÂÊ£¨Ã¿ÃëÑù±¾Êı£© */
-	u32 data_length0;		/* ÓïÒôÊı¾İµÄ³¤¶È */	
-	u32 data_length1;		/* ÓïÒôÊı¾İµÄ³¤¶È */
+	u32 nSamplesPerSec;		/* é‡‡æ ·ç‡ï¼ˆæ¯ç§’æ ·æœ¬æ•°ï¼‰ */
+	u32 data_length0;		/* è¯­éŸ³æ•°æ®çš„é•¿åº¦ */	
+	u32 data_length1;		/* è¯­éŸ³æ•°æ®çš„é•¿åº¦ */
 	u32 unknown0;
 	u32 data_offset;
 	u16 left_channel_sample_data_base;
 	u16 right_channel_sample_data_base;
 	u16 wav_wFormatTag;
 	u16 wav_nChannels;
-	u32 wav_nSamplesPerSec;	/* ²ÉÑùÂÊ£¨Ã¿ÃëÑù±¾Êı£© */	
-	u32 wav_nAvgBytesPerSec;/* ²¨ĞÎÒôÆµÊı¾İ´«ËÍËÙÂÊ£¬ÆäÖµÎªÍ¨µÀÊı¡Á²ÉÑùÂÊ¡ÁÃ¿Ñù
-		  ¡¡¡¡¡¡¡¡¡¡¡¡¡¡	* ±¾µÄÊı¾İÎ»Êı£¯8 */
+	u32 wav_nSamplesPerSec;	/* é‡‡æ ·ç‡ï¼ˆæ¯ç§’æ ·æœ¬æ•°ï¼‰ */	
+	u32 wav_nAvgBytesPerSec;/* æ³¢å½¢éŸ³é¢‘æ•°æ®ä¼ é€é€Ÿç‡ï¼Œå…¶å€¼ä¸ºé€šé“æ•°Ã—é‡‡æ ·ç‡Ã—æ¯æ ·
+		  ã€€ã€€ã€€ã€€ã€€ã€€ã€€	* æœ¬çš„æ•°æ®ä½æ•°ï¼8 */
 	u16 wav_nBlockAlign;
-	u16 wav_wBitsPerSample;	/* Ã¿Ñù±¾µÄÊı¾İÎ»Êı£¬±íÊ¾Ã¿¸öÉùµÀÖĞ¸÷¸öÑù±¾µÄÊı¾İÎ»Êı¡£
-							Èç¹ûÓĞ¶à¸öÉùµÀ£¬¶ÔÃ¿¸öÉùµÀ¶øÑÔ£¬Ñù±¾´óĞ¡¶¼Ò»Ñù¡£*/
+	u16 wav_wBitsPerSample;	/* æ¯æ ·æœ¬çš„æ•°æ®ä½æ•°ï¼Œè¡¨ç¤ºæ¯ä¸ªå£°é“ä¸­å„ä¸ªæ ·æœ¬çš„æ•°æ®ä½æ•°ã€‚
+							å¦‚æœæœ‰å¤šä¸ªå£°é“ï¼Œå¯¹æ¯ä¸ªå£°é“è€Œè¨€ï¼Œæ ·æœ¬å¤§å°éƒ½ä¸€æ ·ã€‚*/
 } wady_header_t;
 
 typedef struct {
@@ -157,7 +157,7 @@ static int MyBuildWAVFile(wady_header_t *wady_header, BYTE *data, DWORD data_len
 	DWORD riff_chunk_len, fmt_chunk_len, data_chunk_len;
 	DWORD wav_file_size;
 	BYTE *wav_data, *dst, *phack;
-	const char *hack_info = "Extracted By ³Õºº¹«Ôô";
+	const char *hack_info = "Extracted By ç—´æ±‰å…¬è´¼";
 
 	fmt_chunk_len = 16;
 	data_chunk_len = data_length;
@@ -210,10 +210,10 @@ static inline BYTE getbit_be(unsigned char byte, unsigned int pos)
 static int yb_decompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	unsigned int curbyte = 0;		/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	unsigned int curbyte = 0;		/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	
 	memset(uncompr, 0, uncomprlen);
-	/* ÒòÎªflagµÄÊµ¼ÊÎ»Êı²»Ã÷£¬Òò´ËÓÉflagÒıÆğµÄcomprÏÂÒçµÄÎÊÌâ¶¼²»Ëã´íÎó */
+	/* å› ä¸ºflagçš„å®é™…ä½æ•°ä¸æ˜ï¼Œå› æ­¤ç”±flagå¼•èµ·çš„comprä¸‹æº¢çš„é—®é¢˜éƒ½ä¸ç®—é”™è¯¯ */
 	while (act_uncomprlen < uncomprlen) {
 		unsigned char bitmap;
 
@@ -222,9 +222,9 @@ static int yb_decompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD com
 
 		bitmap = getbyte_le(compr[curbyte++]);
 		for (unsigned int curbit_bitmap = 0; curbit_bitmap < 8; curbit_bitmap++) {
-			/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+			/* å¦‚æœä¸º0, è¡¨ç¤ºæ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŸæ ·è¾“å‡º */
 			if (!getbit_be(bitmap, curbit_bitmap)) {
-				/* Êä³ö1×Ö½Ú·ÇÑ¹ËõÊı¾İ */
+				/* è¾“å‡º1å­—èŠ‚éå‹ç¼©æ•°æ® */
 				uncompr[act_uncomprlen++] = getbyte_le(compr[curbyte++]);	
 			} else {
 				BYTE flag;
@@ -352,7 +352,7 @@ static void wady_adpcm_decode_mono(wady_header_t *wady_header,
 								   unsigned int comprlen)
 {
 	unsigned int curbyte = 0;
-	unsigned int act_uncomprlen = 0;	// ÒÔsampleÎªµ¥Î»
+	unsigned int act_uncomprlen = 0;	// ä»¥sampleä¸ºå•ä½
 	u16 data = wady_header->left_channel_sample_data_base;
 
 	while (1) {
@@ -375,7 +375,7 @@ static void wady_adpcm_decode_stereo(wady_header_t *wady_header,
 									 unsigned int comprlen)
 {
 	unsigned int curbyte = 0;
-	unsigned int act_uncomprlen = 0;	// ÒÔsampleÎªµ¥Î»
+	unsigned int act_uncomprlen = 0;	// ä»¥sampleä¸ºå•ä½
 	u16 ldata = wady_header->left_channel_sample_data_base;
 	u16 rdata = wady_header->right_channel_sample_data_base;
 
@@ -463,7 +463,7 @@ wady_size - sizeof(wady_header));
 		return -CUI_EREADVEC;
 	}
 
-	unsigned int uncomprlen = comprlen * 2;	// ÒÔsampleÎªµ¥Î»£¨1:2Ñ¹Ëõ£©
+	unsigned int uncomprlen = comprlen * 2;	// ä»¥sampleä¸ºå•ä½ï¼ˆ1:2å‹ç¼©ï¼‰
 	u16 *uncompr = (u16 *)malloc(uncomprlen);
 	if (!uncompr) {
 		free(compr);
@@ -769,7 +769,7 @@ static int MarbleEngine_mbl_extract_directory(struct package *pkg,
 		if (pkg->pio->read(pkg, &mbl_header, sizeof(mbl_header)))
 			return -CUI_EREAD;
 
-		/* ×ï™¸Ğ ¡¸¤ªîŠ¤¤¡­¤³¤ó¤Ê×ËÒŠ¤Ê¤¤¤Ç¡¹ @ mg_gra.mbl */
+		/* ç½ªæ‚ªæ„Ÿ ã€ŒãŠé¡˜ã„â€¦ã“ã‚“ãªå§¿è¦‹ãªã„ã§ã€ @ mg_gra.mbl */
 		if (mbl_header.name_length > 32) {
 			u32 tmp;
 
@@ -1048,7 +1048,7 @@ static int MarbleEngine_anim_parse_resource_info(struct package *pkg,
 
 	anim_entry = (anim_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, anim_entry->name);	
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->offset = anim_entry->offset;
 	pkg_res->actual_data_length = 0;
 	pkg_res->raw_data_length = anim_entry->length;
@@ -1221,3 +1221,4 @@ int CALLBACK MarbleEngine_register_cui(struct cui_register_callback *callback)
 005095A0  03 00 00 00 04 00 00 00 05 00 00 00 06 00 00 00  ................
 005095B0  08 00 00 00 10 00 00 00 20 00 00 00 00 01 00 00  ........ .......
 #endif
+f

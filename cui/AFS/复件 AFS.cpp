@@ -16,7 +16,7 @@ struct acui_information AFS_cui_information = {
 	NULL,					/* system */
 	_T(".AFS"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2007-10-22 18:07"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -214,9 +214,9 @@ static int AFS_tm2_parse_resource_info(struct package *pkg,
 
 	tm2_entry = (tm2_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, tm2_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = tm2_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = tm2_entry->offset;
 
 	return 0;
@@ -269,7 +269,7 @@ static int AFS_tm2_extract_resource(struct package *pkg,
 			Clut = NULL;
 
 		switch (PictHdr.ImageType) {
-		case 1:	// 16bpp(Êµ¼ÊÉÏÊÇBGR555£¬×î¸ßÎ»Îª1±íÊ¾¦ÁÎª0xff£¬Îª0±íÊ¾¦ÁÎª0)
+		case 1:	// 16bpp(å®žé™…ä¸Šæ˜¯BGR555ï¼Œæœ€é«˜ä½ä¸º1è¡¨ç¤ºÎ±ä¸º0xffï¼Œä¸º0è¡¨ç¤ºÎ±ä¸º0)
 			bpp = 16;
 			break;
 		case 2: // 24bpp
@@ -496,9 +496,9 @@ static int AFS_afs_parse_resource_info(struct package *pkg,
 
 	my_afs_entry = (my_afs_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_afs_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_afs_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_afs_entry->offset;
 
 	return 0;
@@ -641,4 +641,5 @@ int CALLBACK AFS_register_cui(struct cui_register_callback *callback)
 			return -1;
 	
 	return 0;
+}
 }

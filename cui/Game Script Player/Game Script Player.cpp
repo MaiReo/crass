@@ -10,21 +10,21 @@
 #include <utility.h>
 
 // M:\CLOVER\MOLDAVITE
-// N:\ÐÔÅ«ë_Î´ÍöÈË
+// N:\æ€§å¥´éš·æœªäº¡äºº
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Game_Script_Player_cui_information = {
 	_T("HyperWorks"),		/* copyright */
 	_T("Game Script Player for Win32"),			/* system */
 	_T(".pak"),		/* package */
 	_T(""),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// "pac2" or "pack" or "PACK"
@@ -32,7 +32,7 @@ typedef struct {
 } pak_header_t;
 #pragma pack ()
 
-/* .dat·â°üµÄË÷ÒýÏî½á¹¹ */
+/* .datå°åŒ…çš„ç´¢å¼•é¡¹ç»“æž„ */
 typedef struct {
 	s8 name[256];
 	u32 name_length;
@@ -49,7 +49,7 @@ static BYTE decript_table[32] = {
 	0x67, 0x30, 0x42, 0x30, 0x8b, 0x30, 0x00, 0x00
 };
 
-// ÊäÈëµÄdata_len±ØÐë4×Ö½Ú¶ÔÆë, offset²»ÄÜ³¬¹ý32
+// è¾“å…¥çš„data_lenå¿…é¡»4å­—èŠ‚å¯¹é½, offsetä¸èƒ½è¶…è¿‡32
 static void decrypt(BYTE *data, int data_len, int offset)
 {
 
@@ -72,7 +72,7 @@ static void decrypt(BYTE *data, int data_len, int offset)
 
 /********************* pak *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Game_Script_Player_pak_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -97,7 +97,7 @@ static int Game_Script_Player_pak_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Game_Script_Player_pak_extract_directory(struct package *pkg,
 													struct package_directory *pkg_dir)
 {
@@ -133,7 +133,7 @@ static int Game_Script_Player_pak_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int Game_Script_Player_pak_parse_resource_info(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -141,15 +141,15 @@ static int Game_Script_Player_pak_parse_resource_info(struct package *pkg,
 	BYTE nlen = entry[8];
 	pkg_res->actual_index_entry_length = 8 + ((8 + 1 + nlen) & ~7);
 	strncpy(pkg_res->name, (char *)entry + 9, nlen);
-	pkg_res->name_length = nlen;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = nlen;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = *(u32 *)&entry[4];
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = *(u32 *)entry;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Game_Script_Player_pak_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -168,7 +168,7 @@ static int Game_Script_Player_pak_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Game_Script_Player_pak_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -192,7 +192,7 @@ static int Game_Script_Player_pak_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Game_Script_Player_pak_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -206,7 +206,7 @@ static void Game_Script_Player_pak_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Game_Script_Player_pak_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -218,7 +218,7 @@ static void Game_Script_Player_pak_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Game_Script_Player_pak_operation = {
 	Game_Script_Player_pak_match,					/* match */
 	Game_Script_Player_pak_extract_directory,		/* extract_directory */
@@ -229,7 +229,7 @@ static cui_ext_operation Game_Script_Player_pak_operation = {
 	Game_Script_Player_pak_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK Game_Script_Player_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".pak"), NULL, 
@@ -237,4 +237,5 @@ int CALLBACK Game_Script_Player_register_cui(struct cui_register_callback *callb
 			return -1;
 
 	return 0;
+}
 }

@@ -277,3 +277,4 @@ void sha256(unsigned char *md, unsigned int md_len,
 	sha256_final(&ctx, md, md_len);
 	sha256_copy(&ctx, md, md_len);
 }
+}

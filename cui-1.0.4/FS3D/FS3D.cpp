@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information FS3D_cui_information = {
 	_T("AbogadoPowers / ScareCrow"),					/* copyright */
 	_T("FS3D"),				/* system */
 	_T(".pak .bmp .dat"),	/* package */
 	_T("1.0.0"),	/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-1-17 15:58"),					/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 name[64];
@@ -30,9 +30,9 @@ typedef struct {
 } pak_entry_t;
 
 typedef struct {
-	s8 name[8];	// À©Õ¹Ãû
-	u32 end_entry_number;	// ¸ÃÀàÐÍ½áÊøµÄË÷Òý±àºÅ(²»°üº¬)
-	u32 start_entry_number;	// ´Ó0¿ªÊ¼
+	s8 name[8];	// æ‰©å±•å
+	u32 end_entry_number;	// è¯¥ç±»åž‹ç»“æŸçš„ç´¢å¼•ç¼–å·(ä¸åŒ…å«)
+	u32 start_entry_number;	// ä»Ž0å¼€å§‹
 } type_info_t;
 
 typedef struct {
@@ -42,7 +42,7 @@ typedef struct {
 	u16 width;
 	u16 height;
 	u32 unknown2;	// 0
-	u32 palette_offset;	// Èç¹ûÃ»ÓÐpal,Ôò¸Ã×Ö¶ÎÎª0
+	u32 palette_offset;	// å¦‚æžœæ²¡æœ‰pal,åˆ™è¯¥å­—æ®µä¸º0
 	u32 dib_offset;
 	u32 file_size;
 	u32 unknown3;	// 0
@@ -2572,7 +2572,7 @@ static void kg_uncompress(bmp_header_t *bmp, BYTE *uncompr, DWORD uncomprlen)
 static int FS3D_pak_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir);
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int FS3D_pak_match(struct package *pkg)
 {
 	u32 key;
@@ -2603,7 +2603,7 @@ static int FS3D_pak_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int FS3D_pak_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -2658,7 +2658,7 @@ static int FS3D_pak_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int FS3D_pak_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -2674,7 +2674,7 @@ static int FS3D_pak_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int FS3D_pak_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -2694,7 +2694,7 @@ static int FS3D_pak_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int FS3D_pak_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -2718,7 +2718,7 @@ static int FS3D_pak_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void FS3D_pak_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -2728,7 +2728,7 @@ static void FS3D_pak_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void FS3D_pak_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
@@ -2740,7 +2740,7 @@ static void FS3D_pak_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation FS3D_pak_operation = {
 	FS3D_pak_match,					/* match */
 	FS3D_pak_extract_directory,		/* extract_directory */
@@ -2753,7 +2753,7 @@ static cui_ext_operation FS3D_pak_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int FS3D_dat_match(struct package *pkg)
 {
 	if (lstrcmp(pkg->name, L"oyazi.dat"))
@@ -2765,7 +2765,7 @@ static int FS3D_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int FS3D_dat_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -2819,7 +2819,7 @@ static int FS3D_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation FS3D_dat_operation = {
 	FS3D_dat_match,				/* match */
 	NULL,						/* extract_directory */
@@ -2832,7 +2832,7 @@ static cui_ext_operation FS3D_dat_operation = {
 
 /********************* bmp *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int FS3D_bmp_match(struct package *pkg)
 {
 	bmp_header_t bmp_header;
@@ -2858,7 +2858,7 @@ static int FS3D_bmp_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int FS3D_bmp_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -2904,7 +2904,7 @@ static int FS3D_bmp_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation FS3D_bmp_operation = {
 	FS3D_bmp_match,				/* match */
 	NULL,						/* extract_directory */
@@ -2915,10 +2915,10 @@ static cui_ext_operation FS3D_bmp_operation = {
 	FS3D_pak_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK FS3D_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".pak"), NULL, 
 		NULL, &FS3D_pak_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -2932,4 +2932,5 @@ int CALLBACK FS3D_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

@@ -1,4 +1,4 @@
-// ÌáÈ¡ BlueImpact ¹«Ë¾µÄÓÎÏ· Angel's Feather ×ÊÔ´ÎÄ¼şµÄ²å¼ş
+// æå– BlueImpact å…¬å¸çš„æ¸¸æˆ Angel's Feather èµ„æºæ–‡ä»¶çš„æ’ä»¶
 
 #include <windows.h>
 #include <tchar.h>
@@ -22,12 +22,12 @@ struct acui_information AF_cui_information =
 		ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
-/* .dat·â°üµÄË÷ÒıÏî½á¹¹ */
+/* .datå°åŒ…çš„ç´¢å¼•é¡¹ç»“æ„ */
 typedef struct {
-	u32 idx_length; // ¸ÃÏîË÷ÒıÏîµÄ³¤¶È
-	u32 unknown; // ÓÃÍ¾²»Ã÷,ºÃÏñ¶¼ÊÇ0 ?
+	u32 idx_length; // è¯¥é¡¹ç´¢å¼•é¡¹çš„é•¿åº¦
+	u32 unknown; // ç”¨é€”ä¸æ˜,å¥½åƒéƒ½æ˜¯0 ?
 	u32 offset;
 	u32 length;
 	s8 name[128];
@@ -36,8 +36,8 @@ typedef struct {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
-// ±¾ÓÎÏ·ÎŞmagic
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
+// æœ¬æ¸¸æˆæ— magic
 static int AF_dat_match(struct package *pkg)
 {
 
@@ -50,14 +50,14 @@ static int AF_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int AF_dat_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
 	dat_entry_t *index_buffer;
 	unsigned int index_buffer_length;	
 	unsigned int i;
-	unsigned int total_index_length; // Õâ¸ö³¤¶ÈÊÇ·â°üÖĞÖ¸³öµÄË÷Òı¶ÎµÄ³¤¶È
+	unsigned int total_index_length; // è¿™ä¸ªé•¿åº¦æ˜¯å°åŒ…ä¸­æŒ‡å‡ºçš„ç´¢å¼•æ®µçš„é•¿åº¦
 	if (!pkg || !pkg_dir)
 		return -CUI_EPARA;
 
@@ -123,7 +123,7 @@ static int AF_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int AF_dat_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -134,15 +134,15 @@ static int AF_dat_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = dat_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int AF_dat_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -163,7 +163,7 @@ static int AF_dat_extract_resource(struct package *pkg,
 		return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int AF_dat_save_resource(struct resource *res, 
 								struct package_resource *pkg_res)
 {
@@ -182,7 +182,7 @@ static int AF_dat_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void AF_dat_release_resource(struct package *pkg, 
 									struct package_resource *pkg_res)
 {
@@ -195,7 +195,7 @@ static void AF_dat_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void AF_dat_release(struct package *pkg, 
 							struct package_directory *pkg_dir)
 {
@@ -210,7 +210,7 @@ static void AF_dat_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AF_dat_operation = {
 		AF_dat_match,					/* match */
 		AF_dat_extract_directory,		/* extract_directory */
@@ -221,14 +221,16 @@ static cui_ext_operation AF_dat_operation = {
 		AF_dat_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK AF_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".dat"), NULL, 
 		NULL, &AF_dat_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_NO_MAGIC))
 		return -1;
 
 	return 0;
 }
+
+
 

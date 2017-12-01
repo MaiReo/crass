@@ -14,34 +14,34 @@
 // http://topic.csdn.net/t/20050707/20/4130073.html
 // http://www.warpfield.cn/blog/?p=146
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information MacromediaFlash_cui_information = {
 	_T("Macromedia"),		/* copyright */
 	_T("MacromediaFlash"),	/* system */
 	_T(".swf"),				/* package */
 	_T("0.0.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T(""),					/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[3];	// "FWS"
 	u8 version;
-	u32 length;		// flashÎÄ¼þµÄ´óÐ¡
+	u32 length;		// flashæ–‡ä»¶çš„å¤§å°
 } swf_header_t;
 
-typedef struct {	// Flash 6¿ªÊ¼Ö§³Ö
+typedef struct {	// Flash 6å¼€å§‹æ”¯æŒ
 	s8 magic[3];	// "CWS"
 	u8 version;		// 7, 8
-	u32 uncomprlen;	// flashÎÄ¼þµÄÔ­Ê¼´óÐ¡
+	u32 uncomprlen;	// flashæ–‡ä»¶çš„åŽŸå§‹å¤§å°
 } cswf_header_t;
 
 typedef struct {
-	RECT frame_size;	// ÒÔtwipÎªµ¥Î»(1/20ÏñËØ)¼ÇÂ¼Ö¡µÄ³ß´ç (¹²8×Ö½Ú)
+	RECT frame_size;	// ä»¥twipä¸ºå•ä½(1/20åƒç´ )è®°å½•å¸§çš„å°ºå¯¸ (å…±8å­—èŠ‚)
 	u16 frame_rate;
 	u16 frame_count;
 } swf_info_t;
@@ -57,7 +57,7 @@ typedef struct {
 
 /********************* cswf *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int MacromediaFlash_cswf_match(struct package *pkg)
 {
 	cswf_header_t cswf_header;
@@ -80,7 +80,7 @@ static int MacromediaFlash_cswf_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int MacromediaFlash_cswf_extract_directory(struct package *pkg,
 												  struct package_directory *pkg_dir)
 {
@@ -126,7 +126,7 @@ printf("%x %x\n", act_uncomprlen, cswf_header.uncomprlen);
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int MacromediaFlash_cswf_parse_resource_info(struct package *pkg,
 													struct package_resource *pkg_res)
 {
@@ -137,13 +137,13 @@ static int MacromediaFlash_cswf_parse_resource_info(struct package *pkg,
 	strcpy(pkg_res->name, my_cswf_entry->name);
 	pkg_res->name_length = my_cswf_entry->name_length;
 	pkg_res->raw_data_length = my_cswf_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_cswf_entry->offset;
 #endif
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MacromediaFlash_cswf_extract_resource(struct package *pkg,
 												 struct package_resource *pkg_res)
 {
@@ -169,7 +169,7 @@ static int MacromediaFlash_cswf_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int MacromediaFlash_cswf_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -188,7 +188,7 @@ static int MacromediaFlash_cswf_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void MacromediaFlash_cswf_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -198,7 +198,7 @@ static void MacromediaFlash_cswf_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void MacromediaFlash_cswf_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -211,7 +211,7 @@ static void MacromediaFlash_cswf_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MacromediaFlash_cswf_operation = {
 	MacromediaFlash_cswf_match,					/* match */
 	MacromediaFlash_cswf_extract_directory,		/* extract_directory */
@@ -222,14 +222,15 @@ static cui_ext_operation MacromediaFlash_cswf_operation = {
 	MacromediaFlash_cswf_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK MacromediaFlash_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".swf"), NULL, 
 		NULL, &MacromediaFlash_cswf_operation, CUI_EXT_FLAG_PKG 
 		| CUI_EXT_FLAG_DIR))
 			return -1;
 
 	return 0;
+}
 }

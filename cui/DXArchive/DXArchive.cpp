@@ -14,40 +14,40 @@ using namespace std;
 using std::vector;
 
 /*
-╒╥╜т├▄key╡─╖╜╖иг║
-╦╤╦ў│г┴┐aa ╙╨push AA╒т╛ф╗░╛═╩╟KeyCreateбг
+цЙ╛шзгхпЖkeyчЪДцЦ╣ц│Хя╝Ъ
+цРЬч┤вх╕╕щЗПaa цЬЙpush AAш┐ЩхПешпЭх░▒цШпKeyCreateуАВ
 
 Q:\asuhare
  */
 
-/* ╜╙┐┌╩¤╛▌╜с╣╣: ▒э╩╛cui▓х╝■╡─╥╗░у╨┼╧в */
+/* цОехПгцХ░цНоч╗УцЮД: шбичд║cuiцПТф╗╢чЪДф╕АшИмф┐бцБп */
 struct acui_information DXArchive_cui_information = {
-	_T("╔╜╠я ╟╔"),			/* copyright */
-	_T("г─г╪ещеде╓ещеъ"),	/* system */
+	_T("х▒▒чФ░ х╖з"),			/* copyright */
+	_T("я╝дя╝╕уГйуВдуГЦуГйуГк"),	/* system */
 	_T(".dxa .dat .hud"),	/* package */
 	_T("1.0.1"),			/* revision */
-	_T("│╒║║╣л╘Ї"),			/* author */
+	_T("чЧ┤ц▒ЙхЕмш┤╝"),			/* author */
 	_T("2009-7-31 20:18"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
 /*
-	е╟й`е┐е▐е├е╫
+	уГЗуГ╝уВ┐уГЮуГГуГЧ
 		
 	DARC_HEAD
-	е╒ебедеыМgе╟й`е┐
-	е╒ебедеы├√е╞й`е╓еы
-	DARC_FILEHEAD е╞й`е╓еы
-	DARC_DIRECTORY е╞й`е╓еы
+	уГХуВбуВдуГлхоЯуГЗуГ╝уВ┐
+	уГХуВбуВдуГлхРНуГЖуГ╝уГЦуГл
+	DARC_FILEHEAD уГЖуГ╝уГЦуГл
+	DARC_DIRECTORY уГЖуГ╝уГЦуГл
 */
 
 /*
-	е╒ебедеы├√д╬е╟й`е┐╨╬╩╜
-	2byte:╬─╫╓┴╨д╬щLд╡(е╨еде╚е╡еде║б┬г┤)
-	2byte:╬─╫╓┴╨д╬е╤еъе╞еге╟й`е┐(╚лд╞д╬╬─╫╓д╬ВОдЄ╫уд╖д┐дтд╬)
-	╙в╫╓д╧┤є╬─╫╓д╦ЙфУQд╡дьд┐е╒ебедеы├√д╬е╟й`е┐(г┤д╬▒╢╩¤д╬е╡еде║)
-	╙в╫╓дм┤є╬─╫╓д╦ЙфУQд╡дьд╞ддд╩дде╒ебедеы├√д╬е╟й`е┐
+	уГХуВбуВдуГлхРНуБоуГЗуГ╝уВ┐х╜вх╝П
+	2byte:цЦЗхнЧхИЧуБощХ╖уБХ(уГРуВдуГИуВ╡уВдуВ║├╖я╝Ф)
+	2byte:цЦЗхнЧхИЧуБоуГСуГкуГЖуВгуГЗуГ╝уВ┐(хЕиуБжуБоцЦЗхнЧуБохАдуВТш╢│уБЧуБЯуВВуБо)
+	шЛ▒хнЧуБпхдзцЦЗхнЧуБлхдЙцПЫуБХуВМуБЯуГХуВбуВдуГлхРНуБоуГЗуГ╝уВ┐(я╝ФуБохАНцХ░уБоуВ╡уВдуВ║)
+	шЛ▒хнЧуБМхдзцЦЗхнЧуБлхдЙцПЫуБХуВМуБжуБДуБкуБДуГХуВбуВдуГлхРНуБоуГЗуГ╝уВ┐
 */
 
 #define FILE_ATTRIBUTE_DIRECTORY		0x00000010
@@ -56,56 +56,56 @@ struct acui_information DXArchive_cui_information = {
 
 #pragma pack(push)
 #pragma pack(1)
-// евй`еледе╓е╟й`е┐д╬╫ю│їд╬е╪е├е└
+// уВвуГ╝уВлуВдуГЦуГЗуГ╝уВ┐уБоцЬАхИЭуБоуГШуГГуГА
 typedef struct tagDARC_HEAD {
-	s8  Head[2];							// е╪е├е└
-	u16 Version;							// е╨й`е╕ечеє
-	u32 HeadSize;							// е╪е├е└╟щИєд╬ DARC_HEAD дЄТiддд┐╚ле╡еде║
-	u32 DataStartAddress;					// ╫ю│їд╬е╒ебедеыд╬е╟й`е┐дм╕ё╝{д╡дьд╞дддые╟й`е┐еве╔еье╣(е╒ебедеыд╬╧╚ю^еве╔еье╣дЄеве╔еье╣г░д╚д╣ды)
-	u32 FileNameTableStartAddress;			// е╒ебедеы├√е╞й`е╓еыд╬╧╚ю^еве╔еье╣(е╒ебедеыд╬╧╚ю^еве╔еье╣дЄеве╔еье╣г░д╚д╣ды)
-	u32 FileTableStartAddress;				// е╒ебедеые╞й`е╓еыд╬╧╚ю^еве╔еье╣(есеєе╨Йф╩¤ FileNameTableStartAddress д╬еве╔еье╣дЄг░д╚д╣ды)
-	u32 DirectoryTableStartAddress;			// е╟егеьепе╚еъе╞й`е╓еыд╬╧╚ю^еве╔еье╣(есеєе╨Йф╩¤ FileNameTableStartAddress д╬еве╔еье╣дЄг░д╚д╣ды)
-											// еве╔еье╣г░длдщ┼ф╓├д╡дьд╞ддды DARC_DIRECTORY ШЛ╘ь╠хдмеый`е╚е╟егеьепе╚еъ
+	s8  Head[2];							// уГШуГГуГА
+	u16 Version;							// уГРуГ╝уВ╕уГзуГ│
+	u32 HeadSize;							// уГШуГГуГАцГЕха▒уБо DARC_HEAD уВТцКЬуБДуБЯхЕиуВ╡уВдуВ║
+	u32 DataStartAddress;					// цЬАхИЭуБоуГХуВбуВдуГлуБоуГЗуГ╝уВ┐уБМца╝ч┤НуБХуВМуБжуБДуВЛуГЗуГ╝уВ┐уВвуГЙуГмуВ╣(уГХуВбуВдуГлуБохЕИщануВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ)
+	u32 FileNameTableStartAddress;			// уГХуВбуВдуГлхРНуГЖуГ╝уГЦуГлуБохЕИщануВвуГЙуГмуВ╣(уГХуВбуВдуГлуБохЕИщануВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ)
+	u32 FileTableStartAddress;				// уГХуВбуВдуГлуГЖуГ╝уГЦуГлуБохЕИщануВвуГЙуГмуВ╣(уГбуГ│уГРхдЙцХ░ FileNameTableStartAddress уБоуВвуГЙуГмуВ╣уВТя╝РуБиуБЩуВЛ)
+	u32 DirectoryTableStartAddress;			// уГЗуВгуГмуВпуГИуГкуГЖуГ╝уГЦуГлуБохЕИщануВвуГЙуГмуВ╣(уГбуГ│уГРхдЙцХ░ FileNameTableStartAddress уБоуВвуГЙуГмуВ╣уВТя╝РуБиуБЩуВЛ)
+											// уВвуГЙуГмуВ╣я╝РуБЛуВЙщЕНч╜оуБХуВМуБжуБДуВЛ DARC_DIRECTORY цзЛщАаф╜УуБМуГлуГ╝уГИуГЗуВгуГмуВпуГИуГк
 } DARC_HEAD ;
 
-// е╒ебедеыд╬Хrщg╟щИє
+// уГХуВбуВдуГлуБоцЩВщЦУцГЕха▒
 typedef struct tagDARC_FILETIME {
-	u64 Create;			// ╫ў│╔Хrщg
-	u64 LastAccess;		// ╫ю╜Kевепе╗е╣Хrщg
-	u64 LastWrite;		// ╫ю╜K╕№╨┬Хrщg
+	u64 Create;			// ф╜ЬцИРцЩВщЦУ
+	u64 LastAccess;		// цЬАч╡ВуВвуВпуВ╗уВ╣цЩВщЦУ
+	u64 LastWrite;		// цЬАч╡ВцЫ┤цЦ░цЩВщЦУ
 } DARC_FILETIME;
 
-// е╒ебедеы╕ё╝{╟щИє(Ver 0x0001)
+// уГХуВбуВдуГлца╝ч┤НцГЕха▒(Ver 0x0001)
 typedef struct tagDARC_FILEHEAD_VER1 {
-	u32 NameAddress ;			// е╒ебедеы├√дм╕ё╝{д╡дьд╞дддыеве╔еье╣( ARCHIVE_HEADШЛ╘ь╠х д╬есеєе╨Йф╩¤ FileNameTableStartAddress д╬еве╔еье╣дЄеве╔еье╣г░д╚д╣ды) 
+	u32 NameAddress ;			// уГХуВбуВдуГлхРНуБМца╝ч┤НуБХуВМуБжуБДуВЛуВвуГЙуГмуВ╣( ARCHIVE_HEADцзЛщАаф╜У уБоуГбуГ│уГРхдЙцХ░ FileNameTableStartAddress уБоуВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ) 
 
-	u32 Attributes ;			// е╒ебедеы╩Ї╨╘
-	DARC_FILETIME Time ;		// Хrщg╟щИє
-	u32 DataAddress ;			// е╒ебедеыдм╕ё╝{д╡дьд╞дддыеве╔еье╣
-								//			е╒ебедеыд╬ИЎ║╧г║DARC_HEADШЛ╘ь╠х д╬есеєе╨Йф╩¤ DataStartAddress дм╩╛д╣еве╔еье╣дЄеве╔еье╣г░д╚д╣ды
-								//			е╟егеьепе╚еъд╬ИЎ║╧г║DARC_HEADШЛ╘ь╠х д╬есеєе╨Йф╩¤ DirectoryTableStartAddress д╬дм╩╛д╣еве╔еье╣дЄеве╔еье╣г░д╚д╣ды
-	u32 DataSize ;				// е╒ебедеыд╬е╟й`е┐е╡еде║
+	u32 Attributes ;			// уГХуВбуВдуГлх▒ЮцАз
+	DARC_FILETIME Time ;		// цЩВщЦУцГЕха▒
+	u32 DataAddress ;			// уГХуВбуВдуГлуБМца╝ч┤НуБХуВМуБжуБДуВЛуВвуГЙуГмуВ╣
+								//			уГХуВбуВдуГлуБоха┤хРИя╝ЪDARC_HEADцзЛщАаф╜У уБоуГбуГ│уГРхдЙцХ░ DataStartAddress уБМчд║уБЩуВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ
+								//			уГЗуВгуГмуВпуГИуГкуБоха┤хРИя╝ЪDARC_HEADцзЛщАаф╜У уБоуГбуГ│уГРхдЙцХ░ DirectoryTableStartAddress уБоуБМчд║уБЩуВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ
+	u32 DataSize ;				// уГХуВбуВдуГлуБоуГЗуГ╝уВ┐уВ╡уВдуВ║
 } DARC_FILEHEAD_VER1;
 
-// е╒ебедеы╕ё╝{╟щИє
+// уГХуВбуВдуГлца╝ч┤НцГЕха▒
 typedef struct tagDARC_FILEHEAD {
-	u32 NameAddress;			// е╒ебедеы├√дм╕ё╝{д╡дьд╞дддыеве╔еье╣( ARCHIVE_HEADШЛ╘ь╠х д╬есеєе╨Йф╩¤ FileNameTableStartAddress д╬еве╔еье╣дЄеве╔еье╣г░д╚д╣ды) 
+	u32 NameAddress;			// уГХуВбуВдуГлхРНуБМца╝ч┤НуБХуВМуБжуБДуВЛуВвуГЙуГмуВ╣( ARCHIVE_HEADцзЛщАаф╜У уБоуГбуГ│уГРхдЙцХ░ FileNameTableStartAddress уБоуВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ) 
 
-	u32 Attributes;				// е╒ебедеы╩Ї╨╘
-	DARC_FILETIME Time;			// Хrщg╟щИє
-	u32 DataAddress;			// е╒ебедеыдм╕ё╝{д╡дьд╞дддыеве╔еье╣
-								//			е╒ебедеыд╬ИЎ║╧г║DARC_HEADШЛ╘ь╠х д╬есеєе╨Йф╩¤ DataStartAddress дм╩╛д╣еве╔еье╣дЄеве╔еье╣г░д╚д╣ды
-								//			е╟егеьепе╚еъд╬ИЎ║╧г║DARC_HEADШЛ╘ь╠х д╬есеєе╨Йф╩¤ DirectoryTableStartAddress д╬дм╩╛д╣еве╔еье╣дЄеве╔еье╣г░д╚д╣ды
-	u32 DataSize;				// е╒ебедеыд╬е╟й`е┐е╡еде║
-	u32 PressDataSize;			// ИR┐sссд╬е╟й`е┐д╬е╡еде║( 0xffffffff:ИR┐sд╡дьд╞ддд╩дд ) ( Ver0x0002 д╟╫╖╝╙д╡дьд┐ )
+	u32 Attributes;				// уГХуВбуВдуГлх▒ЮцАз
+	DARC_FILETIME Time;			// цЩВщЦУцГЕха▒
+	u32 DataAddress;			// уГХуВбуВдуГлуБМца╝ч┤НуБХуВМуБжуБДуВЛуВвуГЙуГмуВ╣
+								//			уГХуВбуВдуГлуБоха┤хРИя╝ЪDARC_HEADцзЛщАаф╜У уБоуГбуГ│уГРхдЙцХ░ DataStartAddress уБМчд║уБЩуВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ
+								//			уГЗуВгуГмуВпуГИуГкуБоха┤хРИя╝ЪDARC_HEADцзЛщАаф╜У уБоуГбуГ│уГРхдЙцХ░ DirectoryTableStartAddress уБоуБМчд║уБЩуВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ
+	u32 DataSize;				// уГХуВбуВдуГлуБоуГЗуГ╝уВ┐уВ╡уВдуВ║
+	u32 PressDataSize;			// хЬзч╕ох╛МуБоуГЗуГ╝уВ┐уБоуВ╡уВдуВ║( 0xffffffff:хЬзч╕оуБХуВМуБжуБДуБкуБД ) ( Ver0x0002 уБзш┐╜хКауБХуВМуБЯ )
 } DARC_FILEHEAD;
 
-// е╟егеьепе╚еъ╕ё╝{╟щИє
+// уГЗуВгуГмуВпуГИуГкца╝ч┤НцГЕха▒
 typedef struct tagDARC_DIRECTORY {
-	u32 DirectoryAddress;			// ╫╘╖╓д╬ DARC_FILEHEAD дм╕ё╝{д╡дьд╞дддыеве╔еье╣( DARC_HEAD ШЛ╘ь╠х д╬есеєе╨Йф╩¤ FileTableStartAddress дм╩╛д╣еве╔еье╣дЄеве╔еье╣г░д╚д╣ды)
-	u32 ParentDirectoryAddress;		// ╙Hе╟егеьепе╚еъд╬ DARC_DIRECTORY дм╕ё╝{д╡дьд╞дддыеве╔еье╣( DARC_HEADШЛ╘ь╠х д╬есеєе╨Йф╩¤ DirectoryTableStartAddress дм╩╛д╣еве╔еье╣дЄеве╔еье╣г░д╚д╣ды)
-	u32 FileHeadNum;				// е╟егеьепе╚еъ─┌д╬е╒ебедеыд╬╩¤
-	u32 FileHeadAddress;			// е╟егеьепе╚еъ─┌д╬е╒ебедеыд╬е╪е├е└┴╨дм╕ё╝{д╡дьд╞дддыеве╔еье╣( DARC_HEADШЛ╘ь╠х д╬есеєе╨Йф╩¤ FileTableStartAddress дм╩╛д╣еве╔еье╣дЄеве╔еье╣г░д╚д╣ды) 
+	u32 DirectoryAddress;			// шЗкхИЖуБо DARC_FILEHEAD уБМца╝ч┤НуБХуВМуБжуБДуВЛуВвуГЙуГмуВ╣( DARC_HEAD цзЛщАаф╜У уБоуГбуГ│уГРхдЙцХ░ FileTableStartAddress уБМчд║уБЩуВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ)
+	u32 ParentDirectoryAddress;		// шжкуГЗуВгуГмуВпуГИуГкуБо DARC_DIRECTORY уБМца╝ч┤НуБХуВМуБжуБДуВЛуВвуГЙуГмуВ╣( DARC_HEADцзЛщАаф╜У уБоуГбуГ│уГРхдЙцХ░ DirectoryTableStartAddress уБМчд║уБЩуВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ)
+	u32 FileHeadNum;				// уГЗуВгуГмуВпуГИуГкхЖЕуБоуГХуВбуВдуГлуБоцХ░
+	u32 FileHeadAddress;			// уГЗуВгуГмуВпуГИуГкхЖЕуБоуГХуВбуВдуГлуБоуГШуГГуГАхИЧуБМца╝ч┤НуБХуВМуБжуБДуВЛуВвуГЙуГмуВ╣( DARC_HEADцзЛщАаф╜У уБоуГбуГ│уГРхдЙцХ░ FileTableStartAddress уБМчд║уБЩуВвуГЙуГмуВ╣уВТуВвуГЙуГмуВ╣я╝РуБиуБЩуВЛ) 
 } DARC_DIRECTORY;
 #pragma pack(pop)
 
@@ -116,9 +116,9 @@ typedef struct {
 	u32 uncomprlen;
 } my_dxa_entry_t;
 
-#define DXA_HEAD			"DX"		// е╪е├е└
-#define DXA_VER				0x0003		// е╨й`е╕ечеє
-#define DXA_KEYSTR_LENGTH	12			// цI╬─╫╓┴╨д╬щLд╡
+#define DXA_HEAD			"DX"		// уГШуГГуГА
+#define DXA_VER				0x0003		// уГРуГ╝уВ╕уГзуГ│
+#define DXA_KEYSTR_LENGTH	12			// щН╡цЦЗхнЧхИЧуБощХ╖уБХ
 
 static const char *key_list[] = {
 	"hug_001",
@@ -128,20 +128,20 @@ static const char *key_list[] = {
 	NULL
 };
 
-// е╒ебедеы├√е╟й`е┐длдщ╘кд╬е╒ебедеы├√д╬╬─╫╓┴╨дЄ╚б╡├д╣ды
+// уГХуВбуВдуГлхРНуГЗуГ╝уВ┐уБЛуВЙхЕГуБоуГХуВбуВдуГлхРНуБоцЦЗхнЧхИЧуВТхПЦх╛ЧуБЩуВЛ
 static const char *GetOriginalFileName(u8 *FileNameTable)
 {
 	return (char *)FileNameTable + *((u16 *)&FileNameTable[0]) * 4 + 4;
 }
 
-#define MIN_COMPRESS		(4)						// ╫ю╡═ИR┐sе╨еде╚╩¤
-#define MAX_SEARCHLISTNUM	(64)					// ╫ю┤є╥╗╓┬щLдЄ╠╜д╣Ющд╬еъе╣е╚дЄ▐{ды╫ю┤є╩¤
-#define MAX_SUBLISTNUM		(65536)					// ИR┐sХrщg╢╠┐sд╬д┐дсд╬е╡е╓еъе╣е╚д╬╫ю┤є╩¤
-#define MAX_COPYSIZE 		(0x1fff + MIN_COMPRESS)	// ▓╬╒╒еве╔еье╣длдще│е╘й`│Ў╟╨ды╫ю┤єе╡еде║( ИR┐sе│й`е╔дм▒эмFд╟дндые│е╘й`е╡еде║д╬╫ю┤єВО + ╫ю╡═ИR┐sе╨еде╚╩¤ )
-#define MAX_ADDRESSLISTNUM	(1024 * 1024 * 1)		// е╣ещеде╔┤╟Х°д╬╫ю┤єе╡еде║
-#define MAX_POSITION		(1 << 24)				// ▓╬╒╒┐╔─▄д╩╫ю┤є╧рМЭеве╔еье╣( 16MB )
+#define MIN_COMPRESS		(4)						// цЬАф╜ОхЬзч╕оуГРуВдуГИцХ░
+#define MAX_SEARCHLISTNUM	(64)					// цЬАхдзф╕АшЗ┤щХ╖уВТцОвуБЩчВ║уБоуГкуВ╣уГИуВТш╛┐уВЛцЬАхдзцХ░
+#define MAX_SUBLISTNUM		(65536)					// хЬзч╕оцЩВщЦУчЯнч╕оуБоуБЯуВБуБоуВ╡уГЦуГкуВ╣уГИуБоцЬАхдзцХ░
+#define MAX_COPYSIZE 		(0x1fff + MIN_COMPRESS)	// хПВчЕзуВвуГЙуГмуВ╣уБЛуВЙуВ│уГФуГ╝хЗ║хИЗуВЛцЬАхдзуВ╡уВдуВ║( хЬзч╕оуВ│уГ╝уГЙуБМшбичП╛уБзуБНуВЛуВ│уГФуГ╝уВ╡уВдуВ║уБоцЬАхдзхАд + цЬАф╜ОхЬзч╕оуГРуВдуГИцХ░ )
+#define MAX_ADDRESSLISTNUM	(1024 * 1024 * 1)		// уВ╣уГйуВдуГЙш╛ЮцЫ╕уБоцЬАхдзуВ╡уВдуВ║
+#define MAX_POSITION		(1 << 24)				// хПВчЕзхПпшГ╜уБкцЬАхдзчЫ╕хп╛уВвуГЙуГмуВ╣( 16MB )
 
-// е╟е│й`е╔( С°дъВО:╜тГЎссд╬е╡еде║  -1 д╧еиещй`  Dest д╦ NULL дЄ╚ыдьдыд│д╚дт┐╔─▄ )
+// уГЗуВ│уГ╝уГЙ( цИ╗уВКхАд:шзгхЗНх╛МуБоуВ╡уВдуВ║  -1 уБпуВиуГйуГ╝  Dest уБл NULL уВТхЕеуВМуВЛуБУуБиуВВхПпшГ╜ )
 static int Decode(void *Src, void *Dest)
 {
 	u32 srcsize, destsize, code, indexsize, keycode, conbo, index ;
@@ -150,28 +150,28 @@ static int Decode(void *Src, void *Dest)
 	destp = (u8 *)Dest ;
 	srcp  = (u8 *)Src ;
 	
-	// ╜тГЎссд╬е╟й`е┐е╡еде║дЄ╡├ды
+	// шзгхЗНх╛МуБоуГЗуГ╝уВ┐уВ╡уВдуВ║уВТх╛ЧуВЛ
 	destsize = *((u32 *)&srcp[0]) ;
 
-	// ИR┐sе╟й`е┐д╬е╡еде║дЄ╡├ды
+	// хЬзч╕оуГЗуГ╝уВ┐уБоуВ╡уВдуВ║уВТх╛ЧуВЛ
 	srcsize = *((u32 *)&srcp[4]) - 9 ;
 
-	// енй`е│й`е╔
+	// уВнуГ╝уВ│уГ╝уГЙ
 	keycode = srcp[8] ;
 	
-	// │Ў┴ж╧╚дмд╩ддИЎ║╧д╧е╡еде║д└д▒╖╡д╣
+	// хЗ║хКЫхЕИуБМуБкуБДха┤хРИуБпуВ╡уВдуВ║уБауБСш┐ФуБЩ
 	if( Dest == NULL )
 		return destsize ;
 	
-	// ╒╣щ_щ_╩╝
+	// х▒ХщЦЛщЦЛхзЛ
 	sp  = srcp + 9 ;
 	dp  = destp ;
 	while( srcsize )
 	{
-		// енй`е│й`е╔дл═мдлд╟ДI└эдЄ╖╓ск
+		// уВнуГ╝уВ│уГ╝уГЙуБЛхРМуБЛуБзхЗжчРЖуВТхИЖх▓Р
 		if( sp[0] != keycode )
 		{
-			// ╖╟ИR┐sе│й`е╔д╬ИЎ║╧д╧д╜д╬д▐д▐│Ў┴ж
+			// щЭЮхЬзч╕оуВ│уГ╝уГЙуБоха┤хРИуБпуБЭуБоуБ╛уБ╛хЗ║хКЫ
 			*dp = *sp ;
 			dp      ++ ;
 			sp      ++ ;
@@ -179,7 +179,7 @@ static int Decode(void *Src, void *Dest)
 			continue ;
 		}
 	
-		// енй`е│й`е╔дм▀B╛Aд╖д╞ддд┐ИЎ║╧д╧енй`е│й`е╔╫╘╠хдЄ│Ў┴ж
+		// уВнуГ╝уВ│уГ╝уГЙуБМщАгч╢ЪуБЧуБжуБДуБЯха┤хРИуБпуВнуГ╝уВ│уГ╝уГЙшЗкф╜УуВТхЗ║хКЫ
 		if( sp[1] == keycode )
 		{
 			*dp = (u8)keycode ;
@@ -190,17 +190,17 @@ static int Decode(void *Src, void *Dest)
 			continue ;
 		}
 
-		// ╡┌╥╗е╨еде╚дЄ╡├ды
+		// чммф╕АуГРуВдуГИуВТх╛ЧуВЛ
 		code = sp[1] ;
 
-		// дтд╖енй`е│й`е╔дшдъдт┤єднд╩ВОд└д├д┐ИЎ║╧д╧енй`е│й`е╔
-		// д╚д╬е╨е├е╞егеєе░╖└╓╣д╬Ющд╦глг▒д╖д╞дддыд╬д╟гнг▒д╣ды
+		// уВВуБЧуВнуГ╝уВ│уГ╝уГЙуВИуВКуВВхдзуБНуБкхАдуБауБгуБЯха┤хРИуБпуВнуГ╝уВ│уГ╝уГЙ
+		// уБиуБоуГРуГГуГЖуВгуГ│уВ░щШ▓цнвуБочВ║уБля╝Ля╝СуБЧуБжуБДуВЛуБоуБзя╝Ня╝СуБЩуВЛ
 		if( code > keycode ) code -- ;
 
 		sp      += 2 ;
 		srcsize -= 2 ;
 
-		// ▀B╛AщLдЄ╚б╡├д╣ды
+		// щАгч╢ЪщХ╖уВТхПЦх╛ЧуБЩуВЛ
 		conbo = code >> 3 ;
 		if( code & ( 0x1 << 2 ) )
 		{
@@ -208,9 +208,9 @@ static int Decode(void *Src, void *Dest)
 			sp      ++ ;
 			srcsize -- ;
 		}
-		conbo += MIN_COMPRESS ;	// ▒г┤цХrд╦Ьp╦уд╖д┐╫ю╨бИR┐sе╨еде╚╩¤дЄ╫уд╣
+		conbo += MIN_COMPRESS ;	// ф┐ЭхнШцЩВуБлц╕ЫчоЧуБЧуБЯцЬАх░ПхЬзч╕оуГРуВдуГИцХ░уВТш╢│уБЩ
 
-		// ▓╬╒╒╧рМЭеве╔еье╣дЄ╚б╡├д╣ды
+		// хПВчЕзчЫ╕хп╛уВвуГЙуГмуВ╣уВТхПЦх╛ЧуБЩуВЛ
 		indexsize = code & 0x3 ;
 		switch( indexsize )
 		{
@@ -232,9 +232,9 @@ static int Decode(void *Src, void *Dest)
 			srcsize -= 3 ;
 			break ;
 		}
-		index ++ ;		// ▒г┤цХrд╦гнг▒д╖д╞дддыд╬д╟глг▒д╣ды
+		index ++ ;		// ф┐ЭхнШцЩВуБля╝Ня╝СуБЧуБжуБДуВЛуБоуБзя╝Ля╝СуБЩуВЛ
 
-		// ╒╣щ_
+		// х▒ХщЦЛ
 		if( index < conbo )
 		{
 			u32 num ;
@@ -260,7 +260,7 @@ static int Decode(void *Src, void *Dest)
 		}
 	}
 
-	// ╜тГЎссд╬е╡еде║дЄ╖╡д╣
+	// шзгхЗНх╛МуБоуВ╡уВдуВ║уВТш┐ФуБЩ
 	return (int)destsize ;
 }
 
@@ -311,7 +311,7 @@ static void KeyConv(void *Data, int Size, int Position, unsigned char *Key)
 	}
 }
 
-// ╓╕╢ид╬е╟егеьепе╚еъе╟й`е┐д╦двдые╒ебедеыдЄ╒╣щ_д╣ды
+// цМЗхоЪуБоуГЗуВгуГмуВпуГИуГкуГЗуГ╝уВ┐уБлуБВуВЛуГХуВбуВдуГлуВТх▒ХщЦЛуБЩуВЛ
 static void DirectoryDecode(u8 *NameP, u8 *DirP, u8 *FileP, 
 						   DARC_HEAD *Head, DARC_DIRECTORY *Dir, struct package *pkg, 
 						   unsigned char *Key, char *ParentDirPath, 
@@ -319,36 +319,36 @@ static void DirectoryDecode(u8 *NameP, u8 *DirP, u8 *FileP,
 {
 	char DirPath[MAX_PATH];
 	
-	// е╟егеьепе╚еъ╟щИєдмдвдыИЎ║╧д╧бвд▐д║╒╣щ_╙├д╬е╟егеьепе╚еъдЄ╫ў│╔д╣ды
+	// уГЗуВгуГмуВпуГИуГкцГЕха▒уБМуБВуВЛха┤хРИуБпуАБуБ╛уБЪх▒ХщЦЛчФиуБоуГЗуВгуГмуВпуГИуГкуВТф╜ЬцИРуБЩуВЛ
 	if (Dir->DirectoryAddress != 0xffffffff && Dir->ParentDirectoryAddress != 0xffffffff) {
 		DARC_FILEHEAD *DirFile;
 		
-		// DARC_FILEHEAD д╬еве╔еье╣дЄ╚б╡├
+		// DARC_FILEHEAD уБоуВвуГЙуГмуВ╣уВТхПЦх╛Ч
 		DirFile = (DARC_FILEHEAD * )(FileP + Dir->DirectoryAddress) ;
 		
-		// е╟егеьепе╚еъд╬╫ў│╔
+		// уГЗуВгуГмуВпуГИуГкуБоф╜ЬцИР
 		sprintf(DirPath, "%s%s\\", ParentDirPath, 
 			GetOriginalFileName(NameP + DirFile->NameAddress));
 		//CreateDirectory(GetOriginalFileName(NameP + DirFile->NameAddress), NULL);
 		
-		// д╜д╬е╟егеьепе╚еъд╦елеьеєе╚е╟егеьепе╚еъдЄ╥╞д╣
+		// уБЭуБоуГЗуВгуГмуВпуГИуГкуБлуВлуГмуГ│уГИуГЗуВгуГмуВпуГИуГкуВТчз╗уБЩ
 		//SetCurrentDirectory( GetOriginalFileName( NameP + DirFile->NameAddress ) ) ;
 		//printf("switch dir %s\n", DirPath);
 	} else
 		strcpy(DirPath, ParentDirPath);
 
-	// ╒╣щ_ДI└эщ_╩╝
+	// х▒ХщЦЛхЗжчРЖщЦЛхзЛ
 	{
 		u32 FileHeadSize;
 		DARC_FILEHEAD *File;
 
-		// ╕ё╝{д╡дьд╞дддые╒ебедеыд╬╩¤д└д▒└Rдъ╖╡д╣
+		// ца╝ч┤НуБХуВМуБжуБДуВЛуГХуВбуВдуГлуБоцХ░уБауБСч╣░уВКш┐ФуБЩ
 		FileHeadSize = Head->Version >= 0x0002 ? sizeof(DARC_FILEHEAD) : sizeof(DARC_FILEHEAD_VER1);
 		File = (DARC_FILEHEAD *)(FileP + Dir->FileHeadAddress);
 		for (u32 i = 0; i < Dir->FileHeadNum; ++i, File = (DARC_FILEHEAD *)((u8 *)File + FileHeadSize)) {
-			// е╟егеьепе╚еъдлд╔дждлд╟ДI└эдЄ╖╓ск
+			// уГЗуВгуГмуВпуГИуГкуБЛуБйуБЖуБЛуБзхЗжчРЖуВТхИЖх▓Р
 			if (File->Attributes & FILE_ATTRIBUTE_DIRECTORY) {
-				// е╟егеьепе╚еъд╬ИЎ║╧д╧╘┘ОвдЄдлд▒ды
+				// уГЗуВгуГмуВпуГИуГкуБоха┤хРИуБпхЖНх╕░уВТуБЛуБСуВЛ
 				DirectoryDecode(NameP, DirP, FileP, Head, 
 					(DARC_DIRECTORY * )(DirP + File->DataAddress), pkg, 
 					Key, DirPath, dxa_index);
@@ -359,7 +359,7 @@ static void DirectoryDecode(u8 *NameP, u8 *DirP, u8 *FileP,
 					GetOriginalFileName(NameP + File->NameAddress));
 				entry.offset = Head->DataStartAddress + File->DataAddress;
 
-				// е╟й`е┐дмИR┐sд╡дьд╞дддыдлд╔дждлд╟ДI└эдЄ╖╓ск
+				// уГЗуГ╝уВ┐уБМхЬзч╕оуБХуВМуБжуБДуВЛуБЛуБйуБЖуБЛуБзхЗжчРЖуВТхИЖх▓Р
 				if(Head->Version >= 0x0002 && File->PressDataSize != -1) {
 					entry.uncomprlen = File->DataSize;
 					entry.comprlen = File->PressDataSize;
@@ -375,7 +375,7 @@ static void DirectoryDecode(u8 *NameP, u8 *DirP, u8 *FileP,
 
 /********************* dxa *********************/
 
-/* ╖т░№╞е┼ф╗╪╡ў║п╩¤ */
+/* х░БхМЕхМ╣щЕНхЫЮш░ГхЗ╜цХ░ */
 static int DXArchive_dxa_match(struct package *pkg)
 {
 	DARC_HEAD Head;	
@@ -468,7 +468,7 @@ ver_check:
 	return 0;	
 }
 
-/* ╖т░№╦ў╥¤─┐┬╝╠с╚б║п╩¤ */
+/* х░БхМЕч┤вх╝ХчЫох╜ХцПРхПЦхЗ╜цХ░ */
 static int DXArchive_dxa_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -484,7 +484,7 @@ static int DXArchive_dxa_extract_directory(struct package *pkg,
 	if (!HeadBuffer)
 		return -CUI_EMEM;
 		
-	// е╪е├е└е╤е├епдЄесетеъд╦╒iд▀▐zдр
+	// уГШуГГуГАуГСуГГуВпуВТуГбуГвуГкуБлшкнуБ┐ш╛╝уВА
 	if (pkg->pio->seek(pkg, Head.FileNameTableStartAddress, IO_SEEK_SET)) {
 		free(HeadBuffer);
 		return -CUI_ESEEK;
@@ -496,14 +496,14 @@ static int DXArchive_dxa_extract_directory(struct package *pkg,
 	}
 	KeyConv(HeadBuffer, Head.HeadSize, Head.FileNameTableStartAddress, Key);
 
-	// ╕ўеве╔еье╣дЄе╗е├е╚д╣ды
+	// хРДуВвуГЙуГмуВ╣уВТуВ╗уГГуГИуБЩуВЛ
 	u8 *NameP = HeadBuffer;
 	u8 *FileP = NameP + Head.FileTableStartAddress;
 	u8 *DirP = NameP + Head.DirectoryTableStartAddress;
 
 	vector<my_dxa_entry_t> my_dxa_index;
 
-	// евй`еледе╓д╬╒╣щ_дЄщ_╩╝д╣ды
+	// уВвуГ╝уВлуВдуГЦуБох▒ХщЦЛуВТщЦЛхзЛуБЩуВЛ
 	DirectoryDecode(NameP, DirP, FileP, &Head, (DARC_DIRECTORY *)DirP, pkg, Key, "", my_dxa_index);
 	
 	my_dxa_entry_t *index = new my_dxa_entry_t[my_dxa_index.size()];
@@ -521,7 +521,7 @@ static int DXArchive_dxa_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ╖т░№╦ў╥¤╧ю╜т╬Ў║п╩¤ */
+/* х░БхМЕч┤вх╝Хщб╣шзгцЮРхЗ╜цХ░ */
 static int DXArchive_dxa_parse_resource_info(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -529,7 +529,7 @@ static int DXArchive_dxa_parse_resource_info(struct package *pkg,
 
 	my_dxa_entry = (my_dxa_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_dxa_entry->name);
-	pkg_res->name_length = -1;			/* -1▒э╩╛├√│╞╥╘NULL╜с╬▓ */
+	pkg_res->name_length = -1;			/* -1шбичд║хРНчз░ф╗еNULLч╗Ух░╛ */
 	pkg_res->raw_data_length = my_dxa_entry->comprlen;
 	pkg_res->actual_data_length = my_dxa_entry->uncomprlen;
 	pkg_res->offset = my_dxa_entry->offset;
@@ -537,7 +537,7 @@ static int DXArchive_dxa_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ╖т░№╫╩╘┤╠с╚б║п╩¤ */
+/* х░БхМЕш╡Дц║РцПРхПЦхЗ╜цХ░ */
 static int DXArchive_dxa_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -561,7 +561,7 @@ static int DXArchive_dxa_extract_resource(struct package *pkg,
 			return -CUI_EMEM;
 		}
 
-		// ╜тГЎ
+		// шзгхЗН
 		Decode(compr, uncompr);
 
 		pkg_res->actual_data = uncompr;
@@ -572,7 +572,7 @@ static int DXArchive_dxa_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ╫╩╘┤▒г┤ц║п╩¤ */
+/* ш╡Дц║Рф┐ЭхнШхЗ╜цХ░ */
 static int DXArchive_dxa_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -596,7 +596,7 @@ static int DXArchive_dxa_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ╖т░№╫╩╘┤╩═╖┼║п╩¤ */
+/* х░БхМЕш╡Дц║РщЗКцФ╛хЗ╜цХ░ */
 static void DXArchive_dxa_release_resource(struct package *pkg, 
 										   struct package_resource *pkg_res)
 {
@@ -611,7 +611,7 @@ static void DXArchive_dxa_release_resource(struct package *pkg,
 	}
 }
 
-/* ╖т░№╨╢╘╪║п╩¤ */
+/* х░БхМЕхН╕ш╜╜хЗ╜цХ░ */
 static void DXArchive_dxa_release(struct package *pkg, 
 								  struct package_directory *pkg_dir)
 {
@@ -629,7 +629,7 @@ static void DXArchive_dxa_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ╖т░№┤ж└э╗╪╡ў║п╩¤╝п║╧ */
+/* х░БхМЕхдДчРЖхЫЮш░ГхЗ╜цХ░щЫЖхРИ */
 static cui_ext_operation DXArchive_dxa_operation = {
 	DXArchive_dxa_match,				/* match */
 	DXArchive_dxa_extract_directory,	/* extract_directory */
@@ -640,10 +640,10 @@ static cui_ext_operation DXArchive_dxa_operation = {
 	DXArchive_dxa_release				/* release */
 };
 
-/* ╜╙┐┌║п╩¤: ╧Єcui_core╫в▓с╓з│╓╡─╖т░№└р╨═ */
+/* цОехПгхЗ╜цХ░: хРСcui_coreц│ихЖМцФпцМБчЪДх░БхМЕч▒╗хЮЛ */
 int CALLBACK DXArchive_register_cui(struct cui_register_callback *callback)
 {
-	/* ╫в▓сcui▓х╝■╓з│╓╡─└й╒╣├√бв╫╩╘┤╖┼╚ы└й╒╣├√бв┤ж└э╗╪╡ў║п╩¤║═╖т░№╩Ї╨╘ */
+	/* ц│ихЖМcuiцПТф╗╢цФпцМБчЪДцЙйх▒ХхРНуАБш╡Дц║РцФ╛хЕецЙйх▒ХхРНуАБхдДчРЖхЫЮш░ГхЗ╜цХ░хТМх░БхМЕх▒ЮцАз */
 	if (callback->add_extension(callback->cui, _T(".dxa"), NULL, 
 		NULL, &DXArchive_dxa_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -657,4 +657,5 @@ int CALLBACK DXArchive_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

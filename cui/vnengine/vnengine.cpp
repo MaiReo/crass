@@ -13,7 +13,7 @@ struct acui_information vnengine_cui_information = {
 	_T("vnengine"),			/* system */
 	_T(".axr"),				/* package */
 	_T(""),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -84,7 +84,7 @@ static int vnengine_axr_extract_directory(struct package *pkg,
 
 	printf("%x\n", ECX & 0xffffff00);exit(0);
 
-	// Q:\ŒƒmŒõ‘¾—zƒm‰e‘ÌŒ±”Å
+	// Q:\å¯§åƒ²å²æ‡¢æ¢²åƒ²å¡­æ‡±å°¡æ–‰
 #if 0
 	(ESI + 4) & ~3
 
@@ -254,4 +254,5 @@ int CALLBACK vnengine_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

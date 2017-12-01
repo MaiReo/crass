@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <utility.h>
 
-// TODO: ´æÔÚÇ¶Ì×ÐÍfpk£¬ÒÔºó¿ÉÄÜÒª¸Ä³ÉfioµÄ·½Ê½
+// TODO: å­˜åœ¨åµŒå¥—åž‹fpkï¼Œä»¥åŽå¯èƒ½è¦æ”¹æˆfioçš„æ–¹å¼
 
 /*
 0044C330  /$  53            PUSH EBX
@@ -53,19 +53,19 @@
 0044C38D  |.  C3            RETN
  */
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information MOONHIR_cui_information = {
 	NULL,					/* copyright */
 	NULL,					/* system */
 	_T(".fpk .dat"),		/* package */
 	_T("1.0.3"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-6-1 13:54"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		/* "FPK" */
@@ -223,7 +223,7 @@ out:
 
 /********************* fpk *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int MOONHIR_MOONHIR_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -255,7 +255,7 @@ static int MOONHIR_MOONHIR_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int MOONHIR_MOONHIR_extract_directory(struct package *pkg,
 									 struct package_directory *pkg_dir)
 {
@@ -296,7 +296,7 @@ static int MOONHIR_MOONHIR_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int MOONHIR_MOONHIR_parse_resource_info(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -304,15 +304,15 @@ static int MOONHIR_MOONHIR_parse_resource_info(struct package *pkg,
 
 	MOONHIR_entry = (MOONHIR_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, MOONHIR_entry->name, 12);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = MOONHIR_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = MOONHIR_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MOONHIR_MOONHIR_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -381,7 +381,7 @@ static int MOONHIR_MOONHIR_extract_resource(struct package *pkg,
 			pkg_res->flags |= PKG_RES_FLAG_REEXT;
 			pkg_res->replace_extension = _T(".bmp");
 		}
-	// ºÃÏñÃ»Ê²Ã´Ð§¹û
+	// å¥½åƒæ²¡ä»€ä¹ˆæ•ˆæžœ
 	//	alpha_blending(uncompr + ((BITMAPFILEHEADER *)uncompr)->bfOffBits,
 	//		((BITMAPINFOHEADER *)((BITMAPFILEHEADER *)uncompr + 1))->biWidth,
 	//		((BITMAPINFOHEADER *)((BITMAPFILEHEADER *)uncompr + 1))->biHeight,
@@ -406,7 +406,7 @@ static int MOONHIR_MOONHIR_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int MOONHIR_MOONHIR_save_resource(struct resource *res, 
 								 struct package_resource *pkg_res)
 {
@@ -430,7 +430,7 @@ static int MOONHIR_MOONHIR_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void MOONHIR_MOONHIR_release_resource(struct package *pkg, 
 									 struct package_resource *pkg_res)
 {
@@ -444,7 +444,7 @@ static void MOONHIR_MOONHIR_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void MOONHIR_MOONHIR_release(struct package *pkg, 
 							struct package_directory *pkg_dir)
 {
@@ -456,7 +456,7 @@ static void MOONHIR_MOONHIR_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MOONHIR_MOONHIR_operation = {
 	MOONHIR_MOONHIR_match,					/* match */
 	MOONHIR_MOONHIR_extract_directory,		/* extract_directory */
@@ -469,7 +469,7 @@ static cui_ext_operation MOONHIR_MOONHIR_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int MOONHIR_dat_match(struct package *pkg)
 {
 	BYTE dat[0x1c];
@@ -495,7 +495,7 @@ static int MOONHIR_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MOONHIR_dat_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -521,7 +521,7 @@ static int MOONHIR_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int MOONHIR_dat_save_resource(struct resource *res, 
 									 struct package_resource *pkg_res)
 {
@@ -545,7 +545,7 @@ static int MOONHIR_dat_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void MOONHIR_dat_release_resource(struct package *pkg, 
 										 struct package_resource *pkg_res)
 {
@@ -559,14 +559,14 @@ static void MOONHIR_dat_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void MOONHIR_dat_release(struct package *pkg, 
 								struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MOONHIR_dat_operation = {
 	MOONHIR_dat_match,				/* match */
 	NULL,							/* extract_directory */
@@ -577,10 +577,10 @@ static cui_ext_operation MOONHIR_dat_operation = {
 	MOONHIR_dat_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK MOONHIR_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".fpk"), NULL, 
 		NULL, &MOONHIR_MOONHIR_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_RES 
 		| CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_RECURSION))
@@ -591,4 +591,5 @@ int CALLBACK MOONHIR_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

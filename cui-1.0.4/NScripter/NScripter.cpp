@@ -14,23 +14,23 @@
 #include <openssl/hmac.h>
 #include <cui_common.h>
 
-/* ²éÕÒÌØÊâ¼ÓÃÜÄ£Ê½µÄkey_string:
-  1, ËÑË÷³£Á¿0x12c¡£
-  2. ÕÒµ½push 12cµÄÖ¸Áî£¬ËüµÄµ÷ÓÃÕßº¯ÊıµÄÇ°ÃæÓĞ¸öpushÁË6¸ö²ÎÊıµÄº¯Êı£¬
-  Õâ¸öº¯Êı¾ÍÊÇHMAC, ¹Û²ìµÚ3¸ö²ÎÊı£¬¸Ã²ÎÊı¾ÍÊÇkey_string¡£
+/* æŸ¥æ‰¾ç‰¹æ®ŠåŠ å¯†æ¨¡å¼çš„key_string:
+  1, æœç´¢å¸¸é‡0x12cã€‚
+  2. æ‰¾åˆ°push 12cçš„æŒ‡ä»¤ï¼Œå®ƒçš„è°ƒç”¨è€…å‡½æ•°çš„å‰é¢æœ‰ä¸ªpushäº†6ä¸ªå‚æ•°çš„å‡½æ•°ï¼Œ
+  è¿™ä¸ªå‡½æ•°å°±æ˜¯HMAC, è§‚å¯Ÿç¬¬3ä¸ªå‚æ•°ï¼Œè¯¥å‚æ•°å°±æ˜¯key_stringã€‚
 
-·½·¨2£º
+æ–¹æ³•2ï¼š
 arc.nsa
 %s\arc.nsa
-×ÖÑùµÄÉÏ·½
+å­—æ ·çš„ä¸Šæ–¹
  */
 
 struct acui_information NScripter_cui_information = {
-	_T("¸ß˜òÖ±˜ä"),			/* copyright */
+	_T("é«˜æ©‹ç›´æ¨¹"),			/* copyright */
 	_T("NScripter"),		/* system */
 	_T(".nsa .dat .sar"),	/* package */
 	_T("1.2.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-6-20 14:42"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -86,25 +86,25 @@ static const BYTE fuck_decrypt_table[256] = {
 static const char *game_key_string[] = {
 	// dummy
 	"",
-	// ÇÖÎg2 ¡«ÒùÄ§¤ÎÉúÙ—¡«
+	// ä¾µè•2 ï½æ·«é­”ã®ç”Ÿè´„ï½
 	"sinsyoku2_sadasdaqwerkhlnlkfdsnlkadsfja;klsjraerioljadsfjkladsknfijhlg",
-	// ¾ı¤¬Ö÷¤ÇˆÌÊÂ¤¬°³¤Ç
+	// å›ãŒä¸»ã§åŸ·äº‹ãŒä¿ºã§
 	"kopkl;fdsl;kl;mwekopj@pgfd[p;:kl:;,lwret;kl;kolsgfdio@pdsflkl:,rse;:l,;:lpksdfpo",
-	// Ä§·¨ÉÙÅ®¥Ş¥Ê Little Witch Mana
+	// é­”æ³•å°‘å¥³ãƒãƒŠ Little Witch Mana
 	"l:;sadl:;asd:;lasdl:;asdl:;wrew434324234dsiop@bvcnmtern,ter589sdftjskdr;w4k2034",
-	// ¥¹¥ì¥¤¥Öor¥é¥Ğ©`¥º
+	// ã‚¹ãƒ¬ã‚¤ãƒ–orãƒ©ãƒãƒ¼ã‚º
 	"asdsak;ll;;lkmhhwqhlhjlhkjfajlklkjlkjkjrekjlkj;asj;lksdalk;:edsa",
-	// ´¥×°ÌìÊ¹¥»¥ê¥«
+	// è§¦è£…å¤©ä½¿ã‚»ãƒªã‚«
 	"s.e.r.i.k.a.sajkreaajkldfasnmdfjklasdfm,.asdr,masdfkl;asfkl;asdflm;asdfkl;asdkl;asd",
-	// ¥­¥¹¤è¤ê¸Ê¤¯¤ÆÉî¤¤¤â¤Î ÌåòY°æ
+	// ã‚­ã‚¹ã‚ˆã‚Šç”˜ãã¦æ·±ã„ã‚‚ã® ä½“é¨“ç‰ˆ
 	//"imakaratukuttokusadasgfdnklrsenklsdjklfdjilfdnkfsdnmfdsjklsdrnklgfnmnklgfnmgfnmdssdklnsdfsrtnmgfnmgfklnfkjlgfjklfdljk",
-	// ¥­¥¹¤è¤ê¸Ê¤¯¤ÆÉî¤¤¤â¤Î
+	// ã‚­ã‚¹ã‚ˆã‚Šç”˜ãã¦æ·±ã„ã‚‚ã®
 	"dfklmdsgkmlkmljklgfnlsdfnklsdfjkl;sdfmkldfskfsdmklsdfjklfdsjklsdfsdfl;",
-	// ³¬ÍâµÀÓÂÕß
+	// è¶…å¤–é“å‹‡è€…
 	"tyou_dfsjklfgjklsdfgnmklasdfasdf_gedou_dfksdnlfgnklsrtsdf_yuusya",
-	// ¤á¤Ã¤Á¤ã¥Ş¥Ş
+	// ã‚ã£ã¡ã‚ƒãƒãƒ
 	"sadjl;kas;klkd;lsakfsgclgfdsnmrfnzdsmflzxkmc,masd;lf;:lal;askdas;oe",
-	// ĞÂÆŞ¡ÁÁxÄ¸ ¡«»¨¼Ş¤ÏÅ®×ÓĞ£Éú¡« ¥Ñ¥Ã¥±©`¥¸°æ
+	// æ–°å¦»Ã—ç¾©æ¯ ï½èŠ±å«ã¯å¥³å­æ ¡ç”Ÿï½ ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ç‰ˆ
 	"asdsak;ll;;lkmhhwqhlhjlhkjfajlklkjlkjkjrekjlkj;asj;lksdalk;:edsa",
 	NULL
 };
@@ -164,7 +164,7 @@ static int game_search(void)
 	else
 		game_id = atoi(game);
 
-	// ÌØÊâ½âÃÜ
+	// ç‰¹æ®Šè§£å¯†
 	if (game_id == 512)
 		return 0;
 
@@ -182,9 +182,9 @@ static void lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 							unsigned char *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xef;
 	BYTE win[256];
@@ -193,7 +193,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 	memset(win, 0x20, nCurWindowByte);
 	bits_init(&bits, compr, comprlen);
 	while (1) {
-		/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+		/* å¦‚æœä¸º0, è¡¨ç¤ºæ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŸæ ·è¾“å‡º */
 		unsigned int flag;
 
 		if (bits_get_high(&bits, 1, &flag))
@@ -204,7 +204,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 			if (bits_get_high(&bits, 8, &data))
 				break;
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= sizeof(win) - 1;
 		} else {
@@ -222,7 +222,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 				data = win[(win_offset + i) & (sizeof(win) - 1)];
 				uncompr[act_uncomprlen++] = data;		
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= sizeof(win) - 1;	
 			}
@@ -250,7 +250,7 @@ static int nscripter_bmp_decompress(BYTE **__uncompr, DWORD *__uncomprlen, BYTE 
 
 	memset(uncompr, 0, uncomprlen);
 
-	/* BGRÈı¸ö·ÖÁ¿Êı¾İÊÇ·Ö¿ªµ¥¶À´æ´¢µÄ */
+	/* BGRä¸‰ä¸ªåˆ†é‡æ•°æ®æ˜¯åˆ†å¼€å•ç‹¬å­˜å‚¨çš„ */
 	for (DWORD p = 0; p < 3; p++) {
 		unsigned int ref_rect;
 		int offset, rect_step;
@@ -258,26 +258,26 @@ static int nscripter_bmp_decompress(BYTE **__uncompr, DWORD *__uncomprlen, BYTE 
 
 		w_step = 1;
 		rect_step = 3;
-		/* ²Î¿¼·ÖÁ¿ */
+		/* å‚è€ƒåˆ†é‡ */
 		bits_get_high(&bits, 8, &ref_rect);
 		offset = pitch * (height - 1) + p;
 		uncompr[offset] = ref_rect;
 		offset += rect_step;
 		w = 1;
 
-		/* Õâ¸öÑ­»·´¦ÀíÒ»¸öÍêÕûµÄ·ÖÁ¿ */
+		/* è¿™ä¸ªå¾ªç¯å¤„ç†ä¸€ä¸ªå®Œæ•´çš„åˆ†é‡ */
 		for (DWORD h = 0; h < height; ) {
 			unsigned int N;
 
 			bits_get_high(&bits, 3, &N);
 	
-			if (N == 7) {	/* Á¬ĞøµÄ¾ßÓĞÏàËÆÊıÖµµÄ·ÖÁ¿ */
+			if (N == 7) {	/* è¿ç»­çš„å…·æœ‰ç›¸ä¼¼æ•°å€¼çš„åˆ†é‡ */
 				bits_get_high(&bits, 1, &N);
 				N++;
-			} else if (N)	/* Á¬ĞøµÄ¾ßÓĞ²»Í¬ÊıÖµµÄ·ÖÁ¿ */
+			} else if (N)	/* è¿ç»­çš„å…·æœ‰ä¸åŒæ•°å€¼çš„åˆ†é‡ */
 				N += 2;
 
-			/* Ã¿´ÎÊä³öÁ¬ĞøµÄ4¸ö·ÖÁ¿ */
+			/* æ¯æ¬¡è¾“å‡ºè¿ç»­çš„4ä¸ªåˆ†é‡ */
 			for (DWORD i = 0; i < 4; i++) {
 				if (N) {
 					unsigned int delta;
@@ -413,7 +413,7 @@ static int NScripter_readvec(struct package *pkg, void *data, DWORD data_len,
 		return -CUI_EPARA;
 	}
 
-	// ÌØÊâ½âÃÜ
+	// ç‰¹æ®Šè§£å¯†
 	if (game_id == 512) {
 		if (pkg->pio->readvec(pkg, data, data_len, offset, method))
 			return -CUI_EREADVEC;
@@ -563,9 +563,9 @@ static int NScripter_nsa_parse_resource_info(struct package *pkg,
 
 	my_nsa_entry = (my_nsa_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_nsa_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_nsa_entry->comprlen;
-	pkg_res->actual_data_length = my_nsa_entry->uncomprlen;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = my_nsa_entry->uncomprlen;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_nsa_entry->offset;
 
 	return 0;
@@ -592,7 +592,7 @@ static int NScripter_nsa_extract_resource(struct package *pkg,
 	if (my_nsa_entry->is_compressed == 1) {
 		int ret;
 
-		// my_nsa_entry->uncomprlenµÄ³¤¶ÈÊÇ4×Ö½Ú²»¶ÔÆëµÄ
+		// my_nsa_entry->uncomprlençš„é•¿åº¦æ˜¯4å­—èŠ‚ä¸å¯¹é½çš„
 		ret = nscripter_bmp_decompress(&uncompr, &uncomprlen, compr, comprlen);
 		if (ret) {
 			free(compr);
@@ -736,7 +736,7 @@ static int NScripter_dat_match(struct package *pkg)
 		return -CUI_EMATCH;
 	}
 
-	// ÃÃÄæ¥ì¥¤¥×¡«Òù¤é¤Ê¤Ä¤Ü¤ß¤ÎÕT¤¤µÄÎÄ±¾Ö±½ÓÊÇÃ÷ÎÄ
+	// å¦¹é€†ãƒ¬ã‚¤ãƒ—ï½æ·«ã‚‰ãªã¤ã¼ã¿ã®èª˜ã„çš„æ–‡æœ¬ç›´æ¥æ˜¯æ˜æ–‡
 	if (!(test_data & 0x80808080)) {
 		pkg->pio->close(pkg);
 		return -CUI_EMATCH;
@@ -795,4 +795,5 @@ int CALLBACK NScripter_register_cui(struct cui_register_callback *callback)
 			return -1;
 	
 	return 0;
+}
 }

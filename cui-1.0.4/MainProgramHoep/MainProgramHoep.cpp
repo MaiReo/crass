@@ -11,29 +11,29 @@
 #include <utility.h>
 #include <cui_common.h>
 
-/* ´ì°Üinstall.CWLµÄ·½·¨:
-Õâ¸öÎÄ¼şÖ»ÔÚ°²×°ÓÎÏ·Ê±ºòÊ¹ÓÃ¡£¶ÁÈ¡ËüµÄÊÇinstall.exe£¬
-Õâ¸ö¼Ò»ï±È½ÏÌÖÑá£¬Ëü°Ñ×ÔÉí¸´ÖÆµ½tempÏÂ£¬È»ºóCreateProcess
-²úÉú×Ó½ø³Ì¼ÌĞø£¬È»ºó×Ô¼º¾ÍÍË³öÁË£¬ÓÃolyÕâÖÖring3µ÷ÊÔÆ÷×¥²»×¡¡£
-ËùÒÔ¸ÄÓÃÒ»ÖÖ·½·¨£ºÆô¶¯oly¼ÓÔØinstall.exe£¬Ö´ĞĞ¹ıÁËµÚ¶şÌõÖ¸Áîºó£¬
-°ÑµÚ¶şÌõÖ¸Áîmov esp,ebp¸ÄÎªint 3£¬È»ºóÁí´æÎªinstall1.exe¡£
-Ë«»÷Install1.exe£¬µ¯³öoly£¬ÕâÑù¾Í½øÈëÁË×Ó½ø³ÌµÄÁì¿Õ£¬°ÑµÚ¶şÌõ»Ö¸´
-Îªmov esp,ebp£¬Í¬Ê±ĞŞÕıeip£¨¼õ1£©£¬È»ºó¾Í¿ÉÒÔÂıÂıµ÷ÊÔËüÁË¡£
+/* æŒ«è´¥install.CWLçš„æ–¹æ³•:
+è¿™ä¸ªæ–‡ä»¶åªåœ¨å®‰è£…æ¸¸æˆæ—¶å€™ä½¿ç”¨ã€‚è¯»å–å®ƒçš„æ˜¯install.exeï¼Œ
+è¿™ä¸ªå®¶ä¼™æ¯”è¾ƒè®¨åŒï¼Œå®ƒæŠŠè‡ªèº«å¤åˆ¶åˆ°tempä¸‹ï¼Œç„¶åCreateProcess
+äº§ç”Ÿå­è¿›ç¨‹ç»§ç»­ï¼Œç„¶åè‡ªå·±å°±é€€å‡ºäº†ï¼Œç”¨olyè¿™ç§ring3è°ƒè¯•å™¨æŠ“ä¸ä½ã€‚
+æ‰€ä»¥æ”¹ç”¨ä¸€ç§æ–¹æ³•ï¼šå¯åŠ¨olyåŠ è½½install.exeï¼Œæ‰§è¡Œè¿‡äº†ç¬¬äºŒæ¡æŒ‡ä»¤åï¼Œ
+æŠŠç¬¬äºŒæ¡æŒ‡ä»¤mov esp,ebpæ”¹ä¸ºint 3ï¼Œç„¶åå¦å­˜ä¸ºinstall1.exeã€‚
+åŒå‡»Install1.exeï¼Œå¼¹å‡ºolyï¼Œè¿™æ ·å°±è¿›å…¥äº†å­è¿›ç¨‹çš„é¢†ç©ºï¼ŒæŠŠç¬¬äºŒæ¡æ¢å¤
+ä¸ºmov esp,ebpï¼ŒåŒæ—¶ä¿®æ­£eipï¼ˆå‡1ï¼‰ï¼Œç„¶åå°±å¯ä»¥æ…¢æ…¢è°ƒè¯•å®ƒäº†ã€‚
 */
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information MainProgramHoep_cui_information = {
 	_T("CROWD"),			/* copyright */
 	_T("Main Program Hoep"),/* system */
 	_T(".sce .amw .amb .amp .pck .eog .cwp .dat .cwd .cw_ .cwl"),	/* package */
 	_T("1.1.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-3-6 22:36"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	u32 index_entries;
@@ -47,7 +47,7 @@ typedef struct {
 
 typedef struct {
 	s8 magic[4];	// "CRM"
-	u32 samples;	// samples x 4±¶µÄ´óĞ¡
+	u32 samples;	// samples x 4å€çš„å¤§å°
 } eog_header_t;
 
 typedef struct {
@@ -259,7 +259,7 @@ static void decrypt2(BYTE *enc_buf, DWORD enc_buf_len, BYTE *dec_buf)
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int MainProgramHoep_dat_match(struct package *pkg)
 {
 	u32 magic;
@@ -280,7 +280,7 @@ static int MainProgramHoep_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MainProgramHoep_dat_extract_resource(struct package *pkg,
 												struct package_resource *pkg_res)
 {
@@ -313,7 +313,7 @@ static int MainProgramHoep_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MainProgramHoep_dat_operation = {
 	MainProgramHoep_dat_match,				/* match */
 	NULL,									/* extract_directory */
@@ -324,7 +324,7 @@ static cui_ext_operation MainProgramHoep_dat_operation = {
 
 /********************* sce *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int MainProgramHoep_sce_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -352,7 +352,7 @@ static int MainProgramHoep_sce_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MainProgramHoep_sce_operation = {
 	MainProgramHoep_sce_match,				/* match */
 	NULL,									/* extract_directory */
@@ -364,7 +364,7 @@ static cui_ext_operation MainProgramHoep_sce_operation = {
 /********************* amw *********************/
 static int MainProgramHoep_amw_extract_directory(struct package *pkg,
 												 struct package_directory *pkg_dir);
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int MainProgramHoep_amw_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -378,7 +378,7 @@ static int MainProgramHoep_amw_match(struct package *pkg)
 	return ret;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int MainProgramHoep_amw_extract_directory(struct package *pkg,
 												 struct package_directory *pkg_dir)
 {
@@ -441,7 +441,7 @@ static int MainProgramHoep_amw_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int MainProgramHoep_amw_parse_resource_info(struct package *pkg,
 												   struct package_resource *pkg_res)
 {
@@ -449,15 +449,15 @@ static int MainProgramHoep_amw_parse_resource_info(struct package *pkg,
 
 	my_amw_entry = (my_amw_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_amw_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_amw_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_amw_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MainProgramHoep_amw_extract_resource(struct package *pkg,
 												struct package_resource *pkg_res)
 {
@@ -503,7 +503,7 @@ static int MainProgramHoep_amw_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MainProgramHoep_amw_operation = {
 	MainProgramHoep_amw_match,				/* match */
 	MainProgramHoep_amw_extract_directory,	/* extract_directory */
@@ -514,7 +514,7 @@ static cui_ext_operation MainProgramHoep_amw_operation = {
 
 /********************* amb *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int MainProgramHoep_amb_match(struct package *pkg)
 {
 	amb_header_t amb_header;
@@ -535,7 +535,7 @@ static int MainProgramHoep_amb_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MainProgramHoep_amb_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -555,7 +555,7 @@ static int MainProgramHoep_amb_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void MainProgramHoep_amb_release_resource(struct package *pkg,
 												 struct package_resource *pkg_res)
 {
@@ -563,7 +563,7 @@ static void MainProgramHoep_amb_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MainProgramHoep_amb_operation = {
 	MainProgramHoep_amb_match,				/* match */
 	NULL,									/* extract_directory */
@@ -576,7 +576,7 @@ static cui_ext_operation MainProgramHoep_amb_operation = {
 
 /********************* amp *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int MainProgramHoep_amp_match(struct package *pkg)
 {
 	amp_header_t amp_header;
@@ -597,7 +597,7 @@ static int MainProgramHoep_amp_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -612,7 +612,7 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 	else
 		SAVE_AS_PNG = 0;
 
-	/* ¶ÁÈ¡Í¼Ïñ¿í¶ÈºÍ¸ß¶È */
+	/* è¯»å–å›¾åƒå®½åº¦å’Œé«˜åº¦ */
 	if (pkg->pio->readvec(pkg, &width, 4, 4, IO_SEEK_SET))
 		return -CUI_EREADVEC;
 
@@ -627,12 +627,12 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 	if (pkg->pio->length_of(pkg, &fsize))
 		return -CUI_ELEN;
 	
-	idat_comprlen = fsize - 0x1a + 8;	/* ²¹ÉÏµÚÒ»¸öIDAT³¤¶ÈºÍIDAT±êÇ©£¨×¢ÒâÕâÀï¶à¼õÁËÒ»×Ö½ÚÊÇÒòÎªamp×îºó1×Ô¼ºÊÇIEND³¤¶ÈµÄ×î¸ß×Ö½Ú£© */
+	idat_comprlen = fsize - 0x1a + 8;	/* è¡¥ä¸Šç¬¬ä¸€ä¸ªIDATé•¿åº¦å’ŒIDATæ ‡ç­¾ï¼ˆæ³¨æ„è¿™é‡Œå¤šå‡äº†ä¸€å­—èŠ‚æ˜¯å› ä¸ºampæœ€å1è‡ªå·±æ˜¯IENDé•¿åº¦çš„æœ€é«˜å­—èŠ‚ï¼‰ */
 	idat_compr = (BYTE *)malloc(idat_comprlen);
 	if (!idat_compr)
 		return -CUI_EMEM;
 
-	/* ¶ÁÈ¡µÚÒ»¿éIDATµÄ³¤¶È */
+	/* è¯»å–ç¬¬ä¸€å—IDATçš„é•¿åº¦ */
 	if (pkg->pio->readvec(pkg, idat_compr, 4, 0x15, IO_SEEK_SET)) {
 		free(idat_compr);
 		return -CUI_EREADVEC;
@@ -642,13 +642,13 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 	idat_compr[6] = 'A';
 	idat_compr[7] = 'T';
 
-	/* ¶ÁÈ¡Õû¸öIDAT¿éÊı¾İ */
+	/* è¯»å–æ•´ä¸ªIDATå—æ•°æ® */
 	if (pkg->pio->readvec(pkg, idat_compr + 8, idat_comprlen - 8, 0x19, IO_SEEK_SET)) {
 		free(idat_compr);
 		return -CUI_EREADVEC;
 	}
 
-	/* µÚÒ»¿éIDAT»Ö¸´Íê±Ï£¬ÊÕ¼¯ËùÓĞIDAT×é³ÉÍêÕûµÄzlib stream */
+	/* ç¬¬ä¸€å—IDATæ¢å¤å®Œæ¯•ï¼Œæ”¶é›†æ‰€æœ‰IDATç»„æˆå®Œæ•´çš„zlib stream */
 	curbyte = 0;
 	zlib_compr = NULL;
 	zlib_comprlen = 0;
@@ -656,17 +656,17 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 		BYTE *sub_idat_compr;
 		DWORD sub_idat_comprlen;
 
-		/* »ñµÃIDAT³¤¶È */
+		/* è·å¾—IDATé•¿åº¦ */
 		sub_idat_comprlen = SWAP32(*(u32 *)(&idat_compr[curbyte]));
 		curbyte += 4;
 
-		/* ·ÇIDAT */
+		/* éIDAT */
 		if (memcmp("IDAT", &idat_compr[curbyte], 4))
 			break;
 
-		sub_idat_compr = &idat_compr[curbyte];	/* Ö¸ÏòIDAT±êÊ¶ */
+		sub_idat_compr = &idat_compr[curbyte];	/* æŒ‡å‘IDATæ ‡è¯† */
 
-		/* ¼ì²écrc */
+		/* æ£€æŸ¥crc */
 		if (crc32(0L, sub_idat_compr, sub_idat_comprlen + 4) != SWAP32(*(u32 *)(&sub_idat_compr[4 + sub_idat_comprlen])))
 			break;
 
@@ -689,7 +689,7 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 		return -CUI_EUNCOMPR;
 	}
 
-	/* ½âÑ¹zlib stream */
+	/* è§£å‹zlib stream */
 	for (i = 1; ; i++) {	
 		zlib_uncomprlen = zlib_comprlen << i;
 		zlib_uncompr = (BYTE *)malloc(zlib_uncomprlen);
@@ -712,7 +712,7 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 		rgba = line + 1;
 
 		if (!SAVE_AS_PNG) {
-			/* defiltering´¦Àí */
+			/* defilteringå¤„ç† */
 			switch (line[0]) {
 			case 0:			
 				break;
@@ -729,10 +729,10 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 				paeth_defiltering(pre_line + 1, &line[1], width, 4);
 				break;
 			}
-			/* ×îÖÕ±£´æµÄPNG²»×öfiltering´¦Àí */
+			/* æœ€ç»ˆä¿å­˜çš„PNGä¸åšfilteringå¤„ç† */
 			line[0] = 0;
 		} else {
-			/* ½»»»RºÍB·ÖÁ¿ */
+			/* äº¤æ¢Rå’ŒBåˆ†é‡ */
 			for (DWORD w = 0; w < width; w++) {
 				BYTE tmp;
 
@@ -806,7 +806,7 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 #endif
 		pkg_res->replace_extension = _T(".bmp");
 	} else {
-		/* ÏÖÔÚµÃµ½Ô­Ê¼µÄRGB(A)Êı¾İ, È»ºóÖØĞÂÑ¹Ëõ */
+		/* ç°åœ¨å¾—åˆ°åŸå§‹çš„RGB(A)æ•°æ®, ç„¶åé‡æ–°å‹ç¼© */
 		for (i = 1; ; i++) {
 			zlib_comprlen = zlib_uncomprlen << i;			
 			zlib_compr = (BYTE *)malloc(zlib_comprlen);
@@ -821,9 +821,9 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 		if (!zlib_compr)
 			return -CUI_EUNCOMPR;
 
-		/* ´´½¨×îÖÕ¾­¹ı¡°ĞŞÕıµÄ¡±PNGÍ¼Ïñ»º³åÇø(·ÇÀ¨ºÅ²¿·ÖÀ´×ÔampÎÄ¼ş) */
+		/* åˆ›å»ºæœ€ç»ˆç»è¿‡â€œä¿®æ­£çš„â€PNGå›¾åƒç¼“å†²åŒº(éæ‹¬å·éƒ¨åˆ†æ¥è‡ªampæ–‡ä»¶) */
 		actual_data_len = (8/* png header */ + 8 /* IHDR length and "IHDR" */) + 13 /* IHDR data */ + 4 /* IHDR crc */ 
-			+ (4 /* IDAT length */ + 4/* "IDAT" */ + zlib_comprlen /* IDATÊı¾İ */ + 4 /* IDAT crc */
+			+ (4 /* IDAT length */ + 4/* "IDAT" */ + zlib_comprlen /* IDATæ•°æ® */ + 4 /* IDAT crc */
 			+ 4 /* IEND length */ + 4 /* "IEND" */ + 4 /* IEND crc */);
 		actual_data = (BYTE *)malloc(actual_data_len);
 		if (!actual_data) {
@@ -831,7 +831,7 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 			return -CUI_EMEM;
 		}
 
-		/* Ğ´ÈëPNGÍ· */
+		/* å†™å…¥PNGå¤´ */
 		actual_data[0] = '\x89';
 		actual_data[1] = 'P';
 		actual_data[2] = 'N';
@@ -840,39 +840,39 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 		actual_data[5] = '\xa';
 		actual_data[6] = '\x1a';
 		actual_data[7] = '\xa';
-		/* Ğ´ÈëIHDR³¤¶È */
+		/* å†™å…¥IHDRé•¿åº¦ */
 		actual_data[8] = 0;
 		actual_data[9] = 0;
 		actual_data[10] = 0;
 		actual_data[11] = 13;
-		/* Ğ´ÈëIHDR±êÊ¶ */
+		/* å†™å…¥IHDRæ ‡è¯† */
 		actual_data[12] = 'I';
 		actual_data[13] = 'H';
 		actual_data[14] = 'D';
 		actual_data[15] = 'R';
 
-		/* ¶ÁÈ¡IHDRÊı¾İºÍcrc */
+		/* è¯»å–IHDRæ•°æ®å’Œcrc */
 		if (pkg->pio->readvec(pkg, &actual_data[16], 13 + 4, 4, IO_SEEK_SET)) {
 			free(actual_data);
 			free(zlib_compr);
 			return -CUI_EREADVEC;
 		}
 
-		/* Ğ´ÈëIDAT³¤¶È */
+		/* å†™å…¥IDATé•¿åº¦ */
 		*(u32 *)(&actual_data[33]) = SWAP32(zlib_comprlen);
-		/* Ğ´ÈëIDAT±êÊ¶ */
+		/* å†™å…¥IDATæ ‡è¯† */
 		actual_data[37] = 'I';
 		actual_data[38] = 'D';
 		actual_data[39] = 'A';
 		actual_data[40] = 'T';
-		/* Ğ´ÈëIDATÊı¾İ */
+		/* å†™å…¥IDATæ•°æ® */
 		memcpy(actual_data + 41, zlib_compr, zlib_comprlen);
-		/* ¼ÆËãIDAT crc */
+		/* è®¡ç®—IDAT crc */
 		crc = crc32(0L, &actual_data[37], zlib_comprlen + 4);
 		free(zlib_compr);
-		/* Ğ´Èëcrc */
+		/* å†™å…¥crc */
 		*(u32 *)(&actual_data[actual_data_len - 16]) = SWAP32(crc);
-		/* Ğ´ÈëIENDĞÅÏ¢¡£Êµ¼ÊÉÏIEND³¤¶ÈµÄµÚÒ»¸ö×Ö½ÚÀ´×ÔampÎÄ¼şµÄ×îºó1×Ö½Ú£¬µ«×ÜÊÇÎª0£¬ËùÒÔ¾Í²»ÔÙ´Óamp¶ÁÈ¡ÁË */
+		/* å†™å…¥IENDä¿¡æ¯ã€‚å®é™…ä¸ŠIENDé•¿åº¦çš„ç¬¬ä¸€ä¸ªå­—èŠ‚æ¥è‡ªampæ–‡ä»¶çš„æœ€å1å­—èŠ‚ï¼Œä½†æ€»æ˜¯ä¸º0ï¼Œæ‰€ä»¥å°±ä¸å†ä»ampè¯»å–äº† */
 		actual_data[actual_data_len - 12] = 0;
 		actual_data[actual_data_len - 11] = 0;
 		actual_data[actual_data_len - 10] = 0;
@@ -896,7 +896,7 @@ static int MainProgramHoep_amp_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MainProgramHoep_amp_operation = {
 	MainProgramHoep_amp_match,				/* match */
 	NULL,									/* extract_directory */
@@ -907,7 +907,7 @@ static cui_ext_operation MainProgramHoep_amp_operation = {
 
 /********************* cwp *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int MainProgramHoep_cwp_match(struct package *pkg)
 {
 	cwp_header_t cwp_header;
@@ -928,7 +928,7 @@ static int MainProgramHoep_cwp_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MainProgramHoep_cwp_operation = {
 	MainProgramHoep_cwp_match,				/* match */
 	NULL,									/* extract_directory */
@@ -939,7 +939,7 @@ static cui_ext_operation MainProgramHoep_cwp_operation = {
 
 /********************* cwd *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int MainProgramHoep_cwd_match(struct package *pkg)
 {
 	s8 magic[32];
@@ -960,7 +960,7 @@ static int MainProgramHoep_cwd_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MainProgramHoep_cwd_extract_resource(struct package *pkg,
 												struct package_resource *pkg_res)
 {
@@ -972,7 +972,7 @@ static int MainProgramHoep_cwd_extract_resource(struct package *pkg,
 	if (pkg->pio->length_of(pkg, &fsize))
 		return -CUI_ELEN;
 
-	/* ¶ÁÈ¡Í¼Ïñ¿í¶ÈºÍ¸ß¶È */
+	/* è¯»å–å›¾åƒå®½åº¦å’Œé«˜åº¦ */
 	if (pkg->pio->readvec(pkg, &width, 4, 0x2c, IO_SEEK_SET))
 		return -CUI_EREADVEC;
 
@@ -1007,7 +1007,7 @@ static int MainProgramHoep_cwd_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MainProgramHoep_cwd_operation = {
 	MainProgramHoep_cwd_match,				/* match */
 	NULL,									/* extract_directory */
@@ -1018,7 +1018,7 @@ static cui_ext_operation MainProgramHoep_cwd_operation = {
 
 /********************* CWL *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int MainProgramHoep_cwl_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -1039,7 +1039,7 @@ static int MainProgramHoep_cwl_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int MainProgramHoep_cwl_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -1080,7 +1080,7 @@ static int MainProgramHoep_cwl_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation MainProgramHoep_cwl_operation = {
 	MainProgramHoep_cwl_match,				/* match */
 	NULL,									/* extract_directory */
@@ -1089,7 +1089,7 @@ static cui_ext_operation MainProgramHoep_cwl_operation = {
 	CUI_COMMON_OPERATION
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK MainProgramHoep_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".cwl"), _T(".cwd"), 
@@ -1141,4 +1141,5 @@ int CALLBACK MainProgramHoep_register_cui(struct cui_register_callback *callback
 			return -1;
 
 	return 0;
+}
 }

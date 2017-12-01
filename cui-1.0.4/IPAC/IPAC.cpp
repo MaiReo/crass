@@ -9,19 +9,19 @@
 #include <utility.h>
 #include <stdio.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information IPAC_cui_information = {
 	NULL,					/* copyright */
 	NULL,					/* system */
 	_T(".PAK .WST"),		/* package */
 	_T("1.0.3"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2009-3-29 23:09"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 
 #pragma pack (1)
 typedef struct {
@@ -83,9 +83,9 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 							unsigned char *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -93,7 +93,7 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 	
 	memset(win, ' ', nCurWindowByte);
 	while (1) {
-		/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+		/* å¦‚æžœä¸º0, è¡¨ç¤ºæŽ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŽŸæ ·è¾“å‡º */
 		BYTE flag;
 
 		if (curbyte >= comprlen)
@@ -112,7 +112,7 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 				data = compr[curbyte++];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;
 			} else {
@@ -139,7 +139,7 @@ static DWORD lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 					data = win[(win_offset + i) & (win_size - 1)];
 					uncompr[act_uncomprlen++] = data;		
-					/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+					/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 					win[nCurWindowByte++] = data;
 					nCurWindowByte &= win_size - 1;	
 				}
@@ -176,7 +176,7 @@ static int ipac_decompress_iel1(iel1_header_t *iel1, DWORD iel1_len,
 
 /********************* WST *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int IPAC_WST_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -197,7 +197,7 @@ static int IPAC_WST_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int IPAC_WST_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -225,7 +225,7 @@ static int IPAC_WST_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int IPAC_WST_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -235,7 +235,7 @@ static int IPAC_WST_save_resource(struct resource *res,
 	char *id = "WAVE"; 
 	char *fmt_chunk_id = "fmt ";
 	char *data_chunk_id = "data";
-	char *hack_info = "Hacked By ³Õºº¹«Ôô";
+	char *hack_info = "Hacked By ç—´æ±‰å…¬è´¼";
 	WORD adpcm_para[16];
 	BYTE *data_chunk; 
 	wst_header_t *wst2;
@@ -246,12 +246,12 @@ static int IPAC_WST_save_resource(struct resource *res,
 		return -CUI_ECREATE;
 
 	wst2 = (wst_header_t *)wst_buf;
-	/* Õâ¸öÓ¦¸ÃÊÇ»¹Ô­ÎªADCMÒÔºóµÄ½á¹û */
+	/* è¿™ä¸ªåº”è¯¥æ˜¯è¿˜åŽŸä¸ºADCMä»¥åŽçš„ç»“æžœ */
 	/* 00441E00  01 00 02 00 44 AC 00 00 10 B1 02 00 04 00 10 00  ....D?..?..... */
 	wav_header.wFormatTag = 2;	/* ADPCM */
 	wav_header.nChannels = 2;
 	wav_header.nSamplesPerSec = 0xac44;	
-	wav_header.nAvgBytesPerSec = 0xac44;	/* ADPCMÊÇ4:1Ñ¹Ëõ£¬Òò´Ëac44µÄ4±¶¾ÍÊÇ0x2b110ÁË */
+	wav_header.nAvgBytesPerSec = 0xac44;	/* ADPCMæ˜¯4:1åŽ‹ç¼©ï¼Œå› æ­¤ac44çš„4å€å°±æ˜¯0x2b110äº† */
 	wav_header.nBlockAlign = 0x800;
 	wav_header.wBitsPerSample = 4;
 	wav_header.cbSize = 32;
@@ -328,7 +328,7 @@ static int IPAC_WST_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void IPAC_WST_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -338,14 +338,14 @@ static void IPAC_WST_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void IPAC_WST_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation IPAC_WST_operation = {
 	IPAC_WST_match,				/* match */
 	NULL,						/* extract_directory */
@@ -358,7 +358,7 @@ static cui_ext_operation IPAC_WST_operation = {
 
 /********************* PAK *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int IPAC_PAK_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -379,7 +379,7 @@ static int IPAC_PAK_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int IPAC_PAK_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -411,7 +411,7 @@ static int IPAC_PAK_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int IPAC_PAK_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -419,15 +419,15 @@ static int IPAC_PAK_parse_resource_info(struct package *pkg,
 
 	PAK_entry = (PAK_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, PAK_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = PAK_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = PAK_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int IPAC_PAK_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -596,7 +596,7 @@ static int IPAC_PAK_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int IPAC_PAK_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -620,7 +620,7 @@ static int IPAC_PAK_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void IPAC_PAK_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -634,7 +634,7 @@ static void IPAC_PAK_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void IPAC_PAK_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
@@ -646,7 +646,7 @@ static void IPAC_PAK_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation IPAC_PAK_operation = {
 	IPAC_PAK_match,					/* match */
 	IPAC_PAK_extract_directory,		/* extract_directory */
@@ -657,10 +657,10 @@ static cui_ext_operation IPAC_PAK_operation = {
 	IPAC_PAK_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK IPAC_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".PAK"), NULL, 
 		NULL, &IPAC_PAK_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -670,4 +670,5 @@ int CALLBACK IPAC_register_cui(struct cui_register_callback *callback)
 			return -1;	
 
 	return 0;
+}
 }

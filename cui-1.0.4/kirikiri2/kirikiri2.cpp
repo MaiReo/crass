@@ -17,23 +17,23 @@ using namespace std;
 using std::vector;
 
 /*
-tcwfcompÒôÆµÑ¹Ëõ
+tcwfcompéŸ³é¢‘åŽ‹ç¼©
 root/kirikiri2/branches/2.30stable/kirikiri2/src/tools/generic/tcwfcomp/src/comp/Main.cpp
 */
 
-// ÒÔÏÂ.xp3ºÍtlgµÄ´ó²¿·Ö½âÎöºÍ½âÂë´úÂë²Î¿¼ÁËkirikiri2-2_27-dev.20060527Ô´Âë
+// ä»¥ä¸‹.xp3å’Œtlgçš„å¤§éƒ¨åˆ†è§£æžå’Œè§£ç ä»£ç å‚è€ƒäº†kirikiri2-2_27-dev.20060527æºç 
 
 /*
-cxdec½âÃÜ²ÎÊýËÑË÷·¨£º
-µ½kernel32ÏÂCreateFileW¶Ïµã£¬Ö±µ½·ÃÎÊµÚÒ»¸ö.xp3ÎÄ¼þÎªÖ¹¡£
-£¨ÕâÑù×öµÄÔ­ÒòÊÇµÈtpm³õÊ¼»¯´úÂë½«½âÃÜº¯Êý½âÃÜ³öÀ´£©
-È»ºóµ½*_cxdecÄ£¿éµÄµØÖ·¿Õ¼äËÑË÷³£Á¿0x18, Ó¦¸ÃÄÜÕÒµ½ÀàËÆÕâÑùµÄÓï¾ä£º
+cxdecè§£å¯†å‚æ•°æœç´¢æ³•ï¼š
+åˆ°kernel32ä¸‹CreateFileWæ–­ç‚¹ï¼Œç›´åˆ°è®¿é—®ç¬¬ä¸€ä¸ª.xp3æ–‡ä»¶ä¸ºæ­¢ã€‚
+ï¼ˆè¿™æ ·åšçš„åŽŸå› æ˜¯ç­‰tpmåˆå§‹åŒ–ä»£ç å°†è§£å¯†å‡½æ•°è§£å¯†å‡ºæ¥ï¼‰
+ç„¶åŽåˆ°*_cxdecæ¨¡å—çš„åœ°å€ç©ºé—´æœç´¢å¸¸é‡0x18, åº”è¯¥èƒ½æ‰¾åˆ°ç±»ä¼¼è¿™æ ·çš„è¯­å¥ï¼š
 
 	CMP     DWORD PTR DS:[ESI], 18
 	JE      SHORT cxdec.1E003086
 
-¸úËæÕâ¸öJEÌõ¼þ£¬±»µ÷ÓÃµÄº¯ÊýÀïÃæ¾ÍÓÐ2¸ö²ÎÊý¡£È»ºó¸úËæ½øÈ¥£¬·ÖÎöºÍ
-ÕÒµ½first_stage¡¢stage0/1µÄº¯ÊýÒÔ¼°ÄÚ²¿switchµÄ¾ßÌåË³Ðò¡£
+è·Ÿéšè¿™ä¸ªJEæ¡ä»¶ï¼Œè¢«è°ƒç”¨çš„å‡½æ•°é‡Œé¢å°±æœ‰2ä¸ªå‚æ•°ã€‚ç„¶åŽè·Ÿéšè¿›åŽ»ï¼Œåˆ†æžå’Œ
+æ‰¾åˆ°first_stageã€stage0/1çš„å‡½æ•°ä»¥åŠå†…éƒ¨switchçš„å…·ä½“é¡ºåºã€‚
 */
 
 struct acui_information kirikiri2_cui_information = {
@@ -41,7 +41,7 @@ struct acui_information kirikiri2_cui_information = {
 	_T("TVP(KIRIKIRI) 2 core / Scripting Platform for Win32"),	/* system */
 	_T(".xp3 .exe .tlg .tlg5 .tlg6 .ksd .kdt .arc"),	/* package */
 	_T("1.5.5"),			/* revison */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-7-31 23:05"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -61,7 +61,7 @@ struct acui_information kirikiri2_cui_information = {
 
 extern unsigned int CheckSum(BYTE *buf, unsigned int len);
 
-// ÎÄ¼þ¸ñÊ½¶¨Òå	
+// æ–‡ä»¶æ ¼å¼å®šä¹‰	
 #pragma pack (1)
 typedef struct {
 	s8 magic[11];		// "XP3\r\n \n\x1a\x8b\x67\x01"
@@ -144,14 +144,14 @@ typedef struct {
 } tlg_sds_header_t;
 
 /* 
- * tlg5²ÉÓÃ²îÖµ+lzssµÄ·½Ê½¶ÔÎ»Í¼½øÐÐÑ¹Ëõ¡£
- * 1. ¼ÆËãÍ¬ÁÐÉÏÏÂ2¸öÏàÁÚÏóËØ·ÖÁ¿µÄ²îÖµcl¡£
- * 2. ½«²îÖµclÓëÉÏÒ»´ÎÍ¬ÁÐÉÏÏÂ2¸öÏàÁÚÏóËØ·ÖÁ¿µÄ
- * ²îÖµprevcl[c]ÔÙ´ÎÇó²î, ½á¹û±£´æÔÚval[c]ÖÐ£¬Í¬Ê±
- * prevcl[c]¸üÐÂÎªcl¡£
- * 3. ¶ÔÍ¬Ò»ÏóËØÄÚµÄÏàÁÚvcl[c]Çó²î£¬½á¹û±£´æÔÚcmpinbuf[c][inp]ÖÐ£¬
- * Ö±µ½inp == width¡£ÖÁ´Ëcolors¸öcmpinbuf[width]×é³ÉÒ»¸öblock¡£
- * 4. ¶Ôblock½øÐÐlzss(±äÌå)Ñ¹Ëõ£¬½«Ñ¹ËõºóµÄ³¤¶ÈÐ´Èëblock size section¡£
+ * tlg5é‡‡ç”¨å·®å€¼+lzssçš„æ–¹å¼å¯¹ä½å›¾è¿›è¡ŒåŽ‹ç¼©ã€‚
+ * 1. è®¡ç®—åŒåˆ—ä¸Šä¸‹2ä¸ªç›¸é‚»è±¡ç´ åˆ†é‡çš„å·®å€¼clã€‚
+ * 2. å°†å·®å€¼clä¸Žä¸Šä¸€æ¬¡åŒåˆ—ä¸Šä¸‹2ä¸ªç›¸é‚»è±¡ç´ åˆ†é‡çš„
+ * å·®å€¼prevcl[c]å†æ¬¡æ±‚å·®, ç»“æžœä¿å­˜åœ¨val[c]ä¸­ï¼ŒåŒæ—¶
+ * prevcl[c]æ›´æ–°ä¸ºclã€‚
+ * 3. å¯¹åŒä¸€è±¡ç´ å†…çš„ç›¸é‚»vcl[c]æ±‚å·®ï¼Œç»“æžœä¿å­˜åœ¨cmpinbuf[c][inp]ä¸­ï¼Œ
+ * ç›´åˆ°inp == widthã€‚è‡³æ­¤colorsä¸ªcmpinbuf[width]ç»„æˆä¸€ä¸ªblockã€‚
+ * 4. å¯¹blockè¿›è¡Œlzss(å˜ä½“)åŽ‹ç¼©ï¼Œå°†åŽ‹ç¼©åŽçš„é•¿åº¦å†™å…¥block size sectionã€‚
  */
 typedef struct {
 	s8 mark[11];	// "TLG5.0\x0raw\x1a"
@@ -174,14 +174,14 @@ typedef struct {
 	//u8 *filter;
 } tlg6_header_t;
 
-// ¥Õ¥ë¥Ï¥¦¥¹¥­¥¹£²¡«ÁµÛÃÔŒm¡«µÄtpk¸ñÊ½
+// ãƒ•ãƒ«ãƒã‚¦ã‚¹ã‚­ã‚¹ï¼’ï½žæ‹æ„›è¿·å®®ï½žçš„tpkæ ¼å¼
 typedef struct {
 	s8 maigc[4];		// "EL"
 	s8 version[4];		// "0101"
-	u32 size;			// ÎÄ¼þ´óÐ¡£¬Ó¦¸ÃµÈÓÚ½ÓÏÂÀ´3¸ö×Ö¶ÎÖ®ºÍ
-	u32 header_size;	// °üº¬palette
+	u32 size;			// æ–‡ä»¶å¤§å°ï¼Œåº”è¯¥ç­‰äºŽæŽ¥ä¸‹æ¥3ä¸ªå­—æ®µä¹‹å’Œ
+	u32 header_size;	// åŒ…å«palette
 	u32 data_size;		
-	u32 block_size;		// Ã»ÓÐÔòÎª0
+	u32 block_size;		// æ²¡æœ‰åˆ™ä¸º0
 	u32 data_offset;
 	u32 block_offset;
 	u32 width;
@@ -195,7 +195,7 @@ typedef struct {
 	u32 orig_y;
 	u32 width;
 	u32 height;
-	u32 offset;			// 0¿ªÊ¼
+	u32 offset;			// 0å¼€å§‹
 	u32 length;
 	u32 reserved[2];	// 0
 } tpk_entry_t;
@@ -213,15 +213,15 @@ typedef struct {
 } my_xp3_entry_t;
 
 static const TCHAR *simplified_chinese_strings[] = {
-	_T("%s: crcÐ£ÑéÊ§°Ü(0x%08x), Ó¦¸ÃÊÇ0x%08x.\n"),
+	_T("%s: crcæ ¡éªŒå¤±è´¥(0x%08x), åº”è¯¥æ˜¯0x%08x.\n"),
 };
 
 static const TCHAR *traditional_chinese_strings[] = {
-	_T("%s: crcÐ£òžÊ§”¡(0x%08x), ‘ªÔ“ÊÇ0x%08x.\n"),
+	_T("%s: crcæ ¡é©—å¤±æ•—(0x%08x), æ‡‰è©²æ˜¯0x%08x.\n"),
 };
 
 static const TCHAR *japanese_strings[] = {
-	_T("%s: crc¥Á¥§¥Ã¥¯Ê§”¡(0x%08x)¡¢¤â¤È¤¤0x%08x¡£\n"),
+	_T("%s: crcãƒã‚§ãƒƒã‚¯å¤±æ•—(0x%08x)ã€ã‚‚ã¨ã„0x%08xã€‚\n"),
 };
 
 static const TCHAR *default_strings[] = {
@@ -1160,7 +1160,7 @@ static int tlg6_process(BYTE *tlg_raw_data, DWORD tlg_size,
 	return 0;
 }
 
-/* Ë÷Òý¶ÎchunkËÑË÷ */
+/* ç´¢å¼•æ®µchunkæœç´¢ */
 static xp3_chunk_t *kirikiri2_xp3_find_chunk(BYTE *data, 
 											 unsigned int data_len, s8 *magic)
 {
@@ -2224,7 +2224,7 @@ static int kirikiri2_tlg_sds_match(struct package *pkg)
 		return -CUI_EMATCH;
 	}
 
-	// fix for maf_1_2_c.tlg @ ¤Þ¤Þ¤Þ¤Þ¤Þ¤Þ
+	// fix for maf_1_2_c.tlg @ ã¾ã¾ã¾ã¾ã¾ã¾
 	u32 size;
 	pkg->pio->length_of(pkg, &size);
 	if (!tlg_sds_header.size || size < tlg_sds_header.size) {		
@@ -2663,4 +2663,5 @@ int CALLBACK kirikiri2_register_cui(struct cui_register_callback *callback)
 	kirikiri2_locale_id = locale_app_register(kirikiri2_locale_configurations, 3);
 
 	return 0;
+}
 }

@@ -14,7 +14,7 @@ struct acui_information AGS32i_cui_information = {
 	_T("AGS32i"),			/* system */
 	_T(".GSS .GSL"),		/* package */
 	_T("1.0.0"),			/* revision */
-	_T("≥’ùhπ´Ÿ\"),			/* author */
+	_T("Áó¥Êº¢ÂÖ¨Ë≥ä"),			/* author */
 	_T("2009-2-14 15:54"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -255,4 +255,5 @@ int CALLBACK AGS32i_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

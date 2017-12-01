@@ -466,3 +466,4 @@ struct cxdec_callback lovelaby_cxdec_callback = {
 	{ 0x28d, 0x61f },
 	xcode_building_stage1
 };
+;

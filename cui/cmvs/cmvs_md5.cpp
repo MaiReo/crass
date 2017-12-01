@@ -124,3 +124,4 @@ void cmvs_md5(unsigned int data[], cmvs_md5_ctx *ctx)
 	data[2] = ctx->state[2];
 	data[3] = ctx->state[0];
 }
+}

@@ -11,7 +11,7 @@
 #include <utility.h>
 
 struct acui_information Narukana_cui_information = {
-	_T("¥¶¥¦¥¹¡¾±¾á|Ôì¡¿(Xuse)"),	/* copyright */
+	_T("ã‚¶ã‚¦ã‚¹ã€æœ¬é†¸é€ ã€‘(Xuse)"),	/* copyright */
 	NULL,							/* system */
 	_T(".arc .xarc .bin .4ag bv*"),	/* package */
 	_T("1.0.0"),					/* revision */
@@ -885,7 +885,7 @@ static int Narukana_4ag_extract_directory(struct package *pkg,
 			decode_4ag_resource((u8 *)&sub_chunk, 8, res_offset, dec_buf, dec_buf_len);
 
 			res_offset += sizeof(sub_chunk);
-			// ÒÔÉÏ£¬¸ù¾Ýmode·µ»Øµ±Ç°µÄoffset called from 426d78
+			// ä»¥ä¸Šï¼Œæ ¹æ®modeè¿”å›žå½“å‰çš„offset called from 426d78
 
 			int ftags = 0;
 			char *buf;
@@ -921,7 +921,7 @@ static int Narukana_4ag_extract_directory(struct package *pkg,
 					break;
 				}
 				break;
-			case 0x47415446:	//FTAG(×ÊÔ´Êý¾ÝÂ·¾¶£¬ÀýÈç£ºWaitScreen\Load.png)
+			case 0x47415446:	//FTAG(èµ„æºæ•°æ®è·¯å¾„ï¼Œä¾‹å¦‚ï¼šWaitScreen\Load.png)
 				if (ftags >= 3) {
 					ret = -CUI_EMATCH;
 					break;
@@ -1146,4 +1146,5 @@ int CALLBACK Narukana_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

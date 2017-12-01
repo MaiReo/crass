@@ -256,3 +256,4 @@ MD5Transform(UWORD32 buf[4], UWORD32 const in[16])
 	buf[2] += c;
 	buf[3] += d;
 }
+}

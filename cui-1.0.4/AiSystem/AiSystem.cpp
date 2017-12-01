@@ -9,32 +9,32 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information AiSystem_cui_information = {
 	_T("Studio AERO"),		/* copyright */
 	_T("AiSystem ver 0.01"),/* system */
 	_T(".ttd .bmp .stf"),	/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-3-13 21:31"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// ".FRC"
-	u32 index_key;		// ½âÃÜË÷Òý¶Îkey
-	u32 index_crc;		// ¼ÓÃÜµÄË÷Òý¶Îcrc
-	u32 index_entries;	// ×ÊÔ´Êý
-	u32 sync;			// must be 5(headerµÄ4×Ö½Ú¸öÊý?)
+	u32 index_key;		// è§£å¯†ç´¢å¼•æ®µkey
+	u32 index_crc;		// åŠ å¯†çš„ç´¢å¼•æ®µcrc
+	u32 index_entries;	// èµ„æºæ•°
+	u32 sync;			// must be 5(headerçš„4å­—èŠ‚ä¸ªæ•°?)
 } ttd_header_t;
 
 typedef struct {
 	u32 length;
 	u32 offset;
-	u32 ttd_id;	// £¨ÔËÐÐÊ±²ÎÊý£©.ttd·â°üµÄÊýÁ¿ÊÇÓ²±àÂëµÄ£»ËùÊôµÄttd·â°üidÒ²ÊÇÊÂÏÈ¶¨ºÃµÄ
+	u32 ttd_id;	// ï¼ˆè¿è¡Œæ—¶å‚æ•°ï¼‰.ttdå°åŒ…çš„æ•°é‡æ˜¯ç¡¬ç¼–ç çš„ï¼›æ‰€å±žçš„ttdå°åŒ…idä¹Ÿæ˜¯äº‹å…ˆå®šå¥½çš„
 	s8 name[32];
 } ttd_entry_t;
 
@@ -44,7 +44,7 @@ typedef struct {
 } dsff_header_t;
 #pragma pack ()
 
-// AUTODIN IIÊÇ±ê×¼µÄÒÔÌ«ÍøCRCÐ£Ñé¶àÏîÊ½
+// AUTODIN IIæ˜¯æ ‡å‡†çš„ä»¥å¤ªç½‘CRCæ ¡éªŒå¤šé¡¹å¼
 extern u32 crc32(const u8 *buf, int len);
 
 static void decode(BYTE *buf, unsigned int len, u32 key)
@@ -58,9 +58,9 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xff0;
 	unsigned int win_size = 4096;
@@ -108,7 +108,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* ttd *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int AiSystem_ttd_match(struct package *pkg)
 {
 	ttd_header_t ttd_header;
@@ -134,7 +134,7 @@ static int AiSystem_ttd_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int AiSystem_ttd_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
@@ -171,7 +171,7 @@ static int AiSystem_ttd_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int AiSystem_ttd_parse_resource_info(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -182,15 +182,15 @@ static int AiSystem_ttd_parse_resource_info(struct package *pkg,
 		strcpy(pkg_res->name, ttd_entry->name);
 	else
 		strncpy(pkg_res->name, ttd_entry->name, 32);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = ttd_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = ttd_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int AiSystem_ttd_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -208,7 +208,7 @@ static int AiSystem_ttd_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int AiSystem_ttd_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -232,7 +232,7 @@ static int AiSystem_ttd_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void AiSystem_ttd_release_resource(struct package *pkg, 
 										  struct package_resource *pkg_res)
 {
@@ -246,7 +246,7 @@ static void AiSystem_ttd_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void AiSystem_ttd_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -258,7 +258,7 @@ static void AiSystem_ttd_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AiSystem_ttd_operation = {
 	AiSystem_ttd_match,					/* match */
 	AiSystem_ttd_extract_directory,		/* extract_directory */
@@ -271,7 +271,7 @@ static cui_ext_operation AiSystem_ttd_operation = {
 
 /********************* bmp *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int AiSystem_bmp_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -292,7 +292,7 @@ static int AiSystem_bmp_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int AiSystem_bmp_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -336,14 +336,14 @@ static int AiSystem_bmp_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void AiSystem_bmp_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AiSystem_bmp_operation = {
 	AiSystem_bmp_match,				/* match */
 	NULL,							/* extract_directory */
@@ -356,7 +356,7 @@ static cui_ext_operation AiSystem_bmp_operation = {
 
 /********************* bmp16 *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int AiSystem_bmp16_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -388,7 +388,7 @@ static int AiSystem_bmp16_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int AiSystem_bmp16_extract_resource(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -416,7 +416,7 @@ static int AiSystem_bmp16_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AiSystem_bmp16_operation = {
 	AiSystem_bmp16_match,			/* match */
 	NULL,							/* extract_directory */
@@ -429,7 +429,7 @@ static cui_ext_operation AiSystem_bmp16_operation = {
 
 /********************* stf *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int AiSystem_stf_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -453,7 +453,7 @@ static int AiSystem_stf_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int AiSystem_stf_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -522,7 +522,7 @@ static int AiSystem_stf_extract_resource(struct package *pkg,
 }
 
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AiSystem_stf_operation = {
 	AiSystem_stf_match,				/* match */
 	NULL,							/* extract_directory */
@@ -533,14 +533,14 @@ static cui_ext_operation AiSystem_stf_operation = {
 	AiSystem_bmp_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK AiSystem_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".bmp"), NULL, 
 		NULL, &AiSystem_bmp16_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_RES))
 			return -1;
 
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".ttd"), NULL, 
 		NULL, &AiSystem_ttd_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -554,4 +554,5 @@ int CALLBACK AiSystem_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

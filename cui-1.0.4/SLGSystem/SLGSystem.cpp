@@ -15,7 +15,7 @@ struct acui_information SLGSystem_cui_information = {
 	NULL,					/* system */
 	_T(".sz .alb .VOI .tig .SPD .SPL"),	/* package */
 	_T("1.0.3"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2009-6-26 21:43"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -30,11 +30,11 @@ typedef struct {
 typedef struct {
 	s8 magic[8];		// "ALB1.21"
 	u32 uncompren;
-	u32 comprlen;		// ÔËÐÐÊ±Ð´ÈëalbÎÄ¼þ³¤¶È£¨ÎÄ¼þÊ±ÊÇ0£©
+	u32 comprlen;		// è¿è¡Œæ—¶å†™å…¥albæ–‡ä»¶é•¿åº¦ï¼ˆæ–‡ä»¶æ—¶æ˜¯0ï¼‰
 } alb_header_t;
 
 typedef struct {
-	s8 magic[4];		// "PHF"(µÚÒ»¿é) or "PH\x1a"(ÖÐ¼ä¿é) or "PH\x1a"(×îºóÒ»¿é)
+	s8 magic[4];		// "PHF"(ç¬¬ä¸€å—) or "PH\x1a"(ä¸­é—´å—) or "PH\x1a"(æœ€åŽä¸€å—)
 	u16 length;
 	u8 is_compressed;
 	u8 is_continuous;
@@ -560,9 +560,9 @@ static int SLGSystem_SPD_parse_resource_info(struct package *pkg,
 	SPD_header_t *header = (SPD_header_t *)package_get_private(pkg);
 
 	strcpy(pkg_res->name, (char *)header + SPL_entry->name_offset);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = SPL_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = SPL_entry->offset * header->factor;
 
 	return 0;
@@ -638,4 +638,5 @@ int CALLBACK SLGSystem_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

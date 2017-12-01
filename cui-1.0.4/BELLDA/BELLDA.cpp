@@ -13,7 +13,7 @@ struct acui_information BELLDA_cui_information = {
 	NULL,					/* system */
 	_T(".DAT"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("≥’ùhπ´Ÿ\"),			/* author */
+	_T("Áó¥Êº¢ÂÖ¨Ë≥ä"),			/* author */
 	_T("2009-2-18 22:40"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -309,4 +309,5 @@ int CALLBACK BELLDA_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

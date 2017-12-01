@@ -151,10 +151,10 @@ static int xcode_building(struct cxdec_callback *callback, DWORD seed, void *sta
 
 // 1E01F434
 struct cxdec {
-	BYTE *xcode;			// 容纳128个解密函数，每个函数100字节
-	void *address_list[128];// 128个解密函数的地址(用index索引)
-	u32 current_count;		// 当前有效的解密函数的个数
-	DWORD index_list[100];	// 记录有效的index编号
+	BYTE *xcode;			// 瀹圭撼128涓В瀵嗗嚱鏁帮紝姣忎釜鍑芥暟100瀛楄妭
+	void *address_list[128];// 128涓В瀵嗗嚱鏁扮殑鍦板潃(鐢╥ndex绱㈠紩)
+	u32 current_count;		// 褰撳墠鏈夋晥鐨勮В瀵嗗嚱鏁扮殑涓暟
+	DWORD index_list[100];	// 璁板綍鏈夋晥鐨刬ndex缂栧彿
 	int init_flag;
 };
 
@@ -354,4 +354,5 @@ void xp3filter_decode_cxdec(struct xp3filter *xp3filter)
 			xp3filter->total_length, 0, xp3filter->hash);
 	}
 #endif
+}
 }

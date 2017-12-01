@@ -51,7 +51,7 @@ static void print_issue(TCHAR *__argv[])
 		__argv[0] ? __argv[0] : _T("Crage.exe"), CRAGE_SYNTEX);
 }
 
-// Õë¶ÔÈÕÎÄÏµÍ³ÖĞwindowsÎÄ¼şÂ·¾¶..¡£
+// é’ˆå¯¹æ—¥æ–‡ç³»ç»Ÿä¸­windowsæ–‡ä»¶è·¯å¾„..ã€‚
 static void conver_backslash(TCHAR *arg)
 {
 	TCHAR *pos = _tcschr(arg, _T('\\'));
@@ -167,7 +167,7 @@ static void parse_cmd(int __argc, TCHAR *__argv[])
 		}
 		if (!_tcscmp(__argv[i], _T("-I"))) {
 			if (!__argv[i + 1])
-				cui_show_infomation = -1;	/* ÏÔÊ¾ËùÓĞ²å¼şµÄĞÅÏ¢ */
+				cui_show_infomation = -1;	/* æ˜¾ç¤ºæ‰€æœ‰æ’ä»¶çš„ä¿¡æ¯ */
 			else {
 				cui_show_infomation = 1;
 #ifndef UNICODE
@@ -220,7 +220,7 @@ static void parse_cmd(int __argc, TCHAR *__argv[])
 	if (!package_path[0] && !package_directory[0] && !cui_show_infomation)
 		die(LOC_ID_CRASS_USAGE);
 
-	/* ĞŞÕı¸ùÂ·¾¶ÒıÆğµÄÀ§ÈÅ */
+	/* ä¿®æ­£æ ¹è·¯å¾„å¼•èµ·çš„å›°æ‰° */
 	if (package_directory[0]) {
 		if (!PathIsRoot(package_directory)) {
 			PathAddBackslash(package_directory);
@@ -231,7 +231,7 @@ static void parse_cmd(int __argc, TCHAR *__argv[])
 	if (!output_directory[0]) {
 		if (package_directory[0])
 			_tcsncpy(output_directory, _T("output_dir"), SOT(output_directory));
-	} else if (!PathIsRoot(output_directory)) {	// j: Õâ¸ö²»ÊÇ¸ùÅÌ·û£»j:\ Õâ¸öÊÇ¸ùÅÌ·û
+	} else if (!PathIsRoot(output_directory)) {	// j: è¿™ä¸ªä¸æ˜¯æ ¹ç›˜ç¬¦ï¼›j:\ è¿™ä¸ªæ˜¯æ ¹ç›˜ç¬¦
 		PathAddBackslash(output_directory);
 		PathRemoveBackslash(output_directory);
 	}
@@ -307,7 +307,7 @@ static int flush_index(TCHAR *name, struct package_index_header *header,
 		return -1;
 	}
 	MyCloseFile(idx_file);
-	_stprintf(fmt_buf, _T("%s: ±£´æË÷Òı³É¹¦\n"), idx_name);
+	_stprintf(fmt_buf, _T("%s: ä¿å­˜ç´¢å¼•æˆåŠŸ\n"), idx_name);
 	wcprintf(fmt_buf);
 	return 0;
 }
@@ -337,7 +337,7 @@ static int cui_common_save_resource(struct resource *res,
 }
 
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void cui_common_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -351,7 +351,7 @@ static void cui_common_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void cui_common_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -369,7 +369,7 @@ static int __crage(struct package *pkg, struct cui_extension *ext, int stepping)
 	if (stepping == CUI_EXTRACT_RESOURCE)
 		goto skip_lst_process;
 
-	/* lstÖ»ÔÚµÚÒ»´Î´¦Àí */
+	/* lståªåœ¨ç¬¬ä¸€æ¬¡å¤„ç† */
 	if (ext->flags & CUI_EXT_FLAG_LST) {
 		if (!lst_filepath[0])
 			return -CUI_EMATCH;
@@ -378,7 +378,7 @@ static int __crage(struct package *pkg, struct cui_extension *ext, int stepping)
 	if (lst_filepath[0]) {
 		pkg->lst = package_fio_create(_T(""), lst_filepath);
 		if (!pkg->lst) {
-			crass_printf(_T("%s£ºÎªlstÎÄ¼ş´´½¨pacakgeÊ§°Ü\n"), lst_filepath);
+			crass_printf(_T("%sï¼šä¸ºlstæ–‡ä»¶åˆ›å»ºpacakgeå¤±è´¥\n"), lst_filepath);
 			return -1;
 		}
 	}
@@ -397,7 +397,7 @@ skip_lst_process:
 
 	memset(&pkg_dir, 0, sizeof(pkg_dir));
 	if (ext->flags & CUI_EXT_FLAG_DIR) {
-		/* ½âÑ¹Ëõ¡¢½âÂë¡¢²¢ÌáÈ¡³öË÷Òı¶ÎÊı¾İ */
+		/* è§£å‹ç¼©ã€è§£ç ã€å¹¶æå–å‡ºç´¢å¼•æ®µæ•°æ® */
 		ret = ext->op->extract_directory(pkg, &pkg_dir);
 		if (ret) {
 			locale_printf(LOC_ID_CRASS_GET_DIR_INFO, pkg->name, ret);
@@ -457,7 +457,7 @@ skip_lst_process:
 			locale_printf(LOC_ID_CRASS_START_RIP_PKG, 
 				pkg->name, pkg_dir.index_entries);
 	} else {
-		/* ×ÊÔ´·â°üÎÄ¼şÃ»ÓĞdirectory, Òò´ËÎ±ÔìdirectoryĞÅÏ¢ */
+		/* èµ„æºå°åŒ…æ–‡ä»¶æ²¡æœ‰directory, å› æ­¤ä¼ªé€ directoryä¿¡æ¯ */
 		pkg_dir.index_entries = 1;
 		pkg_dir.flags = PKG_DIR_FLAG_SKIP0;
 		if (verbose_info)
@@ -557,7 +557,7 @@ skip_lst_process:
 						wcsncpy(pkg_res_name, (WCHAR *)pkg_res.name, pkg_res.name_length);
 				}
 			} else {
-				/* ×ÊÔ´·â°üÍ¨³£Ã»ÓĞ¶ÀÁ¢µÄÎÄ¼şÃû */
+				/* èµ„æºå°åŒ…é€šå¸¸æ²¡æœ‰ç‹¬ç«‹çš„æ–‡ä»¶å */
 				_tcsncpy(pkg_res_name, pkg->path, SOT(pkg_res_name));
 			}
 
@@ -581,7 +581,7 @@ skip_lst_process:
 			}
 			// FIXME
 			pkg_res.raw_data_length = len_lo;
-			/* ×ÊÔ´·â°üÍ¨³£Ã»ÓĞ¶ÀÁ¢µÄÎÄ¼şÃû */
+			/* èµ„æºå°åŒ…é€šå¸¸æ²¡æœ‰ç‹¬ç«‹çš„æ–‡ä»¶å */
 			pkg_res.flags |= PKG_RES_FLAG_UNICODE;
 			_tcsncpy((TCHAR *)pkg_res.name, pkg->path, SOT(pkg_res.name));
 			pkg_res.name_length = -1;
@@ -667,7 +667,7 @@ skip_lst_process:
 		TCHAR res_full_path[MAX_PATH];		
 		memset(res_full_path, 0, sizeof(res_full_path));
 		if (ext->flags & CUI_EXT_FLAG_DIR) {
-			/* ¹¹Ôì×ÊÔ´ÎÄ¼şµÄ´æ´¢Â·¾¶ */
+			/* æ„é€ èµ„æºæ–‡ä»¶çš„å­˜å‚¨è·¯å¾„ */
 			if (!(ext->flags & CUI_EXT_FLAG_NOEXT))
 				_tcsncpy(res_full_path, pkg->path, pkg->extension - pkg->path);
 			else
@@ -686,13 +686,13 @@ skip_lst_process:
 			struct cui_extension *res_ext;
 			int err;
 			
-			/* Îª×ÊÔ´ÎÄ¼ş´´½¨Ò»¸öĞÂµÄpkg */
+			/* ä¸ºèµ„æºæ–‡ä»¶åˆ›å»ºä¸€ä¸ªæ–°çš„pkg */
 			if (is_bio)
 				res_pkg = package_bio_create(_T(""), res_full_path);
 			else
 				res_pkg = package_fio_create(_T(""), res_full_path);
 			if (!res_pkg) {
-				crass_printf(_T("%s: ·ÖÅä×ÊÔ´ÎÄ¼şpackageÊ±Ê§°Ü\n"), pkg_res_name);
+				crass_printf(_T("%s: åˆ†é…èµ„æºæ–‡ä»¶packageæ—¶å¤±è´¥\n"), pkg_res_name);
 				ext->op->release_resource(pkg, &pkg_res);
 				break;
 			}
@@ -703,8 +703,8 @@ skip_lst_process:
 			err = 0;
 			while ((res_ext = cui_extension_walk_each(ext->cui, res_ext, CUI_EXT_FLAG_RES))) {
 				/* 
-				 * ĞÎÈçMalieSystem¡¢RealLive seen.txtÄÇÑùµÄÄÚ²¿×ÊÔ´µİ¹éÌáÈ¡,
-				 * Èç¹ûmatch²»×öÌØÊâ¼ì²â,Ôò»á·¢Éú¶ş´ÎÌáÈ¡´íÎó.
+				 * å½¢å¦‚MalieSystemã€RealLive seen.txté‚£æ ·çš„å†…éƒ¨èµ„æºé€’å½’æå–,
+				 * å¦‚æœmatchä¸åšç‰¹æ®Šæ£€æµ‹,åˆ™ä¼šå‘ç”ŸäºŒæ¬¡æå–é”™è¯¯.
 				 */
 				if ((ext == res_ext) && !(ext->flags & CUI_EXT_FLAG_RECURSION))
 					continue;
@@ -761,12 +761,12 @@ skip_lst_process:
 			if (res_ext) {
 				if (err) {
 					ext->op->release_resource(pkg, &pkg_res);
-					break;	/* ·¢Éú´íÎó */
+					break;	/* å‘ç”Ÿé”™è¯¯ */
 				} else {
 					skip_save = 1;	
 				}
 			}
-			/* ¶ÔÓÚÎŞĞèÁí×ö´¦ÀíµÄ×ÊÔ´ÎÄ¼ş£¬res_ext·µ»ØNULL */
+			/* å¯¹äºæ— éœ€å¦åšå¤„ç†çš„èµ„æºæ–‡ä»¶ï¼Œres_extè¿”å›NULL */
 		}
 
 		if (!extract_null && !skip_save) {
@@ -787,7 +787,7 @@ skip_lst_process:
 		resave:
 			res = resource_create(_T(""), save_name);
 			if (!res) {
-				crass_printf(_T("%s: ·ÖÅä×ÊÔ´ÎÄ¼şresourceÊ±Ê§°Ü\n"), save_name);
+				crass_printf(_T("%s: åˆ†é…èµ„æºæ–‡ä»¶resourceæ—¶å¤±è´¥\n"), save_name);
 				ext->op->release_resource(pkg, &pkg_res);
 				break;
 			}
@@ -875,8 +875,8 @@ static int crage(const TCHAR *cui_name)
 	while ((cui = cui_walk_each(cui))) {		
 		struct cui_extension *ext = NULL;		
 
-		/* Ê¹ÓÃÌØ¶¨µÄcui.
-		 * TODO: ÊµÏÖÖ»Ê¹ÓÃÌØ¶¨¼¯ºÏµÄcuiºÍ²»Ê¹ÓÃÌØ¶¨¼¯ºÏµÄcui.
+		/* ä½¿ç”¨ç‰¹å®šçš„cui.
+		 * TODO: å®ç°åªä½¿ç”¨ç‰¹å®šé›†åˆçš„cuiå’Œä¸ä½¿ç”¨ç‰¹å®šé›†åˆçš„cui.
 		 */
 		if (CUI_name[0]) {
 			if (lstrcmpi(cui->name, CUI_name))
@@ -1024,7 +1024,7 @@ int _tmain(int argc, TCHAR *argv[])
 		}
 	}
 
-	if (cui_show_infomation) {	/* Ö»ÏÔÊ¾cuiĞÅÏ¢ */
+	if (cui_show_infomation) {	/* åªæ˜¾ç¤ºcuiä¿¡æ¯ */
 		show_cui_information();
 		cui_core_uninstall();
 		return 0;
@@ -1035,7 +1035,7 @@ int _tmain(int argc, TCHAR *argv[])
 	package_core_init();	
 	
 	pkg_count = 0;
-	if (package_path[0])	/* µ¥¶ÀµÄ·â°ü */
+	if (package_path[0])	/* å•ç‹¬çš„å°åŒ… */
 		pkg_count = package_search_file(package_path);
 	if (package_directory[0])
 		pkg_count += package_search_directory(package_directory, _T(""));
@@ -1063,4 +1063,5 @@ int _tmain(int argc, TCHAR *argv[])
 	locale_printf(LOC_ID_CRASS_FINISH_CRAGE);
 
 	return 0;
+}
 }

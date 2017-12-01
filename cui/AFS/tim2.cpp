@@ -17,17 +17,17 @@
  */
 #include <stdio.h>
 
-// TIM2�ե�����إå��Θ�����O��
+// TIM2ファイルヘッダの構造を設定
 
 #ifdef R5900
 
-// PS2�h���ΤȤ�
+// PS2環境のとき
 #include <eekernel.h>
 #include <sifdev.h>
 #include <libgraph.h>
 #include "tim2.h"
 
-// �ץ��ȥ���������
+// プロトタイプ宣言
 static void Tim2LoadTexture(int psm, u_int tbp, int tbw, int sx, int sy, u_long128 *pImage);
 static int  Tim2CalcBufWidth(int psm, int w);
 static int  Tim2CalcBufSize(int psm, int w, int h);
@@ -35,7 +35,7 @@ static int  Tim2GetLog2(int n);
 
 #else	// R5900
 
-// ��PS2�h���ΤȤ�
+// 非PS2環境のとき
 
 #ifdef WIN32
 #pragma warning(push)
@@ -50,33 +50,33 @@ static int  Tim2GetLog2(int n);
 
 
 
-// TIM2�ե�����Υե�����إå�������å�����
-// ����
-// pTim2    TIM2��ʽ�Υǩ`�������^���ɥ쥹
-// ���ꂎ
-//          0�ΤȤ�����`
-//          1�ΤȤ������K��(TIM2)
-//          2�ΤȤ������K��(CLUT2)
+// TIM2ファイルのファイルヘッダをチェックする
+// 引数
+// pTim2    TIM2形式のデータの先頭アドレス
+// 返り値
+//          0のときエラー
+//          1のとき正常終了(TIM2)
+//          2のとき正常終了(CLUT2)
 int Tim2CheckFileHeaer(void *pTim2)
 {
 	TIM2_FILEHEADER *pFileHdr = (TIM2_FILEHEADER *)pTim2;
 	int i;
 
-	// TIM2�����ͥ��������å�
+	// TIM2シグネチャをチェック
 	if(pFileHdr->FileId[0]=='T' || pFileHdr->FileId[1]=='I' || pFileHdr->FileId[2]=='M' || pFileHdr->FileId[3]=='2') {
-		// TIM2���ä��Ȥ�
+		// TIM2だったとき
 		i = 1;
 	} else if(pFileHdr->FileId[0]=='C' || pFileHdr->FileId[1]=='L' || pFileHdr->FileId[2]=='T' || pFileHdr->FileId[3]=='2') {
-		// CLUT2���ä��Ȥ�
+		// CLUT2だったとき
 		i = 2;
 	} else {
-		// ����`������R�e���֤��ä��Ȥ�
+		// イリーガルな識別文字だったとき
 		printf("Tim2CheckFileHeaer: TIM2 is broken %02X,%02X,%02X,%02X\n",
 					pFileHdr->FileId[0], pFileHdr->FileId[1], pFileHdr->FileId[2], pFileHdr->FileId[3]);
 		return(0);
 	}
 
-	// TIM2�ե�����ե��`�ޥåȥЩ`�����,�ե��`�ޥå�ID������å�
+	// TIM2ファイルフォーマットバージョン,フォーマットIDをチェック
 	if(!(pFileHdr->FormatVersion==0x03 ||
 	    (pFileHdr->FormatVersion==0x04 && (pFileHdr->FormatId==0x00 || pFileHdr->FormatId==0x01)))) {
 		printf("Tim2CheckFileHeaer: TIM2 is broken (2)\n");
@@ -87,33 +87,33 @@ int Tim2CheckFileHeaer(void *pTim2)
 
 
 
-// ָ�����줿���ŤΥԥ�����إå���ä�
-// ����
-// pTim2    TIM2��ʽ�Υǩ`�������^���ɥ쥹
-// imgno    �η�Ŀ�Υԥ�����إå�����դ��뤫ָ��
-// ���ꂎ
-//          �ԥ�����إå��ؤΥݥ���
+// 指定された番号のピクチャヘッダを得る
+// 引数
+// pTim2    TIM2形式のデータの先頭アドレス
+// imgno    何番目のピクチャヘッダを参照するか指定
+// 返り値
+//          ピクチャヘッダへのポインタ
 TIM2_PICTUREHEADER *Tim2GetPictureHeader(void *pTim2, int imgno)
 {
 	TIM2_FILEHEADER *pFileHdr = (TIM2_FILEHEADER *)pTim2;
 	TIM2_PICTUREHEADER *pPictHdr;
 	int i;
 
-	// �ԥ����㷬�Ť�����å�
+	// ピクチャ番号をチェック
 	if(imgno>=pFileHdr->Pictures) {
 		printf("Tim2GetPictureHeader: Illegal image no.(%d)\n", imgno);
 		return(NULL);
 	}
 
 	if(pFileHdr->FormatId==0x00) {
-		// �ե��`�ޥå�ID��0x00�ΤȤ���16�Х��ȥ��饤�����
+		// フォーマットIDが0x00のとき、16バイトアラインメント
 		pPictHdr = (TIM2_PICTUREHEADER *)((char *)pTim2 + sizeof(TIM2_FILEHEADER));
 	} else {
-		// �ե��`�ޥå�ID��0x01�ΤȤ���128�Х��ȥ��饤�����
+		// フォーマットIDが0x01のとき、128バイトアラインメント
 		pPictHdr = (TIM2_PICTUREHEADER *)((char *)pTim2 + 0x80);
 	}
 
-	// ָ�����줿�ԥ����㷬�Ťޤǥ����å�
+	// 指定されたピクチャ番号までスキップ
 	for(i=0; i<imgno; i++) {
 		pPictHdr = (TIM2_PICTUREHEADER *)((char *)pPictHdr + pPictHdr->TotalSize);
 	}
@@ -121,33 +121,33 @@ TIM2_PICTUREHEADER *Tim2GetPictureHeader(void *pTim2, int imgno)
 }
 
 
-// �ԥ�����ǩ`����CLUT2�ǩ`���Ǥ��뤫�ɤ����Єe
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// ���ꂎ
-//          0�ΤȤ�TIM2
-//          1�ΤȤ�CLUT2
+// ピクチャデータがCLUT2データであるかどうか判別
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// 戻り値
+//          0のときTIM2
+//          1のときCLUT2
 int Tim2IsClut2(TIM2_PICTUREHEADER *ph)
 {
-	// �ԥ�����إå���MipMapTextures���Ф��Єe
+	// ピクチャヘッダのMipMapTexturesメンバを判別
 	if(ph->MipMapTextures==0) {
-		// �ƥ�������ö����0�ΤȤ���CLUT2�ǩ`��
+		// テクスチャ枚数が0のとき、CLUT2データ
 		return(1);
 	} else {
-		// �ƥ�������ö����1ö���ϤΤȤ���TIM2�ǩ`��
+		// テクスチャ枚数が1枚以上のとき、TIM2データ
 		return(0);
 	}
 }
 
 
-// MIPMAP��٥뤴�ȤΥƥ������㥵������ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// mipmap:  MIPMAP�ƥ��������٥�(��������0-ԭʼ��С)
-// pWidth:  X���������ܤ�ȡ�뤿���int�͉����إݥ���
-// pHeight: Y���������ܤ�ȡ�뤿���int�͉����إݥ���
-// ���ꂎ
-//          MIPMAP�ƥ�������Υ�����
+// MIPMAPレベルごとのテクスチャサイズを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// mipmap:  MIPMAPテクスチャレベル(放缩级别：0-原始大小)
+// pWidth:  Xサイズを受け取るためのint型変数へポインタ
+// pHeight: Yサイズを受け取るためのint型変数へポインタ
+// 戻り値
+//          MIPMAPテクスチャのサイズ
 int Tim2GetMipMapPictureSize(TIM2_PICTUREHEADER *ph, int mipmap, int *pWidth, int *pHeight)
 {
 	int w, h, n;
@@ -169,34 +169,34 @@ int Tim2GetMipMapPictureSize(TIM2_PICTUREHEADER *ph, int mipmap, int *pWidth, in
 		case TIM2_IDTEX8:				break;
 	}
 
-	// MIPMAP�ƥ������㥵�����ϥե�����إå���FormatId��ָ���ˤ�����餺��
-	// ����16�Х��ȥ��饤����Ⱦ�������Ф����
+	// MIPMAPテクスチャサイズはファイルヘッダのFormatIdの指定にかかわらず、
+	// 常に16バイトアラインメント境界で整列される
 	n = (n + 15) & ~15;
 	return(n);
 }
 
 
-// MIPMAP�إå��Υ��ɥ쥹,��������ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// pSize:   MIPMAP�إå��Υ��������ܤ�ȡ�뤿���int�͉����إݥ���
-//          ����������Ҫ�Τʤ��Ȥ���NULL��
-// ���ꂎ
-//          NULL�ΤȤ�MIPMAP�إå��ʤ�
-//          NULL�Ǥʤ��Ȥ���MIPMAP�إå������^���ɥ쥹
+// MIPMAPヘッダのアドレス,サイズを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// pSize:   MIPMAPヘッダのサイズを受け取るためのint型変数へポインタ
+//          サイズが必要のないときはNULLに
+// 戻り値
+//          NULLのときMIPMAPヘッダなし
+//          NULLでないとき、MIPMAPヘッダの先頭アドレス
 TIM2_MIPMAPHEADER *Tim2GetMipMapHeader(TIM2_PICTUREHEADER *ph, int *pSize)
 {
 	TIM2_MIPMAPHEADER *pMmHdr;
 
 	static const char mmsize[] = {
-		 0,  // �ƥ�������0ö(CLUT2�ǩ`���ΤȤ�)
-		 0,  // LV0�ƥ�������Τ�(MIPMAP�إå��ʤ�)
-		32,  // LV1 MipMap�ޤ�
-		32,  // LV2 MipMap�ޤ�
-		32,  // LV3 MipMap�ޤ�
-		48,  // LV4 MipMap�ޤ�
-		48,  // LV5 MipMap�ޤ�
-		48   // LV6 MipMap�ޤ�
+		 0,  // テクスチャ0枚(CLUT2データのとき)
+		 0,  // LV0テクスチャのみ(MIPMAPヘッダなし)
+		32,  // LV1 MipMapまで
+		32,  // LV2 MipMapまで
+		32,  // LV3 MipMapまで
+		48,  // LV4 MipMapまで
+		48,  // LV5 MipMapまで
+		48   // LV6 MipMapまで
 	};
 
 	if(ph->MipMapTextures>1) {
@@ -206,48 +206,48 @@ TIM2_MIPMAPHEADER *Tim2GetMipMapHeader(TIM2_PICTUREHEADER *ph, int *pSize)
 	}
 
 	if(pSize) {
-		// �����إå����ʤ��ä����ϡ�
+		// 拡張ヘッダがなかった場合、
 		*pSize = mmsize[ph->MipMapTextures];
 	}
 	return(pMmHdr);
 }
 
 
-// ��`���`���ک`���Υ��ɥ쥹,��������ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// pSize:   ��`���`���ک`���Υ��������ܤ�ȡ�뤿���int�͉����إݥ���
-//          ����������Ҫ�Τʤ��Ȥ���NULL��
-// ���ꂎ
-//          NULL�ΤȤ���`���`���ک`���ʤ�
-//          NULL�Ǥʤ��Ȥ�����`���`���ک`�������^���ɥ쥹
+// ユーザースペースのアドレス,サイズを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// pSize:   ユーザースペースのサイズを受け取るためのint型変数へポインタ
+//          サイズが必要のないときはNULLに
+// 戻り値
+//          NULLのときユーザースペースなし
+//          NULLでないとき、ユーザースペースの先頭アドレス
 void *Tim2GetUserSpace(TIM2_PICTUREHEADER *ph, int *pSize)
 {
 	void *pUserSpace;
 
 	static const char mmsize[] = {
-		sizeof(TIM2_PICTUREHEADER)     ,	// �ƥ�������0ö(CLUT2�ǩ`���ΤȤ�)
-		sizeof(TIM2_PICTUREHEADER)     ,	// LV0�ƥ�������Τ�(MIPMAP�إå��ʤ�)
-		sizeof(TIM2_PICTUREHEADER) + 32,	// LV1 MipMap�ޤ�
-		sizeof(TIM2_PICTUREHEADER) + 32,	// LV2 MipMap�ޤ�
-		sizeof(TIM2_PICTUREHEADER) + 32,	// LV3 MipMap�ޤ�
-		sizeof(TIM2_PICTUREHEADER) + 48,	// LV4 MipMap�ޤ�
-		sizeof(TIM2_PICTUREHEADER) + 48,	// LV5 MipMap�ޤ�
-		sizeof(TIM2_PICTUREHEADER) + 48 	// LV6 MipMap�ޤ�
+		sizeof(TIM2_PICTUREHEADER)     ,	// テクスチャ0枚(CLUT2データのとき)
+		sizeof(TIM2_PICTUREHEADER)     ,	// LV0テクスチャのみ(MIPMAPヘッダなし)
+		sizeof(TIM2_PICTUREHEADER) + 32,	// LV1 MipMapまで
+		sizeof(TIM2_PICTUREHEADER) + 32,	// LV2 MipMapまで
+		sizeof(TIM2_PICTUREHEADER) + 32,	// LV3 MipMapまで
+		sizeof(TIM2_PICTUREHEADER) + 48,	// LV4 MipMapまで
+		sizeof(TIM2_PICTUREHEADER) + 48,	// LV5 MipMapまで
+		sizeof(TIM2_PICTUREHEADER) + 48 	// LV6 MipMapまで
 	};
 
-	// �إå����������{�٤�
+	// ヘッダサイズを調べる
 	if(ph->HeaderSize==mmsize[ph->MipMapTextures]) {
-		// ��`���`���ک`�������ڤ��ʤ��Ȥ�
+		// ユーザースペースが存在しないとき
 		if(pSize) *pSize = 0;
 		return(NULL);
 	}
 
-	// ��`���`���ک`�������ڤ���Ȥ�
+	// ユーザースペースが存在するとき
 	pUserSpace = (void *)((char *)ph + mmsize[ph->MipMapTextures]);
 	if(pSize) {
-		// ��`���`���ک`���Υ�������Ӌ��
-		// �����إå���������Ϥϡ������餫��ȩ`���륵������ȡ��
+		// ユーザースペースのサイズを計算
+		// 拡張ヘッダがある場合は、そちらからトータルサイズを取得
 		TIM2_EXHEADER *pExHdr;
 
 		pExHdr = (TIM2_EXHEADER *)pUserSpace;
@@ -256,10 +256,10 @@ void *Tim2GetUserSpace(TIM2_PICTUREHEADER *ph, int *pSize)
 			pExHdr->ExHeaderId[2]!='t' ||
 			pExHdr->ExHeaderId[3]!=0x00) {
 
-			// �����إå����ʤ��ä����ϡ�
+			// 拡張ヘッダがなかった場合、
 			*pSize = (ph->HeaderSize - mmsize[ph->MipMapTextures]);
 		} else {
-			// �����إå������ä�����
+			// 拡張ヘッダがあった場合
 			*pSize = pExHdr->UserSpaceSize;
 		}
 	}
@@ -267,14 +267,14 @@ void *Tim2GetUserSpace(TIM2_PICTUREHEADER *ph, int *pSize)
 }
 
 
-// ��`���`�ǩ`���Υ��ɥ쥹,��������ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// pSize:   ��`���`�ǩ`���Υ��������ܤ�ȡ�뤿���int�͉����إݥ���
-//          ����������Ҫ�Τʤ��Ȥ���NULL��
-// ���ꂎ
-//          NULL�ΤȤ���`���`�ǩ`���ʤ�
-//          NULL�Ǥʤ��Ȥ�����`���`�ǩ`�������^���ɥ쥹
+// ユーザーデータのアドレス,サイズを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// pSize:   ユーザーデータのサイズを受け取るためのint型変数へポインタ
+//          サイズが必要のないときはNULLに
+// 戻り値
+//          NULLのときユーザーデータなし
+//          NULLでないとき、ユーザーデータの先頭アドレス
 void *Tim2GetUserData(TIM2_PICTUREHEADER *ph, int *pSize)
 {
 	void *pUserSpace;
@@ -282,36 +282,36 @@ void *Tim2GetUserData(TIM2_PICTUREHEADER *ph, int *pSize)
 
 	pUserSpace = Tim2GetUserSpace(ph, pSize);
 	if(pUserSpace==NULL) {
-		// ��`���`���ک`�������ڤ��ʤ��ä��Ȥ�
+		// ユーザースペースが存在しなかったとき
 		return(NULL);
 	}
 
-	// ��`���`���ک`���˒����إå������뤫�ɤ��������å�
+	// ユーザースペースに拡張ヘッダがあるかどうかチェック
 	pExHdr = (TIM2_EXHEADER *)pUserSpace;
 	if(pExHdr->ExHeaderId[0]!='e' ||
 		pExHdr->ExHeaderId[1]!='X' ||
 		pExHdr->ExHeaderId[2]!='t' ||
 		pExHdr->ExHeaderId[3]!=0x00) {
 
-		// �����إå���Ҋ�Ĥ���ʤ��ä�����
+		// 拡張ヘッダが見つからなかった場合
 		return(pUserSpace);
 	}
 
-	// �����إå���Ҋ�Ĥ��ä�����
+	// 拡張ヘッダが見つかった場合
 	if(pSize) {
-		// ��`���`�ǩ`�����֤Υ������򷵤�
+		// ユーザーデータ部分のサイズを返す
 		*pSize = pExHdr->UserDataSize;
 	}
 	return((char *)pUserSpace + sizeof(TIM2_EXHEADER));
 }
 
 
-// ��`���`���ک`���˸�{���줿�����������Ф����^���ɥ쥹��ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// ���ꂎ
-//          NULL�ΤȤ������������Фʤ�
-//          NULL�Ǥʤ��Ȥ���������������(ASCIZ)�����^���ɥ쥹
+// ユーザースペースに格納されたコメント文字列の先頭アドレスを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// 戻り値
+//          NULLのときコメント文字列なし
+//          NULLでないとき、コメント文字列(ASCIZ)の先頭アドレス
 char *Tim2GetComment(TIM2_PICTUREHEADER *ph)
 {
 	void *pUserSpace;
@@ -319,41 +319,41 @@ char *Tim2GetComment(TIM2_PICTUREHEADER *ph)
 
 	pUserSpace = Tim2GetUserSpace(ph, NULL);
 	if(pUserSpace==NULL) {
-		// ��`���`���ک`�������ڤ��ʤ��ä��Ȥ�
+		// ユーザースペースが存在しなかったとき
 		return(NULL);
 	}
 
-	// ��`���`���ک`���˒����إå������뤫�ɤ��������å�
+	// ユーザースペースに拡張ヘッダがあるかどうかチェック
 	pExHdr = (TIM2_EXHEADER *)pUserSpace;
 	if(pExHdr->ExHeaderId[0]!='e' ||
 		pExHdr->ExHeaderId[1]!='X' ||
 		pExHdr->ExHeaderId[2]!='t' ||
 		pExHdr->ExHeaderId[3]!=0x00) {
 
-		// �����إå���Ҋ�Ĥ���ʤ��ä�����
+		// 拡張ヘッダが見つからなかった場合
 		return(NULL);
 	}
 
-	// �����إå����ڤ��Ƥ����Ȥ�
+	// 拡張ヘッダ存在していたとき
 	if(pExHdr->UserSpaceSize==((sizeof(TIM2_EXHEADER) + pExHdr->UserDataSize))) {
-		// ��`���`���ک`��������ʥ��������������إå��ȥ�`���`�ǩ`���κ�Ӌ�������˵Ȥ����ä��Ȥ�
-		// �����������Фϴ��ڤ��ʤ����жϤǤ���
+		// ユーザースペースの有意なサイズが、拡張ヘッダとユーザーデータの合計サイズに等しかったとき
+		// コメント文字列は存在しないと判断できる
 		return(NULL);
 	}
 
-	// �����Ȥ�Ҋ�Ĥ��ä�����
+	// コメントが見つかった場合
 	return((char *)pUserSpace + sizeof(TIM2_EXHEADER) + pExHdr->UserDataSize);
 }
 
 
 
-// ָ������MIPMAP��٥�Υ���`���ǩ`�������^���ɥ쥹��ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// mipmap:  MIPMAP�ƥ��������٥�
-// ���ꂎ
-//          NULL�ΤȤ���ԓ�����륤��`���ǩ`���ʤ�
-//          NULL�Ǥʤ��Ȥ�������`���ǩ`�������^���ɥ쥹
+// 指定したMIPMAPレベルのイメージデータの先頭アドレスを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// mipmap:  MIPMAPテクスチャレベル
+// 戻り値
+//          NULLのとき、該当するイメージデータなし
+//          NULLでないとき、イメージデータの先頭アドレス
 void *Tim2GetImage(TIM2_PICTUREHEADER *ph, int mipmap)
 {
 	void *pImage;
@@ -361,18 +361,18 @@ void *Tim2GetImage(TIM2_PICTUREHEADER *ph, int mipmap)
 	int i;
 
 	if(mipmap>=ph->MipMapTextures) {
-		// ָ�����줿��٥��MIPMAP�ƥ�������ϴ��ڤ��ʤ�
+		// 指定されたレベルのMIPMAPテクスチャは存在しない
 		return(NULL);
 	}
 
-	// ����`���ǩ`�������^���ɥ쥹��Ӌ��
+	// イメージデータの先頭アドレスを計算
 	pImage = (void *)((char *)ph + ph->HeaderSize);
 	if(ph->MipMapTextures==1) {
-		// LV0�ƥ�������ΤߤΈ���
+		// LV0テクスチャのみの場合
 		return(pImage);
 	}
 
-	// MIPMAP�ƥ������㤬���ڤ��Ƥ������
+	// MIPMAPテクスチャが存在している場合
 	pm = (TIM2_MIPMAPHEADER *)((char *)ph + sizeof(TIM2_PICTUREHEADER));
 	for(i=0; i<mipmap; i++) {
 		pImage = (void *)((char *)pImage + pm->MMImageSize[i]);
@@ -381,34 +381,34 @@ void *Tim2GetImage(TIM2_PICTUREHEADER *ph, int mipmap)
 }
 
 
-// CLUT�ǩ`�������^���ɥ쥹��ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// ���ꂎ
-//          NULL�ΤȤ���ԓ������CLUT�ǩ`���ʤ�
-//          NULL�Ǥʤ��Ȥ���CLUT�ǩ`�������^���ɥ쥹
+// CLUTデータの先頭アドレスを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// 戻り値
+//          NULLのとき、該当するCLUTデータなし
+//          NULLでないとき、CLUTデータの先頭アドレス
 void *Tim2GetClut(TIM2_PICTUREHEADER *ph)
 {
 	void *pClut;
 	if(ph->ClutColors==0) {
-		// CLUT�ǩ`�����򘋳ɤ���ɫ����0�ΤȤ�
+		// CLUTデータ部を構成する色数が0のとき
 		pClut = NULL;
 	} else {
-		// CLUT�ǩ`�������ڤ���Ȥ�
+		// CLUTデータが存在するとき
 		pClut = (void *)((char *)ph + ph->HeaderSize + ph->ImageSize);
 	}
 	return(pClut);
 }
 
 
-// CLUT����`��ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// clut:    CLUT���åȤ�ָ��
-// no:      �η�Ŀ�Υ���ǥ�����ȡ�ä��뤫ָ��
-// ���ꂎ
-//          RGBA32�ե��`�ޥåȤ�ɫ�򷵤�
-//          clut,no�Ȥ�ָ���˥���`������Ȥ���0x00000000(�\)�򷵤�
+// CLUTカラーを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// clut:    CLUTセットの指定
+// no:      何番目のインデクスを取得するか指定
+// 戻り値
+//          RGBA32フォーマットで色を返す
+//          clut,no等の指定にエラーがあるとき、0x00000000(黒)を返す
 unsigned int Tim2GetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no)
 {
 	unsigned char *pClut;
@@ -417,43 +417,43 @@ unsigned int Tim2GetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no)
 
 	pClut = (unsigned char *)Tim2GetClut(ph);
 	if(pClut==NULL) {
-		// CLUT�ǩ`�����ʤ��ä��Ȥ�
+		// CLUTデータがなかったとき
 		return(0);
 	}
 
-	// �ޤ����η�Ŀ��ɫ�ǩ`����Ӌ��
+	// まず、何番目の色データか計算
 	switch(ph->ImageType) {
 		case TIM2_IDTEX4:	n = clut*16 + no;	break;
 		case TIM2_IDTEX8:	n = clut*256 + no;	break;
-		default:         	return(0);    // �����ʥԥ����륫��`�ΤȤ�
+		default:         	return(0);    // 不正なピクセルカラーのとき
 	}
 	if(n>ph->ClutColors) {
-		// ָ�����줿CLUT����,����ǥ�����ɫ�ǩ`�������ڤ��ʤ��ä��Ȥ�
+		// 指定されたCLUT番号,インデクスの色データが存在しなかったとき
 		return(0);
 	}
 
-	// CLUT���Υե��`�ޥåȤˤ�äƤϡ����ä��K���椨���Ƥ�������Ԥ�����
+	// CLUT部のフォーマットによっては、配置が並び替えられている可能性がある
 	switch((ph->ClutType<<8) | ph->ImageType) {
-		case (((TIM2_RGB16 | 0x40)<<8) | TIM2_IDTEX4): // 16ɫ,CSM1,16�ӥå�,�K���椨����
-		case (((TIM2_RGB24 | 0x40)<<8) | TIM2_IDTEX4): // 16ɫ,CSM1,24�ӥå�,�K���椨����
-		case (((TIM2_RGB32 | 0x40)<<8) | TIM2_IDTEX4): // 16ɫ,CSM1,32�ӥå�,�K���椨����
-		case (( TIM2_RGB16        <<8) | TIM2_IDTEX8): // 256ɫ,CSM1,16�ӥå�,�K���椨����
-		case (( TIM2_RGB24        <<8) | TIM2_IDTEX8): // 256ɫ,CSM1,24�ӥå�,�K���椨����
-		case (( TIM2_RGB32        <<8) | TIM2_IDTEX8): // 256ɫ,CSM1,32�ӥå�,�K���椨����
+		case (((TIM2_RGB16 | 0x40)<<8) | TIM2_IDTEX4): // 16色,CSM1,16ビット,並び替えずみ
+		case (((TIM2_RGB24 | 0x40)<<8) | TIM2_IDTEX4): // 16色,CSM1,24ビット,並び替えずみ
+		case (((TIM2_RGB32 | 0x40)<<8) | TIM2_IDTEX4): // 16色,CSM1,32ビット,並び替えずみ
+		case (( TIM2_RGB16        <<8) | TIM2_IDTEX8): // 256色,CSM1,16ビット,並び替えずみ
+		case (( TIM2_RGB24        <<8) | TIM2_IDTEX8): // 256色,CSM1,24ビット,並び替えずみ
+		case (( TIM2_RGB32        <<8) | TIM2_IDTEX8): // 256色,CSM1,32ビット,並び替えずみ
 			if((n & 31)>=8) {
 				if((n & 31)<16) {
-					n += 8;    // +8��15��+16��23��
+					n += 8;    // +8～15を+16～23に
 				} else if((n & 31)<24) {
-					n -= 8;    // +16��23��+8��15��
+					n -= 8;    // +16～23を+8～15に
 				}
 			}
 			break;
 	}
 
-	// CLUT���Υԥ�����ե��`�ޥåȤ˻��Ť��ơ�ɫ�ǩ`����ä�
+	// CLUT部のピクセルフォーマットに基づいて、色データを得る
 	switch(ph->ClutType & 0x3F) {
 		case TIM2_RGB16:
-			// 16bit����`�ΤȤ�
+			// 16bitカラーのとき
 			r = (unsigned char)((((pClut[n*2 + 1]<<8) | pClut[n*2])<<3) & 0xF8);
 			g = (unsigned char)((((pClut[n*2 + 1]<<8) | pClut[n*2])>>2) & 0xF8);
 			b = (unsigned char)((((pClut[n*2 + 1]<<8) | pClut[n*2])>>7) & 0xF8);
@@ -461,7 +461,7 @@ unsigned int Tim2GetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no)
 			break;
 
 		case TIM2_RGB24:
-			// 24bit����`�ΤȤ�
+			// 24bitカラーのとき
 			r = pClut[n*3];
 			g = pClut[n*3 + 1];
 			b = pClut[n*3 + 2];
@@ -469,7 +469,7 @@ unsigned int Tim2GetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no)
 			break;
 
 		case TIM2_RGB32:
-			// 32bit����`�ΤȤ�
+			// 32bitカラーのとき
 			r = pClut[n*4];
 			g = pClut[n*4 + 1];
 			b = pClut[n*4 + 2];
@@ -477,7 +477,7 @@ unsigned int Tim2GetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no)
 			break;
 
 		default:
-			// �����ʥԥ�����ե��`�ޥåȤΈ���
+			// 不正なピクセルフォーマットの場合
 			r = 0;
 			g = 0;
 			b = 0;
@@ -488,15 +488,15 @@ unsigned int Tim2GetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no)
 }
 
 
-// CLUT����`���O������
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// clut:    CLUT���åȤ�ָ��
-// no:      �η�Ŀ�Υ���ǥ������O�����뤫ָ��
-// color:   �O������ɫ(RGB32�ե��`�ޥå�)
-// ���ꂎ
-//          RGBA32�ե��`�ޥåȤǹŤ�ɫ�򷵤�
-//          clut,no�Ȥ�ָ���˥���`������Ȥ���0x00000000(�\)�򷵤�
+// CLUTカラーを設定する
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// clut:    CLUTセットの指定
+// no:      何番目のインデクスを設定するか指定
+// color:   設定する色(RGB32フォーマット)
+// 戻り値
+//          RGBA32フォーマットで古い色を返す
+//          clut,no等の指定にエラーがあるとき、0x00000000(黒)を返す
 unsigned int Tim2SetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no, unsigned int newcolor)
 {
 	unsigned char *pClut;
@@ -505,43 +505,43 @@ unsigned int Tim2SetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no, unsigned
 
 	pClut = (unsigned char *)Tim2GetClut(ph);
 	if(pClut==NULL) {
-		// CLUT�ǩ`�����ʤ��ä��Ȥ�
+		// CLUTデータがなかったとき
 		return(0);
 	}
 
-	// �ޤ����η�Ŀ��ɫ�ǩ`����Ӌ��
+	// まず、何番目の色データか計算
 	switch(ph->ImageType) {
 		case TIM2_IDTEX4:	n = clut*16 + no;	break;
 		case TIM2_IDTEX8:	n = clut*256 + no;	break;
-		default:         	return(0);    // �����ʥԥ����륫��`�ΤȤ�
+		default:         	return(0);    // 不正なピクセルカラーのとき
 	}
 	if(n>ph->ClutColors) {
-		// ָ�����줿CLUT����,����ǥ�����ɫ�ǩ`�������ڤ��ʤ��ä��Ȥ�
+		// 指定されたCLUT番号,インデクスの色データが存在しなかったとき
 		return(0);
 	}
 
-	// CLUT���Υե��`�ޥåȤˤ�äƤϡ����ä��K���椨���Ƥ�������Ԥ�����
+	// CLUT部のフォーマットによっては、配置が並び替えられている可能性がある
 	switch((ph->ClutType<<8) | ph->ImageType) {
-		case (((TIM2_RGB16 | 0x40)<<8) | TIM2_IDTEX4): // 16ɫ,CSM1,16�ӥå�,�K���椨����
-		case (((TIM2_RGB24 | 0x40)<<8) | TIM2_IDTEX4): // 16ɫ,CSM1,24�ӥå�,�K���椨����
-		case (((TIM2_RGB32 | 0x40)<<8) | TIM2_IDTEX4): // 16ɫ,CSM1,32�ӥå�,�K���椨����
-		case (( TIM2_RGB16        <<8) | TIM2_IDTEX8): // 256ɫ,CSM1,16�ӥå�,�K���椨����
-		case (( TIM2_RGB24        <<8) | TIM2_IDTEX8): // 256ɫ,CSM1,24�ӥå�,�K���椨����
-		case (( TIM2_RGB32        <<8) | TIM2_IDTEX8): // 256ɫ,CSM1,32�ӥå�,�K���椨����
+		case (((TIM2_RGB16 | 0x40)<<8) | TIM2_IDTEX4): // 16色,CSM1,16ビット,並び替えずみ
+		case (((TIM2_RGB24 | 0x40)<<8) | TIM2_IDTEX4): // 16色,CSM1,24ビット,並び替えずみ
+		case (((TIM2_RGB32 | 0x40)<<8) | TIM2_IDTEX4): // 16色,CSM1,32ビット,並び替えずみ
+		case (( TIM2_RGB16        <<8) | TIM2_IDTEX8): // 256色,CSM1,16ビット,並び替えずみ
+		case (( TIM2_RGB24        <<8) | TIM2_IDTEX8): // 256色,CSM1,24ビット,並び替えずみ
+		case (( TIM2_RGB32        <<8) | TIM2_IDTEX8): // 256色,CSM1,32ビット,並び替えずみ
 			if((n & 31)>=8) {
 				if((n & 31)<16) {
-					n += 8;    // +8��15��+16��23��
+					n += 8;    // +8～15を+16～23に
 				} else if((n & 31)<24) {
-					n -= 8;    // +16��23��+8��15��
+					n -= 8;    // +16～23を+8～15に
 				}
 			}
 			break;
 	}
 
-	// CLUT���Υԥ�����ե��`�ޥåȤ˻��Ť��ơ�ɫ�ǩ`����ä�
+	// CLUT部のピクセルフォーマットに基づいて、色データを得る
 	switch(ph->ClutType & 0x3F) {
 		case TIM2_RGB16:
-			// 16bit����`�ΤȤ�
+			// 16bitカラーのとき
 			{
 				unsigned char rr, gg, bb, aa;
 				r = (unsigned char)((((pClut[n*2 + 1]<<8) | pClut[n*2])<<3) & 0xF8);
@@ -560,7 +560,7 @@ unsigned int Tim2SetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no, unsigned
 			break;
 
 		case TIM2_RGB24:
-			// 24bit����`�ΤȤ�
+			// 24bitカラーのとき
 			r = pClut[n*3];
 			g = pClut[n*3 + 1];
 			b = pClut[n*3 + 2];
@@ -571,7 +571,7 @@ unsigned int Tim2SetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no, unsigned
 			break;
 
 		case TIM2_RGB32:
-			// 32bit����`�ΤȤ�
+			// 32bitカラーのとき
 			r = pClut[n*4];
 			g = pClut[n*4 + 1];
 			b = pClut[n*4 + 2];
@@ -583,7 +583,7 @@ unsigned int Tim2SetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no, unsigned
 			break;
 
 		default:
-			// �����ʥԥ�����ե��`�ޥåȤΈ���
+			// 不正なピクセルフォーマットの場合
 			r = 0;
 			g = 0;
 			b = 0;
@@ -594,14 +594,14 @@ unsigned int Tim2SetClutColor(TIM2_PICTUREHEADER *ph, int clut, int no, unsigned
 }
 
 
-// �ƥ�����(ɫ���Ȥ��ޤ�ʤ�)�ǩ`����ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// mipmap:  MIPMAP�ƥ��������٥�
-// x:       �ƥ�����ǩ`����ä�ƥ�����X����
-// y:       �ƥ�����ǩ`����ä�ƥ�����Y����
-// ���ꂎ
-//          ɫ���(4bit�ޤ���8bit�Υ���ǥ������š��ޤ���16bit,24bit,32bit�Υ����쥯�ȥ���`)
+// テクセル(色情報とは限らない)データを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// mipmap:  MIPMAPテクスチャレベル
+// x:       テクセルデータを得るテクセルX座標
+// y:       テクセルデータを得るテクセルY座標
+// 戻り値
+//          色情報(4bitまたは8bitのインデクス番号、または16bit,24bit,32bitのダイレクトカラー)
 unsigned int Tim2GetTexel(TIM2_PICTUREHEADER *ph, int mipmap, int x, int y)
 {
 	unsigned char *pImage;
@@ -610,12 +610,12 @@ unsigned int Tim2GetTexel(TIM2_PICTUREHEADER *ph, int mipmap, int x, int y)
 
 	pImage = (unsigned char *)Tim2GetImage(ph, mipmap);
 	if(pImage==NULL) {
-		// ָ����٥�Υƥ�������ǩ`�����ʤ��ä�����
+		// 指定レベルのテクスチャデータがなかった場合
 		return(0);
 	}
 	Tim2GetMipMapPictureSize(ph, mipmap, &w, &h);
 	if(x>w || y>h) {
-		// �ƥ��������ˤ������ʤȤ�
+		// テクセル座標が不正なとき
 		return(0);
 	}
 
@@ -640,20 +640,20 @@ unsigned int Tim2GetTexel(TIM2_PICTUREHEADER *ph, int mipmap, int x, int y)
 			return(pImage[t]);
 	}
 
-	// �����ʥԥ�����ե��`�ޥåȤ��ä�����
+	// 不正なピクセルフォーマットだった場合
 	return(0);
 }
 
 
 
-// �ƥ�����(ɫ���Ȥ��ޤ�ʤ�)�ǩ`�����O������
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// mipmap:  MIPMAP�ƥ��������٥�
-// x:       �ƥ�����ǩ`����ä�ƥ�����X����
-// y:       �ƥ�����ǩ`����ä�ƥ�����Y����
-// ���ꂎ
-//          ɫ���(4bit�ޤ���8bit�Υ���ǥ������š��ޤ���16bit,24bit,32bit�Υ����쥯�ȥ���`)
+// テクセル(色情報とは限らない)データを設定する
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// mipmap:  MIPMAPテクスチャレベル
+// x:       テクセルデータを得るテクセルX座標
+// y:       テクセルデータを得るテクセルY座標
+// 戻り値
+//          色情報(4bitまたは8bitのインデクス番号、または16bit,24bit,32bitのダイレクトカラー)
 unsigned int Tim2SetTexel(TIM2_PICTUREHEADER *ph, int mipmap, int x, int y, unsigned int newtexel)
 {
 	unsigned char *pImage;
@@ -663,12 +663,12 @@ unsigned int Tim2SetTexel(TIM2_PICTUREHEADER *ph, int mipmap, int x, int y, unsi
 
 	pImage = (unsigned char *)Tim2GetImage(ph, mipmap);
 	if(pImage==NULL) {
-		// ָ����٥�Υƥ�������ǩ`�����ʤ��ä�����
+		// 指定レベルのテクスチャデータがなかった場合
 		return(0);
 	}
 	Tim2GetMipMapPictureSize(ph, mipmap, &w, &h);
 	if(x>w || y>h) {
-		// �ƥ��������ˤ������ʤȤ�
+		// テクセル座標が不正なとき
 		return(0);
 	}
 
@@ -710,27 +710,27 @@ unsigned int Tim2SetTexel(TIM2_PICTUREHEADER *ph, int mipmap, int x, int y, unsi
 			return(oldtexel);
 	}
 
-	// �����ʥԥ�����ե��`�ޥåȤ��ä�����
+	// 不正なピクセルフォーマットだった場合
 	return(0);
 }
 
 
-// �ƥ������㥫��`��ä�
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// mipmap:  MIPMAP�ƥ��������٥�
-// clut:    ����ǥ�������`�Ή�Q���ä���CLUT���åȷ���
-// x:       �ƥ�����ǩ`����ä�ƥ�����X����
-// y:       �ƥ�����ǩ`����ä�ƥ�����Y����
-// ���ꂎ
-//          RGBA32�ե��`�ޥåȤ�ɫ�򷵤�
-//          clut��ָ���˥���`������Ȥ���0x00000000(�\)�򷵤�
-//          x,y��ָ���˥���`�����ä��Ȥ��΄����ϱ��^���ʤ�
+// テクスチャカラーを得る
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// mipmap:  MIPMAPテクスチャレベル
+// clut:    インデクスカラーの変換に用いるCLUTセット番号
+// x:       テクセルデータを得るテクセルX座標
+// y:       テクセルデータを得るテクセルY座標
+// 戻り値
+//          RGBA32フォーマットで色を返す
+//          clutの指定にエラーがあるとき、0x00000000(黒)を返す
+//          x,yの指定にエラーがあったときの動作は保証しない
 unsigned int Tim2GetTextureColor(TIM2_PICTUREHEADER *ph, int mipmap, int clut, int x, int y)
 {
 	unsigned int t;
 	if(Tim2GetImage(ph, mipmap)==NULL) {
-		// ָ����٥�Υƥ�������ǩ`�����ʤ��ä�����
+		// 指定レベルのテクスチャデータがなかった場合
 		return(0);
 	}
 	t = Tim2GetTexel(ph, mipmap, (x>>mipmap), (y>>mipmap));
@@ -763,40 +763,40 @@ unsigned int Tim2GetTextureColor(TIM2_PICTUREHEADER *ph, int mipmap, int clut, i
 
 
 
-// �����Խ����v���ϡ�PS2��ee-gcc�ǤΤ�ʹ�äǤ����v��
+// これ以降の関数は、PS2のee-gccでのみ使用できる関数
 #ifdef R5900
 
-// TIM2�ԥ�����ǩ`����GS���`���������i���z��
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// tbp:     ܞ���ȥƥ�������Хåե��Υک`���٩`�����ɥ쥹(-1�ΤȤ��إå��ڤ΂���ʹ��)
-// cbp:     ܞ����CLUT�Хåե��Υک`���٩`�����ɥ쥹(-1�ΤȤ��إå��ڤ΂���ʹ��)
-// ���ꂎ
-//          NULL�ΤȤ�	����`
-//          NULL�Ǥʤ��Ȥ����ΤΥХåե����ɥ쥹
-// ע��
-//          CLUT��{��`�ɤȤ���CSM2��ָ������Ƥ������Ϥ⡢���ƵĤ�CSM1�ˉ�Q����GS�����Ť����
+// TIM2ピクチャデータをGSローカルメモリに読み込む
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// tbp:     転送先テクスチャバッファのページベースアドレス(-1のときヘッダ内の値を使用)
+// cbp:     転送先CLUTバッファのページベースアドレス(-1のときヘッダ内の値を使用)
+// 戻り値
+//          NULLのとき	エラー
+//          NULLでないとき、次のバッファアドレス
+// 注意
+//          CLUT格納モードとしてCSM2が指定されていた場合も、強制的にCSM1に変換してGSに送信される
 unsigned int Tim2LoadPicture(TIM2_PICTUREHEADER *ph, unsigned int tbp, unsigned int cbp)
 {
-	// CLUT�ǩ`����ܞ��ܞ��
+	// CLUTデータを転送転送
 	tbp = Tim2LoadImage(ph, tbp);
 	Tim2LoadClut(ph, cbp);
 	return(tbp);
 }
 
 
-// TIM2�ԥ�����Υ���`���ǩ`������GS���`���������i���z��
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// tbp:     ܞ���ȥƥ�������Хåե��Υک`���٩`�����ɥ쥹(-1�ΤȤ��إå��ڤ΂���ʹ��)
-// ���ꂎ
-//          NULL�ΤȤ�	����`
-//          NULL�Ǥʤ��Ȥ����ΤΥƥ�������Хåե����ɥ쥹
-// ע��
-//          CLUT��{��`�ɤȤ���CSM2��ָ������Ƥ������Ϥ⡢���ƵĤ�CSM1�ˉ�Q����GS�����Ť����
+// TIM2ピクチャのイメージデータ部をGSローカルメモリに読み込む
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// tbp:     転送先テクスチャバッファのページベースアドレス(-1のときヘッダ内の値を使用)
+// 戻り値
+//          NULLのとき	エラー
+//          NULLでないとき、次のテクスチャバッファアドレス
+// 注意
+//          CLUT格納モードとしてCSM2が指定されていた場合も、強制的にCSM1に変換してGSに送信される
 unsigned int Tim2LoadImage(TIM2_PICTUREHEADER *ph, unsigned int tbp)
 {
-	// ����`���ǩ`��������
+	// イメージデータを送信
 	if(ph->MipMapTextures>0) {
 		static const int psmtbl[] = {
 			SCE_GS_PSMCT16,
@@ -811,78 +811,78 @@ unsigned int Tim2LoadImage(TIM2_PICTUREHEADER *ph, unsigned int tbp)
 		int w, h;
 		int tbw;
 
-		psm = psmtbl[ph->ImageType - 1]; // �ԥ�����ե��`�ޥåȤ�ä�
+		psm = psmtbl[ph->ImageType - 1]; // ピクセルフォーマットを得る
 		((sceGsTex0 *)&ph->GsTex0)->PSM  = psm;
 
-		w = ph->ImageWidth;  // ����`��X������
-		h = ph->ImageHeight; // ����`��Y������
+		w = ph->ImageWidth;  // イメージXサイズ
+		h = ph->ImageHeight; // イメージYサイズ
 
-		// ����`���ǩ`�������^���ɥ쥹��Ӌ��
+		// イメージデータの先頭アドレスを計算
 		pImage = (u_long128 *)((char *)ph + ph->HeaderSize);
 		if(tbp==-1) {
-			// tbp��ָ����-1�ΤȤ����ԥ�����إå���ָ�����줿GsTex0����tbp,tbw��ä�
+			// tbpの指定が-1のとき、ピクチャヘッダに指定されたGsTex0からtbp,tbwを得る
 			tbp = ((sceGsTex0 *)&ph->GsTex0)->TBP0;
 			tbw = ((sceGsTex0 *)&ph->GsTex0)->TBW;
 
-			Tim2LoadTexture(psm, tbp, tbw, w, h, pImage); // �ƥ�������ǩ`����GS��ܞ��
+			Tim2LoadTexture(psm, tbp, tbw, w, h, pImage); // テクスチャデータをGSに転送
 		} else {
-			// tbp��ָ����ָ�����줿�Ȥ����ԥ�����إå���GsTex0���Ф�tbp,tbw�򥪩`�Щ`�饤��
+			// tbpの指定が指定されたとき、ピクチャヘッダのGsTex0メンバのtbp,tbwをオーバーライド
 			tbw = Tim2CalcBufWidth(psm, w);
-			// GS��TEX0�쥸�������O�����낎�����
+			// GSのTEX0レジスタに設定する値を更新
 			((sceGsTex0 *)&ph->GsTex0)->TBP0 = tbp;
 			((sceGsTex0 *)&ph->GsTex0)->TBW  = tbw;
-			Tim2LoadTexture(psm, tbp, tbw, w, h, pImage); // �ƥ�������ǩ`����GS��ܞ��
-			tbp += Tim2CalcBufSize(psm, w, h);            // tbp�΂������
+			Tim2LoadTexture(psm, tbp, tbw, w, h, pImage); // テクスチャデータをGSに転送
+			tbp += Tim2CalcBufSize(psm, w, h);            // tbpの値を更新
 		}
 
 		if(ph->MipMapTextures>1) {
-			// MIPMAP�ƥ������㤬�������
+			// MIPMAPテクスチャがある場合
 			TIM2_MIPMAPHEADER *pm;
 
-			pm = (TIM2_MIPMAPHEADER *)(ph + 1); // �ԥ�����إå���ֱ���MIPMAP�إå�
+			pm = (TIM2_MIPMAPHEADER *)(ph + 1); // ピクチャヘッダの直後にMIPMAPヘッダ
 
-			// LV0�Υƥ������㥵������ä�
-			// tbp��������ָ�����줿�Ȥ����ԥ�����إå��ˤ���miptbp��oҕ�����Ԅ�Ӌ��
+			// LV0のテクスチャサイズを得る
+			// tbpを引数で指定されたとき、ピクチャヘッダにあるmiptbpを無視して自動計算
 			if(tbp!=-1) {
 				pm->GsMiptbp1 = 0;
 				pm->GsMiptbp2 = 0;
 			}
 
 			pImage = (u_long128 *)((char *)ph + ph->HeaderSize);
-			// ��MIPMAP��٥�Υ���`����ܞ��
+			// 各MIPMAPレベルのイメージを転送
 			for(i=1; i<ph->MipMapTextures; i++) {
-				// MIPMAP��٥뤬������ȡ��ƥ������㥵������1/2�ˤʤ�
+				// MIPMAPレベルがあがると、テクスチャサイズは1/2になる
 				w = w / 2;
 				h = h / 2;
 
 				pImage = (u_long128 *)((char *)pImage + pm->MMImageSize[i - 1]);
 				if(tbp==-1) {
-					// �ƥ�������ک`����ָ����-1�ΤȤ���MIPMAP�إå���ָ�����줿tbp,tbw��ʹ�ä���
+					// テクスチャページの指定が-1のとき、MIPMAPヘッダに指定されたtbp,tbwを使用する
 					int miptbp;
 					if(i<4) {
-						// MIPMAP��٥�1,2,3�ΤȤ�
+						// MIPMAPレベル1,2,3のとき
 						miptbp = (pm->GsMiptbp1>>((i-1)*20)) & 0x3FFF;
 						tbw    = (pm->GsMiptbp1>>((i-1)*20 + 14)) & 0x3F;
 					} else {
-						// MIPMAP��٥�4,5,6�ΤȤ�
+						// MIPMAPレベル4,5,6のとき
 						miptbp = (pm->GsMiptbp2>>((i-4)*20)) & 0x3FFF;
 						tbw    = (pm->GsMiptbp2>>((i-4)*20 + 14)) & 0x3F;
 					}
 					Tim2LoadTexture(psm, miptbp, tbw, w, h, pImage);
 				} else {
-					// �ƥ�������ک`����ָ������Ƥ���Ȥ���MIPMAP�إå������O��
-					tbw = Tim2CalcBufWidth(psm, w);    // �ƥ����������Ӌ��
+					// テクスチャページが指定されているとき、MIPMAPヘッダを再設定
+					tbw = Tim2CalcBufWidth(psm, w);    // テクスチャ幅を計算
 					if(i<4) {
-						// MIPMAP��٥�1,2,3�ΤȤ�
+						// MIPMAPレベル1,2,3のとき
 						pm->GsMiptbp1 |= ((u_long)tbp)<<((i-1)*20);
 						pm->GsMiptbp1 |= ((u_long)tbw)<<((i-1)*20 + 14);
 					} else {
-						// MIPMAP��٥�4,5,6�ΤȤ�
+						// MIPMAPレベル4,5,6のとき
 						pm->GsMiptbp2 |= ((u_long)tbp)<<((i-4)*20);
 						pm->GsMiptbp2 |= ((u_long)tbw)<<((i-4)*20 + 14);
 					}
 					Tim2LoadTexture(psm, tbp, tbw, w, h, pImage);
-					tbp += Tim2CalcBufSize(psm, w, h); // tbp�΂������
+					tbp += Tim2CalcBufSize(psm, w, h); // tbpの値を更新
 				}
 			}
 		}
@@ -892,15 +892,15 @@ unsigned int Tim2LoadImage(TIM2_PICTUREHEADER *ph, unsigned int tbp)
 
 
 
-// TIM2�ԥ������CLUT�ǩ`������GS���`��������ܞ��
-// ����
-// ph:      TIM2�ԥ�����إå������^���ɥ쥹
-// cbp:     ܞ����CLUT�Хåե��Υک`���٩`�����ɥ쥹(-1�ΤȤ��إå��ڤ΂���ʹ��)
-// ���ꂎ
-//          0�ΤȤ�����`
-//          ��0�ΤȤ��ɹ�
-// ע��
-//          CLUT��{��`�ɤȤ���CSM2��ָ������Ƥ������Ϥ⡢���ƵĤ�CSM1�ˉ�Q����GS�����Ť����
+// TIM2ピクチャのCLUTデータ部をGSローカルメモリに転送
+// 引数
+// ph:      TIM2ピクチャヘッダの先頭アドレス
+// cbp:     転送先CLUTバッファのページベースアドレス(-1のときヘッダ内の値を使用)
+// 戻り値
+//          0のときエラー
+//          非0のとき成功
+// 注意
+//          CLUT格納モードとしてCSM2が指定されていた場合も、強制的にCSM1に変換してGSに送信される
 unsigned int Tim2LoadClut(TIM2_PICTUREHEADER *ph, unsigned int cbp)
 {
 	int i;
@@ -908,9 +908,9 @@ unsigned int Tim2LoadClut(TIM2_PICTUREHEADER *ph, unsigned int cbp)
 	u_long128 *pClut;
 	int	cpsm;
 
-	// CLUT�ԥ�����ե��`�ޥåȤ�ä�
+	// CLUTピクセルフォーマットを得る
 	if(ph->ClutType==TIM2_NONE) {
-		// CLUT�ǩ`�������ڤ��ʤ��Ȥ�
+		// CLUTデータが存在しないとき
 		return(1);
 	} else if((ph->ClutType & 0x3F)==TIM2_RGB16) {
 		cpsm = SCE_GS_PSMCT16;
@@ -919,64 +919,64 @@ unsigned int Tim2LoadClut(TIM2_PICTUREHEADER *ph, unsigned int cbp)
 	} else {
 		cpsm = SCE_GS_PSMCT32;
 	}
-	((sceGsTex0 *)&ph->GsTex0)->CPSM = cpsm; // CLUT���ԥ�����ե��`�ޥå��O��
-	((sceGsTex0 *)&ph->GsTex0)->CSM  = 0;    // CLUT��{��`��(����CSM1)
-	((sceGsTex0 *)&ph->GsTex0)->CSA  = 0;    // CLUT����ȥꥪ�ե��å�(����0)
-	((sceGsTex0 *)&ph->GsTex0)->CLD  = 1;    // CLUT�Хåե��Υ��`������(���˥��`��)
+	((sceGsTex0 *)&ph->GsTex0)->CPSM = cpsm; // CLUT部ピクセルフォーマット設定
+	((sceGsTex0 *)&ph->GsTex0)->CSM  = 0;    // CLUT格納モード(常にCSM1)
+	((sceGsTex0 *)&ph->GsTex0)->CSA  = 0;    // CLUTエントリオフセット(常に0)
+	((sceGsTex0 *)&ph->GsTex0)->CLD  = 1;    // CLUTバッファのロード制御(常にロード)
 
 	if(cbp==-1) {
-		// cbp��ָ�����ʤ��Ȥ����ԥ�����إå���GsTex0���Ф��邎��ȡ��
+		// cbpの指定がないとき、ピクチャヘッダのGsTex0メンバから値を取得
 		cbp = ((sceGsTex0 *)&ph->GsTex0)->CBP;
 	} else {
-		// cbp��ָ�����줿�Ȥ����ԥ�����إå���GsTex0���Ф΂��򥪩`�Щ`�饤��
+		// cbpが指定されたとき、ピクチャヘッダのGsTex0メンバの値をオーバーライド
 		((sceGsTex0 *)&ph->GsTex0)->CBP = cbp;
 	}
 
-	// CLUT�ǩ`�������^���ɥ쥹��Ӌ��
+	// CLUTデータの先頭アドレスを計算
 	pClut = (u_long128 *)((char *)ph + ph->HeaderSize + ph->ImageSize);
 
-	// CLUT�ǩ`����GS���`������������
-	// CLUT��ʽ�ȥƥ���������ʽ�ˤ�ä�CLUT�ǩ`���Υե��`�ޥåȤʤɤ��Q�ޤ�
+	// CLUTデータをGSローカルメモリに送信
+	// CLUT形式とテクスチャ形式によってCLUTデータのフォーマットなどが決まる
 	switch((ph->ClutType<<8) | ph->ImageType) {
-		case (((TIM2_RGB16 | 0x40)<<8) | TIM2_IDTEX4): // 16ɫ,CSM1,16�ӥå�,�K���椨����
-		case (((TIM2_RGB24 | 0x40)<<8) | TIM2_IDTEX4): // 16ɫ,CSM1,24�ӥå�,�K���椨����
-		case (((TIM2_RGB32 | 0x40)<<8) | TIM2_IDTEX4): // 16ɫ,CSM1,32�ӥå�,�K���椨����
-		case (( TIM2_RGB16        <<8) | TIM2_IDTEX8): // 256ɫ,CSM1,16�ӥå�,�K���椨����
-		case (( TIM2_RGB24        <<8) | TIM2_IDTEX8): // 256ɫ,CSM1,24�ӥå�,�K���椨����
-		case (( TIM2_RGB32        <<8) | TIM2_IDTEX8): // 256ɫ,CSM1,32�ӥå�,�K���椨����
-			// 256ɫCLUT���ġ�CLUT��{��`�ɤ�CSM1�ΤȤ�
-			// 16ɫCLUT���ġ�CLUT��{��`�ɤ�CSM1������椨�g�ߥե饰��ON�ΤȤ�
-			// ���Ǥ˥ԥ����뤬����椨�������ä���Ƥ���ΤǤ��Τޤ�ܞ�Ϳ��ܤ��`
+		case (((TIM2_RGB16 | 0x40)<<8) | TIM2_IDTEX4): // 16色,CSM1,16ビット,並び替えずみ
+		case (((TIM2_RGB24 | 0x40)<<8) | TIM2_IDTEX4): // 16色,CSM1,24ビット,並び替えずみ
+		case (((TIM2_RGB32 | 0x40)<<8) | TIM2_IDTEX4): // 16色,CSM1,32ビット,並び替えずみ
+		case (( TIM2_RGB16        <<8) | TIM2_IDTEX8): // 256色,CSM1,16ビット,並び替えずみ
+		case (( TIM2_RGB24        <<8) | TIM2_IDTEX8): // 256色,CSM1,24ビット,並び替えずみ
+		case (( TIM2_RGB32        <<8) | TIM2_IDTEX8): // 256色,CSM1,32ビット,並び替えずみ
+			// 256色CLUTかつ、CLUT格納モードがCSM1のとき
+			// 16色CLUTかつ、CLUT格納モードがCSM1で入れ替え済みフラグがONのとき
+			// すでにピクセルが入れ替えられて配置されているのでそのまま転送可能だー
 			Tim2LoadTexture(cpsm, cbp, 1, 16, (ph->ClutColors / 16), pClut);
 			break;
 
-		case (( TIM2_RGB16        <<8) | TIM2_IDTEX4): // 16ɫ,CSM1,16�ӥå�,��˥�����
-		case (( TIM2_RGB24        <<8) | TIM2_IDTEX4): // 16ɫ,CSM1,24�ӥå�,��˥�����
-		case (( TIM2_RGB32        <<8) | TIM2_IDTEX4): // 16ɫ,CSM1,32�ӥå�,��˥�����
-		case (((TIM2_RGB16 | 0x80)<<8) | TIM2_IDTEX4): // 16ɫ,CSM2,16�ӥå�,��˥�����
-		case (((TIM2_RGB24 | 0x80)<<8) | TIM2_IDTEX4): // 16ɫ,CSM2,24�ӥå�,��˥�����
-		case (((TIM2_RGB32 | 0x80)<<8) | TIM2_IDTEX4): // 16ɫ,CSM2,32�ӥå�,��˥�����
-		case (((TIM2_RGB16 | 0x80)<<8) | TIM2_IDTEX8): // 256ɫ,CSM2,16�ӥå�,��˥�����
-		case (((TIM2_RGB24 | 0x80)<<8) | TIM2_IDTEX8): // 256ɫ,CSM2,24�ӥå�,��˥�����
-		case (((TIM2_RGB32 | 0x80)<<8) | TIM2_IDTEX8): // 256ɫ,CSM2,32�ӥå�,��˥�����
-			// 16ɫCLUT���ġ�CLUT��{��`�ɤ�CSM1������椨�g�ߥե饰��OFF�ΤȤ�
-			// 16ɫCLUT���ġ�CLUT��{��`�ɤ�CSM2�ΤȤ�
-			// 256ɫCLUT���ġ�CLUT��{��`�ɤ�CSM2�ΤȤ�
+		case (( TIM2_RGB16        <<8) | TIM2_IDTEX4): // 16色,CSM1,16ビット,リニア配置
+		case (( TIM2_RGB24        <<8) | TIM2_IDTEX4): // 16色,CSM1,24ビット,リニア配置
+		case (( TIM2_RGB32        <<8) | TIM2_IDTEX4): // 16色,CSM1,32ビット,リニア配置
+		case (((TIM2_RGB16 | 0x80)<<8) | TIM2_IDTEX4): // 16色,CSM2,16ビット,リニア配置
+		case (((TIM2_RGB24 | 0x80)<<8) | TIM2_IDTEX4): // 16色,CSM2,24ビット,リニア配置
+		case (((TIM2_RGB32 | 0x80)<<8) | TIM2_IDTEX4): // 16色,CSM2,32ビット,リニア配置
+		case (((TIM2_RGB16 | 0x80)<<8) | TIM2_IDTEX8): // 256色,CSM2,16ビット,リニア配置
+		case (((TIM2_RGB24 | 0x80)<<8) | TIM2_IDTEX8): // 256色,CSM2,24ビット,リニア配置
+		case (((TIM2_RGB32 | 0x80)<<8) | TIM2_IDTEX8): // 256色,CSM2,32ビット,リニア配置
+			// 16色CLUTかつ、CLUT格納モードがCSM1で入れ替え済みフラグがOFFのとき
+			// 16色CLUTかつ、CLUT格納モードがCSM2のとき
+			// 256色CLUTかつ、CLUT格納モードがCSM2のとき
 
-			// CSM2�ϥѥե��`�ޥ󥹤������Τǡ�CSM1�Ȥ�������椨�ʤ���ܞ��
+			// CSM2はパフォーマンスが悪いので、CSM1として入れ替えながら転送
 			for(i=0; i<(ph->ClutColors/16); i++) {
 				sceGsSetDefLoadImage(&li, cbp, 1, cpsm, (i & 1)*8, (i>>1)*2, 8, 2);
-				FlushCache(WRITEBACK_DCACHE);   // D����å���Βߤ�����
-				sceGsExecLoadImage(&li, pClut); // CLUT�ǩ`����GS��ܞ��
-				sceGsSyncPath(0, 0);            // �ǩ`��ܞ�ͽK�ˤޤǴ��C
+				FlushCache(WRITEBACK_DCACHE);   // Dキャッシュの掃き出し
+				sceGsExecLoadImage(&li, pClut); // CLUTデータをGSに転送
+				sceGsSyncPath(0, 0);            // データ転送終了まで待機
 
-				// �Τ�16ɫ�ء����ɥ쥹����
+				// 次の16色へ、アドレス更新
 				if((ph->ClutType & 0x3F)==TIM2_RGB16) {
-					pClut = (u_long128 *)((char *)pClut + 2*16); // 16bitɫ�ΤȤ�
+					pClut = (u_long128 *)((char *)pClut + 2*16); // 16bit色のとき
 				} else if((ph->ClutType & 0x3F)==TIM2_RGB24) {
-					pClut = (u_long128 *)((char *)pClut + 3*16); // 24bitɫ�ΤȤ�
+					pClut = (u_long128 *)((char *)pClut + 3*16); // 24bit色のとき
 				} else {
-					pClut = (u_long128 *)((char *)pClut + 4*16); // 32bitɫ�ΤȤ�
+					pClut = (u_long128 *)((char *)pClut + 4*16); // 32bit色のとき
 				}
 			}
 			break;
@@ -989,88 +989,88 @@ unsigned int Tim2LoadClut(TIM2_PICTUREHEADER *ph, unsigned int cbp)
 }
 
 
-// TIM2�ե�����ǥ��ʥåץ���åȤ��������
-// ����
-// d0:      ż���饹���Υե�`��Хåե�
-// d1:      �����饹���Υե�`��Хåե�(NULL�ΤȤ��Υ󥤥󥿥�`��)
-// pszFname:TIM2�ե�������
-// ���ꂎ
-//          0�ΤȤ�����`
-//          ��0�ΤȤ��ɹ�
+// TIM2ファイルでスナップショットを書き出す
+// 引数
+// d0:      偶数ラスタのフレームバッファ
+// d1:      奇数ラスタのフレームバッファ(NULLのときノンインタレース)
+// pszFname:TIM2ファイル名
+// 返り値
+//          0のときエラー
+//          非0のとき成功
 int Tim2TakeSnapshot(sceGsDispEnv *d0, sceGsDispEnv *d1, char *pszFname)
 {
 	int i;
 
-	int h;               // �ե�����ϥ�ɥ�
-	int nWidth, nHeight; // ����`���δ編
-	int nImageType;      // ����`�����N�e
-	int psm;             // �ԥ�����ե��`�ޥå�
-	int nBytes;          // 1�饹���򘋳ɤ���Х�����
+	int h;               // ファイルハンドル
+	int nWidth, nHeight; // イメージの寸法
+	int nImageType;      // イメージ部種別
+	int psm;             // ピクセルフォーマット
+	int nBytes;          // 1ラスタを構成するバイト数
 
-	// ���񥵥���,�ԥ�����ե��`�ޥåȤ�ä�
+	// 画像サイズ,ピクセルフォーマットを得る
 	nWidth  = d0->display.DW / (d0->display.MAGH + 1);
 	nHeight = d0->display.DH + 1;
 	psm     = d0->dispfb.PSM;
 
-	// �ԥ�����ե��`�ޥåȤ��顢1�饹��������ΥХ�����,TIM2�ԥ�����N�e������
+	// ピクセルフォーマットから、1ラスタあたりのバイト数,TIM2ピクセル種別を求める
 	switch(psm) {
 		case SCE_GS_PSMCT32 :	nBytes = nWidth*4;	nImageType = TIM2_RGB32;	break;
 		case SCE_GS_PSMCT24 :	nBytes = nWidth*3;	nImageType = TIM2_RGB24;	break;
 		case SCE_GS_PSMCT16 :	nBytes = nWidth*2;	nImageType = TIM2_RGB16;	break;
 		case SCE_GS_PSMCT16S:	nBytes = nWidth*2;	nImageType = TIM2_RGB16;	break;
 		default:
-			// �����ʥԥ�����ե��`�ޥåȤΤȤ�������`�K��
-			// GS_PSGPU24�ե��`�ޥåȤϷǥ��ݩ`��
+			// 不明なピクセルフォーマットのとき、エラー終了
+			// GS_PSGPU24フォーマットは非サポート
 			printf("Illegal pixel format.\n");
 			return(0);
 	}
 
 
-	// TIM2�ե�����򥪩`�ץ�
+	// TIM2ファイルをオープン
 	h = sceOpen(pszFname, SCE_WRONLY | SCE_CREAT);
 	if(h==-1) {
-		// �ե����륪�`�ץ�ʧ��
+		// ファイルオープン失敗
 		printf("file create failure.\n");
 		return(0);
 	}
 
-	// �ե�����إå����������
+	// ファイルヘッダを書き出し
 	{
 		TIM2_FILEHEADER fhdr;
 
-		fhdr.FileId[0] = 'T';   // �ե�����ID���O��
+		fhdr.FileId[0] = 'T';   // ファイルIDを設定
 		fhdr.FileId[1] = 'I';
 		fhdr.FileId[2] = 'M';
 		fhdr.FileId[3] = '2';
-		fhdr.FormatVersion = 3; // �ե��`�ޥåȥЩ`�����4
-		fhdr.FormatId  = 0;     // 16�Х��ȥ��饤����ȥ�`��
-		fhdr.Pictures  = 1;     // �ԥ�����ö����1ö
+		fhdr.FormatVersion = 3; // フォーマットバージョン4
+		fhdr.FormatId  = 0;     // 16バイトアラインメントモード
+		fhdr.Pictures  = 1;     // ピクチャ枚数は1枚
 		for(i=0; i<8; i++) {
-			fhdr.pad[i] = 0x00; // �ѥǥ��󥰥��Ф�0x00�ǥ��ꥢ
+			fhdr.pad[i] = 0x00; // パディングメンバを0x00でクリア
 		}
 
-		sceWrite(h, &fhdr, sizeof(TIM2_FILEHEADER)); // �ե�����إå����������
+		sceWrite(h, &fhdr, sizeof(TIM2_FILEHEADER)); // ファイルヘッダを書き出し
 	}
 
-	// �ԥ�����إå����������
+	// ピクチャヘッダを書き出し
 	{
 		TIM2_PICTUREHEADER phdr;
 		int nImageSize;
 
 		nImageSize = nBytes * nHeight;
-		phdr.TotalSize   = sizeof(TIM2_PICTUREHEADER) + nImageSize; // �ȩ`���륵����
-		phdr.ClutSize    = 0;                           // CLUT���ʤ�
-		phdr.ImageSize   = nImageSize;                  // ����`����������
-		phdr.HeaderSize  = sizeof(TIM2_PICTUREHEADER);  // �إå���������
-		phdr.ClutColors  = 0;                           // CLUTɫ��
-		phdr.PictFormat  = 0;                           // �ԥ�������ʽ
-		phdr.MipMapTextures = 1;                        // MIPMAP�ƥ�������ö��
-		phdr.ClutType    = TIM2_NONE;                   // CLUT���ʤ�
-		phdr.ImageType   = nImageType;                  // ����`���N�e
-		phdr.ImageWidth  = nWidth;                      // ����`�����
-		phdr.ImageHeight = nHeight;                     // ����`���ߤ�
+		phdr.TotalSize   = sizeof(TIM2_PICTUREHEADER) + nImageSize; // トータルサイズ
+		phdr.ClutSize    = 0;                           // CLUT部なし
+		phdr.ImageSize   = nImageSize;                  // イメージ部サイズ
+		phdr.HeaderSize  = sizeof(TIM2_PICTUREHEADER);  // ヘッダ部サイズ
+		phdr.ClutColors  = 0;                           // CLUT色数
+		phdr.PictFormat  = 0;                           // ピクチャ形式
+		phdr.MipMapTextures = 1;                        // MIPMAPテクスチャ枚数
+		phdr.ClutType    = TIM2_NONE;                   // CLUT部なし
+		phdr.ImageType   = nImageType;                  // イメージ種別
+		phdr.ImageWidth  = nWidth;                      // イメージ横幅
+		phdr.ImageHeight = nHeight;                     // イメージ高さ
 
-		// GS�쥸�������O����ȫ��0�ˤ��Ƥ���
+		// GSレジスタの設定は全部0にしておく
 		phdr.GsTex0        = 0;
 		((sceGsTex0 *)&phdr.GsTex0)->TBW = Tim2CalcBufWidth(psm, nWidth);
 		((sceGsTex0 *)&phdr.GsTex0)->PSM = psm;
@@ -1080,44 +1080,44 @@ int Tim2TakeSnapshot(sceGsDispEnv *d0, sceGsDispEnv *d1, char *pszFname)
 		phdr.GsTexaFbaPabe = 0;
 		phdr.GsTexClut     = 0;
 
-		sceWrite(h, &phdr, sizeof(TIM2_PICTUREHEADER)); // �ԥ�����إå����������
+		sceWrite(h, &phdr, sizeof(TIM2_PICTUREHEADER)); // ピクチャヘッダを書き出し
 	}
 
 
-	// ����`���ǩ`���Ε�������
+	// イメージデータの書き出し
 	for(i=0; i<nHeight; i++) {
-		u_char buf[4096];   // �饹���Хåե���4KB�_��
+		u_char buf[4096];   // ラスタバッファを4KB確保
 		sceGsStoreImage si;
 
 		if(d1) {
-			// ���󥿥�`���ΤȤ�
+			// インタレースのとき
 			if(!(i & 1)) {
-				// ���󥿥�`����ʾ��ż���饹���ΤȤ�
+				// インタレース表示の偶数ラスタのとき
 				sceGsSetDefStoreImage(&si, d0->dispfb.FBP*32, d0->dispfb.FBW, psm,
 				                      d0->dispfb.DBX, (d0->dispfb.DBY + i/2),
 				                      nWidth, 1);
 			} else {
-				// ���󥿥�`����ʾ�������饹���ΤȤ�
+				// インタレース表示の奇数ラスタのとき
 				sceGsSetDefStoreImage(&si, d1->dispfb.FBP*32, d1->dispfb.FBW, psm,
 				                      d1->dispfb.DBX, (d1->dispfb.DBY + i/2),
 				                      nWidth, 1);
 			}
 		} else {
-			// �Υ󥤥󥿥�`���ΤȤ�
+			// ノンインタレースのとき
 			sceGsSetDefStoreImage(&si, d0->dispfb.FBP*32, d0->dispfb.FBW, psm,
 			                      d0->dispfb.DBX, (d0->dispfb.DBY + i),
 			                      nWidth, 1);
 		}
-		FlushCache(WRITEBACK_DCACHE); // D����å���Βߤ�����
+		FlushCache(WRITEBACK_DCACHE); // Dキャッシュの掃き出し
 
-		sceGsExecStoreImage(&si, (u_long128 *)buf); // VRAM�ؤ�ܞ�ͤ�����
-		sceGsSyncPath(0, 0);                        // �ǩ`��ܞ�ͽK�ˤޤǴ��C
+		sceGsExecStoreImage(&si, (u_long128 *)buf); // VRAMへの転送を起動
+		sceGsSyncPath(0, 0);                        // データ転送終了まで待機
 
-		sceWrite(h, buf, nBytes);  // 1�饹���֤Υǩ`�����������
+		sceWrite(h, buf, nBytes);  // 1ラスタ分のデータを書き出し
 	}
 
-	// �ե�����Ε�����������
-	sceClose(h);  // �ե�����򥯥��`��
+	// ファイルの書き出し完了
+	sceClose(h);  // ファイルをクローズ
 	return(1);
 }
 
@@ -1126,14 +1126,14 @@ int Tim2TakeSnapshot(sceGsDispEnv *d0, sceGsDispEnv *d1, char *pszFname)
 
 
 
-// �ƥ�������ǩ`����ܞ��
-// ����
-// psm:     �ƥ�������ԥ�����ե��`�ޥå�
-// tbp:     �ƥ�������Хåե��Υ٩`���ݥ����
-// tbw:     �ƥ�������Хåե��η�
-// w:       ܞ���I��κ��
-// h:       ܞ���I��Υ饤����
-// pImage:  �ƥ������㥤��`������{����Ƥ��륢�ɥ쥹
+// テクスチャデータを転送
+// 引数
+// psm:     テクスチャピクセルフォーマット
+// tbp:     テクスチャバッファのベースポイント
+// tbw:     テクスチャバッファの幅
+// w:       転送領域の横幅
+// h:       転送領域のライン数
+// pImage:  テクスチャイメージが格納されているアドレス
 static void Tim2LoadTexture(int psm, u_int tbp, int tbw, int w, int h, u_long128 *pImage)
 {
 	sceGsLoadImage li;
@@ -1173,7 +1173,7 @@ static void Tim2LoadTexture(int psm, u_int tbp, int tbw, int w, int h, u_long128
 			return;
 	}
 
-	// DMA�����ܞ������512KB�򳬤��ʤ��褦�˷ָ�ʤ�������
+	// DMAの最大転送量の512KBを超えないように分割しながら送信
 	l = 32764 * 16 / n;
 	for(i=0; i<h; i+=l) {
 		p = (u_long128 *)((char *)pImage + n*i);
@@ -1182,22 +1182,22 @@ static void Tim2LoadTexture(int psm, u_int tbp, int tbw, int w, int h, u_long128
 		}
 
 		sceGsSetDefLoadImage(&li, tbp, tbw, psm, 0, i, w, l);
-		FlushCache(WRITEBACK_DCACHE); // D����å���Βߤ�����
-		sceGsExecLoadImage(&li, p);   // GS���`�������ؤ�ܞ�ͤ�����
-		sceGsSyncPath(0, 0);          // �ǩ`��ܞ�ͽK�ˤޤǴ��C
+		FlushCache(WRITEBACK_DCACHE); // Dキャッシュの掃き出し
+		sceGsExecLoadImage(&li, p);   // GSローカルメモリへの転送を起動
+		sceGsSyncPath(0, 0);          // データ転送終了まで待機
 	}
 	return;
 }
 
 
 
-// ָ�����줿�ԥ�����ե��`�ޥåȤȥƥ������㥵�������顢�Хåե���������Ӌ��
-// ����
-// psm:     �ƥ�������ԥ�����ե��`�ޥå�
-// w:       ���
-// ���ꂎ
-//          1�饤������M����Хåե�������
-//          �gλ��256�Х���(64word)
+// 指定されたピクセルフォーマットとテクスチャサイズから、バッファサイズを計算
+// 引数
+// psm:     テクスチャピクセルフォーマット
+// w:       横幅
+// 返り値
+//          1ラインで消費するバッファサイズ
+//          単位は256バイト(64word)
 static int Tim2CalcBufWidth(int psm, int w)
 {
 //	return(w / 64);
@@ -1229,17 +1229,17 @@ static int Tim2CalcBufWidth(int psm, int w)
 
 
 
-// ָ�����줿�ԥ�����ե��`�ޥåȤȥƥ������㥵�������顢�Хåե���������Ӌ��
-// ����
-// psm:     �ƥ�������ԥ�����ե��`�ޥå�
-// w:       ���
-// h:       �饤����
-// ���ꂎ
-//          1�饤������M����Хåե�������
-//          �gλ��256�Х���(64word)
-// ע��
-//          �A���ƥ������㤬���ʤ�ԥ�����ե��`�ޥåȤ��{������Ϥϡ�
-//          2KB�ک`���Х������ޤ�tbp�򥢥饤����Ȥ��{�������Ҫ�����롣
+// 指定されたピクセルフォーマットとテクスチャサイズから、バッファサイズを計算
+// 引数
+// psm:     テクスチャピクセルフォーマット
+// w:       横幅
+// h:       ライン数
+// 返り値
+//          1ラインで消費するバッファサイズ
+//          単位は256バイト(64word)
+// 注意
+//          続くテクスチャが異なるピクセルフォーマットを格納する場合は、
+//          2KBページバウンダリまでtbpをアラインメントを調整する必要がある。
 static int Tim2CalcBufSize(int psm, int w, int h)
 {
 	return(w * h / 64);
@@ -1252,32 +1252,32 @@ static int Tim2CalcBufSize(int psm, int w, int h)
 		case SCE_GS_PSMCT24:
 		case SCE_GS_PSMZ32:
 		case SCE_GS_PSMZ24:
-			// 1�ԥ����뤢���ꡢ1��`�����M
+			// 1ピクセルあたり、1ワード消費
 			return(((w+63)/64) * ((h+31)/32));
 
 		case SCE_GS_PSMCT16:
 		case SCE_GS_PSMCT16S:
 		case SCE_GS_PSMZ16:
 		case SCE_GS_PSMZ16S:
-			// 1�ԥ����뤢���ꡢ1/2��`�����M
+			// 1ピクセルあたり、1/2ワード消費
 			return(((w+63)/64) * ((h+63)/64));
 
 		case SCE_GS_PSMT8:
-			// 1�ԥ����뤢���ꡢ1/4��`�����M
+			// 1ピクセルあたり、1/4ワード消費
 			return(((w+127)/128) * ((h+63)/64));
 
 		case SCE_GS_PSMT4:
-			// 1�ԥ����뤢���ꡢ1/8��`�����M
+			// 1ピクセルあたり、1/8ワード消費
 			return(((w+127)/128) * ((h+127)/128));
 	}
-	// ����`?
+	// エラー?
 	return(0);
 */
 }
 
 
 
-// �ӥåȷ���ä�
+// ビット幅を得る
 static int Tim2GetLog2(int n)
 {
 	int i;
@@ -1294,3 +1294,4 @@ static int Tim2GetLog2(int n)
 
 
 #endif	// R5900
+0

@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information SCI_System_cui_information = {
 	_T(""),					/* copyright */
 	_T("SCI System"),		/* system */
 	_T(".bin"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-12-22 23:09"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[3];	// "TPW"
@@ -42,7 +42,7 @@ typedef struct {
 } wav_header_t;
 #pragma pack ()
 
-/* .bin·â°üµÄË÷ÒýÏî½á¹¹ */
+/* .binå°åŒ…çš„ç´¢å¼•é¡¹ç»“æž„ */
 typedef struct {
 	s8 name[256];
 	u32 offset;
@@ -132,7 +132,7 @@ static DWORD tpw_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* bin *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int SCI_System_bin_match(struct package *pkg)
 {
 	u32 first_entry_offset;
@@ -158,7 +158,7 @@ static int SCI_System_bin_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int SCI_System_bin_extract_directory(struct package *pkg,
 											struct package_directory *pkg_dir)
 {
@@ -198,7 +198,7 @@ static int SCI_System_bin_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int SCI_System_bin_parse_resource_info(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -206,7 +206,7 @@ static int SCI_System_bin_parse_resource_info(struct package *pkg,
 
 	my_bin_entry = (my_bin_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_bin_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_bin_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = my_bin_entry->offset;
@@ -214,7 +214,7 @@ static int SCI_System_bin_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int SCI_System_bin_extract_resource(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -319,7 +319,7 @@ static int SCI_System_bin_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int SCI_System_bin_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -343,7 +343,7 @@ static int SCI_System_bin_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void SCI_System_bin_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -357,7 +357,7 @@ static void SCI_System_bin_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void SCI_System_bin_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -369,7 +369,7 @@ static void SCI_System_bin_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation SCI_System_bin_operation = {
 	SCI_System_bin_match,					/* match */
 	SCI_System_bin_extract_directory,		/* extract_directory */
@@ -380,7 +380,7 @@ static cui_ext_operation SCI_System_bin_operation = {
 	SCI_System_bin_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK SCI_System_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".bin"), NULL, 
@@ -389,4 +389,5 @@ int CALLBACK SCI_System_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

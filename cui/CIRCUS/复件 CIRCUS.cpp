@@ -1,9 +1,9 @@
 /* Circus cui 0.10
- * ³Õºº¹«Ôô (C) 2007.02.17
+ * ç—´æ±‰å…¬è´¼ (C) 2007.02.17
  *  
  * ChangeLog:
- * 2007.02.17 ver 0.10	Ö§³Öpckµ¼³ö
- * 2007.02.13 ver 0.01	×î³õ°æ±¾ 
+ * 2007.02.17 ver 0.10	æ”¯æŒpckå¯¼å‡º
+ * 2007.02.13 ver 0.01	æœ€åˆç‰ˆæœ¬ 
  */
 
 #include <windows.h>
@@ -23,13 +23,13 @@ struct acui_information CIRCUS_cui_information = {
 	NULL,						/* system */
 	_T(".CRX .PCK .pcm"),		/* package */
 	_T("0.2.2"),				/* revison */
-	_T("³Õºº¹«Ôô"),				/* author */
+	_T("ç—´æ±‰å…¬è´¼"),				/* author */
 	_T("2007-5-2 11:51"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };	
 
-static const char *pcm_hack_info = "Extracted By ³Õºº¹«Ôô";
+static const char *pcm_hack_info = "Extracted By ç—´æ±‰å…¬è´¼";
 
 #pragma pack (1)
 typedef struct {
@@ -53,7 +53,7 @@ typedef struct {
 
 typedef struct {
 	u32 entries;
-/* ½ÓÏÂÀ´ÊÇlengthºÍoffset¿ìËÙË÷Òı£¨Ã¿Ïî8×Ö½Ú£© */
+/* æ¥ä¸‹æ¥æ˜¯lengthå’Œoffsetå¿«é€Ÿç´¢å¼•ï¼ˆæ¯é¡¹8å­—èŠ‚ï¼‰ */
 /*
 	typedef struct {
 		u32 offset;
@@ -102,7 +102,7 @@ typedef struct {
 
 typedef struct {
 	s8 magic[4];		/* XPCM */
-	u32 length;			/* length(ĞèÒªÖØĞÂ¼ÆËã) */
+	u32 length;			/* length(éœ€è¦é‡æ–°è®¡ç®—) */
 	u8 mode;			/* 3 - zlib */ 
 	u8 reserved[3];
 	u16 wFormatTag;
@@ -203,7 +203,7 @@ static void __CIRCUS_crx_defilting(BYTE *dst_base, BYTE *src, int width,
 					}
 				}
 				dst -= raw_line_len;
-				dst++;	/* ÒÆ¶¯µ½ÏÂÒ»¸ö·ÖÁ¿ */
+				dst++;	/* ç§»åŠ¨åˆ°ä¸‹ä¸€ä¸ªåˆ†é‡ */
 			}
 			break;
 		default:
@@ -221,7 +221,7 @@ static void __CIRCUS_crx_defilting(BYTE *dst_base, BYTE *src, int width,
 			pixel[3] = alpha;
 		}
 	}
-	// ºó´¦Àí
+	// åå¤„ç†
 	if (bpp == 4) {
 		for (int h = 0; h < height; h++) {
 			int esi = (h & 1) * 3;
@@ -506,11 +506,11 @@ static void __CIRCUS_crx_defilting(u8 *dst, u8 *src, unsigned int width,
 			for (x = 0; x < width; x++) {
 				u8 alpha = dst[3];
 				
-				/* ÈËÎï×ÔÉíµÄalphaÊÇ0xff(²»Í¸Ã÷£©; ±³¾°²¿·ÖµÄalphaÊÇ0x00£»ÈËÎï±ßÔµÊÇ0x00~0xffÖ®¼ä */
+				/* äººç‰©è‡ªèº«çš„alphaæ˜¯0xff(ä¸é€æ˜ï¼‰; èƒŒæ™¯éƒ¨åˆ†çš„alphaæ˜¯0x00ï¼›äººç‰©è¾¹ç¼˜æ˜¯0x00~0xffä¹‹é—´ */
 				if (!alpha) {	
 					//((255 - buf32[3]) * pBgRGB[i] + buf32[3] * buf32[i]) / 255;
 					for (p = 0; p < 3; p++)					
-						/* ¼ÙÉè±³¾°È«ºÚ(0x00) */
+						/* å‡è®¾èƒŒæ™¯å…¨é»‘(0x00) */
 						dst[p] = (0xff * 0x00) / 255;
 				}
 				dst += 4;
@@ -664,11 +664,11 @@ static int CIRCUS_crx_extract_resource(struct package *pkg,
 			memcpy(palette, compr, palette_size);
 		}
 
-		/* ÒòÎªÃ¿ĞĞ¿ªÍ·µÄµÚÒ»¸ö×Ö½Ú±íÊ¾ÕâĞĞµÄÊı¾İÓ¦¸ÃÈçºÎ´¦Àí, Òò´Ë
-		 * Êµ¼ÊµÄ½âÑ¹³¤¶È±ÈÔ­Ê¼Í¼ÏñÊı¾İ³¤¶È¶àÁËÒ»ÁĞ.
+		/* å› ä¸ºæ¯è¡Œå¼€å¤´çš„ç¬¬ä¸€ä¸ªå­—èŠ‚è¡¨ç¤ºè¿™è¡Œçš„æ•°æ®åº”è¯¥å¦‚ä½•å¤„ç†, å› æ­¤
+		 * å®é™…çš„è§£å‹é•¿åº¦æ¯”åŸå§‹å›¾åƒæ•°æ®é•¿åº¦å¤šäº†ä¸€åˆ—.
 		 */
 		act_len = ((crx_header.width * bits_count / 8) + 1) 
-			* crx_header.height;	// ³ÌĞòÖĞ»¹Òª¶à¼Ó100×Ö½Ú
+			* crx_header.height;	// ç¨‹åºä¸­è¿˜è¦å¤šåŠ 100å­—èŠ‚
 		act_data = (u8 *)malloc(act_len);
 		if (!uncompr) {
 			free(uncompr);
@@ -689,7 +689,7 @@ printf("sdf %x \n",ret);
 		if (crx_header.color_type <= 1) {
 			__CIRCUS_crx_defilting(uncompr, act_data, crx_header.width, 
 				crx_header.height, bits_count / 8);
-		} else {	/* Êµ¼ÊÇé¿ö£¬8Î»É«Í¼ÏñÍ¨¹ıµ÷É«°æ×ªÎª24Î»É«£¬È»ºó¾­¹ı__CIRCUS_crx_defilting´¦Àí */
+		} else {	/* å®é™…æƒ…å†µï¼Œ8ä½è‰²å›¾åƒé€šè¿‡è°ƒè‰²ç‰ˆè½¬ä¸º24ä½è‰²ï¼Œç„¶åç»è¿‡__CIRCUS_crx_defiltingå¤„ç† */
 			BYTE *dst, *src;
 			int line_len, aligned_line_len;
 
@@ -811,7 +811,7 @@ static int CIRCUS_pck_extract_directory(struct package *pkg,
 	if (pkg->pio->read(pkg, &pkg_dir->index_entries, 4))
 		return -CUI_EREAD;
 
-	/* ¿ç¹ı¿ìËÙË÷Òı¶Î */
+	/* è·¨è¿‡å¿«é€Ÿç´¢å¼•æ®µ */
 	if (pkg->pio->seek(pkg, pkg_dir->index_entries * sizeof(__pck_entry_t), IO_SEEK_CUR))
 		return -CUI_ESEEK;
 
@@ -992,7 +992,7 @@ static int CIRCUS_pcm_parse_resource_info(struct package *pkg,
 	}
 	
 	//data_chunk_len &= ~(pcm_header->nBlockAlign - 1);
-	fmt_chunk_len = 16;	/* PCMÊ±²»°üÀ¨2×Ö½ÚcbSize */
+	fmt_chunk_len = 16;	/* PCMæ—¶ä¸åŒ…æ‹¬2å­—èŠ‚cbSize */
 	riff_chunk_len = 4 + (8 + fmt_chunk_len) + (8 + data_chunk_len);
 	pkg_res->actual_data_length = 8 + riff_chunk_len + strlen(pcm_hack_info);
 
@@ -1058,7 +1058,7 @@ static int CIRCUS_pcm_extract_resource(struct package *pkg,
 	}
 
 	//data_chunk_len &= ~(pcm_header->nBlockAlign - 1);
-	fmt_chunk_len = 16;	/* PCMÊ±²»°üÀ¨2×Ö½ÚcbSize */
+	fmt_chunk_len = 16;	/* PCMæ—¶ä¸åŒ…æ‹¬2å­—èŠ‚cbSize */
 	riff_chunk_len = 4 + (8 + fmt_chunk_len) + (8 + data_chunk_len);
 	strncpy((char *)wav_header->ChunkID, "RIFF", 4);
 	wav_header->ChunkSize = riff_chunk_len;
@@ -1312,7 +1312,7 @@ static cui_ext_operation CIRCUS_dat_operation = {
 static inline DWORD pcm3_make_length(DWORD len)
 {
 /*
-00424E3A  |.  B8 09040281   MOV EAX,81020409                         ;  ebpÊÇxpcm.length
+00424E3A  |.  B8 09040281   MOV EAX,81020409                         ;  ebpæ˜¯xpcm.length
 00424E3F  |.  F7ED          IMUL EBP
 00424E41  |.  03D5          ADD EDX,EBP
 00424E43  |.  C1FA 0B       SAR EDX,0B
@@ -1374,4 +1374,5 @@ int CALLBACK CIRCUS_register_cui(struct cui_register_callback *callback)
 #endif
 
 	return 0;
+}
 }

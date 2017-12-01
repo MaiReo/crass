@@ -14,19 +14,19 @@
 using namespace std;
 using std::vector;
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information ohgetsu_cui_information = {
 	NULL,					/* copyright */
 	NULL,					/* system */
 	_T(".PAC"),				/* package */
 	_T("1.0.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-6-4 21:51"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];			// "LZS"
@@ -116,7 +116,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 			if (act_uncomprlen >= uncomprlen || curbyte >= comprlen)
 				break;
 		} else {
-			DWORD win_pos = (act_uncomprlen + 0xfee) & 0xfff;// ÒÔµ±Ç°uncomprµÄÖ¸Õë£¬ĞéÄâÎªwindowµÄwin_pos
+			DWORD win_pos = (act_uncomprlen + 0xfee) & 0xfff;// ä»¥å½“å‰uncomprçš„æŒ‡é’ˆï¼Œè™šæ‹Ÿä¸ºwindowçš„win_pos
 			DWORD win_offset = compr[curbyte++];
 			DWORD copy_bytes = compr[curbyte++];
 			win_offset |= (copy_bytes & 0xf0) << 4;
@@ -127,7 +127,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 				break;
 
 			if (win_offset <= win_pos)
-				win_offset = win_pos - win_offset;	// ¼ÆËã³öwin_posºÍoffsetÖ®¼äµÄ³¤¶È
+				win_offset = win_pos - win_offset;	// è®¡ç®—å‡ºwin_poså’Œoffsetä¹‹é—´çš„é•¿åº¦
 			else
 				win_offset = win_pos + win_size - win_offset;
 			
@@ -154,7 +154,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* PAC *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int ohgetsu_PAC_match(struct package *pkg)
 {
 	const char *_exe_path = get_options("exe");
@@ -196,7 +196,7 @@ static int ohgetsu_PAC_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int ohgetsu_PAC_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -324,7 +324,7 @@ static int ohgetsu_PAC_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int ohgetsu_PAC_parse_resource_info(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -332,7 +332,7 @@ static int ohgetsu_PAC_parse_resource_info(struct package *pkg,
 
 	my_PAC_entry = (my_PAC_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_PAC_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_PAC_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = my_PAC_entry->offset;
@@ -340,7 +340,7 @@ static int ohgetsu_PAC_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int ohgetsu_PAC_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -387,7 +387,7 @@ static int ohgetsu_PAC_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int ohgetsu_PAC_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -411,7 +411,7 @@ static int ohgetsu_PAC_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void ohgetsu_PAC_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -425,7 +425,7 @@ static void ohgetsu_PAC_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void ohgetsu_PAC_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -437,7 +437,7 @@ static void ohgetsu_PAC_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ohgetsu_PAC_operation = {
 	ohgetsu_PAC_match,					/* match */
 	ohgetsu_PAC_extract_directory,		/* extract_directory */
@@ -448,7 +448,7 @@ static cui_ext_operation ohgetsu_PAC_operation = {
 	ohgetsu_PAC_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK ohgetsu_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".PAC"), NULL, 
@@ -457,4 +457,5 @@ int CALLBACK ohgetsu_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

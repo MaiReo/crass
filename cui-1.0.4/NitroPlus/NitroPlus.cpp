@@ -12,11 +12,11 @@
 #include <stdio.h>
 
 struct acui_information NitroPlus_cui_information = {
-	_T("ÖêÊ½»áÉç¥Ë¥È¥í¥×¥é¥¹"),	/* copyright */
+	_T("æ ªå¼ä¼šç¤¾ãƒ‹ãƒˆãƒ­ãƒ—ãƒ©ã‚¹"),	/* copyright */
 	_T("Nirtroplus system"),	/* system */
 	_T(".pak"),					/* package */
 	_T("1.0.3"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2009-6-21 12:51"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -35,7 +35,7 @@ typedef struct {
 	u32 index_entries;
 	u32 uncomprlen;
 	u32 comprlen;
-	u32 unknown1;	/* 0 or 0x100(ºÍis_comprÓÐ¹Ø£¿) */	
+	u32 unknown1;	/* 0 or 0x100(å’Œis_compræœ‰å…³ï¼Ÿ) */	
 	s8 magic[256];
 } pak2_header_t;
 
@@ -274,7 +274,7 @@ static int pak4_decompress_index(struct package *pkg, struct package_directory *
 	xor_decode(xor_code, (BYTE *)&uncomprlen, (BYTE *)&pak_header->uncomprlen, 4);
 	xor_decode(xor_code, (BYTE *)&index_entries, (BYTE *)&pak_header->index_entries, 4);	
 	xor_decode(pak_header->xor_factor, (BYTE *)&comprlen, (BYTE *)&pak_header->comprlen, 4);
-	pak_header->comprlen = comprlen;	/* ÎªÁËºóÃæ¼ÆËã×ÊÔ´ÎÄ¼þÆ«ÒÆ */
+	pak_header->comprlen = comprlen;	/* ä¸ºäº†åŽé¢è®¡ç®—èµ„æºæ–‡ä»¶åç§» */
 	
 	compr = (BYTE *)malloc(comprlen);
 	if (!compr) {
@@ -359,7 +359,7 @@ static int NitroPlus_pak_extract_directory(struct package *pkg,
 		ret = pak2_decompress_index(pkg, pkg_dir);
 	else if (version == 3) {
 		ret = pak3_decompress_index(pkg, pkg_dir);
-		if (ret) {	// ÈÐÃùÉ¢
+		if (ret) {	// åˆƒé¸£æ•£
 			version = 4;
 			if (pkg->pio->seek(pkg, 0, IO_SEEK_SET)) 
 				return -CUI_ESEEK;
@@ -367,7 +367,7 @@ static int NitroPlus_pak_extract_directory(struct package *pkg,
 	}
 	if (version == 4) {
 		ret = pak4_decompress_index(pkg, pkg_dir);
-		if (!ret) {	// ÈÐÃùÉ¢
+		if (!ret) {	// åˆƒé¸£æ•£
 			pak4_header_t *pak_header = (pak4_header_t *)package_get_private(pkg);
 			pak_header->version = 4;
 		}
@@ -387,7 +387,7 @@ static int NitroPlus_pak_parse_resource_info(struct package *pkg,
 	if (version == 4) {
 		pak4_header_t *pak_header;
 		int xor_code;
-		u32 next_offset;	/* ÏÂÒ»¸öË÷ÒýÏîÔÚdirÖÐµÄÆ«ÒÆ */
+		u32 next_offset;	/* ä¸‹ä¸€ä¸ªç´¢å¼•é¡¹åœ¨dirä¸­çš„åç§» */
 
 		name_length = *(u32 *)pak_entry_p;
 		pak_entry_p += 4;
@@ -428,7 +428,7 @@ static int NitroPlus_pak_parse_resource_info(struct package *pkg,
 		pak_entry_p += 4;
 		comprlen = *(u32 *)pak_entry_p;
 
-		/* ¶ÔÓÚis_comprÎª0µÄÇé¿ö£¬comprlenºÍuncomprlen¶¼Îª0 */
+		/* å¯¹äºŽis_comprä¸º0çš„æƒ…å†µï¼Œcomprlenå’Œuncomprlenéƒ½ä¸º0 */
 		if (version == 2) {
 			pak2_header_t *pak_header = (pak2_header_t *)package_get_private(pkg);
 			offset += pak_header->comprlen + sizeof(pak2_header_t);
@@ -459,7 +459,7 @@ static int NitroPlus_pak_parse_resource_info(struct package *pkg,
 		pak_entry_p += 4;
 		comprlen = *(u32 *)pak_entry_p;
 	
-		/* ¶ÔÓÚis_comprÎª0µÄÇé¿ö£¬comprlenºÍuncomprlen¶¼Îª0 */
+		/* å¯¹äºŽis_comprä¸º0çš„æƒ…å†µï¼Œcomprlenå’Œuncomprlenéƒ½ä¸º0 */
 		pak_header = (pak3_header_t *)package_get_private(pkg);
 		offset += pak_header->comprlen + sizeof(pak3_header_t);
 		act_index_len = 4 + name_length + 4 * 5;
@@ -630,4 +630,5 @@ int CALLBACK NitroPlus_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

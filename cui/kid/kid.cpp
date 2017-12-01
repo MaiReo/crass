@@ -10,19 +10,19 @@
 #include <utility.h>
 #include <cui_common.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information kid_cui_information = {
 	_T(""),		/* copyright */
 	_T(""),			/* system */
 	_T(".dat"),		/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];	// "LNK"
@@ -150,7 +150,7 @@ static DWORD cps_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int kid_dat_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -171,7 +171,7 @@ static int kid_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int kid_dat_extract_directory(struct package *pkg,
 									 struct package_directory *pkg_dir)
 {
@@ -204,7 +204,7 @@ static int kid_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int kid_dat_parse_resource_info(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -212,15 +212,15 @@ static int kid_dat_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = dat_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int kid_dat_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -320,7 +320,7 @@ pkg_res->actual_data_length = uncomprlen;
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation kid_dat_operation = {
 	kid_dat_match,				/* match */
 	kid_dat_extract_directory,	/* extract_directory */
@@ -329,7 +329,7 @@ static cui_ext_operation kid_dat_operation = {
 	CUI_COMMON_OPERATION
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK kid_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".dat"), NULL, 
@@ -337,4 +337,5 @@ int CALLBACK kid_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

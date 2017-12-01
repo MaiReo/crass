@@ -8,13 +8,13 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information GScripter_cui_information = {
 	_T("GoChin(ACT-Zero)"),	/* copyright */
 	_T("Script Player for Win32"),	/* system */
 	_T(""),					/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-6-8 10:58"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -22,7 +22,7 @@ struct acui_information GScripter_cui_information = {
 
 /********************* *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int GScripter_match(struct package *pkg)
 {
 	s8 magic[10];
@@ -47,7 +47,7 @@ static int GScripter_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int GScripter_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -79,7 +79,7 @@ static int GScripter_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int GScripter_save_resource(struct resource *res, 
 								   struct package_resource *pkg_res)
 {
@@ -103,7 +103,7 @@ static int GScripter_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void GScripter_release_resource(struct package *pkg, 
 									   struct package_resource *pkg_res)
 {
@@ -117,7 +117,7 @@ static void GScripter_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void GScripter_release(struct package *pkg, 
 							  struct package_directory *pkg_dir)
 {
@@ -129,7 +129,7 @@ static void GScripter_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation GScripter_operation = {
 	GScripter_match,				/* match */
 	NULL,							/* extract_directory */
@@ -140,7 +140,7 @@ static cui_ext_operation GScripter_operation = {
 	GScripter_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK GScripter_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, NULL, NULL, 
@@ -148,4 +148,5 @@ int CALLBACK GScripter_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

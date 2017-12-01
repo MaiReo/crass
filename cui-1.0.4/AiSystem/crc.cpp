@@ -63,3 +63,4 @@ u32 crc32(const u8 *buf, int len)
                 crc = (crc << 8) ^ crc32_table[(crc >> 24) ^ *p];
         return ~crc;            /* transmit complement, per CRC-32 spec */
 }
+}

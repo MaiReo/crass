@@ -17,7 +17,7 @@ struct acui_information Hypatia_cui_information = {
 	_T(""),						/* system */
 	_T(".pak .dat"),			/* package */
 	_T("1.0.0"),				/* revision */
-	_T("³Õºº¹«Ôô"),				/* author */
+	_T("ç—´æ±‰å…¬è´¼"),				/* author */
 	_T("2009-1-3 18:53"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -32,7 +32,7 @@ struct acui_information Hypatia_cui_information = {
 		?
 
 	0x300:
-		Én¤¤¿Õ¤Î¥Í¥ª¥¹¥Õ¥£¥¢ ¤É¤­¤É¤­¥¢¥É¥Ù¥ó¥Á¥ã©` Effective E
+		è’¼ã„ç©ºã®ãƒã‚ªã‚¹ãƒ•ã‚£ã‚¢ ã©ãã©ãã‚¢ãƒ‰ãƒ™ãƒ³ãƒãƒ£ãƒ¼ Effective E
 
 	0x301:
 		?
@@ -68,7 +68,7 @@ typedef struct {	// 48 bytes
 	u32 offset;		// need plus sizeof(pak_header_t)
 	u32 uncomprLen;
 	u32 comprLen;
-	u8 mode;		// 1 - lzÑ¹Ëõ±äÌå 2 - BWT+MTF+RangeCoder 3 - Êı¾İÈ¡·´ etc - Ô­Ê¼Êı¾İ
+	u8 mode;		// 1 - lzå‹ç¼©å˜ä½“ 2 - BWT+MTF+RangeCoder 3 - æ•°æ®å–å etc - åŸå§‹æ•°æ®
 	u8 do_crc_check;
 	u16 crc;
 	FILETIME time_stamp;
@@ -161,7 +161,7 @@ static void MarielDecode(BYTE *uncompr, DWORD uncomprLen,
 						 BYTE *compr, DWORD comprLen)
 {
 	DWORD act_uncomprlen = 0;
-	DWORD curbyte = 0;		/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	DWORD curbyte = 0;		/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	DWORD mask = 0;
 
 	while (act_uncomprlen < uncomprLen || curbyte < comprLen) {
@@ -205,7 +205,7 @@ static void MarielDecode(BYTE *uncompr, DWORD uncomprLen,
 static DWORD MarielDecode(BYTE *uncompr, DWORD uncomprLen, BYTE *compr, DWORD comprLen)
 {
 	DWORD act_uncomprlen = 0;
-	DWORD curbyte = 0;		/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	DWORD curbyte = 0;		/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	
 	while (1) {
 		DWORD bits = 32;
@@ -297,7 +297,7 @@ static int bwt_decode(BYTE *out_buf, BYTE *L, UINT buf_len, UINT pi_index)
 	bwt_in_buffer = L;
 	bwt_in_buffer_length = buf_len;
 		
-	/* FÊÇLµÄÅÅĞò½á¹û */
+	/* Fæ˜¯Lçš„æ’åºç»“æœ */
 	for (UINT i = 0; i < buf_len; i++)
 		F[i] = i;
 	qsort(F, buf_len, sizeof(UINT), bwt_decode_compare);
@@ -388,7 +388,7 @@ static int CocotteDecode(unsigned char *uncompr, unsigned int uncomprLen,
 
 		compr_block_len = *(u16 *)compr - 4;
 		compr += 2;
-		uncompr_block_len = *(u16 *)compr;	/* 2×Ö½ÚpiË÷Òı */
+		uncompr_block_len = *(u16 *)compr;	/* 2å­—èŠ‚piç´¢å¼• */
 		compr += 2;
 
 		if (act_uncomprlen + uncompr_block_len > uncomprLen) {
@@ -450,7 +450,7 @@ static int CocotteDecode(unsigned char *uncompr, unsigned int uncomprLen,
 
 		/****** BWT decode ******/
 		unsigned int pi_idx = *(u16 *)block;
-		act_uncompr_block_len -= 2;	/* 2×Ö½ÚpiË÷Òı */
+		act_uncompr_block_len -= 2;	/* 2å­—èŠ‚piç´¢å¼• */
 
 		BYTE *out_buf = (BYTE *)malloc(act_uncompr_block_len);
 		if (!out_buf) {
@@ -471,7 +471,7 @@ static int CocotteDecode(unsigned char *uncompr, unsigned int uncomprLen,
 		free(out_buf);
 		free(block);
 		uncompr += act_uncompr_block_len;	/* need modify */
-		/* pak->entry->comprLen×Ö¶Î±ÈÊµ¼ÊµÄact_comprlen¶àblocks * 4×Ö½Ú */
+		/* pak->entry->comprLenå­—æ®µæ¯”å®é™…çš„act_comprlenå¤šblocks * 4å­—èŠ‚ */
 		act_comprlen += compr_block_len + 4;
 		act_uncomprlen += act_uncompr_block_len;
 
@@ -692,7 +692,7 @@ static int Hypatia_pak_parse_resource_info(struct package *pkg,
 	strncpy((char *)pkg_res->name, pak_entry->name, sizeof(pak_entry->name));
 	strcat((char *)pkg_res->name, ".");
 	strncat((char *)pkg_res->name, pak_entry->suffix, 3);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = pak_entry->comprLen;
 	//pkg_res->actual_data_length = !pak_entry->mode ? 0 : (!pak_entry->uncomprLen ? pak_entry->comprLen : pak_entry->uncomprLen);
 	pkg_res->actual_data_length = pak_entry->uncomprLen;
@@ -994,4 +994,5 @@ int CALLBACK Hypatia_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

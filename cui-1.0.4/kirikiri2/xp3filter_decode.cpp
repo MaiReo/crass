@@ -33,8 +33,8 @@ void xp3filter_decode(WCHAR *name, BYTE *buf, DWORD len, DWORD offset, DWORD tot
 	(*xp3filter_decode_handler)(&xp3filter);
 }
 
-// ºó´¦Àí¡£
-// ÓĞµÄ¼ÓÃÜÏµÍ³£¬hashÊÇÕë¶Ô¼ÓÃÜºóµÄÊı¾İµÄ¡£
+// åå¤„ç†ã€‚
+// æœ‰çš„åŠ å¯†ç³»ç»Ÿï¼Œhashæ˜¯é’ˆå¯¹åŠ å¯†åçš„æ•°æ®çš„ã€‚
 void xp3filter_post_decode(WCHAR *name, BYTE *buf, DWORD len, DWORD hash)
 {
 	struct xp3filter xp3filter;
@@ -76,4 +76,5 @@ void xp3filter_decode_init(void)
 		xp3filter_decode_parameter = dec_string;
 		xp3filter_decode_handler = xp3filter_decode_dec;
 	}
+}
 }

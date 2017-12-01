@@ -10,41 +10,41 @@
 #include <utility.h>
 
 
-/* Êý¾Ý¶ÎÄÚ¼ÇÂ¼ÁËÒ»Ð©ÖØÒªµÄ²ÎÊý£¬°üÀ¨½âÃÜ´®¡¢·â°üÆ«ÒÆµÈ¡£¡£¡££¨ÓÃAVtype_info×ö¹Ø¼ü×Ö²éÕÒ£©
+/* æ•°æ®æ®µå†…è®°å½•äº†ä¸€äº›é‡è¦çš„å‚æ•°ï¼ŒåŒ…æ‹¬è§£å¯†ä¸²ã€å°åŒ…åç§»ç­‰ã€‚ã€‚ã€‚ï¼ˆç”¨AVtype_infoåšå…³é”®å­—æŸ¥æ‰¾ï¼‰
 004230A9                                      38 36 30 31              8601
-004230B9  36 00 00 00 00 00 78 80 02 79 E0 01 64 00 00 73  6.....x€.y?d..s
-004230C9  3F 3B 6B 84 DF 6F 8C 5F 00 00 00 F8 07 42 00 00  ?;k„ßoŒ_...?B..
+004230B9  36 00 00 00 00 00 78 80 02 79 E0 01 64 00 00 73  6.....xâ‚¬.y?d..s
+004230C9  3F 3B 6B 84 DF 6F 8C 5F 00 00 00 F8 07 42 00 00  ?;kå‹¥oå®Š...?B..
 004230D9  00 00 00 2E 3F 41 56 74 79 70 65 5F 69 6E 66 6F  ....?AVtype_info
-004230E9  40 40 00 B8 81 41 00 75 98 00 00 73 98 00 00 69  @@.¸A.u?.s?.i
+004230E9  40 40 00 B8 81 41 00 75 98 00 00 73 98 00 00 69  @@.ç«µA.u?.s?.i
 004230F9  67 41 00 30 67 41 00 30 67 41 00 20 05 93 19     gA.0gA.0gA. .?.
 */
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information HSP_cui_information = {
 	_T("onion software"),		/* copyright */
 	_T("Hot Soup Processor"),	/* system */
 	_T(".dpm .mv .exe"),		/* package */
 	_T("1.0.0"),				/* revision */
-	_T("ç±²¨Î¢²½"),				/* author */
+	_T("ç»«æ³¢å¾®æ­¥"),				/* author */
 	_T("2007-9-29 22:03"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		/* "DPMX" */
 	u32 data_offset;
 	u32 index_entries;
-	u32 name_length;	// name space´_±£¥µ¥¤¥º(ver2.6)
+	u32 name_length;	// name spaceç¢ºä¿ã‚µã‚¤ã‚º(ver2.6)
 } dpm_header_t;
 
 typedef struct {
 	s8 name[16];
-	u32 name_offset;	// -1 ÃûÇ°¸ñ¼{¥Ý¥¤¥ó¥¿(ÏÈî^¤¬'\0'¤Î•r¤Î¤ßÓÐ„¿)
-	u32 dec_key;		// °µºÅ»¯flag(ÏÈî^¤¬'\0'¤Î•r¤Î¤ßÓÐ„¿)
-	u32 offset;			/* Ïà¶ÔµØÖ· */
+	u32 name_offset;	// -1 åå‰æ ¼ç´ãƒã‚¤ãƒ³ã‚¿(å…ˆé ­ãŒ'\0'ã®æ™‚ã®ã¿æœ‰åŠ¹)
+	u32 dec_key;		// æš—å·åŒ–flag(å…ˆé ­ãŒ'\0'ã®æ™‚ã®ã¿æœ‰åŠ¹)
+	u32 offset;			/* ç›¸å¯¹åœ°å€ */
 	u32 length;
 } dpm_entry_t;
 #pragma pack ()
@@ -99,7 +99,7 @@ static void decode(struct HSP_context *context, BYTE *buf, unsigned int buf_len)
 
 /********************* mv *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int HSP_mv_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -123,7 +123,7 @@ static int HSP_mv_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int HSP_mv_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -143,7 +143,7 @@ static int HSP_mv_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int HSP_mv_save_resource(struct resource *res, 
 								 struct package_resource *pkg_res)
 {
@@ -171,7 +171,7 @@ static int HSP_mv_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void HSP_mv_release_resource(struct package *pkg, 
 									 struct package_resource *pkg_res)
 {
@@ -182,7 +182,7 @@ static void HSP_mv_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void HSP_mv_release(struct package *pkg, 
 						   struct package_directory *pkg_dir)
 {
@@ -192,7 +192,7 @@ static void HSP_mv_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation HSP_mv_operation = {
 	HSP_mv_match,				/* match */
 	NULL,						/* extract_directory */
@@ -205,7 +205,7 @@ static cui_ext_operation HSP_mv_operation = {
 
 /********************* exe *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int HSP_exe_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -296,7 +296,7 @@ static int HSP_exe_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int HSP_exe_extract_directory(struct package *pkg,
 									 struct package_directory *pkg_dir)
 {
@@ -341,7 +341,7 @@ static int HSP_exe_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int HSP_exe_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -355,15 +355,15 @@ static int HSP_exe_parse_resource_info(struct package *pkg,
 	dpm_entry = (dpm_entry_t *)pkg_res->actual_index_entry;
 	context->res_dec_key = dpm_entry->dec_key;
 	strcpy(pkg_res->name, dpm_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dpm_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = dpm_entry->offset + context->package_offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int HSP_exe_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -395,7 +395,7 @@ static int HSP_exe_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int HSP_exe_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -417,7 +417,7 @@ static int HSP_exe_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void HSP_exe_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -430,7 +430,7 @@ static void HSP_exe_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void HSP_exe_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -453,7 +453,7 @@ static void HSP_exe_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation HSP_exe_operation = {
 	HSP_exe_match,					/* match */
 	HSP_exe_extract_directory,		/* extract_directory */
@@ -466,7 +466,7 @@ static cui_ext_operation HSP_exe_operation = {
 
 /********************* dpm *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int HSP_dpm_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -514,7 +514,7 @@ static int HSP_dpm_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation HSP_dpm_operation = {
 	HSP_dpm_match,					/* match */
 	HSP_exe_extract_directory,		/* extract_directory */
@@ -525,10 +525,10 @@ static cui_ext_operation HSP_dpm_operation = {
 	HSP_exe_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK HSP_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".mv"), _T(".wav"), 
 		NULL, &HSP_mv_operation, CUI_EXT_FLAG_PKG))
 			return -1;
@@ -542,4 +542,5 @@ int CALLBACK HSP_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

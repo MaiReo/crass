@@ -466,3 +466,4 @@ struct cxdec_callback tenshin_Trial_cxdec_callback = {
 	{ 0x29f, 0x33f },
 	xcode_building_stage1
 };
+;

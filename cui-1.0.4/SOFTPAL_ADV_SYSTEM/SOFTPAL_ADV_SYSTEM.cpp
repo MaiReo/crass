@@ -11,8 +11,8 @@
 #include <utility.h>
 
 /*
-ËÑË÷decryptÃÜÔ¿µÄ·½·¨£º
-ÃÜÔ¿ÒÔ³£Á¿µÄĞÎÊ½½øĞĞ²ÎÊı´«µİ£º
+æœç´¢decryptå¯†é’¥çš„æ–¹æ³•ï¼š
+å¯†é’¥ä»¥å¸¸é‡çš„å½¢å¼è¿›è¡Œå‚æ•°ä¼ é€’ï¼š
 00429F5A  |.  FF15 50D14200 CALL DWORD PTR DS:[<&KERNEL32.ReadFile>] ; \ReadFile
 00429F60  |.  8B55 F8       MOV EDX,DWORD PTR SS:[EBP-8]
 00429F63  |.  52            PUSH EDX                                 ; /hObject
@@ -46,7 +46,7 @@ struct acui_information SOFTPAL_ADV_SYSTEM_cui_information = {
 	_T("SOFTPAL ADV SYSTEM"),		/* system */
 	_T(".pac .PGD"),				/* package */
 	_T("1.3.2"),					/* revision */
-	_T("³Õh¹«Ù\"),					/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),					/* author */
 	_T("2009-6-23 22:02"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE | ACUI_ATTRIBUTE_PRELOAD
@@ -57,15 +57,15 @@ typedef struct {
 	s8 magic[16];	// "VAFSH       "
 } _058_header_t;
 
-/* !from && !numbers (·Ç¿É¼û×Ö·û); from == index_entries && !numbers (Ã»ÓĞÒÔ¸Ã×ÖÄ¸ÎªÊ×µÄ×ÊÔ´Ïî) */
+/* !from && !numbers (éå¯è§å­—ç¬¦); from == index_entries && !numbers (æ²¡æœ‰ä»¥è¯¥å­—æ¯ä¸ºé¦–çš„èµ„æºé¡¹) */
 typedef struct {
-	u16 from;			// ´Ó0¿ªÊ¼
-	u16 numbers;		// ¾ßÓĞÏàÍ¬Ê××ÖÄ¸µÄÏîÊı
+	u16 from;			// ä»0å¼€å§‹
+	u16 numbers;		// å…·æœ‰ç›¸åŒé¦–å­—æ¯çš„é¡¹æ•°
 } pac_dir_t;
 
 typedef struct {
-	u32 from;			// ´Ó0¿ªÊ¼
-	u32 numbers;		// ¾ßÓĞÏàÍ¬Ê××ÖÄ¸µÄÏîÊı
+	u32 from;			// ä»0å¼€å§‹
+	u32 numbers;		// å…·æœ‰ç›¸åŒé¦–å­—æ¯çš„é¡¹æ•°
 } pac2_dir_t;
 
 typedef struct {
@@ -98,35 +98,35 @@ typedef struct {
 
 typedef struct {
 	u32 zero[2];
-	u32 x_origin;	// ?Í¼Ïó×ó¶Ë×ø±ê
-	u32 y_origin;	// ?Í¼Ïóµ×¶Ë×ø±ê
+	u32 x_origin;	// ?å›¾è±¡å·¦ç«¯åæ ‡
+	u32 y_origin;	// ?å›¾è±¡åº•ç«¯åæ ‡
 	u32 width;
 	u32 height;
 	s8 magic[4];	// "00_C"
 	u32 uncomprlen;
-	u32 comprlen;	// °üÀ¨0xc×Ö½ÚÍ·
+	u32 comprlen;	// åŒ…æ‹¬0xcå­—èŠ‚å¤´
 } pgd_header_t;
 
 typedef struct {
 	s8 maigc0[2];		// "GE"
 	u16 sizeof_header;
-	u32 orig_x;			// Í¼Ïó¶¥µãÔÚÕû¸öÏÔÊ¾ÇøÓòµÄÎ»ÖÃ
+	u32 orig_x;			// å›¾è±¡é¡¶ç‚¹åœ¨æ•´ä¸ªæ˜¾ç¤ºåŒºåŸŸçš„ä½ç½®
 	u32 orig_y;
 	u32 width;	
 	u32 height;		
-	u32 orig_width;		// Í¼ÏóÕû¸öÏÔÊ¾ÇøÓòÖĞÏÔÊ¾µÄ¿í¶È
-	u32 orig_height;	// Í¼ÏóÕû¸öÏÔÊ¾ÇøÓòÖĞÏÔÊ¾µÄ¸ß¶È
+	u32 orig_width;		// å›¾è±¡æ•´ä¸ªæ˜¾ç¤ºåŒºåŸŸä¸­æ˜¾ç¤ºçš„å®½åº¦
+	u32 orig_height;	// å›¾è±¡æ•´ä¸ªæ˜¾ç¤ºåŒºåŸŸä¸­æ˜¾ç¤ºçš„é«˜åº¦
 } pgd11_header_t;
 
 typedef struct {
 	s8 maigc0[2];		// "GE"
 	u16 sizeof_header;	// 32
-	u32 orig_x;			// Í¼Ïó¶¥µãÔÚÕû¸öÏÔÊ¾ÇøÓòµÄÎ»ÖÃ
+	u32 orig_x;			// å›¾è±¡é¡¶ç‚¹åœ¨æ•´ä¸ªæ˜¾ç¤ºåŒºåŸŸçš„ä½ç½®
 	u32 orig_y;
 	u32 width;	
 	u32 height;		
-	u32 orig_width;		// Í¼ÏóÕû¸öÏÔÊ¾ÇøÓòÖĞÏÔÊ¾µÄ¿í¶È
-	u32 orig_height;	// Í¼ÏóÕû¸öÏÔÊ¾ÇøÓòÖĞÏÔÊ¾µÄ¸ß¶È
+	u32 orig_width;		// å›¾è±¡æ•´ä¸ªæ˜¾ç¤ºåŒºåŸŸä¸­æ˜¾ç¤ºçš„å®½åº¦
+	u32 orig_height;	// å›¾è±¡æ•´ä¸ªæ˜¾ç¤ºåŒºåŸŸä¸­æ˜¾ç¤ºçš„é«˜åº¦
 	u16 compr_method;
 	u16 unknown;
 } pgd32_header_t;
@@ -144,12 +144,12 @@ typedef struct {
 typedef struct {
 	s8 magic[4];		// "11_C"
 	u32 uncomprlen;
-	u32 comprlen;		// °üÀ¨±¾InfoĞÅÏ¢ÔÚÄÚµÄ12×Ö½Ú
+	u32 comprlen;		// åŒ…æ‹¬æœ¬Infoä¿¡æ¯åœ¨å†…çš„12å­—èŠ‚
 } pgd11_info_t;
 
 typedef struct {
 	u32 uncomprlen;
-	u32 comprlen;		// °üÀ¨±¾InfoĞÅÏ¢ÔÚÄÚµÄ12×Ö½Ú
+	u32 comprlen;		// åŒ…æ‹¬æœ¬Infoä¿¡æ¯åœ¨å†…çš„12å­—èŠ‚
 } pgd32_info_t;
 
 typedef struct {
@@ -157,34 +157,34 @@ typedef struct {
 	u16 bpp;			// 32 or 24
 	u16 width;
 	u16 height;
-	//u8 *flags			// height¸ö
+	//u8 *flags			// heightä¸ª
 } ge_header_t;
 
 struct TargaHeader_s {
-    u8  bID_Length;		// ¸½¼ÓĞÅÏ¢³¤¶È @ 0
-    u8  bPalType;		// µ÷É«°åĞÅÏ¢ @ 1
-    u8  bImageType;		// Í¼ÏóÀàĞÍ(0,1,2,3,9,10,11) @ 2 
-    u16 wPalFirstNdx;	// µ÷É«°åµÚÒ»¸öË÷ÒıÖµ  @ 3
-    u16 wPalLength;		// µ÷É«°åË÷ÒıÊı(ÒÔµ÷É«°åµ¥ÔªÎªµ¥Î»)  @ 5
-    u8  bPalBits;		// Ò»¸öµ÷É«°åµ¥Î»Î»Êı(15,16,24,32)  @ 7
-    u16 wLeft;			// Í¼Ïó×ó¶Ë×ø±ê(»ù±¾ÎŞÓÃ) @ 8
-    u16 wBottom;		// Í¼Ïóµ×¶Ë×ø±ê(»ù±¾ÎŞÓÃ) @ a 
-    u16 wWidth;			// Í¼Ïó¿í¶È @ c 
-    u16 wDepth;			// Í¼Ïó³¤¶È  @ e
-    u8  bBits;			// Ò»¸öÏóËØÎ»Êı @ 10 
-    u8  bDescriptor;	// ¸½¼ÓÌØĞÔÃèÊö @ 11 
+    u8  bID_Length;		// é™„åŠ ä¿¡æ¯é•¿åº¦ @ 0
+    u8  bPalType;		// è°ƒè‰²æ¿ä¿¡æ¯ @ 1
+    u8  bImageType;		// å›¾è±¡ç±»å‹(0,1,2,3,9,10,11) @ 2 
+    u16 wPalFirstNdx;	// è°ƒè‰²æ¿ç¬¬ä¸€ä¸ªç´¢å¼•å€¼  @ 3
+    u16 wPalLength;		// è°ƒè‰²æ¿ç´¢å¼•æ•°(ä»¥è°ƒè‰²æ¿å•å…ƒä¸ºå•ä½)  @ 5
+    u8  bPalBits;		// ä¸€ä¸ªè°ƒè‰²æ¿å•ä½ä½æ•°(15,16,24,32)  @ 7
+    u16 wLeft;			// å›¾è±¡å·¦ç«¯åæ ‡(åŸºæœ¬æ— ç”¨) @ 8
+    u16 wBottom;		// å›¾è±¡åº•ç«¯åæ ‡(åŸºæœ¬æ— ç”¨) @ a 
+    u16 wWidth;			// å›¾è±¡å®½åº¦ @ c 
+    u16 wDepth;			// å›¾è±¡é•¿åº¦  @ e
+    u8  bBits;			// ä¸€ä¸ªè±¡ç´ ä½æ•° @ 10 
+    u8  bDescriptor;	// é™„åŠ ç‰¹æ€§æè¿° @ 11 
 };
 
 typedef struct {
 	s8 magic[4];		// "EPEG"
-	u32 index_entries;	// Ã¿Ïî8×Ö½Ú
+	u32 index_entries;	// æ¯é¡¹8å­—èŠ‚
 	u32 unknown;		// 2000
 	u16 width;
 	u16 height;
 	u16 bpp;
 	u32 unknown1;		// 0x39893582
 	u8 unknown2[10];
-	u32 flags;			// 1 - £¿£» 2 - PalSoundLoadVerEpeg
+	u32 flags;			// 1 - ï¼Ÿï¼› 2 - PalSoundLoadVerEpeg
 } epg_header_t;
 
 typedef struct {
@@ -559,7 +559,7 @@ printf("GE 11_C!\n\n");
 					return -CUI_EMEM;
 				}
 				pgd_ge_process3(out, out_len, uncompr, info->uncomprlen, bpp);
-			} else if (pgd32_header->compr_method == 2) {	// ËäÈ»ÊÇ32Î»Í¼(±³¾°), µ«ËÆºõÊÇ24Î»É«+´¿°×alp
+			} else if (pgd32_header->compr_method == 2) {	// è™½ç„¶æ˜¯32ä½å›¾(èƒŒæ™¯), ä½†ä¼¼ä¹æ˜¯24ä½è‰²+çº¯ç™½alp
 				bpp = 32;
 				out_len = pgd32_header->width * pgd32_header->height * bpp / 8;
 				out = (BYTE *)malloc(out_len);
@@ -609,7 +609,7 @@ printf("GE 11_C!\n\n");
 		} else if (!memcmp(__pgd, " EZL", 4)) {
 			printf("not support EZL!\n");
 			exit(0);
-		} else {	// Õâ¸ö·ÖÖ§ĞèÒª²âÊÔ£¡
+		} else {	// è¿™ä¸ªåˆ†æ”¯éœ€è¦æµ‹è¯•ï¼
 			BYTE *ret_bgd = (BYTE *)malloc(__pgd_length);
 			if (!ret_bgd)
 				return -CUI_EMEM;
@@ -864,18 +864,18 @@ static int SOFTPAL_ADV_SYSTEM_pac_parse_resource_info(struct package *pkg,
 
 		pac_entry = (pac_entry_t *)pkg_res->actual_index_entry;
 		strncpy(pkg_res->name, pac_entry->name, 16);
-		pkg_res->name_length = 16;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+		pkg_res->name_length = 16;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 		pkg_res->raw_data_length = pac_entry->length;
-		pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+		pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 		pkg_res->offset = pac_entry->offset;
 	} else if (entry_size == sizeof(pac_entry2_t)) {
 		pac_entry2_t *pac_entry;		
 
 		pac_entry = (pac_entry2_t *)pkg_res->actual_index_entry;
 		strncpy(pkg_res->name, pac_entry->name, 32);
-		pkg_res->name_length = 32;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+		pkg_res->name_length = 32;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 		pkg_res->raw_data_length = pac_entry->length;
-		pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+		pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 		pkg_res->offset = pac_entry->offset;
 	}
 
@@ -1288,7 +1288,7 @@ static int SOFTPAL_ADV_SYSTEM_058_parse_resource_info(struct package *pkg,
 	u32 *offset = (u32 *)pkg_res->actual_index_entry;
 
 	sprintf(pkg_res->name, "%06d", pkg_res->index_number);		
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = offset[1] - offset[0];
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = *offset;
@@ -1358,4 +1358,5 @@ int CALLBACK SOFTPAL_ADV_SYSTEM_register_cui(struct cui_register_callback *callb
 			return -1;
 
 	return 0;
+}
 }

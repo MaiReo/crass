@@ -8,14 +8,14 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-// N:\comic\AlterEgoÌåòY°æ090505
+// N:\comic\AlterEgoä½“é¨“ç‰ˆ090505
 
 struct acui_information MNP_cui_information = {
 	_T(""),/* copyright */
 	_T(""),	/* system */
 	_T(".mma"),		/* package */
 	_T(""),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -197,4 +197,5 @@ int CALLBACK MNP_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

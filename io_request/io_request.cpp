@@ -331,7 +331,7 @@ IO_REQUEST_API int fio_operation_write(struct fio_request *ior, void *buf, u32 b
 	mapping_rem = (ior->base_offset + ior->current_offset) & (virtualalloc_length_aligned - 1);
 	mapping_src = (BYTE *)buf;
 
-	if (mapping_rem) {	/* ÏÈ³ýµô²»¶ÔÆëµÄµØ·½ */
+	if (mapping_rem) {	/* å…ˆé™¤æŽ‰ä¸å¯¹é½çš„åœ°æ–¹ */
 		if (mapping_rem + buf_len > virtualalloc_length_aligned)
 			mapping_size = virtualalloc_length_aligned;
 		else
@@ -579,4 +579,5 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 	virtualalloc_length_aligned = sys_info.dwAllocationGranularity;
 
 	return TRUE;
+}
 }

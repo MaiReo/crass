@@ -14,7 +14,7 @@ struct acui_information FS_cui_information = {
 	NULL,							/* system */
 	_T(".pd"),						/* package */
 	_T("4.0.0"),					/* revision */
-	_T("³Õºº¹«Ôô"),					/* author */
+	_T("ç—´æ±‰å…¬è´¼"),					/* author */
 	_T("2007-11-17 14:51"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -551,7 +551,7 @@ static int FS_pd_extract_resource(struct package *pkg,
 	pd_entry = (pd_entry_t *)pkg_res->actual_index_entry;
 
 	char *ext = PathFindExtensionA(pkg_res->name);
-	if (ext) {	// ¥¯¥é¥¤¥ß¥é¥¤2 trial FSFile: 37235d
+	if (ext) {	// ã‚¯ãƒ©ã‚¤ãƒŸãƒ©ã‚¤2 trial FSFile: 37235d
 		if (!(pkg_res->name[0] == 'e' && pkg_res->name[1] == 'x')) {
 			if (!strcmp(ext, ".def") || !strcmp(ext, ".dsf")) {
 				decode(data, pkg_res->raw_data_length, pd_entry->xor_magic);
@@ -640,4 +640,5 @@ int CALLBACK FS_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

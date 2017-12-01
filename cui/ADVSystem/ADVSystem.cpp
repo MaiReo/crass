@@ -14,7 +14,7 @@ struct acui_information ADVSystem_cui_information = {
 	_T("U-Me SOFT ADV System"),		/* system */
 	_T(".PK .TPK .GPK .WPK .MPK .PK0 .PKA .PKB .PKC .PKD .PKE .PKF .DAT"),	/* package */
 	_T("1.0.1"),					/* revision */
-	_T("³Õh¹«Ù\"),					/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),					/* author */
 	_T("2009-6-15 20:43"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -34,7 +34,7 @@ typedef struct {
 } sgx_header_t;
 
 typedef struct {
-	u16 orig_x;		// ×óÉÏ½Ç×ø±ê
+	u16 orig_x;		// å·¦ä¸Šè§’åæ ‡
 	u16 orig_y;
 	u16 width;
 	u16 height;
@@ -128,8 +128,8 @@ static void grx_decompressA(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heigh
 			copy_pixel_count |= *compr++ << 2;
 		copy_pixel_count++;
 		x_count -= copy_pixel_count;
-		if (!(flag & 0xF0)) {	// ¸ß4Î»ÊÇoffset£¨Ë÷ÒıÖØ¸´ĞĞµÄË÷Òı£©
-			if (flag & 8) {	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ;·´Ö®±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+		if (!(flag & 0xF0)) {	// é«˜4ä½æ˜¯offsetï¼ˆç´¢å¼•é‡å¤è¡Œçš„ç´¢å¼•ï¼‰
+			if (flag & 8) {	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®;åä¹‹è¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++)
 					*uncompr++ = *compr++ >> 3;
 			} else {
@@ -137,12 +137,12 @@ static void grx_decompressA(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heigh
 					*uncompr++ = *compr >> 3;
 				compr++;
 			}
-		} else {	// Èç¹û¸ß4Î»offset´æÔÚ
+		} else {	// å¦‚æœé«˜4ä½offsetå­˜åœ¨
 			BYTE *src = (BYTE *)(uncompr + s_offset_step[flag >> 4]);
-			if (!(flag & 8)) {	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ
+			if (!(flag & 8)) {	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++)
 					*uncompr++ = *src;
-			} else {	// *Èç¹ûÃ»ÉèÖÃ£¬±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+			} else {	// *å¦‚æœæ²¡è®¾ç½®ï¼Œè¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++)
 					*uncompr++ = *src++;
 			}
@@ -184,8 +184,8 @@ static void grx_decompress8(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heigh
 			copy_pixel_count |= *compr++ << 2;
 		copy_pixel_count++;
 		x_count -= copy_pixel_count;
-		if (!(flag & 0xF0)) {	// ¸ß4Î»ÊÇoffset£¨Ë÷ÒıÖØ¸´ĞĞµÄË÷Òı£©
-			if (flag & 8) {	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ;·´Ö®±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+		if (!(flag & 0xF0)) {	// é«˜4ä½æ˜¯offsetï¼ˆç´¢å¼•é‡å¤è¡Œçš„ç´¢å¼•ï¼‰
+			if (flag & 8) {	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®;åä¹‹è¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++)
 					*uncompr++ = *compr++;
 			} else {
@@ -193,12 +193,12 @@ static void grx_decompress8(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heigh
 					*uncompr++ = *compr;
 				compr++;
 			}
-		} else {	// Èç¹û¸ß4Î»offset´æÔÚ
+		} else {	// å¦‚æœé«˜4ä½offsetå­˜åœ¨
 			BYTE *src = (BYTE *)(uncompr + s_offset_step[flag >> 4]);
-			if (!(flag & 8)) {	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ
+			if (!(flag & 8)) {	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++)
 					*uncompr++ = *src;
-			} else {	// *Èç¹ûÃ»ÉèÖÃ£¬±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+			} else {	// *å¦‚æœæ²¡è®¾ç½®ï¼Œè¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++)
 					*uncompr++ = *src++;
 			}
@@ -240,8 +240,8 @@ static void grx_decompress16(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heig
 			copy_pixel_count |= *compr++ << 2;
 		copy_pixel_count++;
 		x_count -= copy_pixel_count;
-		if (!(flag & 0xF0)) {	// ¸ß4Î»ÊÇoffset£¨Ë÷ÒıÖØ¸´ĞĞµÄË÷Òı£©
-			if (flag & 8) {//	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ;·´Ö®±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+		if (!(flag & 0xF0)) {	// é«˜4ä½æ˜¯offsetï¼ˆç´¢å¼•é‡å¤è¡Œçš„ç´¢å¼•ï¼‰
+			if (flag & 8) {//	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®;åä¹‹è¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++) {
 					*(u16 *)uncompr = *(u16 *)compr;
 					uncompr += 2;
@@ -254,14 +254,14 @@ static void grx_decompress16(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heig
 				}
 				compr += 2;
 			}
-		} else {	// Èç¹û¸ß4Î»offset´æÔÚ
+		} else {	// å¦‚æœé«˜4ä½offsetå­˜åœ¨
 			u16 *src = (u16 *)(uncompr + s_offset_step[flag >> 4]);
-			if (!(flag & 8)) {	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ
+			if (!(flag & 8)) {	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++) {//
 					*(u16 *)uncompr = *(u16 *)src;
 					uncompr += 2;
 				}
-			} else {	// *Èç¹ûÃ»ÉèÖÃ£¬±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+			} else {	// *å¦‚æœæ²¡è®¾ç½®ï¼Œè¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++) {
 					*(u16 *)uncompr = *src++;
 					uncompr += 2;
@@ -304,8 +304,8 @@ static void grx_decompress24(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heig
 			copy_pixel_count |= *compr++ << 2;
 		copy_pixel_count++;
 		x_count -= copy_pixel_count;
-		if (!(flag & 0xF0)) {	// ¸ß4Î»ÊÇoffset£¨Ë÷ÒıÖØ¸´ĞĞµÄË÷Òı£©
-			if (flag & 8) {	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ;·´Ö®±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+		if (!(flag & 0xF0)) {	// é«˜4ä½æ˜¯offsetï¼ˆç´¢å¼•é‡å¤è¡Œçš„ç´¢å¼•ï¼‰
+			if (flag & 8) {	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®;åä¹‹è¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++) {
 					*(u32 *)uncompr = *(u32 *)compr & 0xFFFFFF;
 					uncompr += 4;
@@ -318,14 +318,14 @@ static void grx_decompress24(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heig
 				}
 				compr += 3;
 			}
-		} else {	// Èç¹û¸ß4Î»offset´æÔÚ
+		} else {	// å¦‚æœé«˜4ä½offsetå­˜åœ¨
 			DWORD *src = (DWORD *)(uncompr + s_offset_step[flag >> 4]);
-			if (!(flag & 8)) {	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ
+			if (!(flag & 8)) {	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++) {
 					*(u32 *)uncompr = *(u32 *)src & 0xFFFFFF;
 					uncompr += 4;
 				}
-			} else {	// *Èç¹ûÃ»ÉèÖÃ£¬±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+			} else {	// *å¦‚æœæ²¡è®¾ç½®ï¼Œè¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++) {
 					*(u32 *)uncompr = *(u32 *)src++;
 					uncompr += 4;
@@ -367,8 +367,8 @@ static void grx_decompress32(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heig
 			copy_pixel_count |= *compr++ << 2;
 		copy_pixel_count++;
 		x_count -= copy_pixel_count;
-		if (!(flag & 0xF0)) {	// ¸ß4Î»ÊÇoffset£¨Ë÷ÒıÖØ¸´ĞĞµÄË÷Òı£©
-			if (flag & 8) {	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ;·´Ö®±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+		if (!(flag & 0xF0)) {	// é«˜4ä½æ˜¯offsetï¼ˆç´¢å¼•é‡å¤è¡Œçš„ç´¢å¼•ï¼‰
+			if (flag & 8) {	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®;åä¹‹è¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++) {
 					*(u32 *)uncompr = *(u32 *)compr;
 					uncompr += 4;
@@ -381,14 +381,14 @@ static void grx_decompress32(BYTE *uncompr, BYTE *compr, DWORD width, DWORD heig
 				}
 				compr += 4;
 			}
-		} else {	// Èç¹û¸ß4Î»offset´æÔÚ
+		} else {	// å¦‚æœé«˜4ä½offsetå­˜åœ¨
 			DWORD *src = (DWORD *)(uncompr + s_offset_step[flag >> 4]);
-			if (!(flag & 8)) {	// Èç¹ûÉèÖÃ£¬±íÊ¾·ÇÖØ¸´RGBÊı¾İ
+			if (!(flag & 8)) {	// å¦‚æœè®¾ç½®ï¼Œè¡¨ç¤ºéé‡å¤RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++) {
 					*(u32 *)uncompr = *src;
 					uncompr += 4;
 				}
-			} else {	// *Èç¹ûÃ»ÉèÖÃ£¬±íÊ¾ÊÇÖØ¸´µÄRGBÊı¾İ
+			} else {	// *å¦‚æœæ²¡è®¾ç½®ï¼Œè¡¨ç¤ºæ˜¯é‡å¤çš„RGBæ•°æ®
 				for (i = 0; i < copy_pixel_count; i++) {
 					*(u32 *)uncompr = *src++;
 					uncompr += 4;
@@ -496,9 +496,9 @@ static int ADVSystem_PK_parse_resource_info(struct package *pkg,
 
 	my_PK_entry = (my_PK_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_PK_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_PK_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_PK_entry->offset;
 
 	return 0;
@@ -791,4 +791,5 @@ int CALLBACK ADVSystem_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

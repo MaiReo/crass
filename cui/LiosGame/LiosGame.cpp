@@ -10,7 +10,7 @@
 #include <utility.h>
 #include <stdio.h>
 
-// ²¿·ÖwavÊÇĞèÒªOgg Vorbis ACM codec²ÅÄÜÖ§³Ö£¨fmt tag×Ö¶ÎÊÇ"qg"£©
+// éƒ¨åˆ†wavæ˜¯éœ€è¦Ogg Vorbis ACM codecæ‰èƒ½æ”¯æŒï¼ˆfmt tagå­—æ®µæ˜¯"qg"ï¼‰
 
 #define getbits	bits_get_high
 
@@ -19,7 +19,7 @@ struct acui_information LiosGame_cui_information = {
 	_T("LiosGame"),			/* system */
 	_T(".xfl .lwg .wcg .lim"),	/* package */
 	_T("0.9.7"),				/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2009-4-10 23:07"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -40,21 +40,21 @@ typedef struct {
 	u32 length;
 } xfl_entry_t;
 
-/* °üº¬ÁËÒ»ÆÁÖĞËùÓĞ×é¼şµÄÍ¼Ïñ¿é */
+/* åŒ…å«äº†ä¸€å±ä¸­æ‰€æœ‰ç»„ä»¶çš„å›¾åƒå— */
 typedef struct {
 	s8 magic[2];		/* "LG" */
 	u16 version;		/* must be 1 */
 	u32 height;
 	u32 width;
-	u32 entries;		/* ×é¼şÊı */
+	u32 entries;		/* ç»„ä»¶æ•° */
 	u32 reserved;	
 	u32 index_length;
 } lwg_header_t;
 
 typedef struct {
-	u32 x_poisition;	/* xÖáÆğµã×ø±ê */
-	u32 y_position;		/* xÖáÆğµã×ø±ê */
-	u8 unknown;			/* ×ÜÊÇ0x28 */
+	u32 x_poisition;	/* xè½´èµ·ç‚¹åæ ‡ */
+	u32 y_position;		/* xè½´èµ·ç‚¹åæ ‡ */
+	u8 unknown;			/* æ€»æ˜¯0x28 */
 	u32 offset;
 	u32 length;
 	u8 name_length;
@@ -70,15 +70,15 @@ typedef struct {
 } wcg_header_t;
 
 typedef struct {
-	u32 uncomprlen;		/* ½âÑ¹ºóµÄ³¤¶È */
+	u32 uncomprlen;		/* è§£å‹åçš„é•¿åº¦ */
 	u32 comprlen;	
-	u16 code_number;	/* Ã¿¸öcode 2×Ö½Ú */
+	u16 code_number;	/* æ¯ä¸ªcode 2å­—èŠ‚ */
 	u16 unknown;
 } wcg_info_t;
 
 typedef struct {
 	s8 magic[2];		/* "LM" */
-	u8 flag0;			// (flags & 0xf: 2 - 3 - ; etc - invalid£©
+	u8 flag0;			// (flags & 0xf: 2 - 3 - ; etc - invalidï¼‰
 	u8 flag1;
 	u32 unknown1;
 	u32 width;
@@ -86,9 +86,9 @@ typedef struct {
 } lim_header_t;
 
 typedef struct {
-	u32 uncomprlen;		// ½âÑ¹ºóµÄ³¤¶È
-	u32 comprlen;		// lz+×ÖµäÑ¹ËõµÄ³¤¶È
-	u16 code_number;	// ×Öµä³¤¶È
+	u32 uncomprlen;		// è§£å‹åçš„é•¿åº¦
+	u32 comprlen;		// lz+å­—å…¸å‹ç¼©çš„é•¿åº¦
+	u16 code_number;	// å­—å…¸é•¿åº¦
 	u16 unknown;		
 } lim_info_t;
 #pragma pack ()
@@ -323,7 +323,7 @@ static DWORD __wcg_decompress(BYTE *uncompr, DWORD uncomprlen,
 		if (getbits(&bits_struct, 3, &bitval))
 			break;
 
-		if (bitval) { /* ·ÇÖØ¸´Î»Êı¾İ */
+		if (bitval) { /* éé‡å¤ä½æ•°æ® */
 			if (getcode(&bits_struct, bitval, &code))
 				break;
 		
@@ -334,7 +334,7 @@ static DWORD __wcg_decompress(BYTE *uncompr, DWORD uncomprlen,
 			*__uncompr = code_table[code];
 			pos += 2;
 			act_uncomprlen += 2;
-		} else {	 /* ÖØ¸´Î»Êı¾İ */
+		} else {	 /* é‡å¤ä½æ•°æ® */
 			unsigned int count, code_len;
 			unsigned int i;
 
@@ -384,7 +384,7 @@ static DWORD __wcg_decompress2(BYTE *uncompr, DWORD uncomprlen,
 		if (getbits(&bits_struct, 4, &bitval))
 			break;
 
-		if (bitval) { /* ·ÇÖØ¸´Î»Êı¾İ */
+		if (bitval) { /* éé‡å¤ä½æ•°æ® */
 			if (getcode2(&bits_struct, bitval, &code))
 				break;
 		
@@ -395,7 +395,7 @@ static DWORD __wcg_decompress2(BYTE *uncompr, DWORD uncomprlen,
 			*__uncompr = code_table[code];
 			pos += 2;
 			act_uncomprlen += 2;
-		} else {	 /* ÖØ¸´Î»Êı¾İ */
+		} else {	 /* é‡å¤ä½æ•°æ® */
 			unsigned int count, code_len;
 			unsigned int i;
 
@@ -453,7 +453,7 @@ static DWORD __lim2_decompress(BYTE *uncompr, DWORD uncomprlen,
 		if (getbits(&bits_struct, 3, &bitval))
 			break;
 
-		if (bitval) { /* ·ÇÖØ¸´Î»Êı¾İ */
+		if (bitval) { /* éé‡å¤ä½æ•°æ® */
 			if (getcode(&bits_struct, bitval, &code))
 				break;
 		
@@ -462,7 +462,7 @@ static DWORD __lim2_decompress(BYTE *uncompr, DWORD uncomprlen,
 			
 			((u16 *)uncompr)[pos++] = code_table[code];
 			act_uncomprlen += 2;
-		} else {	 /* ÖØ¸´Î»Êı¾İ */
+		} else {	 /* é‡å¤ä½æ•°æ® */
 			unsigned int count, code_len;
 			unsigned int i;
 
@@ -508,7 +508,7 @@ static DWORD __lim2_decompress2(BYTE *uncompr, DWORD uncomprlen,
 		if (getbits(&bits_struct, 4, &bitval))
 			break;
 
-		if (bitval) { /* ·ÇÖØ¸´Î»Êı¾İ */
+		if (bitval) { /* éé‡å¤ä½æ•°æ® */
 			if (getcode2(&bits_struct, bitval, &code))
 				break;
 		
@@ -517,7 +517,7 @@ static DWORD __lim2_decompress2(BYTE *uncompr, DWORD uncomprlen,
 			
 			((u16 *)uncompr)[pos++] = code_table[code];
 			act_uncomprlen += 2;
-		} else {	 /* ÖØ¸´Î»Êı¾İ */
+		} else {	 /* é‡å¤ä½æ•°æ® */
 			unsigned int count, code_len;
 			unsigned int i;
 
@@ -564,7 +564,7 @@ static DWORD __lim3_decompress(BYTE *uncompr, DWORD uncomprlen,
 		if (getbits(&bits_struct, 3, &bitval))
 			break;
 
-		if (bitval) { /* ·ÇÖØ¸´Î»Êı¾İ */
+		if (bitval) { /* éé‡å¤ä½æ•°æ® */
 			if (getcode(&bits_struct, bitval, &code))
 				break;
 		
@@ -574,7 +574,7 @@ static DWORD __lim3_decompress(BYTE *uncompr, DWORD uncomprlen,
 			uncompr[pos] = code_table[code];
 			pos += 4;
 			act_uncomprlen++;
-		} else {	 /* ÖØ¸´Î»Êı¾İ */
+		} else {	 /* é‡å¤ä½æ•°æ® */
 			unsigned int count, code_len;
 			unsigned int i;
 
@@ -673,9 +673,9 @@ static int LiosGame_xfl_extract_directory(struct package *pkg,
 	pkg_dir->index_entry_length = sizeof(xfl_entry_t);
 	pkg_dir->directory = index_buffer;
 	pkg_dir->directory_length = index_length;
-	/* ¤Ü©`¤ó ¤Õ¤ê©`¤¯¤¹£¡ÌåÑé°æ:
-	9045.wcg: ÎŞĞ§µÄ×ÊÔ´ÎÄ¼ş(0)
-	grpo_dn.xfl£ºÌáÈ¡µÚ416¸öÊ±Ê§°Ü
+	/* ã¼ãƒ¼ã‚“ ãµã‚Šãƒ¼ãã™ï¼ä½“éªŒç‰ˆ:
+	9045.wcg: æ— æ•ˆçš„èµ„æºæ–‡ä»¶(0)
+	grpo_dn.xflï¼šæå–ç¬¬416ä¸ªæ—¶å¤±è´¥
 	*/
 	pkg_dir->flags = PKG_DIR_FLAG_SKIP0;
 
@@ -844,7 +844,7 @@ static int LiosGame_lwg_parse_resource_info(struct package *pkg,
 {
 	lwg_header_t *lwg_header;
 	BYTE *xfl_entry;
-	u32 x_pos, y_pos;	/* ¸ÃÍ¼ÏñÔÚÕû¸ö»­²¼ÖĞµÄÎ»ÖÃ£¨ÒÔ×óÉÏÉÏ½ÇÎªÔ­µã£© */
+	u32 x_pos, y_pos;	/* è¯¥å›¾åƒåœ¨æ•´ä¸ªç”»å¸ƒä¸­çš„ä½ç½®ï¼ˆä»¥å·¦ä¸Šä¸Šè§’ä¸ºåŸç‚¹ï¼‰ */
 	u8 unknown;	/* always 0x28 */
 
 	lwg_header = (lwg_header_t *)package_get_private(pkg);
@@ -1252,7 +1252,7 @@ static int LiosGame_lim2_extract_resource(struct package *pkg,
 		compr, lim_info.comprlen, code_table, lim_info.code_number);
 	free(compr);
 	free(code_table);
-	// FXIME£ºÄ³¸öÓÎÏ·µÄÍ¼4357.lim£¨decompress error occured (716768 VS 716800)£©
+	// FXIMEï¼šæŸä¸ªæ¸¸æˆçš„å›¾4357.limï¼ˆdecompress error occured (716768 VS 716800)ï¼‰
 	if (act_uncomprlen != lim_info.uncomprlen) {
 		fprintf(stderr, "WARNNING: lim2 decompress miss-match "
 				"(%d VS %d)\n", act_uncomprlen, lim_info.uncomprlen);
@@ -1261,7 +1261,7 @@ static int LiosGame_lim2_extract_resource(struct package *pkg,
 	}
 
 //printf("%x\n", wcg_info.unknown);
-	// BGR565(³ÌĞòÖĞ½«Æä×ª»¯Îªbmp 32bit£¬alphaµÄÉè¶¨Îª£ºÈç¹ûB=0ÇÒR=0ÇÒG=0x3f(È«ÂÌ)£¬alpha=0xff£»·ñÔòalpha=0
+	// BGR565(ç¨‹åºä¸­å°†å…¶è½¬åŒ–ä¸ºbmp 32bitï¼Œalphaçš„è®¾å®šä¸ºï¼šå¦‚æœB=0ä¸”R=0ä¸”G=0x3f(å…¨ç»¿)ï¼Œalpha=0xffï¼›å¦åˆ™alpha=0
 	if (MyBuildBMP16File(uncompr, act_uncomprlen, lim_header->width, 0 - lim_header->height, 
 			(BYTE **)&pkg_res->actual_data, (DWORD *)&pkg_res->actual_data_length, RGB565, NULL, malloc_callback)) {
 		free(uncompr);	
@@ -1337,7 +1337,7 @@ static int LiosGame_lim2_with_alpha_extract_resource(struct package *pkg,
 			compr, lim_info.comprlen, code_table, lim_info.code_number, 3 - p);
 		free(compr);
 		free(code_table);
-		// FIXME: CG_203.LIM¡¢4157.lim½âÑ¹·µ»Ø³¤¶È²»Æ¥Åä
+		// FIXME: CG_203.LIMã€4157.limè§£å‹è¿”å›é•¿åº¦ä¸åŒ¹é…
 		if (act_uncomprlen != lim_info.uncomprlen) {
 			fprintf(stderr, "WARNNING: lim2 (step %d) with alpha decompress miss-match "
 					"(%d VS %d)\n", p, act_uncomprlen, lim_info.uncomprlen);
@@ -1568,4 +1568,5 @@ int CALLBACK LiosGame_register_cui(struct cui_register_callback *callback)
 			return -1;
 	
 	return 0;
+}
 }

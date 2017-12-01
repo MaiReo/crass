@@ -14,17 +14,17 @@
 /*
 H:\tools\sketchFE1.31.19\sketch
 J:\eve_x_taiken
-H:\Crass\test_files\ExHIBIT\clear_crystal_cm\ClearƒNƒŠƒXƒ^ƒ‹ƒXƒg[ƒŠ[ƒY“à—eĞ‰î‘ÌŒ±”Å
+H:\Crass\test_files\ExHIBIT\clear_crystal_cm\Clearåƒ‹å„•åƒ—åƒå„–åƒ—åƒ©ä¹•å„•ä¹•åƒ˜æ’ªæ¢•å¾¯å¤˜æ‡±å°¡æ–‰
 N:\MOONSTONE\magiski
 E:\Primary_trial\Primary_trial
 */
 
 struct acui_information ExHIBIT_cui_information = {
 	_T("RETOUCH"),									/* copyright */
-	_T("ADVG¥ª©`¥µ¥ê¥ó¥°¥·¥¹¥Æ¥à sketch / ExHIBIT"),/* system */
+	_T("ADVGã‚ªãƒ¼ã‚µãƒªãƒ³ã‚°ã‚·ã‚¹ãƒ†ãƒ  sketch / ExHIBIT"),/* system */
 	_T(".gyu .grp"),								/* package */
 	_T("0.3.1"),									/* revison */
-	_T("³Õh¹«Ù\"),									/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),									/* author */
 	_T("2009-6-21 21:21"),							/* date */
 	NULL,											/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -33,8 +33,8 @@ struct acui_information ExHIBIT_cui_information = {
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];	/* "GYU\x1a" */
-	u32 mode;		/* 0x02000000 - cmode: SLD; 0x02000000 - SLD2(ÔÚSLDµÄ»ù´¡ÉÏÔÙ´Î¼ÓÃÜ) */
-	u32 key;		/* ¹Ù·½µÄ¹¤¾ßÖĞ£¬ÓĞ¸ögyu³ÌĞò£¬Ö´ĞĞgyu 9 xxx.gyu¿ÉÒÔ²Á³ıÕâ¸ökeyÎª0£¬ÕâÑù½âÃÜÕâÕÅÍ¼µÄkey¾ÍÃ»ÓĞÁË */
+	u32 mode;		/* 0x02000000 - cmode: SLD; 0x02000000 - SLD2(åœ¨SLDçš„åŸºç¡€ä¸Šå†æ¬¡åŠ å¯†) */
+	u32 key;		/* å®˜æ–¹çš„å·¥å…·ä¸­ï¼Œæœ‰ä¸ªgyuç¨‹åºï¼Œæ‰§è¡Œgyu 9 xxx.gyuå¯ä»¥æ“¦é™¤è¿™ä¸ªkeyä¸º0ï¼Œè¿™æ ·è§£å¯†è¿™å¼ å›¾çš„keyå°±æ²¡æœ‰äº† */
 	u32 bits_count;
 	u32 width;
 	u32 height;
@@ -57,17 +57,17 @@ typedef struct {
 /*
 format = flags & 0xf00;
 if (format == 0xf00)
-	¥¹¥Ê¥Ã¥×¥Ç©`¥¿
+	ã‚¹ãƒŠãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿
 else if (format == 0xe00)
 	palette data
 else if (format == 0xe00)
-	£°®’¤ßŞz¤ß
+	ï¼ç•³ã¿è¾¼ã¿
 else if (format == 0x200)
 	LZ
 else
-	¥Ù¥¿
+	ãƒ™ã‚¿
 	
-if (flags & 4) ¸üĞÂîIÓòŸo¤· else if (flags & 2) È«Óò else see dlt_page_pos_t
+if (flags & 4) æ›´æ–°é ˜åŸŸç„¡ã— else if (flags & 2) å…¨åŸŸ else see dlt_page_pos_t
 */
 	u32 flags;
 	u32 size;
@@ -101,7 +101,7 @@ typedef struct {
 } grp_header_t;
 
 typedef struct {
-	u32 id;				// ´Ó1¿ªÊ¼
+	u32 id;				// ä»1å¼€å§‹
 	u32 start_res_id;
 	u32 end_res_id;
 	u32 res_entries;
@@ -140,9 +140,9 @@ static DWORD lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -164,7 +164,7 @@ static DWORD lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 				break;
 			data = compr[curbyte++];
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -186,7 +186,7 @@ static DWORD lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 					break;
 				data = win[(win_offset + i) & (win_size - 1)];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -306,7 +306,7 @@ static int ExHIBIT_gyu_match(struct package *pkg)
 		if (key) {
 			gyu_header->key = strtoul(key, NULL, 16);
 		} else if (dll_path) {
-			//44ae590 ¿ÕÉ«
+			//44ae590 ç©ºè‰²
 			HMODULE dll;
 			u32 (__stdcall *RetouchSystem_dk)(u32, u32);
 
@@ -500,7 +500,7 @@ static int ExHIBIT_gyu_extract_resource(struct package *pkg,
 		actlen = comprlen;		
 	}
 
-	if (alpha && alpha_length) {	// alphaºÏ³É
+	if (alpha && alpha_length) {	// alphaåˆæˆ
 		BYTE *a = alpha;
 
 		DWORD dib32_line_len = gyu_header->width * 4;
@@ -519,7 +519,7 @@ static int ExHIBIT_gyu_extract_resource(struct package *pkg,
 		if (gyu_header->palette_colors) {
 			BYTE *src_line = actbuf;
 			BYTE *dst_line = dib32;
-			// alphaµÄÖµÔÚ[0,16]Ö®¼ä
+			// alphaçš„å€¼åœ¨[0,16]ä¹‹é—´
 			for (unsigned int y = 0; y < gyu_header->height; ++y) {
 				BYTE *sp = src_line;
 				BYTE *dp = dst_line;
@@ -558,7 +558,7 @@ static int ExHIBIT_gyu_extract_resource(struct package *pkg,
 			BYTE *src_line = actbuf;
 			BYTE *dst_line = dib32;
 			DWORD bpp = gyu_header->bits_count / 8;
-			// alphaµÄÖµÔÚ[0,16]Ö®¼ä
+			// alphaçš„å€¼åœ¨[0,16]ä¹‹é—´
 			for (unsigned int y = 0; y < gyu_header->height; ++y) {
 				BYTE *sp = src_line;
 				BYTE *dp = dst_line;
@@ -795,7 +795,7 @@ static int ExHIBIT_dlt_parse_resource_info(struct package *pkg,
 
 	my_dlt_entry = (my_dlt_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_dlt_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_dlt_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = my_dlt_entry->offset;
@@ -1168,7 +1168,7 @@ static int ExHIBIT_grp_parse_resource_info(struct package *pkg,
 	entry = (grp_info_entry_t *)pkg_res->actual_index_entry;
 	DWORD start_res_id = package_get_private(pkg);
 	sprintf(pkg_res->name, "%06d.ogg", start_res_id + pkg_res->index_number);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = entry->offset;
@@ -1251,7 +1251,7 @@ static int ExHIBIT_rld_extract_resource(struct package *pkg,
 		return -CUI_EREADVEC;
 	}
 
-	char *string = "PrimaryPrimary@`MagicalšTroublešScramble`@TRIAL80060020482566144100225253380048000400100";
+	char *string = "PrimaryPrimaryä¸‚ä¹£Magicalä»›Troubleä»›Scrambleä¹£ä¸‚TRIAL80060020482566144100225253380048000400100";
 	BYTE code[4] = { 0, 0, 0, 0 };
 	BYTE chr;
 	while ((chr = *string++)) {
@@ -1317,4 +1317,5 @@ int CALLBACK ExHIBIT_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

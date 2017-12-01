@@ -14,7 +14,7 @@ struct acui_information Selen_cui_information = {
 	NULL,					/* system */
 	_T(".exe"),				/* package */
 	_T("0.1.0"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2007-10-22 18:07"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -26,11 +26,11 @@ typedef struct {
 	u32 xfir_offset;
 	u32 unknown0;
 	u32 unknown1;	// ?
-	u32 total_compents;		// ×ÜµÄ×é¼þÊýÁ¿£¬°üÀ¨Íâ²¿×é¼þ£¨ºÍexeÔÚÍ¬¼¶Ä¿Â¼£©ÒÔ¼°ÄÚ²Ø×é¼þ£¨exeÄÚ£©
-	u32 internal_compents;	// ÄÚ²Ø×é¼þµãµÄ¸öÊý
+	u32 total_compents;		// æ€»çš„ç»„ä»¶æ•°é‡ï¼ŒåŒ…æ‹¬å¤–éƒ¨ç»„ä»¶ï¼ˆå’Œexeåœ¨åŒçº§ç›®å½•ï¼‰ä»¥åŠå†…è—ç»„ä»¶ï¼ˆexeå†…ï¼‰
+	u32 internal_compents;	// å†…è—ç»„ä»¶ç‚¹çš„ä¸ªæ•°
 } exe_header_t;
 
-// Ç°total_compents-internal_compents¸ö×é¼þÊôÓÚÍâ²¿×é¼þ
+// å‰total_compents-internal_compentsä¸ªç»„ä»¶å±žäºŽå¤–éƒ¨ç»„ä»¶
 typedef struct {
 	u32 offset;
 	u32 length;
@@ -120,9 +120,9 @@ static int Selen_exe_parse_resource_info(struct package *pkg,
 	strcpy(pkg_res->name, exe_entry->name);
 	strcat(pkg_res->name, ".");
 	strcat(pkg_res->name, exe_entry->suffix);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = exe_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = exe_entry->offset;
 
 	return 0;
@@ -234,4 +234,5 @@ int CALLBACK Selen_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

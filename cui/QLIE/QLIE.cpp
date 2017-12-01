@@ -9,29 +9,29 @@
 #include <stdio.h>
 #include <utility.h>
 
-// pack_ver == 1 && new_pack_ver1: J:\(Í¬ÈË¥½¥Õ¥È) [´ä‘z] ‰äÃ²¤Î•Š²Í\(Í¬ÈË¥½¥Õ¥È)[´ä‘z]‰äÃ²¤Î•Š²Í\GameData
+// pack_ver == 1 && new_pack_ver1: J:\(åŒäººã‚½ãƒ•ãƒˆ) [ç¿ æ†] å¤‰è²Œã®æ™©é¤\(åŒäººã‚½ãƒ•ãƒˆ)[ç¿ æ†]å¤‰è²Œã®æ™©é¤\GameData
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information QLIE_cui_information = {
-	_T("ÖêÊ½»áÉç¥ï©`¥à¥¹¥¨¥ó¥¿¥Æ¥¤¥á¥ó¥È"),						/* copyright */
+	_T("æ ªå¼ä¼šç¤¾ãƒ¯ãƒ¼ãƒ ã‚¹ã‚¨ãƒ³ã‚¿ãƒ†ã‚¤ãƒ¡ãƒ³ãƒˆ"),						/* copyright */
 	_T("QLIE AVD GAME CREATE SYSTEM"),			/* system */
 	_T(".pack .hash"),			/* package */
 	_T("0.8.3"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2008-12-13 15:43"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ·â°ü½á¹¹
-[0](...)×ÊÔ´Êı¾İ£¨¼ÓÃÜ£«Ñ¹Ëõ£©
-[index_offset_lo](...)Ë÷Òı¶Î
-[...](...)hashË÷Òı¶ÎÍ·¡¢hashË÷Òı¶Î£¨¼ÓÃÜ£«Ñ¹Ëõ£¬hash_index_entriesÏî£©£¬½áÎ²ÊÇindex_entriesÏîË÷Òı£¬Ã¿Ïî2×Ö½Ú£¬×÷ÓÃ²»Ã÷
-[...](0x440)ÓÃÓÚ¼ÆËãkeyºÍĞ£ÑéºÍµÄÊı¾İ
+/* å°åŒ…ç»“æ„
+[0](...)èµ„æºæ•°æ®ï¼ˆåŠ å¯†ï¼‹å‹ç¼©ï¼‰
+[index_offset_lo](...)ç´¢å¼•æ®µ
+[...](...)hashç´¢å¼•æ®µå¤´ã€hashç´¢å¼•æ®µï¼ˆåŠ å¯†ï¼‹å‹ç¼©ï¼Œhash_index_entriesé¡¹ï¼‰ï¼Œç»“å°¾æ˜¯index_entriesé¡¹ç´¢å¼•ï¼Œæ¯é¡¹2å­—èŠ‚ï¼Œä½œç”¨ä¸æ˜
+[...](0x440)ç”¨äºè®¡ç®—keyå’Œæ ¡éªŒå’Œçš„æ•°æ®
 [...](0x1c)pack_tailer_t
 */
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[16];				// "FilePackVer1.0", "FilePackVer2.0" or "FilePackVer3.0", 
@@ -215,9 +215,9 @@ static int pack_decompress(BYTE **ret_uncompr, DWORD *ret_uncomprlen,
 		for (i = 0; i < 256; i++)
 			node[LEFT_CHILD][i] = i;
 
-		/* ¹¹ÔìhuffmanÊ÷£¨ÒòÎªÓĞÖØ¸´µÄ½Úµãindex£¬ËùÒÔÓ¦¸ÃÊÇÒ»ÖÖ´®µÄÑ¹ËõËã·¨£©£¬²ÉÓÃÎ»ÖÃ±àÂë. ¶ÔÓÚ²»Á¬ĞøµÄÎ»ÖÃ£¬Î»ÖÃ±êÊ¶·û+0x80±íÊ¾£»
-		 * ¶ÔÓÚÁ¬ĞøµÄÎ»ÖÃ£¬Ö»ÓĞµÚÒ»¸ö+0x80£¬ºóÃæ¸úÒ»¸öÁ¬ĞøµÄÎ»ÖÃ¼ÆÊı£¬
-		 * ºóÃæµÄÎ»ÖÃÖ±½Ó¸úÊı¾İ£¬¶øÎŞĞèÎ»ÖÃ±êÊ¶·û.
+		/* æ„é€ huffmanæ ‘ï¼ˆå› ä¸ºæœ‰é‡å¤çš„èŠ‚ç‚¹indexï¼Œæ‰€ä»¥åº”è¯¥æ˜¯ä¸€ç§ä¸²çš„å‹ç¼©ç®—æ³•ï¼‰ï¼Œé‡‡ç”¨ä½ç½®ç¼–ç . å¯¹äºä¸è¿ç»­çš„ä½ç½®ï¼Œä½ç½®æ ‡è¯†ç¬¦+0x80è¡¨ç¤ºï¼›
+		 * å¯¹äºè¿ç»­çš„ä½ç½®ï¼Œåªæœ‰ç¬¬ä¸€ä¸ª+0x80ï¼Œåé¢è·Ÿä¸€ä¸ªè¿ç»­çš„ä½ç½®è®¡æ•°ï¼Œ
+		 * åé¢çš„ä½ç½®ç›´æ¥è·Ÿæ•°æ®ï¼Œè€Œæ— éœ€ä½ç½®æ ‡è¯†ç¬¦.
 		 */
 		for (i = 0; i < 256; ) {
 			count = compr[curbyte++];
@@ -250,7 +250,7 @@ static int pack_decompress(BYTE **ret_uncompr, DWORD *ret_uncomprlen,
 
 		unsigned int k = 0;
 		while (1) {
-			/* ´¦ÀíÃ¿Ò»¸ö×ÓÊ÷·ÖÖ§ */
+			/* å¤„ç†æ¯ä¸€ä¸ªå­æ ‘åˆ†æ”¯ */
 			if (k > 0)
 				index = child_node[--k];
 			else {
@@ -260,11 +260,11 @@ static int pack_decompress(BYTE **ret_uncompr, DWORD *ret_uncomprlen,
 				index = compr[curbyte++];
 			}
 
-			/* ´ïµ½Ò¶½Úµã */
+			/* è¾¾åˆ°å¶èŠ‚ç‚¹ */
 			if (node[LEFT_CHILD][index] == index)
 				uncompr[act_uncomprlen++] = index;
 			else {
-				/* ÏÈ×Ó×óÊ÷ºóÓÒ×ÓÊ÷ */
+				/* å…ˆå­å·¦æ ‘åå³å­æ ‘ */
 				child_node[k++] = node[RIGHT_CHILD][index];
 				child_node[k++] = node[LEFT_CHILD][index];
 			}
@@ -294,7 +294,7 @@ static int abmp7_decompress(BYTE **ret_uncompr, DWORD *ret_uncomprlen, BYTE *dat
 	if (ret)
 		return ret;
 
-	/* Õâ¶ÎĞÅÏ¢ÒâÒå²»Ã÷ */
+	/* è¿™æ®µä¿¡æ¯æ„ä¹‰ä¸æ˜ */
 	free(uncompr);
 
 	act_data_len = *(u32 *)(compr + comprlen);
@@ -322,7 +322,7 @@ static int abmp10_decompress(BYTE **ret_uncompr, DWORD *ret_uncomprlen, BYTE *da
 	if (ret)
 		return ret;
 
-	/* Õâ¶ÎĞÅÏ¢ÒâÒå²»Ã÷ */
+	/* è¿™æ®µä¿¡æ¯æ„ä¹‰ä¸æ˜ */
 	free(uncompr);
 
 	act_data_len = *(u32 *)(compr + comprlen);
@@ -341,7 +341,7 @@ static int abmp10_decompress(BYTE **ret_uncompr, DWORD *ret_uncomprlen, BYTE *da
 
 /********************* pack *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int QLIE_pack_match(struct package *pkg)
 {
 	pack_tailer_t pack_tailer;
@@ -365,7 +365,7 @@ static int QLIE_pack_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int QLIE_pack_extract_directory(struct package *pkg,
 											struct package_directory *pkg_dir)
 {
@@ -397,9 +397,9 @@ static int QLIE_pack_extract_directory(struct package *pkg,
 
 		if (pack_ver == 3) {
 			key = gen_hash((WORD *)&buf[0x24], 256) & 0x0fffffff;
-			decode((DWORD *)buf, 32, key);// ¼ÆËã³öĞ£ÑéºÍ
+			decode((DWORD *)buf, 32, key);// è®¡ç®—å‡ºæ ¡éªŒå’Œ
 		} else if (pack_ver == 2)
-			decode((DWORD *)buf, 32, 0);// ¼ÆËã³öĞ£ÑéºÍ
+			decode((DWORD *)buf, 32, 0);// è®¡ç®—å‡ºæ ¡éªŒå’Œ
 	}
 
 	u32 hash_size = 0;
@@ -475,7 +475,7 @@ retry:
 		return -CUI_EMEM;
 	}
 
-	/* Õâ¸ö±íµÄ¾ßÌå×÷ÓÃ²»Ã÷ */
+	/* è¿™ä¸ªè¡¨çš„å…·ä½“ä½œç”¨ä¸æ˜ */
 	p = hash_index;
 	for (i = 0; i < hash_header->hash_index_entries; i++) {		
 		u16 n = *(u16 *)p;
@@ -589,7 +589,7 @@ no_hash:
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int QLIE_pack_parse_resource_info(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -597,15 +597,15 @@ static int QLIE_pack_parse_resource_info(struct package *pkg,
 
 	my_entry = (my_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_entry->comprlen;
-	pkg_res->actual_data_length = my_entry->uncomprlen;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = my_entry->uncomprlen;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = (u32)my_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int QLIE_pack_extract_resource(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -726,7 +726,7 @@ static int QLIE_pack_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int QLIE_pack_save_resource(struct resource *res, 
 										struct package_resource *pkg_res)
 {
@@ -750,7 +750,7 @@ static int QLIE_pack_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void QLIE_pack_release_resource(struct package *pkg, 
 											struct package_resource *pkg_res)
 {
@@ -764,7 +764,7 @@ static void QLIE_pack_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void QLIE_pack_release(struct package *pkg, 
 								   struct package_directory *pkg_dir)
 {
@@ -776,7 +776,7 @@ static void QLIE_pack_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation QLIE_pack_operation = {
 	QLIE_pack_match,					/* match */
 	QLIE_pack_extract_directory,		/* extract_directory */
@@ -787,10 +787,10 @@ static cui_ext_operation QLIE_pack_operation = {
 	QLIE_pack_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK QLIE_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".pack"), NULL, 
 		NULL, &QLIE_pack_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -800,4 +800,5 @@ int CALLBACK QLIE_register_cui(struct cui_register_callback *callback)
 			return -1;
 #endif
 	return 0;
+}
 }

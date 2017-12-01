@@ -129,7 +129,7 @@ static struct package *package_alloc(const TCHAR *full_path)
 	alloc_len = sizeof(*pkg) + (_tcslen(full_path) + 1) * sizeof(TCHAR);
 	pkg = (struct package *)LocalAlloc(LMEM_FIXED | LMEM_ZEROINIT, alloc_len);
 	if (!pkg) {
-		crass_printf(_T("·ÖÅäpackageÊ±·¢Éú´íÎó\n"));
+		crass_printf(_T("åˆ†é…packageæ—¶å‘ç”Ÿé”™è¯¯\n"));
 		return NULL;		
 	}
 	pkg->release = package_free;
@@ -160,7 +160,7 @@ static struct package *__package_create(const TCHAR *base_dir, const TCHAR *path
 		base_len = 0;
 
 	if (PathAppend(full_path, path) == FALSE) {
-		crass_printf(_T("%s: ÎŞĞ§µÄpackageÂ·¾¶ (%s)\n"), path, base_dir);
+		crass_printf(_T("%s: æ— æ•ˆçš„packageè·¯å¾„ (%s)\n"), path, base_dir);
 		return NULL;
 	}
 		
@@ -171,11 +171,11 @@ static struct package *__package_create(const TCHAR *base_dir, const TCHAR *path
 	pkg->path = pkg->full_path + base_len;
 	pkg->name = PathFindFileName(pkg->full_path);
 	if (!pkg->name) {
-		crass_printf(_T("%s: ÎŞĞ§µÄpackageÂ·¾¶\n"), pkg->full_path);
+		crass_printf(_T("%s: æ— æ•ˆçš„packageè·¯å¾„\n"), pkg->full_path);
 		__package_put(pkg);
 		return NULL;
 	}
-	// ÎªÁËÖ§³ÖË«ºó×ºÃûÆ¥Åä
+	// ä¸ºäº†æ”¯æŒåŒåç¼€ååŒ¹é…
 	//pkg->extension = PathFindExtension(pkg->full_path);
 	pkg->extension = _tcsstr(pkg->name, _T("."));
 	if (!pkg->extension || (pkg->extension[0] != _T('.')))
@@ -234,7 +234,7 @@ static int __package_search_file(const TCHAR *path)
 	FindClose(find_file);
 
 	if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-		crass_printf(_T("%s: ¸ÃÂ·¾¶²»ÊÇÎÄ¼ş¶øÊÇÄ¿Â¼\n"), path);
+		crass_printf(_T("%s: è¯¥è·¯å¾„ä¸æ˜¯æ–‡ä»¶è€Œæ˜¯ç›®å½•\n"), path);
 		return 0;
 	}
 
@@ -267,7 +267,7 @@ static int __package_search_directory(const TCHAR *base_dir,
 
 	_tcsncpy(full_path, base_dir, SOT(full_path));
 	if (PathAppend(full_path, sub_dir) == FALSE) {
-		crass_printf(_T("%s: ÎŞĞ§µÄpackageÂ·¾¶ (%s)\n"), sub_dir, base_dir);
+		crass_printf(_T("%s: æ— æ•ˆçš„packageè·¯å¾„ (%s)\n"), sub_dir, base_dir);
 		return -1;
 	}
 	
@@ -284,7 +284,7 @@ static int __package_search_directory(const TCHAR *base_dir,
 		&& _tcscmp(find_data.cFileName, _T(".."))) {
 			_tcsncpy(new_sub_path, sub_dir, SOT(new_sub_path));
 			if (PathAppend(new_sub_path, find_data.cFileName) == FALSE) {
-				crass_printf(_T("%s: ÎŞĞ§µÄpackageÂ·¾¶ (%s)\n"), find_data.cFileName, sub_dir);
+				crass_printf(_T("%s: æ— æ•ˆçš„packageè·¯å¾„ (%s)\n"), find_data.cFileName, sub_dir);
 				FindClose(find_file);
 				return -1;
 			}
@@ -316,7 +316,7 @@ next:
 				&& _tcscmp(find_data.cFileName, _T(".."))) {					
 			_tcsncpy(new_sub_path, sub_dir, SOT(new_sub_path));
 			if (PathAppend(new_sub_path, find_data.cFileName) == FALSE) {
-				crass_printf(_T("%s: ÎŞĞ§µÄpackageÂ·¾¶ (%s)\n"), find_data.cFileName, sub_dir);
+				crass_printf(_T("%s: æ— æ•ˆçš„packageè·¯å¾„ (%s)\n"), find_data.cFileName, sub_dir);
 				err = -1;
 				break;
 			}
@@ -1147,3 +1147,4 @@ PACKAGE_CORE_API int pkg_res_set_name(struct package_resource *pkg_res, char *na
 	}
 }
 #endif
+f

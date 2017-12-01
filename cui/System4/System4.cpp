@@ -14,30 +14,30 @@
 
 using namespace std;
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information System4_cui_information = {
-	_T("¥¢¥ê¥¹¥½¥Õ¥È"),			/* copyright */
+	_T("ã‚¢ãƒªã‚¹ã‚½ãƒ•ãƒˆ"),			/* copyright */
 	_T("AliceSoft System4.0"),	/* system */
 	_T(".ald .ain .AJP .bgi .acx .alk"),	/* package */
 	_T("0.9.2"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2009-3-1 14:30"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[2];		// "NL"
 	// 0x01 0x00 0x01 0x00 0x00 0x00 0x01 0x** 0x00 0x00 0x00 0x00 0x00 0x00 
 	s8 unknown0[7];
-	u32 index_entries;	/* ÕæÕıÓĞĞ§µÄÎÄ¼şµÄÊıÁ¿ */
+	u32 index_entries;	/* çœŸæ­£æœ‰æ•ˆçš„æ–‡ä»¶çš„æ•°é‡ */
 	s8 unknown1[3];
 } ald_tailer_t;
 
 typedef struct {
-	u32 entry_length;	/* entryÍ·µÄ³¤¶È£¨°üº¬±¾×Ö¶Î£© */
+	u32 entry_length;	/* entryå¤´çš„é•¿åº¦ï¼ˆåŒ…å«æœ¬å­—æ®µï¼‰ */
 	u32 length;
 	u32 unknown[2];
 } ald_entry_t;
@@ -136,7 +136,7 @@ static void *my_malloc(DWORD len)
 	return new BYTE[len];
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int System4_save_resource(struct resource *res, 
 								 struct package_resource *pkg_res)
 {
@@ -160,7 +160,7 @@ static int System4_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void System4_release_resource(struct package *pkg, 
 									 struct package_resource *pkg_res)
 {
@@ -174,7 +174,7 @@ static void System4_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void System4_release(struct package *pkg, 
 							struct package_directory *pkg_dir)
 {
@@ -201,7 +201,7 @@ static void decode(BYTE *data)
 
 /********************* ald *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int System4_ald_match(struct package *pkg)
 {
 	s8 magic[2];
@@ -223,7 +223,7 @@ static int System4_ald_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int System4_ald_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -273,12 +273,12 @@ static int System4_ald_extract_directory(struct package *pkg,
 	BYTE *p_num_index = num_index;
 	BYTE *p_offset_index = offset_index;
 	for (DWORD i = 0, k = 0; i < num_index_entries; ++i) {
-		u8 ald_id = *p_num_index++;			// xxxxT[A-Z], ´Ó1¿ªÊ¼Ò»Ò»¶ÔÓ¦
-		u16 res_id = *(u16 *)p_num_index;	// ´Ó1¿ªÊ¼
-											// ÊÂÊµÉÏ£¬Õâ¸öÌØĞÔÒ²ĞíÄÜÓÃ×÷Éı¼¶·â°ü¡£¼ÙÉèWC.aldÀïÃæÓĞald=1µÄ²¹¶¡ÎÄ¼ş£¨Õë¶ÔWA.aldµÄ²¹¶¡£©
+		u8 ald_id = *p_num_index++;			// xxxxT[A-Z], ä»1å¼€å§‹ä¸€ä¸€å¯¹åº”
+		u16 res_id = *(u16 *)p_num_index;	// ä»1å¼€å§‹
+											// äº‹å®ä¸Šï¼Œè¿™ä¸ªç‰¹æ€§ä¹Ÿè®¸èƒ½ç”¨ä½œå‡çº§å°åŒ…ã€‚å‡è®¾WC.aldé‡Œé¢æœ‰ald=1çš„è¡¥ä¸æ–‡ä»¶ï¼ˆé’ˆå¯¹WA.aldçš„è¡¥ä¸ï¼‰
 		p_num_index += 2;
 
-		if (!ald_id)	// ÎŞĞ§
+		if (!ald_id)	// æ— æ•ˆ
 			continue;
 
 		ald_entry_t entry;
@@ -318,7 +318,7 @@ static int System4_ald_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int System4_ald_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -326,15 +326,15 @@ static int System4_ald_parse_resource_info(struct package *pkg,
 
 	y_ald_entry = (my_ald_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, y_ald_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = y_ald_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = y_ald_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int System4_ald_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -431,7 +431,7 @@ retry:
 			for (DWORD p = 0; p < BPP; ++p) {
 				for (DWORD y = 0; y < ((info->height + 1) / 2); ++y) {	
 					dst = uncompr_dib + y * bmp24_line_len * 2 + p;
-					/* ¸ÃÑ­»·ÓÃÓÚÌî³äÃ¿2ĞĞÊı¾İÖĞµÄB, G, RÎ»ÖÃµÄĞÅÏ¢ */
+					/* è¯¥å¾ªç¯ç”¨äºå¡«å……æ¯2è¡Œæ•°æ®ä¸­çš„B, G, Rä½ç½®çš„ä¿¡æ¯ */
 					for (DWORD x = 0; x < ((info->width + 1) / 2); ++x) {				
 						dst[bmp24_line_len * 0 + x * BPP * 2 + 0] = *src++;
 						dst[bmp24_line_len * 1 + x * BPP * 2 + 0] = *src++;
@@ -479,7 +479,7 @@ retry:
 		DWORD alpha_line_len = 0;
 		if (alpha_compr) {
 			if (info->is_compressed) {
-				// ¤ª‹İ˜”GA.ald: cg06501.QNT
+				// ãŠå¬¢æ§˜GA.ald: cg06501.QNT
 				alpha_uncomprlen = info->width * (info->height + 1);
 				alpha_uncompr = new BYTE[alpha_uncomprlen];
 				if (!alpha_uncompr) {
@@ -770,7 +770,7 @@ retry:
 		pkg_res->replace_extension = _T(".jpg");
 		pkg_res->actual_data = raw;
 		pkg_res->actual_data_length = raw_len;
-	} else if (!memcmp(raw, "RIFF", 4)) {	// ±¾¸ÃÔÚalkÖĞ´¦Àí
+	} else if (!memcmp(raw, "RIFF", 4)) {	// æœ¬è¯¥åœ¨alkä¸­å¤„ç†
 		pkg_res->flags |= PKG_RES_FLAG_REEXT;
 		pkg_res->replace_extension = _T(".wav");
 		pkg_res->actual_data = raw;
@@ -783,7 +783,7 @@ retry:
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation System4_ald_operation = {
 	System4_ald_match,				/* match */
 	System4_ald_extract_directory,	/* extract_directory */
@@ -796,7 +796,7 @@ static cui_ext_operation System4_ald_operation = {
 
 /********************* AJP *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int System4_AJP_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -817,7 +817,7 @@ static int System4_AJP_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int System4_AJP_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -879,7 +879,7 @@ static cui_ext_operation System4_AJP_operation = {
 
 /********************* alk *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int System4_alk_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -900,7 +900,7 @@ static int System4_alk_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int System4_alk_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -928,7 +928,7 @@ static int System4_alk_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int System4_alk_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -936,7 +936,7 @@ static int System4_alk_parse_resource_info(struct package *pkg,
 
 	alk_entry = (alk_entry_t *)pkg_res->actual_index_entry;
 	sprintf(pkg_res->name, "%04d", pkg_res->index_number);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = alk_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = alk_entry->offset;
@@ -956,7 +956,7 @@ static cui_ext_operation System4_alk_operation = {
 
 /********************* ain *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int System4_ain_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -965,7 +965,7 @@ static int System4_ain_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int System4_ain_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {	
@@ -996,7 +996,7 @@ static int System4_ain_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation System4_ain_operation = {
 	System4_ain_match,				/* match */
 	NULL,							/* extract_directory */
@@ -1009,7 +1009,7 @@ static cui_ext_operation System4_ain_operation = {
 
 /********************* bgi *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int System4_bgi_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -1018,7 +1018,7 @@ static int System4_bgi_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int System4_bgi_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {	
@@ -1041,7 +1041,7 @@ static int System4_bgi_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation System4_bgi_operation = {
 	System4_bgi_match,				/* match */
 	NULL,							/* extract_directory */
@@ -1054,7 +1054,7 @@ static cui_ext_operation System4_bgi_operation = {
 
 /********************* acx *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int System4_acx_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -1086,7 +1086,7 @@ static int System4_acx_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int System4_acx_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1121,7 +1121,7 @@ static int System4_acx_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation System4_acx_operation = {
 	System4_acx_match,				/* match */
 	NULL,							/* extract_directory */
@@ -1132,7 +1132,7 @@ static cui_ext_operation System4_acx_operation = {
 	System4_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK System4_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".ald"), NULL, 
@@ -1160,4 +1160,5 @@ int CALLBACK System4_register_cui(struct cui_register_callback *callback)
 			return -1;
 	
 	return 0;
+}
 }

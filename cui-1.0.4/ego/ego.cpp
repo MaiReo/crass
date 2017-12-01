@@ -15,7 +15,7 @@ struct acui_information ego_cui_information = {
 	NULL,					/* system */
 	_T(".dat"),				/* package */
 	_T("1.1.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-3-26 20:24"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE | ACUI_ATTRIBUTE_PRELOAD 
@@ -25,13 +25,13 @@ struct acui_information ego_cui_information = {
 typedef struct {
 	s8 magic[4];		// "PAK0"
 	u32 data_offset;
-	u32 dir_numbers;	// °üÀ¨¸ùÄ¿Â¼
+	u32 dir_numbers;	// åŒ…æ‹¬æ ¹ç›®å½•
 	u32 index_entries;
 } dat_header_t;
 
 typedef struct {
-	u32 parent_dir;		// ËùÊôµÄdir¡£-1±íÊ¾Ã»ÓÐ¸¸Ä¿Â¼£¨ÒòÎª¸ùÄ¿Â¼Ã»ÓÐ¸¸Ä¿Â¼)
-	u32 last_file;		// ¸ÃÄ¿Â¼ÏÂ×îºó1¸öÎÄ¼þµÄË÷ÒýºÅ(»ùÓÚ1)
+	u32 parent_dir;		// æ‰€å±žçš„dirã€‚-1è¡¨ç¤ºæ²¡æœ‰çˆ¶ç›®å½•ï¼ˆå› ä¸ºæ ¹ç›®å½•æ²¡æœ‰çˆ¶ç›®å½•)
+	u32 last_file;		// è¯¥ç›®å½•ä¸‹æœ€åŽ1ä¸ªæ–‡ä»¶çš„ç´¢å¼•å·(åŸºäºŽ1)
 } dat_dir_entry_t;
 
 typedef struct {
@@ -55,7 +55,7 @@ typedef struct {
 	u32 key;
 } edb2_header_t;
 
-typedef struct {	// ½ÓÔÚºóÃæµÄÊÇhash_length³¤µÄcipher hashÖµ£¬È»ºóÊÇcipherÊý¾Ý
+typedef struct {	// æŽ¥åœ¨åŽé¢çš„æ˜¯hash_lengthé•¿çš„cipher hashå€¼ï¼Œç„¶åŽæ˜¯cipheræ•°æ®
 	s8 maigc[4];	// "TUTA"
 	u32 data_length;
 	u32 hash_length;
@@ -103,7 +103,7 @@ static void dat_get_dir_name(char *name_index, dat_dir_entry_t *dir_index, DWORD
 	DWORD dir_idx[256];
 	DWORD idx = 0;
 	
-	/* ±éÀúµ½¸ùÄ¿Â¼ */
+	/* éåŽ†åˆ°æ ¹ç›®å½• */
 	while (dir_index[dir].parent_dir != -1) {
 		dir_idx[idx++] = dir;
 		dir = dir_index[dir].parent_dir;
@@ -246,9 +246,9 @@ static int ego_dat_parse_resource_info(struct package *pkg,
 
 	my_dat_entry = (my_dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_dat_entry->offset;
 
 	return 0;
@@ -282,7 +282,7 @@ static int ego_dat_extract_resource(struct package *pkg,
 		DWORD i;
 
 		switch (ecc_header->mode) {
-		case 0:	/* Ã÷ÎÄ */
+		case 0:	/* æ˜Žæ–‡ */
 			break;
 		case 1:
 			for (i = 0; i < loop; i++) {
@@ -318,7 +318,7 @@ static int ego_dat_extract_resource(struct package *pkg,
 		DWORD i;
 
 		switch (ecc_header->mode) {
-		case 0:	/* Ã÷ÎÄ */
+		case 0:	/* æ˜Žæ–‡ */
 			break;
 		case 1:
 			for (i = 0; i < loop; i++) {
@@ -357,7 +357,7 @@ static int ego_dat_extract_resource(struct package *pkg,
 		DWORD i;
 
 		switch (ecc_header->mode) {
-		case 0:	/* Ã÷ÎÄ */
+		case 0:	/* æ˜Žæ–‡ */
 		default:
 			break;
 		case 1:
@@ -421,13 +421,13 @@ static int ego_dat_extract_resource(struct package *pkg,
 		memcpy(uncompr, cipher, cipher_len);
 	} else if (!strncmp((char *)compr, "TCRP", 4)) {
 		DWORD cipher_len = comprlen - 8;
-		HCRYPTPROV hCryptProv;   // ¶¨ÒåÒ»¸öCSPÄ£¿éµÄ¾ä±ú
+		HCRYPTPROV hCryptProv;   // å®šä¹‰ä¸€ä¸ªCSPæ¨¡å—çš„å¥æŸ„
 		HCRYPTHASH hHash;
 		HCRYPTKEY hKey;
 	//	BYTE passwd = 0;
 		BYTE *cipher = compr + 8;
 
-		//Õâ¸öº¯ÊýÊÇ»ñÈ¡ÓÐÄ³¸öÈÝÆ÷µÄCSPÄ£¿éµÄÖ¸Õë£¬³É¹¦·µ»ØTRUE
+		//è¿™ä¸ªå‡½æ•°æ˜¯èŽ·å–æœ‰æŸä¸ªå®¹å™¨çš„CSPæ¨¡å—çš„æŒ‡é’ˆï¼ŒæˆåŠŸè¿”å›žTRUE
 		if (CryptAcquireContext(&hCryptProv, _T("FLD"), _T("Microsoft Base Cryptographic Provider v1.0"),
 				PROV_RSA_FULL, 0) == FALSE) {
 			free(compr);
@@ -448,7 +448,7 @@ static int ego_dat_extract_resource(struct package *pkg,
 			return -CUI_EMATCH;		
 		}
 #endif
-		// »ñÈ¡¶Ô»°ÃÜÂë
+		// èŽ·å–å¯¹è¯å¯†ç 
 		if (CryptDeriveKey(hCryptProv, CALG_RC4, hHash, 0, &hKey) == FALSE) {
 			CryptDestroyHash(hHash);
 			CryptReleaseContext(hCryptProv, 0);
@@ -713,9 +713,9 @@ static int ego_old_dat_parse_resource_info(struct package *pkg,
 
 	my_dat_entry = (my_dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_dat_entry->offset;
 
 	return 0;
@@ -761,4 +761,5 @@ int CALLBACK ego_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

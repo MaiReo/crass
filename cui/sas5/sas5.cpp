@@ -9,14 +9,14 @@
 #include <utility.h>
 #include <stdio.h>
 
-// M:\¤¹¤¿¤¸¤ª¾v²è\Æ¬Áµ¤¤¤ÎÔÂ¡«ÌåòY°æ¡«
+// M:\ã™ãŸã˜ãŠç·‘èŒ¶\ç‰‡æ‹ã„ã®æœˆï½žä½“é¨“ç‰ˆï½ž
 
 struct acui_information sas5_cui_information = {
-	_T("ÇïÉ½˜‹Æ½"),			/* copyright */
+	_T("ç§‹å±±æ§‹å¹³"),			/* copyright */
 	_T("Solfa Standard Novel System"),	/* system */
 	_T(".iar .war"),		/* package */
 	_T("0.5.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-7-5 19:23"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -56,19 +56,19 @@ typedef struct {
 } iar_info_header_t;
 
 typedef struct {		// 0x40
-	u16 flags;			// µÍ6Îª²»ÄÜÈ«Îª0£»bit9 - dataÊÇ·ñ´æÔÚdata_offset
+	u16 flags;			// ä½Ž6ä¸ºä¸èƒ½å…¨ä¸º0ï¼›bit9 - dataæ˜¯å¦å­˜åœ¨data_offset
 	u8 pad;
 	u8 is_compressed;	// 0 or 1
-	u32 unknown0;		// (0)¿Ï¶¨ÊÇÒ»¸ö³¤¶È×Ö¶Î
+	u32 unknown0;		// (0)è‚¯å®šæ˜¯ä¸€ä¸ªé•¿åº¦å­—æ®µ
 	u32 uncomprlen;
 	u32 palette_length;
 	
 	u32 comprlen;
 	u32 unknown1;		// (0)
-	/* ÎÄ×ÖÏÔÊ¾µÄÆðÊ¼Î»ÖÃµÄ×ø±ê(10,10)ÊÓÎªÔ­µãµÄ»°£¬
-	 * ÄÇÃ´¸ÃÕâÀïµÄ×ø±êÊÇÏà¶ÔÓÚÎÄ×ÖÏÔÊ¾µÄÆðÊ¼Î»ÖÃµÄÏà¶Ô×ø±êµÄ¸ºÖµ
-	 *£¨±³¾°¿òÎª10£¬±íÊ¾±³¾°¿ò×óÉÏ½ÇÎ»ÓÚ¸ÃÔ­µã(-10,-10)µÄÎ»ÖÃÉÏ£©£¬
-	 * ÓÒ±ßµÄ·½¿òÎ»ÖÃ×ÔÈ»¶¼ÊÇ¸ºÖµ£©
+	/* æ–‡å­—æ˜¾ç¤ºçš„èµ·å§‹ä½ç½®çš„åæ ‡(10,10)è§†ä¸ºåŽŸç‚¹çš„è¯ï¼Œ
+	 * é‚£ä¹ˆè¯¥è¿™é‡Œçš„åæ ‡æ˜¯ç›¸å¯¹äºŽæ–‡å­—æ˜¾ç¤ºçš„èµ·å§‹ä½ç½®çš„ç›¸å¯¹åæ ‡çš„è´Ÿå€¼
+	 *ï¼ˆèƒŒæ™¯æ¡†ä¸º10ï¼Œè¡¨ç¤ºèƒŒæ™¯æ¡†å·¦ä¸Šè§’ä½äºŽè¯¥åŽŸç‚¹(-10,-10)çš„ä½ç½®ä¸Šï¼‰ï¼Œ
+	 * å³è¾¹çš„æ–¹æ¡†ä½ç½®è‡ªç„¶éƒ½æ˜¯è´Ÿå€¼ï¼‰
 	 */
 	u32 orig_x;
 	u32 orig_y;
@@ -77,10 +77,10 @@ typedef struct {		// 0x40
 	s32 height;
 	u32 pitch;
 	u32 unknown7;
-	// ÏÂÃæµÄ×Ö¶Î£¬version 2ºÍ3²ÅÓÐ
-	u32 left_top_x;		// ×óÉÏ½ÇÏà¶ÔÓÚ»æÍ¼±³¾°Ô­µãµÄ×ø±ê£¨²»ÊÇÆÁÄ»Ô­µã×ø±ê£©
+	// ä¸‹é¢çš„å­—æ®µï¼Œversion 2å’Œ3æ‰æœ‰
+	u32 left_top_x;		// å·¦ä¸Šè§’ç›¸å¯¹äºŽç»˜å›¾èƒŒæ™¯åŽŸç‚¹çš„åæ ‡ï¼ˆä¸æ˜¯å±å¹•åŽŸç‚¹åæ ‡ï¼‰
 	u32 left_top_y;
-	u32 right_top_x;	// ÓÒÉÏ½ÇÏà¶ÔÓÚ»æÍ¼±³¾°ÓÒÉÏ½ÇµÄ×ø±ê£¨²»ÊÇÆÁÄ»Ô­µã×ø±ê£©
+	u32 right_top_x;	// å³ä¸Šè§’ç›¸å¯¹äºŽç»˜å›¾èƒŒæ™¯å³ä¸Šè§’çš„åæ ‡ï¼ˆä¸æ˜¯å±å¹•åŽŸç‚¹åæ ‡ï¼‰
 	u32 right_top_y;
 } img_header_t;
 
@@ -202,7 +202,7 @@ static void iar_uncompress(BYTE *uncompr, BYTE *compr)
 						}
 					}
 				}
-			} else {	// ÍâwhileÍâ
+			} else {	// å¤–whileå¤–
 				flag_shift;
 				copy_bytes = 2;
 				if (flag & 1) {
@@ -280,7 +280,7 @@ static int __sas5_get_resource_name(DWORD res_load_id, char *name,
 		char *info = resr;
 		char *pkg_name = info;
 		info += strlen(pkg_name) + 1;
-		u32 res_id = *(u32 *)info;	// ËùÔÚµÄ·â°üµÄÄÚ²¿id
+		u32 res_id = *(u32 *)info;	// æ‰€åœ¨çš„å°åŒ…çš„å†…éƒ¨id
 		resr += res_info_sz;
 
 		if (strstr(pkg_name, pack_name)) {
@@ -377,14 +377,14 @@ static int sas5_sec5_extract_resource(struct package *pkg,
 		if (!strncmp((char *)&magic, "ENDS", 4)) {
 			break;
 		} else if (!strncmp((char *)&magic, "RESR", 4)) {
-			// ËùÓÐÄÚ²¿×ÊÔ´ÎÄ¼þÁÐ±í
+			// æ‰€æœ‰å†…éƒ¨èµ„æºæ–‡ä»¶åˆ—è¡¨
 			;
 		} else if (!strncmp((char *)&magic, "VARS", 4)) {
 			;
 		} else if (!strncmp((char *)&magic, "CZIT", 4)) {
 			;
 		} else if (!strncmp((char *)&magic, "OPTN", 4)) {
-			// msÊÇÓÎÏ·ÉèÖÃÏà¹ØµÄ±äÁ¿ºÍÉè¶¨Öµ
+			// msæ˜¯æ¸¸æˆè®¾ç½®ç›¸å…³çš„å˜é‡å’Œè®¾å®šå€¼
 			;
 		} else if (!strncmp((char *)&magic, "CODE", 4)) {
 			decrypt(p, seg_len);
@@ -393,9 +393,9 @@ static int sas5_sec5_extract_resource(struct package *pkg,
 		} else if (!strncmp((char *)&magic, "VARA", 4)) {
 			;
 		} else if (!strncmp((char *)&magic, "RTFC", 4)) {
-			// ËùÓÐÓÎÏ·ÎÄ¼þÁÐ±í
-			// [0](4)ÎÄ¼þÊýÁ¿
-			// [4](-1)ÎÄ¼þÃû1
+			// æ‰€æœ‰æ¸¸æˆæ–‡ä»¶åˆ—è¡¨
+			// [0](4)æ–‡ä»¶æ•°é‡
+			// [4](-1)æ–‡ä»¶å1
 			// ...
 			;
 		}
@@ -632,9 +632,9 @@ static int sas5_iar_parse_resource_info(struct package *pkg,
 
 	my_iar_entry = (my_iar_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, my_iar_entry->name, 64);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_iar_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_iar_entry->offset;
 
 	return 0;
@@ -691,7 +691,7 @@ static int sas5_iar_extract_resource(struct package *pkg,
 		|| !(header.flags & 0x3F) )
     return CUI_EMATCH;
 
-	if (header.flags & 0x0200) {	// ÓÐpalette
+	if (header.flags & 0x0200) {	// æœ‰palette
 		palette = (BYTE *)malloc(header.palette_length);
 		if (!palette)
 			return -CUI_EMEM;
@@ -774,7 +774,7 @@ static int sas5_iar_extract_resource(struct package *pkg,
 				   header.palette_length, header.width, 
 					header.height, bpp);
 		break;
-	case 0x81c:	// ²î·ÖÊý¾Ý
+	case 0x81c:	// å·®åˆ†æ•°æ®
 		bpp = 24;
 		if (debug)
 			printf("%s: 81c %x %x %x %x %x %x\n", pkg_res->name, 
@@ -782,7 +782,7 @@ static int sas5_iar_extract_resource(struct package *pkg,
 				   header.palette_length, header.width, 
 					header.height, bpp);
 		break;
-	case 0x83c:	// ²î·ÖÊý¾Ý
+	case 0x83c:	// å·®åˆ†æ•°æ®
 		bpp = 32;
 		break;
 	default:
@@ -1032,9 +1032,9 @@ static int sas5_war_parse_resource_info(struct package *pkg,
 	unicode2sj(pkg_name, MAX_PATH, pkg->name, -1);
 	sas5_get_resource_name(pkg_res->index_number, 
 		pkg_res->name, pkg_name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = war_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = war_entry->offset;
 	if (debug)
 		printf("%s: %x %x %x %x %x %x\n",pkg_res->name,
@@ -1114,4 +1114,5 @@ int CALLBACK sas5_register_cui(struct cui_register_callback *callback)
 	sas5_current_resource = NULL;
 
 	return 0;
+}
 }

@@ -10,11 +10,11 @@
 #include <stdio.h>
 
 struct acui_information ktg_cui_information = {
-	_T("¹¤®‹ÌÃ¥¹¥¿¥¸¥ª"),	/* copyright */
+	_T("å·¥ç•«å ‚ã‚¹ã‚¿ã‚¸ã‚ª"),	/* copyright */
 	_T(""),					/* system */
 	_T(".arc"),				/* package */
 	_T("0.0.2"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2007.05.12 20:41"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -25,7 +25,7 @@ typedef struct {
 	u32 magic;			// 0xa8bcadbe
 	u32 version;		// must be 0
 	u32 size;
-	u32 offset;			// Êµ¼ÊµÄÊı¾İµÄÎÄ¼şÆ«ÒÆ
+	u32 offset;			// å®é™…çš„æ•°æ®çš„æ–‡ä»¶åç§»
 } arc_header_t;
 
 typedef struct {
@@ -36,10 +36,10 @@ typedef struct {
 
 typedef struct {
 	//u32 parts;	// 100030466 script, string: 1
-	u32 ident;		// script, string: 0/* ×ÊÔ´Ä¿Â¼±êÊ¶·û£¨¶¥¼¶Í¨³£Îª0) */
+	u32 ident;		// script, string: 0/* èµ„æºç›®å½•æ ‡è¯†ç¬¦ï¼ˆé¡¶çº§é€šå¸¸ä¸º0) */
 	u32 reserved;	// script, string: 0
 	u32 entries;
-	u32 length;		// ¸ÃpartsµÄ³¤¶È
+	u32 length;		// è¯¥partsçš„é•¿åº¦
 } arc_info_header_t;
 
 typedef struct {
@@ -53,13 +53,13 @@ typedef struct {
 typedef struct {
 	u32 parts;	// 100030466
 
-	u32 ident;		// script: 0/* ×ÊÔ´Ä¿Â¼±êÊ¶·û£¨¶¥¼¶Í¨³£Îª0) */
+	u32 ident;		// script: 0/* èµ„æºç›®å½•æ ‡è¯†ç¬¦ï¼ˆé¡¶çº§é€šå¸¸ä¸º0) */
 	u32 reserved;	// script: 0
 	u32 entries;
 	u32 info_length;
 	......info		// script: name_segment 
 
-	u32 ident;		/* ×ÊÔ´Ä¿Â¼±êÊ¶·û£¨´Î¼¶£¬±ÈÈçDDS) */
+	u32 ident;		/* èµ„æºç›®å½•æ ‡è¯†ç¬¦ï¼ˆæ¬¡çº§ï¼Œæ¯”å¦‚DDS) */
 	u32 reserved;
 	u32 entries2;
 	u32 info_length;
@@ -73,7 +73,7 @@ u32 name_offset;
 	width
 	height
 
-	[entries2¸ö]	// ÒòÎªÍ¨³£entriesËùÔÚµÄ¶Î±íÊ¾µÄ²»ÊÇÍ¼Ïñ
+	[entries2ä¸ª]	// å› ä¸ºé€šå¸¸entriesæ‰€åœ¨çš„æ®µè¡¨ç¤ºçš„ä¸æ˜¯å›¾åƒ
 	offset
 	u32 comprlen;
 	u32 flags;
@@ -96,9 +96,9 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -118,7 +118,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 			uncompr[act_uncomprlen++] = data;
 			if (act_uncomprlen == uncomprlen)
 				break;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -138,7 +138,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 				uncompr[act_uncomprlen++] = data;
 				if (act_uncomprlen == uncomprlen)
 					return;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -184,7 +184,7 @@ static int ktg_arc_extract_directory(struct package *pkg,
 	DWORD parts;
 	int err = 0;
 
-	/* ÌáÈ¡Ãû³Æ¶ÎºÍinfo¶Î */
+	/* æå–åç§°æ®µå’Œinfoæ®µ */
 	for (DWORD i = 0; i < 2; ++i) {
 		arc_entry_t arc_entry;
 		if (pkg->pio->read(pkg, &arc_entry, sizeof(arc_entry))) {
@@ -457,4 +457,5 @@ int CALLBACK ktg_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

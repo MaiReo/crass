@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information NEJII_cui_information = {
 	NULL,					/* copyright */
 	_T("NEJII"),			/* system */
 	_T(".cdt .vdt .ovd .pdt .dat"),				/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2009-3-21 14:01"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// "RK1"
@@ -62,9 +62,9 @@ static void lzss_decompress(unsigned char *uncompr, DWORD *uncomprlen,
 							unsigned char *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -72,7 +72,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD *uncomprlen,
 	
 	memset(win, 0, sizeof(win));
 	while (1) {
-		/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+		/* å¦‚æžœä¸º0, è¡¨ç¤ºæŽ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŽŸæ ·è¾“å‡º */
 		BYTE flag;
 
 		if (curbyte >= comprlen)
@@ -91,7 +91,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD *uncomprlen,
 
 				data = compr[curbyte++];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;
 			} else {
@@ -117,7 +117,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD *uncomprlen,
 
 					data = win[(win_offset + i) & (win_size - 1)];
 					uncompr[act_uncomprlen++] = data;		
-					/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+					/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 					win[nCurWindowByte++] = data;
 					nCurWindowByte &= win_size - 1;	
 				}
@@ -130,7 +130,7 @@ out:
 
 /*********************  *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int NEJII_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -156,7 +156,7 @@ static int NEJII_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int NEJII_extract_directory(struct package *pkg,
 								   struct package_directory *pkg_dir)
 {
@@ -188,7 +188,7 @@ static int NEJII_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int NEJII_parse_resource_info(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -197,15 +197,15 @@ static int NEJII_parse_resource_info(struct package *pkg,
 	Xdt_entry = (Xdt_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, Xdt_entry->name, 16);
 	pkg_res->name[16] = 0;
-	pkg_res->name_length = strlen(pkg_res->name);		/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = strlen(pkg_res->name);		/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = Xdt_entry->comprlen;
-	pkg_res->actual_data_length = Xdt_entry->uncomprlen;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = Xdt_entry->uncomprlen;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = Xdt_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int NEJII_extract_resource(struct package *pkg,
 								  struct package_resource *pkg_res)
 {
@@ -251,7 +251,7 @@ static int NEJII_extract_resource(struct package *pkg,
 		BITMAPINFOHEADER *bmif = (BITMAPINFOHEADER *)(bmh + 1);
 		BYTE *rgba = act_data + bmh->bfOffBits;
 		alpha_blending(rgba, bmif->biWidth, bmif->biHeight, bmif->biBitCount);
-		// ¥Ó¥ê¥Ó¥ê¥Ñ¥Ë¥Ã¥¯ ¤Ö¤ë¡Á¤«¤ëµÄIm32.cdt
+		// ãƒ“ãƒªãƒ“ãƒªãƒ‘ãƒ‹ãƒƒã‚¯ ã¶ã‚‹Ã—ã‹ã‚‹çš„Im32.cdt
 		if (bmif->biCompression == 3)
 			bmif->biCompression = BI_RGB;
 	}
@@ -262,7 +262,7 @@ static int NEJII_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int NEJII_save_resource(struct resource *res, 
 							   struct package_resource *pkg_res)
 {
@@ -286,7 +286,7 @@ static int NEJII_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void NEJII_release_resource(struct package *pkg, 
 								   struct package_resource *pkg_res)
 {
@@ -300,7 +300,7 @@ static void NEJII_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void NEJII_release(struct package *pkg, 
 						  struct package_directory *pkg_dir)
 {
@@ -312,7 +312,7 @@ static void NEJII_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation NEJII_operation = {
 	NEJII_match,				/* match */
 	NEJII_extract_directory,	/* extract_directory */
@@ -325,7 +325,7 @@ static cui_ext_operation NEJII_operation = {
 
 /********************* mk *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int NEJII_mk_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -352,7 +352,7 @@ static int NEJII_mk_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int NEJII_mk_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -377,7 +377,7 @@ static int NEJII_mk_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int NEJII_mk_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -393,7 +393,7 @@ static int NEJII_mk_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int NEJII_mk_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -418,7 +418,7 @@ static int NEJII_mk_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation NEJII_mk_operation = {
 	NEJII_mk_match,					/* match */
 	NEJII_mk_extract_directory,		/* extract_directory */
@@ -435,7 +435,7 @@ static cui_ext_operation NEJII_mk_operation = {
 static int NEJII_map_extract_directory(struct package *pkg,
 									   struct package_directory *pkg_dir);
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int NEJII_map_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -449,7 +449,7 @@ static int NEJII_map_match(struct package *pkg)
 	return ret;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int NEJII_map_extract_directory(struct package *pkg,
 									   struct package_directory *pkg_dir)
 {
@@ -494,7 +494,7 @@ static int NEJII_map_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int NEJII_map_parse_resource_info(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -512,7 +512,7 @@ static int NEJII_map_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int NEJII_map_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -539,7 +539,7 @@ static int NEJII_map_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation NEJII_map_operation = {
 	NEJII_map_match,				/* match */
 	NEJII_map_extract_directory,	/* extract_directory */
@@ -551,10 +551,10 @@ static cui_ext_operation NEJII_map_operation = {
 };
 #endif
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK NEJII_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".cdt"), NULL, 
 		NULL, &NEJII_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -580,4 +580,5 @@ int CALLBACK NEJII_register_cui(struct cui_register_callback *callback)
 //			return -1;
 
 	return 0;
+}
 }

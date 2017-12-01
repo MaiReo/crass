@@ -719,3 +719,4 @@ struct cxdec_callback nidaimeTrial_cxdec_callback = {
 	{ 0x187, 0x7ac },
 	xcode_building_stage1
 };
+;

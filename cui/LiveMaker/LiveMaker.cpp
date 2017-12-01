@@ -18,7 +18,7 @@ struct acui_information LiveMaker_cui_information = {
 	_T("LiveMaker"),		/* system */
 	_T(".gal .dat .exe .ext"),	/* package */
 	_T(""),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -37,25 +37,25 @@ typedef struct {
 } gal_header_t;
 
 typedef struct {
-	u32 version;		// ÓëmagicÖĞµÄXXX×Ö¶Î¶ÔÓ¦
+	u32 version;		// ä¸magicä¸­çš„XXXå­—æ®µå¯¹åº”
 	u32 width;
 	u32 height;
 	u32 bpp;
 	u32 frames;
 	u8 unknown			// 0 or 1
-	u8 code;			// 0 Ê¶±ğcode
-	u8 compress_method;	// 0 - Í¨³£Ñ¹Ëõ 1 - ÎŞÑ¹Ëõ 2 - ²»¿ÉÄæÑ¹Ëõ
+	u8 code;			// 0 è¯†åˆ«code
+	u8 compress_method;	// 0 - é€šå¸¸å‹ç¼© 1 - æ— å‹ç¼© 2 - ä¸å¯é€†å‹ç¼©
 	u8 id;				// 0x00 - Gale105 0xc0 - Gale106
 	u32 mask;			// 0x00ffffff(rgba)
-	u32 block_width;	// 0x10(²»¿ÉÄæÑ¹ËõÎª0)
-	u32 block_height;	// 0x10(²»¿ÉÄæÑ¹ËõÎª0)
-	u32 quality;		// Æ·ÖÊ(ÓÃÓÚ²»¿ÉÄæÑ¹Ëõ): [0, 100]
+	u32 block_width;	// 0x10(ä¸å¯é€†å‹ç¼©ä¸º0)
+	u32 block_height;	// 0x10(ä¸å¯é€†å‹ç¼©ä¸º0)
+	u32 quality;		// å“è´¨(ç”¨äºä¸å¯é€†å‹ç¼©): [0, 100]
 } gal_infor_t;
 
 typedef struct {
 	u32 name_length;
 	s8 *name;
-	u32 mask;		// 0xXXffffff(rgba) XXÔÚtransparent enabledÊ±Îª0£¬·ñÔòÎ»ff
+	u32 mask;		// 0xXXffffff(rgba) XXåœ¨transparent enabledæ—¶ä¸º0ï¼Œå¦åˆ™ä½ff
 	u32 delay;		// ms
 	u32 disposal;	// 0 - None 1 - No disposal 2 - Background 3 - Previous
 	u8	// 0
@@ -64,7 +64,7 @@ typedef struct {
 	u32 height;
 	u32 bpp;
 #if bpp <= 8 
-¡¡¡¡u32 palette[2^bpp];
+ã€€ã€€u32 palette[2^bpp];
 #endif 
 	u32		// 0;
 	u32 ; // 0
@@ -296,7 +296,7 @@ static int LiveMaker_dat_parse_resource_info(struct package *pkg,
 
 	my_dat_entry = (my_dat_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, my_dat_entry->name, 64);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_dat_entry->comprlen;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = my_dat_entry->offset;
@@ -482,4 +482,5 @@ int CALLBACK LiveMaker_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

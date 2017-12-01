@@ -9,14 +9,14 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-//crcÑéÖ¤£º2×Ö½ÚÑéÖ¤Öµ Èç¹ûÕýÈ·£¬·µ»ØµÄµ½crc_bufÖÐµÄÖµÓ¦Îª0£¬·ñÔò±íÊ¾Êý¾ÝÓÐ´í£¬ÈÏÖ¤Ê§°Ü
-//³ÖÐøµÄ¶ÔÒ»¸ö²Ù×÷µ¥Ôª¼ÆËãcrc £¬×îºó¼ì²é×îÖÕcrcÊÇ·ñÎª0
+//crcéªŒè¯ï¼š2å­—èŠ‚éªŒè¯å€¼ å¦‚æžœæ­£ç¡®ï¼Œè¿”å›žçš„åˆ°crc_bufä¸­çš„å€¼åº”ä¸º0ï¼Œå¦åˆ™è¡¨ç¤ºæ•°æ®æœ‰é”™ï¼Œè®¤è¯å¤±è´¥
+//æŒç»­çš„å¯¹ä¸€ä¸ªæ“ä½œå•å…ƒè®¡ç®—crc ï¼Œæœ€åŽæ£€æŸ¥æœ€ç»ˆcrcæ˜¯å¦ä¸º0
 //[0](4)XARC
 //[4](4)??
 //[8](2)
 //[10](2)
 //[12](4)
-//[16](4)NDIX entries ×ÊÔ´ÊýÁ¿(8 bytes per entry)
+//[16](4)NDIX entries èµ„æºæ•°é‡(8 bytes per entry)
 //[20](2)
 //[22](4)DFNM
 //[26](8)CADR segment offset lo & hi
@@ -24,23 +24,23 @@
 //[36](4)NDIX
 //entry [0](2)0x1001 [2](4)offset [6](2)
 //[??](4)EDIX
-//ÄÚÈÝÍ¬NDIX
+//å†…å®¹åŒNDIX
 //[??](4)CTIF
-//[0](2) Í¨¹ýËüËã³öcrc¡¾2¡¿£¨2£©Ç°ÕßËã³öµÄcrcÔÙ´ÎÓë¸ÃÖµËã³öÐÂµÄcrc¡¾4¡¿(2)ÐòºÅidx£¨´Ó0¿ªÊ¼£©¡¾6](2)name_len[8](2)
-//¾­¹ýÕâÐ©²Ù×÷ÒÔºó£¬¶Ô×îÖÕµÄcrc¼ì²é£¨×îºóµÄcrc×Ö¶ÎºÍ¼ÆËãµÃµ½µÄcrcÓ¦¸ÃÏàÍ¬£©
-//[10](name_len) xor 0x56½âÃÜ[][2]crc
+//[0](2) é€šè¿‡å®ƒç®—å‡ºcrcã€2ã€‘ï¼ˆ2ï¼‰å‰è€…ç®—å‡ºçš„crcå†æ¬¡ä¸Žè¯¥å€¼ç®—å‡ºæ–°çš„crcã€4ã€‘(2)åºå·idxï¼ˆä»Ž0å¼€å§‹ï¼‰ã€6](2)name_len[8](2)
+//ç»è¿‡è¿™äº›æ“ä½œä»¥åŽï¼Œå¯¹æœ€ç»ˆçš„crcæ£€æŸ¥ï¼ˆæœ€åŽçš„crcå­—æ®µå’Œè®¡ç®—å¾—åˆ°çš„crcåº”è¯¥ç›¸åŒï¼‰
+//[10](name_len) xor 0x56è§£å¯†[][2]crc
 
 //CADR
-//Ã¿Ïî12×Ö½Ú£¬ÓÃÐòºÅidxÀ´ÒýÓÃ£¨CADR segment offset lo + idx * 12) + 4
+//æ¯é¡¹12å­—èŠ‚ï¼Œç”¨åºå·idxæ¥å¼•ç”¨ï¼ˆCADR segment offset lo + idx * 12) + 4
 //[0](2) [2](8)
 
 
 struct acui_information Xuse_cui_information = {
-	_T("¥¶¥¦¥¹¡¾±¾á|Ôì¡¿(Xuse)"),		/* copyright */
+	_T("ã‚¶ã‚¦ã‚¹ã€æœ¬é†¸é€ ã€‘(Xuse)"),		/* copyright */
 	NULL,	/* system */
 	_T(".gd .dll*"),		/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -100,7 +100,7 @@ static int Xuse_gd_extract_directory(struct package *pkg,
 	if (pkg->pio->read(pkg, &gd_header, sizeof(gd_header)))
 		return -CUI_EREAD;
 
-	/* ÓÐµÄÎÄ¼þµÄgd_header.entriesÎª0£»ÓÐÊ±ºòÊµ¼ÊµÄ×ÊÔ´Êý±Ègd_headerÖÐ¼ÇÂ¼µÄ»¹¶à */
+	/* æœ‰çš„æ–‡ä»¶çš„gd_header.entriesä¸º0ï¼›æœ‰æ—¶å€™å®žé™…çš„èµ„æºæ•°æ¯”gd_headerä¸­è®°å½•çš„è¿˜å¤š */
 	//if (!gd_header.entries)
 	//	gd_header.entries = entries;
 	//gd_header.entries = entries >= gd_header.entries ? entries : gd_header.entries;
@@ -233,4 +233,5 @@ int CALLBACK Xuse_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

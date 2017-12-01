@@ -123,3 +123,4 @@ static void cxdec_execute_decode(struct cxdec_callback *callback, DWORD hash, DW
 	*ret1 = cxdec_decode_stage1(&seed, 5, hash);
 	*ret2 = cxdec_decode_stage1(&seed, 5, hash);
 }
+}

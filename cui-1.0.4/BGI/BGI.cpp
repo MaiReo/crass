@@ -14,7 +14,7 @@ struct acui_information BGI_cui_information = {
 	_T("Ethornell - Buriko General Interpreter"),	/* system */
 	_T(".arc .gdb"),					/* package */
 	_T("1.0.1"),						/* revision */
-	_T("³Õh¹«Ù\"),						/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),						/* author */
 	_T("2008-6-18 8:31"),				/* date */
 	NULL,								/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -37,7 +37,7 @@ typedef struct {
 	s8 magic[16];			/* "DSC FORMAT 1.00" */
 	u32 key;
 	u32 uncomprlen;
-	u32 dec_counts;			/* ½âÃÜµÄ´ÎÊı */
+	u32 dec_counts;			/* è§£å¯†çš„æ¬¡æ•° */
 	u32 reserved;
 } dsc_header_t;
 
@@ -46,14 +46,14 @@ typedef struct {
 	u32 key;
 	u32 comprlen;
 	u32 uncomprlen;
-	u16 sum_check;			/* ÀÛ¼ÓĞ£ÑéÖµ */
-	u16 xor_check;			/* ÀÛÒì»òĞ£ÑéÖµ */
+	u16 sum_check;			/* ç´¯åŠ æ ¡éªŒå€¼ */
+	u16 xor_check;			/* ç´¯å¼‚æˆ–æ ¡éªŒå€¼ */
 } gdb_header_t;
 
 typedef struct {
 	u32 header_length;
 	u32 unknown0;
-	u32 length;				/* Êµ¼ÊµÄÊı¾İ³¤¶È */
+	u32 length;				/* å®é™…çš„æ•°æ®é•¿åº¦ */
 	u32 unknown[13];
 } snd_header_t;
 
@@ -70,9 +70,9 @@ typedef struct {
 	u16 height;
 	u32 color_depth;
 	u32 reserved0[2];
-	u32 zero_comprlen;		/* huffman½âÑ¹ºóµÄ0Öµ×Ö½ÚÑ¹ËõµÄÊı¾İ³¤¶È */
-	u32 key;				/* ½âÃÜÒ¶½ÚµãÈ¨Öµ¶ÎÓÃkey */
-	u32 encode_length;		/* ¼ÓÃÜÁËµÄÒ¶½ÚµãÈ¨Öµ¶ÎµÄ³¤¶È */
+	u32 zero_comprlen;		/* huffmanè§£å‹åçš„0å€¼å­—èŠ‚å‹ç¼©çš„æ•°æ®é•¿åº¦ */
+	u32 key;				/* è§£å¯†å¶èŠ‚ç‚¹æƒå€¼æ®µç”¨key */
+	u32 encode_length;		/* åŠ å¯†äº†çš„å¶èŠ‚ç‚¹æƒå€¼æ®µçš„é•¿åº¦ */
 	u8 sum_check;
 	u8 xor_check;
 	u16 reserved1;
@@ -85,7 +85,7 @@ static void *my_malloc(DWORD len)
 	return malloc(len);
 }
 
-/********************* ½âÃÜ *********************/
+/********************* è§£å¯† *********************/
 
 static u8 update_key(u32 *key, u8 *magic)
 {
@@ -103,17 +103,17 @@ static u8 update_key(u32 *key, u8 *magic)
 
 struct dsc_huffman_code {
 	u16 code;
-	u16 depth;		/* ¸ÃÒ¶½ÚµãËùÔÚµÄdepth£¨0¿ªÊ¼£© */
+	u16 depth;		/* è¯¥å¶èŠ‚ç‚¹æ‰€åœ¨çš„depthï¼ˆ0å¼€å§‹ï¼‰ */
 };
 
 struct dsc_huffman_node {
 	unsigned int is_parent;
-	unsigned int code;	/* ¶ÔÓÚĞ¡ÓÚ256µÄ£¬code¾ÍÊÇ×Ö½ÚÊı¾İ£»¶ÔÓÚ´óÓÚ256µÄ£¬¸ß×Ö½ÚµÄ1ÊÇ±êÖ¾£¨lzÑ¹Ëõ£©£¬µÍ×Ö½ÚÊÇcopy_bytes£¨ÁíÍâĞèÒª+2£© */
+	unsigned int code;	/* å¯¹äºå°äº256çš„ï¼Œcodeå°±æ˜¯å­—èŠ‚æ•°æ®ï¼›å¯¹äºå¤§äº256çš„ï¼Œé«˜å­—èŠ‚çš„1æ˜¯æ ‡å¿—ï¼ˆlzå‹ç¼©ï¼‰ï¼Œä½å­—èŠ‚æ˜¯copy_bytesï¼ˆå¦å¤–éœ€è¦+2ï¼‰ */
 	unsigned int left_child_index;
 	unsigned int right_child_index;
 };
 
-/* °´ÉıĞòÅÅÁĞ */
+/* æŒ‰å‡åºæ’åˆ— */
 static int dsc_huffman_code_compare(const void *code1, const void *code2)
 {
 	struct dsc_huffman_code *codes[2] = { (struct dsc_huffman_code *)code1, (struct dsc_huffman_code *)code2 };
@@ -129,17 +129,17 @@ static void dsc_create_huffman_tree(struct dsc_huffman_node *huffman_nodes,
 									struct dsc_huffman_code *huffman_code, 
 									unsigned int leaf_node_counts)
 {
-	unsigned int nodes_index[2][512];	/* ¹¹Ôìµ±Ç°depthÏÂ½ÚµãË÷ÒıµÄ¸¨ÖúÓÃÊı×é£¬
-										 * Æä³¤¶ÈÊÇµ±Ç°depthÏÂ¿ÉÄÜµÄ×î´ó½ÚµãÊı */
-	unsigned int next_node_index = 1;	/* 0ÒÑ¾­Ä¬ÈÏ·ÖÅä¸ø¸ù½ÚµãÁË */
-	unsigned int depth_nodes = 1;		/* µÚ0Éî¶ÈµÄ½ÚµãÊı(2^N)Îª1 */
-	unsigned int depth = 0;				/* µ±Ç°µÄÉî¶È */	
+	unsigned int nodes_index[2][512];	/* æ„é€ å½“å‰depthä¸‹èŠ‚ç‚¹ç´¢å¼•çš„è¾…åŠ©ç”¨æ•°ç»„ï¼Œ
+										 * å…¶é•¿åº¦æ˜¯å½“å‰depthä¸‹å¯èƒ½çš„æœ€å¤§èŠ‚ç‚¹æ•° */
+	unsigned int next_node_index = 1;	/* 0å·²ç»é»˜è®¤åˆ†é…ç»™æ ¹èŠ‚ç‚¹äº† */
+	unsigned int depth_nodes = 1;		/* ç¬¬0æ·±åº¦çš„èŠ‚ç‚¹æ•°(2^N)ä¸º1 */
+	unsigned int depth = 0;				/* å½“å‰çš„æ·±åº¦ */	
 	unsigned int switch_flag = 0;
 
 	nodes_index[0][0] = 0;
 	for (unsigned int n = 0; n < leaf_node_counts; ) {
-		unsigned int depth_existed_nodes;/* µ±Ç°depthÏÂ´´½¨µÄÒ¶½Úµã¼ÆÊı */
-		unsigned int depth_nodes_to_create;	/* µ±Ç°depthÏÂĞèÒª´´½¨µÄ½ÚµãÊı£¨¶ÔÓÚÏÂÒ»²ãÀ´ËµÏàµ±ÓÚ¸¸½Úµã£© */
+		unsigned int depth_existed_nodes;/* å½“å‰depthä¸‹åˆ›å»ºçš„å¶èŠ‚ç‚¹è®¡æ•° */
+		unsigned int depth_nodes_to_create;	/* å½“å‰depthä¸‹éœ€è¦åˆ›å»ºçš„èŠ‚ç‚¹æ•°ï¼ˆå¯¹äºä¸‹ä¸€å±‚æ¥è¯´ç›¸å½“äºçˆ¶èŠ‚ç‚¹ï¼‰ */
 		unsigned int *huffman_nodes_index;
 		unsigned int *child_index;
 
@@ -148,10 +148,10 @@ static void dsc_create_huffman_tree(struct dsc_huffman_node *huffman_nodes,
 		child_index = nodes_index[switch_flag];
 
 		depth_existed_nodes = 0;
-		/* ³õÊ¼»¯Á¥ÊôÓÚÍ¬Ò»depthµÄËùÓĞ½Úµã */
+		/* åˆå§‹åŒ–éš¶å±äºåŒä¸€depthçš„æ‰€æœ‰èŠ‚ç‚¹ */
 		while (huffman_code[n].depth == depth) {
 			struct dsc_huffman_node *node = &huffman_nodes[huffman_nodes_index[depth_existed_nodes++]];
-			/* Ò¶½Úµã¼¯ÖĞÔÚ×ó²à */
+			/* å¶èŠ‚ç‚¹é›†ä¸­åœ¨å·¦ä¾§ */
 			node->is_parent = 0;
 			node->code = huffman_code[n++].code;
 		}
@@ -164,7 +164,7 @@ static void dsc_create_huffman_tree(struct dsc_huffman_node *huffman_nodes,
 			child_index[i * 2 + 1] = node->right_child_index = next_node_index++;
 		}
 		depth++;
-		depth_nodes = depth_nodes_to_create * 2;	/* ÏÂÒ»depth¿ÉÄÜµÄ½ÚµãÊı */
+		depth_nodes = depth_nodes_to_create * 2;	/* ä¸‹ä¸€depthå¯èƒ½çš„èŠ‚ç‚¹æ•° */
 	}
 }
 
@@ -196,7 +196,7 @@ static unsigned int dsc_huffman_decompress(struct dsc_huffman_node *huffman_node
 
 		code = huffman_nodes[node_index].code;
 
-		if (code >= 256) {	// 12Î»±àÂëµÄwin_pos, lzÑ¹Ëõ
+		if (code >= 256) {	// 12ä½ç¼–ç çš„win_pos, lzå‹ç¼©
 			unsigned int copy_bytes, win_pos;
 			
 			copy_bytes = (code & 0xff) + 2;
@@ -218,9 +218,9 @@ out:
 static unsigned int dsc_decompress(dsc_header_t *dsc_header, unsigned int dsc_len, 
 								   unsigned char *uncompr, unsigned int uncomprlen)
 {
-	/* Ò¶½Úµã±àÂë£ºÇ°256ÊÇÆÕÍ¨µÄµ¥×Ö½ÚÊı¾İcode£»ºó256ÊÇlzÑ¹ËõµÄcode£¨Ã¿ÖÖcode¶ÔÓ¦Ò»ÖÖ²»Í¬µÄcopy_bytes */
+	/* å¶èŠ‚ç‚¹ç¼–ç ï¼šå‰256æ˜¯æ™®é€šçš„å•å­—èŠ‚æ•°æ®codeï¼›å256æ˜¯lzå‹ç¼©çš„codeï¼ˆæ¯ç§codeå¯¹åº”ä¸€ç§ä¸åŒçš„copy_bytes */
 	struct dsc_huffman_code huffman_code[512];
-	/* Ç±ÔÚµÄ£¬Ïàµ±ÓÚË«×Ö½Ú±àÂë£¨µ¥×Ö½Úascii£«Ë«×Ö½Úlz£© */
+	/* æ½œåœ¨çš„ï¼Œç›¸å½“äºåŒå­—èŠ‚ç¼–ç ï¼ˆå•å­—èŠ‚asciiï¼‹åŒå­—èŠ‚lzï¼‰ */
 	struct dsc_huffman_node huffman_nodes[1023];	
 	u8 magic[2];
 	unsigned int key;
@@ -231,7 +231,7 @@ static unsigned int dsc_decompress(dsc_header_t *dsc_header, unsigned int dsc_le
 	magic[1] = dsc_header->magic[1];
 	key = dsc_header->key;
 
-	/* ½âÃÜÒ¶½ÚµãÉî¶ÈĞÅÏ¢ */
+	/* è§£å¯†å¶èŠ‚ç‚¹æ·±åº¦ä¿¡æ¯ */
 	memset(huffman_code, 0, sizeof(huffman_code));
 	unsigned int leaf_node_counts = 0;
 	for (unsigned int i = 0; i < 512; i++) {
@@ -260,12 +260,12 @@ static unsigned int dsc_decompress(dsc_header_t *dsc_header, unsigned int dsc_le
 /********************* CompressedBG___ *********************/
 
 typedef struct {
-	unsigned int valid;				/* ÊÇ·ñÓĞĞ§µÄ±ê¼Ç */
-	unsigned int weight;			/* È¨Öµ */
-	unsigned int is_parent;			/* ÊÇ·ñÊÇ¸¸½Úµã */
-	unsigned int parent_index;		/* ¸¸½ÚµãË÷Òı */
-	unsigned int left_child_index;	/* ×ó×Ó½ÚµãË÷Òı */
-	unsigned int right_child_index;	/* ÓÒ×Ó½ÚµãË÷Òı */		
+	unsigned int valid;				/* æ˜¯å¦æœ‰æ•ˆçš„æ ‡è®° */
+	unsigned int weight;			/* æƒå€¼ */
+	unsigned int is_parent;			/* æ˜¯å¦æ˜¯çˆ¶èŠ‚ç‚¹ */
+	unsigned int parent_index;		/* çˆ¶èŠ‚ç‚¹ç´¢å¼• */
+	unsigned int left_child_index;	/* å·¦å­èŠ‚ç‚¹ç´¢å¼• */
+	unsigned int right_child_index;	/* å³å­èŠ‚ç‚¹ç´¢å¼• */		
 } bg_huffman_node;
 
 static void	decode_bg(unsigned char *enc_buf, unsigned int enc_buf_len, 
@@ -286,12 +286,12 @@ static void	decode_bg(unsigned char *enc_buf, unsigned int enc_buf_len,
 
 static unsigned int	bg_create_huffman_tree(bg_huffman_node *nodes, u32 *leaf_nodes_weight)
 {
-	unsigned int parent_node_index = 256;	/* ¸¸½Úµã´Ónodes[]µÄ256´¦¿ªÊ¼ */
+	unsigned int parent_node_index = 256;	/* çˆ¶èŠ‚ç‚¹ä»nodes[]çš„256å¤„å¼€å§‹ */
 	bg_huffman_node *parent_node = &nodes[parent_node_index];
-	unsigned int root_node_weight = 0;	/* ¸ù½ÚµãÈ¨Öµ */
+	unsigned int root_node_weight = 0;	/* æ ¹èŠ‚ç‚¹æƒå€¼ */
 	unsigned int i;
 
-	/* ³õÊ¼»¯Ò¶½Úµã */
+	/* åˆå§‹åŒ–å¶èŠ‚ç‚¹ */
 	for (i = 0; i < 256; i++) {
 		nodes[i].valid = !!leaf_nodes_weight[i];
 		nodes[i].weight = leaf_nodes_weight[i];
@@ -302,13 +302,13 @@ static unsigned int	bg_create_huffman_tree(bg_huffman_node *nodes, u32 *leaf_nod
 	while (1) {		
 		unsigned int child_node_index[2];
 		
-		/* ´´½¨×óÓÒ×Ó½Úµã */
+		/* åˆ›å»ºå·¦å³å­èŠ‚ç‚¹ */
 		for (i = 0; i < 2; i++) {
 			unsigned int min_weight;
 			
 			min_weight = -1;
 			child_node_index[i] = -1;
-			/* ±éÀúnodes[], ÕÒµ½weight×îĞ¡µÄ2¸ö½Úµã×÷Îª×Ó½Úµã */
+			/* éå†nodes[], æ‰¾åˆ°weightæœ€å°çš„2ä¸ªèŠ‚ç‚¹ä½œä¸ºå­èŠ‚ç‚¹ */
 			for (unsigned int n = 0; n < parent_node_index; n++) {
 				if (nodes[n].valid) {
 					if (nodes[n].weight < min_weight) {
@@ -317,11 +317,11 @@ static unsigned int	bg_create_huffman_tree(bg_huffman_node *nodes, u32 *leaf_nod
 					}
 				}
 			}
-			/* ±»ÕÒµ½µÄ×Ó½Úµã±ê¼ÇÎªÎŞĞ§£¬ÒÔ±ã²»²ÎÓë½ÓÏÂÀ´µÄ²éÕÒ */			
+			/* è¢«æ‰¾åˆ°çš„å­èŠ‚ç‚¹æ ‡è®°ä¸ºæ— æ•ˆï¼Œä»¥ä¾¿ä¸å‚ä¸æ¥ä¸‹æ¥çš„æŸ¥æ‰¾ */			
 			nodes[child_node_index[i]].valid = 0;
 			nodes[child_node_index[i]].parent_index = parent_node_index;
 		}
-		/* ´´½¨¸¸½Úµã */		
+		/* åˆ›å»ºçˆ¶èŠ‚ç‚¹ */		
 		parent_node->valid = 1;
 		parent_node->is_parent = 1;
 		parent_node->left_child_index = child_node_index[0];
@@ -440,14 +440,14 @@ static unsigned int bg_decompress(bg_header_t *bg_header, unsigned int bg_len,
 	unsigned int i;		
 	unsigned char *enc_buf = (unsigned char *)(bg_header + 1);
 	
-	/* ½âÃÜÒ¶½ÚµãÈ¨Öµ */
+	/* è§£å¯†å¶èŠ‚ç‚¹æƒå€¼ */
 	unsigned char sum;
 	unsigned char xor;
 	decode_bg(enc_buf, bg_header->encode_length, bg_header->key, &sum, &xor);	
 	if (sum != bg_header->sum_check || xor != bg_header->xor_check)
 		return -CUI_EMATCH;
 
-	/* ³õÊ¼»¯Ò¶½ÚµãÈ¨Öµ */
+	/* åˆå§‹åŒ–å¶èŠ‚ç‚¹æƒå€¼ */
 	u32 leaf_nodes_weight[256];
 	unsigned int curbyte = 0;
 	for (i = 0; i < 256; i++) {
@@ -548,9 +548,9 @@ static int BGI_arc_parse_resource_info(struct package *pkg,
 	arc_header = (arc_header_t *)package_get_private(pkg);
 	arc_entry = (arc_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, arc_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = arc_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = arc_entry->offset 
 		+ sizeof(arc_header_t) + arc_header->entries * sizeof(arc_entry_t);
 
@@ -629,7 +629,7 @@ static int BGI_arc_extract_resource(struct package *pkg,
 		pkg_res->replace_extension = _T(".bmp");
 		pkg_res->flags = PKG_RES_FLAG_REEXT;
 		return 0;
-	} else /* ÔçÆÚµÄBGIÏµÍ³Í¨³£²»×ödsc·â×° */ 
+	} else /* æ—©æœŸçš„BGIç³»ç»Ÿé€šå¸¸ä¸åšdscå°è£… */ 
 		if (snd_header->header_length == sizeof(snd_header_t) 
 			&& !memcmp((char *)(snd_header + 1), "OggS", 4)) {
 		char *ogg_magic = (char *)(snd_header + 1);
@@ -960,4 +960,5 @@ int CALLBACK BGI_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

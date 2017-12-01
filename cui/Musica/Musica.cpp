@@ -12,24 +12,24 @@
 #include "blowfish.h"
 
 /* TODO
- * 1. ¼ÓÈë¸ü¶àÓÎÏ·µÄÖ§³Ö
- * 2. ¼ÓÈëÇ°µ¼xor½âÃÜ
- * 3. movµÄxor½âÃÜkeyÀ´×Ô°²×°Ê±µÄcd-key£¬¿´ËÆÐèÒª¶ÁÈ¡×¢²á±í»ñµÃkey£¬Êµ¼ÊÉÏ¿ÉÒÔprobe³öÀ´£¨"RIFF" xor encrypt dword£©
+ * 1. åŠ å…¥æ›´å¤šæ¸¸æˆçš„æ”¯æŒ
+ * 2. åŠ å…¥å‰å¯¼xorè§£å¯†
+ * 3. movçš„xorè§£å¯†keyæ¥è‡ªå®‰è£…æ—¶çš„cd-keyï¼Œçœ‹ä¼¼éœ€è¦è¯»å–æ³¨å†Œè¡¨èŽ·å¾—keyï¼Œå®žé™…ä¸Šå¯ä»¥probeå‡ºæ¥ï¼ˆ"RIFF" xor encrypt dwordï¼‰
  */
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Musica_cui_information = {
 	_T("minori"),			/* copyright */
 	_T("Media Unification System Interpreter and Compiler Authorization"),	/* system */
 	_T(".paz system.dat"),	/* package */
 	_T("0.3.4"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-5-31 13:27"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	u8 byte[32];
@@ -40,8 +40,8 @@ typedef struct {
 	u64 offset;
 	u32 uncomprlen;
 	u32 comprlen;
-	u32 decrypt_length;	/* ÊÊÓ¦ÓÐ¶ÔÆëÒªÇóµÄ¼ÓÃÜËã·¨£¨bfÒªÇó8×Ö½Ú¶ÔÆë£© */
-	u16 is_compressed;	/* 0 - ÎÞÑ¹Ëõ; 1 - zlibÑ¹Ëõ£»etc - Î´¶¨Òå */
+	u32 decrypt_length;	/* é€‚åº”æœ‰å¯¹é½è¦æ±‚çš„åŠ å¯†ç®—æ³•ï¼ˆbfè¦æ±‚8å­—èŠ‚å¯¹é½ï¼‰ */
+	u16 is_compressed;	/* 0 - æ— åŽ‹ç¼©; 1 - zlibåŽ‹ç¼©ï¼›etc - æœªå®šä¹‰ */
 	u16 reserved;
 } paz_entry_t;
 #pragma pack ()
@@ -67,7 +67,7 @@ struct paz_blowfish_list {
 struct paz_blowfish_key {
 	const char *paz_name;
 	DWORD key_len;
-	unsigned char key[2][56];	/* µÚÒ»×éÓÃ×÷½âÃÜË÷Òý¶Î£»µÚ¶þ×éÓÃÓÚ½âÃÜ×ÊÔ´Êý¾Ý */
+	unsigned char key[2][56];	/* ç¬¬ä¸€ç»„ç”¨ä½œè§£å¯†ç´¢å¼•æ®µï¼›ç¬¬äºŒç»„ç”¨äºŽè§£å¯†èµ„æºæ•°æ® */
 	struct paz_blowfish_list *list;
 };
 
@@ -651,7 +651,7 @@ static struct paz_blowfish_list ef_lttg_paz_blowfish = {
 };
 
 
-/*  ef -the latter tale.- ÌåòY°æ */
+/*  ef -the latter tale.- ä½“é¨“ç‰ˆ */
 static struct paz_blowfish_list ef_ltt_trial_paz_blowfish = {
 	"ef_lttr", ef_ltt_trial_paz_blowfish_key, 0, 0, 0, 
 };
@@ -661,7 +661,7 @@ static struct paz_blowfish_list ef_sfm_paz_blowfish = {
 	"ef_sfm", ef_sfm_paz_blowfish_key, 0, 0, 0, 
 };
 
-/* ¤Ï¤ë¤Î¤¢¤·¤ª¤È web trial */
+/* ã¯ã‚‹ã®ã‚ã—ãŠã¨ web trial */
 static struct paz_blowfish_list haruoto_trial_paz_blowfish = {
 	"haruoto_trial", NULL, 1, 0, 0, 
 };
@@ -839,7 +839,7 @@ static void ef_latter_decrypt_data(const char *id, BYTE *enc, DWORD enc_length, 
 
 /********************* paz *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Musica_paz_match(struct package *pkg)
 {
 	struct paz_blowfish_key *key;
@@ -881,7 +881,7 @@ static int Musica_paz_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Musica_paz_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
@@ -896,7 +896,7 @@ static int Musica_paz_extract_directory(struct package *pkg,
 	if (Musica_paz_read(key, pkg, &index_length, 4))
 		return -CUI_EREAD;
 
-	/* ±ØÐë8×Ö½Ú¶ÔÆë */
+	/* å¿…é¡»8å­—èŠ‚å¯¹é½ */
 	if (index_length & 7)
 		return -CUI_EMATCH;
 
@@ -933,7 +933,7 @@ static int Musica_paz_extract_directory(struct package *pkg,
 					}
 					p += 256;
 				}
-			} else if (!i) {	// Ö»ÓÐ1¸ö
+			} else if (!i) {	// åªæœ‰1ä¸ª
 				memcpy(ef_latter_mov_rc4table, p, 256);
 				p += 256;
 			}
@@ -966,7 +966,7 @@ static int Musica_paz_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int Musica_paz_parse_resource_info(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -982,7 +982,7 @@ static int Musica_paz_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Musica_paz_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -1081,7 +1081,7 @@ static int Musica_paz_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Musica_paz_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -1105,7 +1105,7 @@ static int Musica_paz_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Musica_paz_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -1119,7 +1119,7 @@ static void Musica_paz_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Musica_paz_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -1139,7 +1139,7 @@ static void Musica_paz_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Musica_paz_operation = {
 	Musica_paz_match,					/* match */
 	Musica_paz_extract_directory,		/* extract_directory */
@@ -1152,7 +1152,7 @@ static cui_ext_operation Musica_paz_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Musica_dat_match(struct package *pkg)
 {
 	if (lstrcmp(pkg->name, _T("system.dat")))
@@ -1164,7 +1164,7 @@ static int Musica_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Musica_dat_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -1212,7 +1212,7 @@ static int Musica_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Musica_dat_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -1239,7 +1239,7 @@ static int Musica_dat_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Musica_dat_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -1254,7 +1254,7 @@ static void Musica_dat_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Musica_dat_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -1264,7 +1264,7 @@ static void Musica_dat_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Musica_dat_operation = {
 	Musica_dat_match,			/* match */
 	NULL,						/* extract_directory */
@@ -1275,10 +1275,10 @@ static cui_ext_operation Musica_dat_operation = {
 	Musica_dat_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK Musica_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".paz"), NULL, 
 		NULL, &Musica_paz_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_WEAK_MAGIC))
 			return -1;
@@ -1288,4 +1288,5 @@ int CALLBACK Musica_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

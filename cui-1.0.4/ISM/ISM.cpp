@@ -15,7 +15,7 @@ struct acui_information ISM_cui_information = {
 	_T("ISM"),					/* system */
 	_T(".isa"),					/* package */
 	_T("1.0.2"),				/* revision */
-	_T("³Õºº¹«Ôô"),				/* author */
+	_T("ç—´æ±‰å…¬è´¼"),				/* author */
 	_T("2009-7-23 12:29"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -25,7 +25,7 @@ struct acui_information ISM_cui_information = {
 typedef struct {
 	s8 magic[12];
 	u16 entries;
-	u16 mode;		/* bit0 - ÊÇ·ñÓÃ¶þ·Ö·¨¶¨Î»Ö¸¶¨µÄ×ÊÔ´£»bit1 - £¿£¿£»bit15 - ÊÇ·ñÐèÒª¶ÔË÷Òý¶Î½âÃÜ */
+	u16 mode;		/* bit0 - æ˜¯å¦ç”¨äºŒåˆ†æ³•å®šä½æŒ‡å®šçš„èµ„æºï¼›bit1 - ï¼Ÿï¼Ÿï¼›bit15 - æ˜¯å¦éœ€è¦å¯¹ç´¢å¼•æ®µè§£å¯† */
 } isa_header_t;
 
 #if 0
@@ -79,8 +79,8 @@ static int ISM_isa_match(struct package *pkg)
 					((u32 *)tmp)[i] ^= ~(((index_buffer_length / 4) - i) + index_buffer_length);
 				
 				// offset + length = next.offset
-				// data0.isa(¤Ò¤È¤æ¤á-Autumnal Equinox Story 1.03²¹¶¡ÐÂÔöµÄÎÄ¼þ)ÖÐ
-				// ×ÊÔ´µÄË³Ðò(offset)ÊÇ²»Á¬ÐøµÄ¡£
+				// data0.isa(ã²ã¨ã‚†ã‚-Autumnal Equinox Story 1.03è¡¥ä¸æ–°å¢žçš„æ–‡ä»¶)ä¸­
+				// èµ„æºçš„é¡ºåº(offset)æ˜¯ä¸è¿žç»­çš„ã€‚
 				if ((*(u32 *)(tmp + name_size) + *(u32 *)(tmp + name_size + 4)
 						== *(u32 *)(tmp + name_size + extra_size + name_size))
 						|| *(u32 *)(tmp + name_size) == sizeof(isa_header_t) + index_buffer_length 
@@ -156,7 +156,7 @@ static int ISM_isa_parse_resource_info(struct package *pkg,
 	isa_entry += entry_name_size;
 	pkg_res->offset = *(u32 *)isa_entry;
 	isa_entry += 4;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */	
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */	
 	pkg_res->raw_data_length = *(u32 *)isa_entry;
 
 	return 0;
@@ -255,4 +255,5 @@ int CALLBACK ISM_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

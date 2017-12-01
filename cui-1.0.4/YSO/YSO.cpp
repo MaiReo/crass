@@ -10,19 +10,19 @@
 #include <utility.h>
 #include <zlib.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information YSO_cui_information = {
-	_T("ÈÕ±¾¥Õ¥¡¥ë¥³¥àÖêÊ½»áÉç"),/* copyright */
+	_T("æ—¥æœ¬ãƒ•ã‚¡ãƒ«ã‚³ãƒ æ ªå¼ä¼šç¤¾"),/* copyright */
 	_T("Ys Origin"),		/* system */
 	_T(".na .ni"),			/* package */
 	_T("0.9.5"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-3-4 16:55"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// "NNI"
@@ -31,16 +31,16 @@ typedef struct {
 	u32 flag;
 } ni_header_t;
 
-/* °´ÕÕname_hash´ÓÐ¡µ½´óË³ÐòÅÅÁÐ.
- * ×ÊÔ´²éÕÒÊ±£¬Ê×ÏÈ½«Òª²éÕÒµÄ×ÊÔ´µÄÃû×Ö×ª»»Îªhash,
- * È»ºóÓÃ¶þ·Ö·¨ÔÚni_entry_tµÄÊý×éÀï(.niÎÄ¼þÄÚ´æ´¢)
- * ¸ù¾ÝhashÕÒµ½ÏàÓ¦µÄÏî£¨¶ÔÓÚhashÖµÏàÍ¬µÄÁ¬ÐøÏî£¬×îÖÕ
- * ¶þ·Ö·¨²éÕÒ½áÊøÊ±¶¨Î»µÄ¿Ï¶¨ÊÇÁ¬ÐøÏîÖÐµÄµÚÒ»Ïî)¡£
+/* æŒ‰ç…§name_hashä»Žå°åˆ°å¤§é¡ºåºæŽ’åˆ—.
+ * èµ„æºæŸ¥æ‰¾æ—¶ï¼Œé¦–å…ˆå°†è¦æŸ¥æ‰¾çš„èµ„æºçš„åå­—è½¬æ¢ä¸ºhash,
+ * ç„¶åŽç”¨äºŒåˆ†æ³•åœ¨ni_entry_tçš„æ•°ç»„é‡Œ(.niæ–‡ä»¶å†…å­˜å‚¨)
+ * æ ¹æ®hashæ‰¾åˆ°ç›¸åº”çš„é¡¹ï¼ˆå¯¹äºŽhashå€¼ç›¸åŒçš„è¿žç»­é¡¹ï¼Œæœ€ç»ˆ
+ * äºŒåˆ†æ³•æŸ¥æ‰¾ç»“æŸæ—¶å®šä½çš„è‚¯å®šæ˜¯è¿žç»­é¡¹ä¸­çš„ç¬¬ä¸€é¡¹)ã€‚
  */
 typedef struct {
 	u32 name_hash;
 	u32 length;
-	u32 offset;			/* ×î¸ßÎ»¿ÉÄÜ±íÊ¾Éý¼¶·â°üÖÐÓÐ¸Ã×ÊÔ´µÄ¸üÐÂ°æ±¾ */
+	u32 offset;			/* æœ€é«˜ä½å¯èƒ½è¡¨ç¤ºå‡çº§å°åŒ…ä¸­æœ‰è¯¥èµ„æºçš„æ›´æ–°ç‰ˆæœ¬ */
 	u32 name_offset;
 } ni_entry_t;
 
@@ -49,7 +49,7 @@ typedef struct {
 	u32 uncomprlen;
 } z_header_t;
 
-/* Éý¼¶·â°ü(.na+.ni)µÄÉý¼¶ÁÐ±íÎÄ¼þ */
+/* å‡çº§å°åŒ…(.na+.ni)çš„å‡çº§åˆ—è¡¨æ–‡ä»¶ */
 typedef struct {
 	u32 name_hash;
 	u32 unknown[4];
@@ -92,7 +92,7 @@ static DWORD get_hash(char *name)
 
 /********************* na *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int YSO_na_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -120,7 +120,7 @@ static int YSO_na_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int YSO_na_extract_directory(struct package *pkg,
 									struct package_directory *pkg_dir)
 {
@@ -200,15 +200,15 @@ static int YSO_na_parse_resource_info(struct package *pkg,
 
 	my_ni_entry = (my_ni_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_ni_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_ni_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_ni_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int YSO_na_extract_resource(struct package *pkg,
 								   struct package_resource *pkg_res)
 {
@@ -256,7 +256,7 @@ static int YSO_na_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int YSO_na_save_resource(struct resource *res, 
 								struct package_resource *pkg_res)
 {
@@ -280,7 +280,7 @@ static int YSO_na_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void YSO_na_release_resource(struct package *pkg, 
 									struct package_resource *pkg_res)
 {
@@ -292,7 +292,7 @@ static void YSO_na_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void YSO_na_release(struct package *pkg, 
 						   struct package_directory *pkg_dir)
 {
@@ -304,7 +304,7 @@ static void YSO_na_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation YSO_na_operation = {
 	YSO_na_match,					/* match */
 	YSO_na_extract_directory,		/* extract_directory */
@@ -317,7 +317,7 @@ static cui_ext_operation YSO_na_operation = {
 
 /********************* nya *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int YSO_nya_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -326,7 +326,7 @@ static int YSO_nya_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int YSO_nya_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -362,7 +362,7 @@ static void YSO_nya_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation YSO_nya_operation = {
 	YSO_nya_match,				/* match */
 	NULL,						/* extract_directory */
@@ -374,7 +374,7 @@ static cui_ext_operation YSO_nya_operation = {
 };
 
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK YSO_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".na"), NULL, 
@@ -386,4 +386,5 @@ int CALLBACK YSO_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

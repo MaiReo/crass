@@ -463,3 +463,4 @@ struct cxdec_callback ConcertoNote_cxdec_callback = {
 	{ 0x1a7, 0x4ca },
 	xcode_building_stage1
 };
+;

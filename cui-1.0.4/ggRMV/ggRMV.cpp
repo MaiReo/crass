@@ -14,7 +14,7 @@ struct acui_information ggRMV_cui_information = {
 	_T(""),			/* system */
 	_T(".ggm .gdp .rsd"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("≥’ùhπ´Ÿ\"),			/* author */
+	_T("Áó¥Êº¢ÂÖ¨Ë≥ä"),			/* author */
 	_T("2009-3-18 20:29"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -331,4 +331,5 @@ int CALLBACK ggRMV_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

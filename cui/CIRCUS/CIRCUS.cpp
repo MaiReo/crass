@@ -28,7 +28,7 @@ struct acui_information CIRCUS_cui_information = {
 	NULL,						/* system */
 	_T(".CRX .PCK .pcm .dat"),	/* package */
 	_T("0.3.2"),				/* revison */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2008-4-24 12:05"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -56,7 +56,7 @@ typedef struct {
 
 typedef struct {
 	u32 entries;
-/* ½ÓÏÂÀ´ÊÇlengthºÍoffset¿ìËÙË÷Òı£¨Ã¿Ïî8×Ö½Ú£© */
+/* æ¥ä¸‹æ¥æ˜¯lengthå’Œoffsetå¿«é€Ÿç´¢å¼•ï¼ˆæ¯é¡¹8å­—èŠ‚ï¼‰ */
 /*
 	typedef struct {
 		u32 offset;
@@ -105,7 +105,7 @@ typedef struct {
 
 typedef struct {
 	s8 magic[4];		/* XPCM */
-	u32 length;			/* length(ĞèÒªÖØĞÂ¼ÆËã) */
+	u32 length;			/* length(éœ€è¦é‡æ–°è®¡ç®—) */
 	u8 mode;			/* 3 - zlib */ 
 	u8 reserved[3];
 	u16 wFormatTag;
@@ -212,7 +212,7 @@ static void __CIRCUS_crx_defilting(BYTE *dst_base, BYTE *src, int width,
 					}
 				}
 				dst -= raw_line_len;
-				dst++;	/* ÒÆ¶¯µ½ÏÂÒ»¸ö·ÖÁ¿ */
+				dst++;	/* ç§»åŠ¨åˆ°ä¸‹ä¸€ä¸ªåˆ†é‡ */
 			}
 			break;
 		default:
@@ -395,11 +395,11 @@ static int CIRCUS_crx_extract_resource(struct package *pkg,
 			return -CUI_EMEM;
 		}
 
-		/* ÒòÎªÃ¿ĞĞ¿ªÍ·µÄµÚÒ»¸ö×Ö½Ú±íÊ¾ÕâĞĞµÄÊı¾İÓ¦¸ÃÈçºÎ´¦Àí, Òò´Ë
-		 * Êµ¼ÊµÄ½âÑ¹³¤¶È±ÈÔ­Ê¼Í¼ÏñÊı¾İ³¤¶È¶àÁËÒ»ÁĞ.
+		/* å› ä¸ºæ¯è¡Œå¼€å¤´çš„ç¬¬ä¸€ä¸ªå­—èŠ‚è¡¨ç¤ºè¿™è¡Œçš„æ•°æ®åº”è¯¥å¦‚ä½•å¤„ç†, å› æ­¤
+		 * å®é™…çš„è§£å‹é•¿åº¦æ¯”åŸå§‹å›¾åƒæ•°æ®é•¿åº¦å¤šäº†ä¸€åˆ—.
 		 */
 		act_len = ((crx_header.width * bits_count / 8) + 1) 
-			* crx_header.height;	// ³ÌĞòÖĞ»¹Òª¶à¼Ó100×Ö½Ú
+			* crx_header.height;	// ç¨‹åºä¸­è¿˜è¦å¤šåŠ 100å­—èŠ‚
 		act_data = (u8 *)malloc(act_len);
 		if (!uncompr) {
 			free(uncompr);
@@ -412,7 +412,7 @@ static int CIRCUS_crx_extract_resource(struct package *pkg,
 		if (crx_header.color_type <= 1) {
 			__CIRCUS_crx_defilting(uncompr, act_data, crx_header.width, 
 				crx_header.height, bits_count / 8);
-		} else {	/* Êµ¼ÊÇé¿ö£¬8Î»É«Í¼ÏñÍ¨¹ıµ÷É«°æ×ªÎª24Î»É«£¬È»ºó¾­¹ı__CIRCUS_crx_defilting´¦Àí */
+		} else {	/* å®é™…æƒ…å†µï¼Œ8ä½è‰²å›¾åƒé€šè¿‡è°ƒè‰²ç‰ˆè½¬ä¸º24ä½è‰²ï¼Œç„¶åç»è¿‡__CIRCUS_crx_defiltingå¤„ç† */
 			BYTE *dst, *src;
 			int line_len, aligned_line_len;
 
@@ -440,7 +440,7 @@ static int CIRCUS_crx_extract_resource(struct package *pkg,
 		}
 	}
 
-	// ºó´¦Àí
+	// åå¤„ç†
 	if (crx_header.color_type == 1) {
 		BYTE *rgba = uncompr;
 
@@ -652,7 +652,7 @@ static int CIRCUS_pck_extract_directory(struct package *pkg,
 	if (pkg->pio->read(pkg, &pkg_dir->index_entries, 4))
 		return -CUI_EREAD;
 
-	/* ¿ç¹ı¿ìËÙË÷Òı¶Î */
+	/* è·¨è¿‡å¿«é€Ÿç´¢å¼•æ®µ */
 	if (pkg->pio->seek(pkg, pkg_dir->index_entries * sizeof(__pck_entry_t), IO_SEEK_CUR))
 		return -CUI_ESEEK;
 
@@ -1096,7 +1096,7 @@ static cui_ext_operation CIRCUS_dat_operation = {
 static inline DWORD pcm3_make_length(DWORD len)
 {
 /*
-00424E3A  |.  B8 09040281   MOV EAX,81020409                         ;  ebpÊÇxpcm.length
+00424E3A  |.  B8 09040281   MOV EAX,81020409                         ;  ebpæ˜¯xpcm.length
 00424E3F  |.  F7ED          IMUL EBP
 00424E41  |.  03D5          ADD EDX,EBP
 00424E43  |.  C1FA 0B       SAR EDX,0B
@@ -1158,4 +1158,5 @@ int CALLBACK CIRCUS_register_cui(struct cui_register_callback *callback)
 #endif
 
 	return 0;
+}
 }

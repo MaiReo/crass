@@ -9,13 +9,13 @@
 #include <stdio.h>
 #include <openssl/des.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information usi_cui_information = {
 	_T(""),					/* copyright */
 	_T(""),					/* system */
 	_T(".UCG"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-1-25 21:27"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -36,7 +36,7 @@ static void des_decrypt(BYTE *buf, DWORD len, const char *key = "FIREWORK")
 
 /********************* UCG *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int usi_UCG_match(struct package *pkg)
 {
 	s8 magic[8];
@@ -58,7 +58,7 @@ static int usi_UCG_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int usi_UCG_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -78,7 +78,7 @@ static int usi_UCG_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int usi_UCG_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -102,7 +102,7 @@ static int usi_UCG_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void usi_UCG_release_resource(struct package *pkg, 
 									 struct package_resource *pkg_res)
 {
@@ -116,7 +116,7 @@ static void usi_UCG_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void usi_UCG_release(struct package *pkg, 
 							struct package_directory *pkg_dir)
 {
@@ -128,7 +128,7 @@ static void usi_UCG_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation usi_UCG_operation = {
 	usi_UCG_match,				/* match */
 	NULL,						/* extract_directory */
@@ -139,7 +139,7 @@ static cui_ext_operation usi_UCG_operation = {
 	usi_UCG_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK usi_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".UCG"), _T(".bmp"), 
@@ -147,4 +147,5 @@ int CALLBACK usi_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

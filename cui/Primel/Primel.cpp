@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Primel_cui_information = {
 	_T("Itsuki Myouhao"),		/* copyright */
 	_T("Primel the Advanture System for x86"),	/* system */
 	_T(".pcf"),	/* package */
 	_T(""),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[8];		// "PackCode"
@@ -29,7 +29,7 @@ typedef struct {
 	u32 off_0x0c;		// @0c ?
 
 	u64 data_size;		// @10
-	u64 unknown_offset;	// @18 ?	ÓÃÓÚºÍpcfÎÄ¼şµÄ´óĞ¡×ö±È½Ï£¨Èç¹û³¬³öÎÄ¼ş´óĞ¡¾ÍÓĞ´íÎó£©
+	u64 unknown_offset;	// @18 ?	ç”¨äºå’Œpcfæ–‡ä»¶çš„å¤§å°åšæ¯”è¾ƒï¼ˆå¦‚æœè¶…å‡ºæ–‡ä»¶å¤§å°å°±æœ‰é”™è¯¯ï¼‰
 
 	u64 unknown_entry_size;	// @20 ?
 	u64 index_offset;	// @28
@@ -209,7 +209,7 @@ static void decrypt(struct crypt_ctx *ctx, unsigned char *data,
 
 /********************* pcf *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Primel_pcf_match(struct package *pkg)
 {
 	pcf_header_t header;
@@ -245,7 +245,7 @@ static int Primel_pcf_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Primel_pcf_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
@@ -297,7 +297,7 @@ static int Primel_pcf_extract_directory(struct package *pkg,
 		case 0x20000:	// here
 			//buffer_flags = new ???(0x38);	// 3d6bd8
 			// op: 4ABCC4
-			// member value: hash_len (init value: 4), hash_len <= 16 && 4×Ö½Ú¶ÔÆë 
+			// member value: hash_len (init value: 4), hash_len <= 16 && 4å­—èŠ‚å¯¹é½ 
 			break;
 		case 0x30000:		
 			//v8 = operator new(0x5Cu);
@@ -419,7 +419,7 @@ static int Primel_pcf_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Primel_pcf_parse_resource_info(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -427,15 +427,15 @@ static int Primel_pcf_parse_resource_info(struct package *pkg,
 
 	pcf_entry = (pcf_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, pcf_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = pcf_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = pcf_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Primel_pcf_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -454,7 +454,7 @@ static int Primel_pcf_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Primel_pcf_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -478,7 +478,7 @@ static int Primel_pcf_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Primel_pcf_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -492,7 +492,7 @@ static void Primel_pcf_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Primel_pcf_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -504,7 +504,7 @@ static void Primel_pcf_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Primel_pcf_operation = {
 	Primel_pcf_match,					/* match */
 	Primel_pcf_extract_directory,		/* extract_directory */
@@ -515,7 +515,7 @@ static cui_ext_operation Primel_pcf_operation = {
 	Primel_pcf_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK Primel_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".pcf"), NULL, 
@@ -523,4 +523,5 @@ int CALLBACK Primel_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

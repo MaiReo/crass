@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information EAGLS_cui_information = {
 	_T("Tech-Arts"),		/* copyright */
 	_T("Enhanced Adventure Game Language System)"),/* system */
 	_T(".pak .idx"),		/* package */
 	_T("1.1.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-7-21 16:59"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 name[20];
@@ -42,9 +42,9 @@ static DWORD alis_lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 							unsigned char *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -52,7 +52,7 @@ static DWORD alis_lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 	
 	memset(win, 0, sizeof(win));
 	while (1) {
-		/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+		/* å¦‚æžœä¸º0, è¡¨ç¤ºæŽ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŽŸæ ·è¾“å‡º */
 		BYTE flag;
 
 		if (curbyte >= comprlen)
@@ -71,7 +71,7 @@ static DWORD alis_lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 				data = compr[curbyte++];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;
 			} else {
@@ -97,7 +97,7 @@ static DWORD alis_lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 					data = win[(win_offset + i) & (win_size - 1)];
 					uncompr[act_uncomprlen++] = data;		
-					/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+					/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 					win[nCurWindowByte++] = data;
 					nCurWindowByte &= win_size - 1;	
 				}
@@ -112,9 +112,9 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -137,7 +137,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 			if (curbyte == comprlen)
 				break;
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -159,7 +159,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 				data = win[(win_offset + i) & (win_size - 1)];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -276,7 +276,7 @@ static void decode_script(char *encypt_key, long seed, BYTE *dec, DWORD len)
 		dec[i] ^= decode_table[update_seed(&seed) % encypt_key_length];
 }
 
-// Š—¤È¥Ü¥¤¥ó
+// å§‰ã¨ãƒœã‚¤ãƒ³
 static void ANEBOIN_decode_script(char *encypt_key, long seed, BYTE *dec, DWORD len)
 {
 	BYTE decode_table[5] = { 'E', 'A', 'G', 'L', 'S' };
@@ -296,7 +296,7 @@ static void decode_cg(char *encypt_key, long seed, BYTE *buf, DWORD len)
 		buf[i] ^= decode_table[lrand(&seed) % encypt_key_length];
 }
 
-// ¤ªŠ—¤µ¤óÖÐ³ö¤·³ÕhÁÐÜ‡
+// ãŠå§‰ã•ã‚“ä¸­å‡ºã—ç—´æ¼¢åˆ—è»Š
 static void TIKAN_decode_cg(char *encypt_key, long seed, BYTE *dec, DWORD len)
 {
 	DWORD encypt_key_length = strlen(encypt_key);
@@ -308,7 +308,7 @@ static void TIKAN_decode_cg(char *encypt_key, long seed, BYTE *dec, DWORD len)
 		dec[i] ^= decode_table[update_seed(&seed) % encypt_key_length];
 }
 
-// Š—¤È¥Ü¥¤¥ó
+// å§‰ã¨ãƒœã‚¤ãƒ³
 static void ANEBOIN_decode_cg(char *encypt_key, long seed, BYTE *dec, DWORD len)
 {
 }
@@ -370,7 +370,7 @@ static void (*find_decode_script(const char *name))(char *, long, BYTE *, DWORD)
 static int EAGLS_pak_extract_directory(struct package *pkg,
 									   struct package_directory *pkg_dir);
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int EAGLS_pak_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -389,7 +389,7 @@ static int EAGLS_pak_match(struct package *pkg)
 	return ret;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int EAGLS_pak_extract_directory(struct package *pkg,
 									   struct package_directory *pkg_dir)
 {
@@ -422,7 +422,7 @@ static int EAGLS_pak_extract_directory(struct package *pkg,
 	const char *name = get_options("game");
 	DWORD i;
 	if (init_seed) {
-		if (name && !strcmpi(name, "ALIS")) {	// ALISÏµÍ³
+		if (name && !strcmpi(name, "ALIS")) {	// ALISç³»ç»Ÿ
 			for (i = 0; entry->name[0]; i++) {
 				entry->offset -= 0x800;
 				++entry;
@@ -446,7 +446,7 @@ static int EAGLS_pak_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int EAGLS_pak_parse_resource_info(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -454,15 +454,15 @@ static int EAGLS_pak_parse_resource_info(struct package *pkg,
 
 	idx_entry = (idx_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, idx_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = idx_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = idx_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int EAGLS_pak_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -526,7 +526,7 @@ static int EAGLS_pak_extract_resource(struct package *pkg,
 		BYTE *dec = (BYTE *)malloc(pkg_res->raw_data_length + 1);
 		if (!dec)
 			return -CUI_EMEM;
-		// ÎªÁËÃÖ²¹½âÑ¹ËõÊý¾Ý³¤¶È²»×ãµÄÎÊÌâ
+		// ä¸ºäº†å¼¥è¡¥è§£åŽ‹ç¼©æ•°æ®é•¿åº¦ä¸è¶³çš„é—®é¢˜
 		dec[pkg_res->raw_data_length] = 0xff;
 
 		DWORD uncomprlen = 100000000;
@@ -553,7 +553,7 @@ out:
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int EAGLS_pak_save_resource(struct resource *res, 
 								   struct package_resource *pkg_res)
 {
@@ -577,7 +577,7 @@ static int EAGLS_pak_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void EAGLS_pak_release_resource(struct package *pkg, 
 									   struct package_resource *pkg_res)
 {
@@ -589,7 +589,7 @@ static void EAGLS_pak_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void EAGLS_pak_release(struct package *pkg, 
 							  struct package_directory *pkg_dir)
 {
@@ -601,7 +601,7 @@ static void EAGLS_pak_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation EAGLS_pak_operation = {
 	EAGLS_pak_match,				/* match */
 	EAGLS_pak_extract_directory,	/* extract_directory */
@@ -612,7 +612,7 @@ static cui_ext_operation EAGLS_pak_operation = {
 	EAGLS_pak_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK EAGLS_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".pak"), NULL, 
@@ -621,4 +621,5 @@ int CALLBACK EAGLS_register_cui(struct cui_register_callback *callback)
 				return -1;
 
 	return 0;
+}
 }

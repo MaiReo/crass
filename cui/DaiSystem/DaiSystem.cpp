@@ -11,11 +11,11 @@
 #include <stdio.h>
 
 struct acui_information DaiSystem_cui_information = {
-	_T("DAI ÊÏ"),				/* copyright */
+	_T("DAI æ°"),				/* copyright */
 	_T("DaiSystem"),			/* system */
 	_T(".pac"),					/* package */
 	_T("0.9.0"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2008-4-21 15:15"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -39,7 +39,7 @@ typedef struct {
 typedef struct {
 	u16 width;
 	u16 height;
-	u8 have_alpha;		/* 0 - ÎŞ; 1 - ÓĞ */
+	u8 have_alpha;		/* 0 - æ— ; 1 - æœ‰ */
 } cg_parameter_t;
 #pragma pack ()
 
@@ -282,7 +282,7 @@ static int DaiSystem_pac_extract_directory(struct package *pkg,
 		return -CUI_EREAD;
 	}
 
-	/* ½âÎöÃû³ÆºÍÆ«ÒÆ */
+	/* è§£æåç§°å’Œåç§» */
 	BYTE *p = index_buffer;
 	for (i = 0; i < index_entries; i++) {
 		unsigned int name_len = 0;
@@ -300,7 +300,7 @@ static int DaiSystem_pac_extract_directory(struct package *pkg,
 		p += 4 + 1;
 	}	
 	delete [] index_buffer;
-	/* ½âÎö³¤¶È */
+	/* è§£æé•¿åº¦ */
 	for (i = 0; i < index_entries - 1; i++)
 		pac_index_buffer[i].length = pac_index_buffer[i + 1].offset
 			- pac_index_buffer[i].offset;
@@ -399,7 +399,7 @@ static int DaiSystem_pac_extract_resource(struct package *pkg,
 	} else if (ha0_header.parameter_length == 5) {
 		cg_parameter_t *cg_para = (cg_parameter_t *)parameter;
 
-		/* uncomprlen £½ aligned_line_length * height + width * height */
+		/* uncomprlen ï¼ aligned_line_length * height + width * height */
 		if (BuildBMPFile(buffer, pkg_res->actual_data_length, SWAP16(cg_para->width), SWAP16(cg_para->height), 
 				!cg_para->have_alpha ? 24 : 32, (BYTE **)&pkg_res->actual_data, &pkg_res->actual_data_length)) {
 			delete [] buffer;
@@ -479,4 +479,5 @@ int CALLBACK DaiSystem_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

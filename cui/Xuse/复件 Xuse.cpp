@@ -13,8 +13,8 @@
 /*
 Xuse: 
 ETERNAL
-İx¹âÒí‘éÓ› Ìì¿Õ¤Î¥æ¥ß¥Ê
-D:\“V‹ó‚Ìƒ†ƒ~ƒií“¬‘ÌŒ±”Å\Data
+è¼å…‰ç¿¼æˆ¦è¨˜ å¤©ç©ºã®ãƒ¦ãƒŸãƒŠ
+D:\æ¤å¬»åºå„å„ˆåƒ«æ„´æ‘¤æ‡±å°¡æ–‰\Data
 */
 
 struct acui_information Xuse_cui_information = {
@@ -22,7 +22,7 @@ struct acui_information Xuse_cui_information = {
 	NULL,							/* system */
 	_T(".arc .xarc .bin .4ag .wag bv* .xsa"),	/* package */
 	_T("0.2.6"),					/* revision */
-	_T("³Õh¹«Ù\"),
+	_T("ç—´æ¼¢å…¬è³Š"),
 	_T("2009-1-22 22:50"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -70,7 +70,7 @@ typedef struct {
 	u16 crc;
 } arc_NDIX_t;
 
-// ½ô½ÓÔÚNDIXÊı¾İ¶ÎÖ®ºó£¬"EDIX"ºó½ÓºÍNDIXÍêÈ«ÏàÍ¬µÄEDIXÊı¾İ
+// ç´§æ¥åœ¨NDIXæ•°æ®æ®µä¹‹åï¼Œ"EDIX"åæ¥å’ŒNDIXå®Œå…¨ç›¸åŒçš„EDIXæ•°æ®
 typedef struct {
 	u16 sync;		// must be 0x1001
 	u32 CTIF_offset;
@@ -97,9 +97,9 @@ typedef struct {
 typedef struct {
 	s8 magic[4];		// "DATA"
 	u32 unknown;		// 0x20 or 0x80 or 0x26(Thumbs.db)
-	// Ê±¼ä´Á
+	// æ—¶é—´æˆ³
 	u16 year, month, day, hour, minute, second;
-	u16 sec_60, ms;		// 1/60ÃëºÍms?
+	u16 sec_60, ms;		// 1/60ç§’å’Œms?
 	u32 length;
 	u16 crc;
 } arc_DATA_t;
@@ -391,7 +391,7 @@ static int Xuse_arc_extract_directory(struct package *pkg,
 		printf("unsupport dir mode 1\n");
 		return -CUI_EMATCH;
 		break;
-	case 2:	// no test, ¶øÇÒËÆºõÏµÍ³Ò²²»Ö§³ÖÕâÖÖÄ£Ê½ÁË
+	case 2:	// no test, è€Œä¸”ä¼¼ä¹ç³»ç»Ÿä¹Ÿä¸æ”¯æŒè¿™ç§æ¨¡å¼äº†
 		CADR_offset_lo = 22;
 		CADR_offset_hi = 0;
 		break;
@@ -409,7 +409,7 @@ static int Xuse_arc_extract_directory(struct package *pkg,
 	if (pkg->pio->locate(pkg, &pos))
 		return -CUI_EREAD;
 
-	// ÕâÀïÊµ¼ÊÉÏÓ¦¸ÃÔÚÏÂÃæµÄÑ­»·ÖĞ×öCADR¼ì²é
+	// è¿™é‡Œå®é™…ä¸Šåº”è¯¥åœ¨ä¸‹é¢çš„å¾ªç¯ä¸­åšCADRæ£€æŸ¥
 	if (pkg->pio->seek(pkg, CADR_offset_lo, IO_SEEK_SET))
 		return -CUI_ESEEK;
 
@@ -1001,7 +1001,7 @@ static int Xuse_4ag_extract_directory(struct package *pkg,
 			decode_4ag_resource((u8 *)&sub_chunk, 8, res_offset, dec_buf, dec_buf_len);
 
 			res_offset += sizeof(sub_chunk);
-			// ÒÔÉÏ£¬¸ù¾İmode·µ»Øµ±Ç°µÄoffset called from 426d78
+			// ä»¥ä¸Šï¼Œæ ¹æ®modeè¿”å›å½“å‰çš„offset called from 426d78
 
 			int ftags = 0;
 			char *buf;
@@ -1037,7 +1037,7 @@ static int Xuse_4ag_extract_directory(struct package *pkg,
 					break;
 				}
 				break;
-			case 0x47415446:	//FTAG(×ÊÔ´Êı¾İÂ·¾¶£¬ÀıÈç£ºWaitScreen\Load.png)
+			case 0x47415446:	//FTAG(èµ„æºæ•°æ®è·¯å¾„ï¼Œä¾‹å¦‚ï¼šWaitScreen\Load.png)
 				if (ftags >= 3) {
 					ret = -CUI_EMATCH;
 					break;
@@ -1130,9 +1130,9 @@ static int Xuse_4ag_parse_resource_info(struct package *pkg,
 	my_4ag_entry_t *my_4ag_entry;
 
 	my_4ag_entry = (my_4ag_entry_t *)pkg_res->actual_index_entry;
-	/* ¹ıÂËµô
-	 * Nas\02_“V‹ó‚Ìƒ†ƒ~ƒi\040_‰æ‘œ\045_ƒtƒFƒCƒX\0455_yí“¬ƒtƒFƒCƒXz•ÒW\03_png\bf312_0101.png
-	 * @Data\fa0000.wagÖĞ´íÎóµÄ×ÊÔ´Ãû	
+	/* è¿‡æ»¤æ‰
+	 * Nas\02_æ¤å¬»åºå„å„ˆåƒ«\040_å¤‹æ†¸\045_åƒ¼åƒƒåƒ€åƒ—\0455_äº‚æ„´æ‘¤åƒ¼åƒƒåƒ€åƒ—äºƒæ›‡å»¤\03_png\bf312_0101.png
+	 * @Data\fa0000.wagä¸­é”™è¯¯çš„èµ„æºå	
 	 */
 	char *name = my_4ag_entry->name;
 	while (*name == '\\')
@@ -1259,7 +1259,7 @@ static int Xuse_var_extract_resource(struct package *pkg,
 			return -CUI_EREADVEC;
 	}
 	
-	// ²»°üÀ¨crc
+	// ä¸åŒ…æ‹¬crc
 	decode_ScenarioVariable((BYTE *)pkg_res->raw_data + sizeof(var_header_t), 
 		pkg_res->raw_data_length - sizeof(var_header_t) - 2);
 
@@ -1432,7 +1432,7 @@ static int Xuse_KOTORi_extract_resource(struct package *pkg,
 		return -CUI_EREAD;
 	}
 
-	// Êµ¼ÊkeyµÄÆ«ÒÆÖµÊÇÏà¶Ôsizeof(KOTORi_header_t) + sizeof(KOTORi_info)¿ªÊ¼µÄ
+	// å®é™…keyçš„åç§»å€¼æ˜¯ç›¸å¯¹sizeof(KOTORi_header_t) + sizeof(KOTORi_info)å¼€å§‹çš„
 	for (DWORD i = 0; i < data_len; ++i)
 		data[i] ^= KOTORi_info.key[i % 16];
 
@@ -1503,4 +1503,5 @@ int CALLBACK Xuse_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

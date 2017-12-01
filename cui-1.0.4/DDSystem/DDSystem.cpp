@@ -12,19 +12,19 @@
 using namespace std;
 using std::vector;
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information DDSystem_cui_information = {
 	NULL,					/* copyright */
 	_T("DDSystem"),			/* system */
 	_T(".dat"),				/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-7-4 23:18"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];	// "DDP0" or "DDP1" or "DDP2" or "DDP3"
@@ -36,7 +36,7 @@ typedef struct {
 	u32 offset;
 } DDP1_hash_entry_t;
 
-// ÎÄ¼şµÄ×îºó4×Ö½ÚÊÇÎÄ¼şµÄ´óĞ¡
+// æ–‡ä»¶çš„æœ€å4å­—èŠ‚æ˜¯æ–‡ä»¶çš„å¤§å°
 typedef struct {
 	s8 magic[4];	// "DDP2"
 	u32 index_entries;
@@ -51,7 +51,7 @@ typedef struct {
 	u32 unknown;	// 0
 } DDP2_entry_t;
 
-// ÎÄ¼şµÄ×îºó4×Ö½ÚÊÇÎÄ¼şµÄ´óĞ¡
+// æ–‡ä»¶çš„æœ€å4å­—èŠ‚æ˜¯æ–‡ä»¶çš„å¤§å°
 typedef struct {
 	s8 magic[4];	// "DDP3"
 	u32 hash_entries;
@@ -67,7 +67,7 @@ typedef struct {
 } HXB_header_t;
 #pragma pack ()
 
-/* .dat·â°üµÄË÷ÒıÏî½á¹¹ */
+/* .datå°åŒ…çš„ç´¢å¼•é¡¹ç»“æ„ */
 typedef struct {
 	char name[MAX_PATH];
 	DWORD offset;
@@ -159,7 +159,7 @@ static void ddp_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int DDSystem_DDP0_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -180,7 +180,7 @@ static int DDSystem_DDP0_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int DDSystem_DDP0_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -235,7 +235,7 @@ static int DDSystem_DDP0_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int DDSystem_DDP0_parse_resource_info(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -258,7 +258,7 @@ static int DDSystem_DDP0_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int DDSystem_DDP0_extract_resource(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -341,7 +341,7 @@ static int DDSystem_DDP0_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int DDSystem_DDP0_save_resource(struct resource *res, 
 									   struct package_resource *pkg_res)
 {
@@ -365,7 +365,7 @@ static int DDSystem_DDP0_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void DDSystem_DDP0_release_resource(struct package *pkg, 
 										   struct package_resource *pkg_res)
 {
@@ -379,7 +379,7 @@ static void DDSystem_DDP0_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void DDSystem_DDP0_release(struct package *pkg, 
 								  struct package_directory *pkg_dir)
 {
@@ -391,7 +391,7 @@ static void DDSystem_DDP0_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation DDSystem_DDP0_operation = {
 	DDSystem_DDP0_match,				/* match */
 	DDSystem_DDP0_extract_directory,	/* extract_directory */
@@ -404,7 +404,7 @@ static cui_ext_operation DDSystem_DDP0_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int DDSystem_DDP1_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -425,7 +425,7 @@ static int DDSystem_DDP1_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int DDSystem_DDP1_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -447,10 +447,10 @@ static int DDSystem_DDP1_extract_directory(struct package *pkg,
 	vector<my_dat_entry_t> dat_index;
 	int ret = 0;
 	for (DWORD i = 0; i < hash_entries; ++i) {
-		if (!hash_index[i].size)	// Ã»ÓĞ×ÊÔ´»º´æÔÚ¸ÃhashÖĞ
+		if (!hash_index[i].size)	// æ²¡æœ‰èµ„æºç¼“å­˜åœ¨è¯¥hashä¸­
 			continue;
 
-		// Îª»º´æÔÚ¸ÃhashÖĞµÄËùÓĞ×ÊÔ´Ïî·ÖÅäÄÚ´æ
+		// ä¸ºç¼“å­˜åœ¨è¯¥hashä¸­çš„æ‰€æœ‰èµ„æºé¡¹åˆ†é…å†…å­˜
 		BYTE *info_entry = (BYTE *)malloc(hash_index[i].size);
 		if (!info_entry) {
 			ret = -CUI_EMEM;
@@ -521,7 +521,7 @@ static int DDSystem_DDP1_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int DDSystem_DDP1_parse_resource_info(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -537,7 +537,7 @@ static int DDSystem_DDP1_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation DDSystem_DDP1_operation = {
 	DDSystem_DDP1_match,				/* match */
 	DDSystem_DDP1_extract_directory,	/* extract_directory */
@@ -550,7 +550,7 @@ static cui_ext_operation DDSystem_DDP1_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int DDSystem_DDP2_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -571,7 +571,7 @@ static int DDSystem_DDP2_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int DDSystem_DDP2_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -599,7 +599,7 @@ static int DDSystem_DDP2_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int DDSystem_DDP2_parse_resource_info(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -615,7 +615,7 @@ static int DDSystem_DDP2_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation DDSystem_DDP2_operation = {
 	DDSystem_DDP2_match,				/* match */
 	DDSystem_DDP2_extract_directory,	/* extract_directory */
@@ -628,7 +628,7 @@ static cui_ext_operation DDSystem_DDP2_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int DDSystem_DDP3_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -649,7 +649,7 @@ static int DDSystem_DDP3_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int DDSystem_DDP3_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -671,10 +671,10 @@ static int DDSystem_DDP3_extract_directory(struct package *pkg,
 	vector<my_dat_entry_t> dat_index;
 	int ret = 0;
 	for (DWORD i = 0; i < header.hash_entries; ++i) {
-		if (!hash_index[i].size)	// Ã»ÓĞ×ÊÔ´»º´æÔÚ¸ÃhashÖĞ
+		if (!hash_index[i].size)	// æ²¡æœ‰èµ„æºç¼“å­˜åœ¨è¯¥hashä¸­
 			continue;
 
-		// Îª»º´æÔÚ¸ÃhashÖĞµÄËùÓĞ×ÊÔ´Ïî·ÖÅäÄÚ´æ
+		// ä¸ºç¼“å­˜åœ¨è¯¥hashä¸­çš„æ‰€æœ‰èµ„æºé¡¹åˆ†é…å†…å­˜
 		BYTE *info_entry = (BYTE *)malloc(hash_index[i].size);
 		if (!info_entry) {
 			ret = -CUI_EMEM;
@@ -742,7 +742,7 @@ static int DDSystem_DDP3_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation DDSystem_DDP3_operation = {
 	DDSystem_DDP3_match,				/* match */
 	DDSystem_DDP3_extract_directory,	/* extract_directory */
@@ -753,7 +753,7 @@ static cui_ext_operation DDSystem_DDP3_operation = {
 	DDSystem_DDP0_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK DDSystem_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".dat"), NULL, 
@@ -773,4 +773,5 @@ int CALLBACK DDSystem_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

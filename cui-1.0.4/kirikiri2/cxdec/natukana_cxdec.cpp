@@ -463,3 +463,4 @@ struct cxdec_callback natukana_cxdec_callback = {
 	{ 0x2f5, 0x6f0 },
 	xcode_building_stage1
 };
+;

@@ -12,19 +12,19 @@
 extern void init_genrand(unsigned long s);
 extern unsigned long genrand_int32(void);
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Touhou_cui_information = {
-	_T("»Æ»è¥Õ¥í¥ó¥Æ¥£¥¢"),	/* copyright */
+	_T("é»„æ˜ãƒ•ãƒ­ãƒ³ãƒ†ã‚£ã‚¢"),	/* copyright */
 	NULL,					/* system */
 	_T(".dat"),				/* package */
 	_T("1.0.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-5-25 21:02"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	u16 index_entries;
@@ -35,7 +35,7 @@ typedef struct {
 	u8 bpp;
 	u32 width; 
     u32 height; 
-    u32 pitch;		// ¶ÔÆëÁËµÄ¿í¶È
+    u32 pitch;		// å¯¹é½äº†çš„å®½åº¦
     u32 unknown_dib_length; 
 } cv2_header_t;
 
@@ -65,7 +65,7 @@ static void *my_malloc(DWORD len)
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Touhou105_dat_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -96,7 +96,7 @@ static int Touhou105_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Touhou105_dat_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -152,7 +152,7 @@ static int Touhou105_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int Touhou105_dat_parse_resource_info(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -162,13 +162,13 @@ static int Touhou105_dat_parse_resource_info(struct package *pkg,
 	strcpy(pkg_res->name, dat_entry->name);
 	pkg_res->name_length = dat_entry->name_length;
 	pkg_res->raw_data_length = dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = dat_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Touhou105_dat_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -247,9 +247,9 @@ static int Touhou105_dat_extract_resource(struct package *pkg,
 		pkg_res->raw_data = raw;
 
 #if 0
-	// [C72]–|·½¾pÏëÌì ¡« Scarlet Weather Rhapsody ÌåòY°æ
-	// µÄËùÓÐ×ÊÔ´À©Õ¹Ãû¶¼ÊÇ.cnv,¶øÇÒÍ¼Ïñ×ÊÔ´±È½Ï¶à,ËùÒÔ·Å
-	// µ½×îºóÒ»¸ö±È½Ï·ÖÖ§Àï.
+	// [C72]æ±æ–¹ç·‹æƒ³å¤© ï½ž Scarlet Weather Rhapsody ä½“é¨“ç‰ˆ
+	// çš„æ‰€æœ‰èµ„æºæ‰©å±•åéƒ½æ˜¯.cnv,è€Œä¸”å›¾åƒèµ„æºæ¯”è¾ƒå¤š,æ‰€ä»¥æ”¾
+	// åˆ°æœ€åŽä¸€ä¸ªæ¯”è¾ƒåˆ†æ”¯é‡Œ.
 	if (strstr(pkg_res->name, ".cv1") || (strstr(pkg_res->name, "csv") && strstr(pkg_res->name, ".cnv"))) {
 		BYTE xor0 = 0x66, xor1 = 0x65;
 		for (DWORD i = 0; i < pkg_res->raw_data_length; i++) {
@@ -268,7 +268,7 @@ printf("dfs\n");
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Touhou105_dat_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -292,7 +292,7 @@ static int Touhou105_dat_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Touhou105_dat_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -306,7 +306,7 @@ static void Touhou105_dat_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Touhou105_dat_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -318,7 +318,7 @@ static void Touhou105_dat_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Touhou105_dat_operation = {
 	Touhou105_dat_match,					/* match */
 	Touhou105_dat_extract_directory,		/* extract_directory */
@@ -329,7 +329,7 @@ static cui_ext_operation Touhou105_dat_operation = {
 	Touhou105_dat_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK Touhou_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".dat"), NULL, 
@@ -337,4 +337,5 @@ int CALLBACK Touhou_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

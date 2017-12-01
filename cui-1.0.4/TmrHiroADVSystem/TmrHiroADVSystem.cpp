@@ -15,7 +15,7 @@ struct acui_information TmrHiroADVSystem_cui_information = {
 	_T("Tmr-Hiro ADV System"),	/* system */
 	_T(".pac"),					/* package */
 	_T("1.0.1"),				/* revision */
-	_T("³Õºº¹«Ôô"),				/* author */
+	_T("ç—´æ±‰å…¬è´¼"),				/* author */
 	_T("2007-12-30 11:58"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -49,8 +49,8 @@ typedef struct {
 typedef struct {
 	u8 format;		// 1 - D3DFMT_X8R8G8B8; 2 - D3DFMT_A8R8G8B8
 	u8 is_32bit;
-	u16 width;		// ¿ÉÄÜÊÇÆÁÄ»ÏÔÊ¾¿í¶È
-	u16 height;		// ¿ÉÄÜÊÇÆÁÄ»ÏÔÊ¾¸ß¶È
+	u16 width;		// å¯èƒ½æ˜¯å±å¹•æ˜¾ç¤ºå®½åº¦
+	u16 height;		// å¯èƒ½æ˜¯å±å¹•æ˜¾ç¤ºé«˜åº¦
 	u16 bits_count;
 	u16 pitch_x;
 	u16 orig_x;
@@ -158,20 +158,20 @@ static int TmrHiroADVSystem_pac_parse_resource_info(struct package *pkg,
 
 	my_pac_entry = (my_pac_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, my_pac_entry->name, 16);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_pac_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_pac_entry->offset;
 
 	return 0;
 }
 
-/* uncomprlenÊÇ½âÑ¹µÄÏóËØÊý */
+/* uncomprlenæ˜¯è§£åŽ‹çš„è±¡ç´ æ•° */
 static void __grp_decompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD comprlen, int pitch, DWORD line_length, int pixel_offset)
 {
 	DWORD act_uncomprlen = 0;
 	DWORD pixel = 0;
-	DWORD w = 0;	/* ÐÐÄÚÏóËØ¼ÆÊý */
+	DWORD w = 0;	/* è¡Œå†…è±¡ç´ è®¡æ•° */
 	DWORD curbyte = 0;
 
 	while (1) {
@@ -194,11 +194,11 @@ static void __grp_decompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD
 			for (DWORD i = 0; i < count; i++) {
 				w++;
 				*dst = compr[curbyte];
-				/* ÒòÎªÊµ¼ÊÌáÈ¡µÄ²»ÊÇÒ»¸öÍêÕûµÄÍ¼Ïñ£¬¶øÊÇÒ»·ùÍ¼ÏñÖÐµÄÒ»¸ö×ÓÇøÓò£¬
-				 * ËùÒÔÓÃw¼ÆÊýµ½×ÓÇøÓòµÄÐÐ³¤Ê±Òª¸üÐÂ²ÎÊý¡£
+				/* å› ä¸ºå®žé™…æå–çš„ä¸æ˜¯ä¸€ä¸ªå®Œæ•´çš„å›¾åƒï¼Œè€Œæ˜¯ä¸€å¹…å›¾åƒä¸­çš„ä¸€ä¸ªå­åŒºåŸŸï¼Œ
+				 * æ‰€ä»¥ç”¨wè®¡æ•°åˆ°å­åŒºåŸŸçš„è¡Œé•¿æ—¶è¦æ›´æ–°å‚æ•°ã€‚
 				 */
 				if (w == line_length) {
-					dst += pitch * 4;	// ÒÆ¶¯µ½ÏÂÒ»ÐÐ
+					dst += pitch * 4;	// ç§»åŠ¨åˆ°ä¸‹ä¸€è¡Œ
 					w = 0;
 					pixel += pitch;
 				}
@@ -214,7 +214,7 @@ static void __grp_decompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD
 				w++;
 				*dst = compr[curbyte++];
 				if (w == line_length) {
-					dst += pitch * 4;	// ÒÆ¶¯µ½ÉÏÒ»ÐÐ
+					dst += pitch * 4;	// ç§»åŠ¨åˆ°ä¸Šä¸€è¡Œ
 					w = 0;
 					pixel += pitch;
 				}
@@ -449,4 +449,5 @@ int CALLBACK TmrHiroADVSystem_register_cui(struct cui_register_callback *callbac
 	else
 		extract_raw = 0;
 	return 0;
+}
 }

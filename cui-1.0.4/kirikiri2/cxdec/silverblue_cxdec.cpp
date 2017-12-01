@@ -466,3 +466,4 @@ struct cxdec_callback silverblue_cxdec_callback = {
 	{ 0x1a1, 0x1eb },
 	xcode_building_stage1
 };
+;

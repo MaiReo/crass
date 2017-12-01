@@ -8,14 +8,14 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-// N:\comic\AlterEgoÌåòY°æ090505
+// N:\comic\AlterEgoä½“é¨“ç‰ˆ090505
 
 struct acui_information Irrlicht_Engine_cui_information = {
 	_T("Nikolaus Gebhardt"),/* copyright */
 	_T("Irrlicht Engine"),	/* system */
 	_T(".ark .pack"),		/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-5-12 18:13"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -316,4 +316,5 @@ int CALLBACK Irrlicht_Engine_register_cui(struct cui_register_callback *callback
 
 
 	return 0;
+}
 }

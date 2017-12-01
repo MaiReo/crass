@@ -13,20 +13,20 @@
 #include "SFMT-19937.h"
 #include "SFMT-132049.h"
 
-/* Ñ°ÕÒ½âÃÜkeyµÄ·½·¨£º
-ÏµÍ³Ê×ÏÈ»á¶ÁÈ¡system.arc£¬ÏÂReadFile¶Ïµã£¬È»ºó»ØËİ³öfread(),
-fread()·µ»Øºó¾ÍÊÇdecode()º¯Êı£¨buf,buf_len£©£¬ÕâÀïÒ»ÉÏÀ´»áÓĞ¸öÈ«¾Ö±äÁ¿
-Ö´ĞĞÒ»¸ö±£´ækeyµÄÖ¸Õë£¬ÕâÀïµÄÖµ¾ÍÊÇkey¡£
-È»ºóËÑË÷ÄÇ¸öÈ«¾Ö±äÁ¿£¬ÕÒµ½¸øÄÇ¸öÈ«¾Ö±äÁ¿¸´ÖÆµÄÓï¾ä¡£
-ËüµÄÏÂÃæÓĞÀàËÆÕâÑùµÄ´úÂë£º
-00494CE0   .  A3 CCBD8000   MOV     DWORD PTR DS:[80BDCC], EAX ¡¶£­£­key bufµÄµØÖ·
+/* å¯»æ‰¾è§£å¯†keyçš„æ–¹æ³•ï¼š
+ç³»ç»Ÿé¦–å…ˆä¼šè¯»å–system.arcï¼Œä¸‹ReadFileæ–­ç‚¹ï¼Œç„¶åå›æº¯å‡ºfread(),
+fread()è¿”å›åå°±æ˜¯decode()å‡½æ•°ï¼ˆbuf,buf_lenï¼‰ï¼Œè¿™é‡Œä¸€ä¸Šæ¥ä¼šæœ‰ä¸ªå…¨å±€å˜é‡
+æ‰§è¡Œä¸€ä¸ªä¿å­˜keyçš„æŒ‡é’ˆï¼Œè¿™é‡Œçš„å€¼å°±æ˜¯keyã€‚
+ç„¶åæœç´¢é‚£ä¸ªå…¨å±€å˜é‡ï¼Œæ‰¾åˆ°ç»™é‚£ä¸ªå…¨å±€å˜é‡å¤åˆ¶çš„è¯­å¥ã€‚
+å®ƒçš„ä¸‹é¢æœ‰ç±»ä¼¼è¿™æ ·çš„ä»£ç ï¼š
+00494CE0   .  A3 CCBD8000   MOV     DWORD PTR DS:[80BDCC], EAX ã€Šï¼ï¼key bufçš„åœ°å€
 00494CE5   .  890D C4BD8000 MOV     DWORD PTR DS:[80BDC4], ECX
 00494CEB   .  8915 C8BD8000 MOV     DWORD PTR DS:[80BDC8], EDX
 00494CF1   .  74 12         JE      SHORT zw.00494D05
-00494CF3   .  B9 BCBD8000   MOV     ECX, zw.0080BDBC ¡¶£­iniÊı×é
-00494CF8   .  E8 73D0F7FF   CALL    zw.00411D70 ¡¶£­£­gen_key
+00494CF3   .  B9 BCBD8000   MOV     ECX, zw.0080BDBC ã€Šï¼iniæ•°ç»„
+00494CF8   .  E8 73D0F7FF   CALL    zw.00411D70 ã€Šï¼ï¼gen_key
 00494CFD   .  8B0D CCBD8000 MOV     ECX, DWORD PTR DS:[80BDCC]
-00494D03   .  8901          MOV     DWORD PTR DS:[ECX], EAX ¡¶£­£­key¸³Öµ
+00494D03   .  8901          MOV     DWORD PTR DS:[ECX], EAX ã€Šï¼ï¼keyèµ‹å€¼
 00494D05   >  68 B04D4900   PUSH    zw.00494DB0
 00494D0A   .  E8 4D27FCFF   CALL    zw.0045745C
 00494D0F   .  59            POP     ECX
@@ -35,24 +35,24 @@ fread()·µ»Øºó¾ÍÊÇdecode()º¯Êı£¨buf,buf_len£©£¬ÕâÀïÒ»ÉÏÀ´»áÓĞ¸öÈ«¾Ö±äÁ¿
 
  */
 
-/* Ñ°ÕÒ.asbµÄ½âÃÜ²ÎÊı£º
+/* å¯»æ‰¾.asbçš„è§£å¯†å‚æ•°ï¼š
 00431D80  /$  53            PUSH EBX
 00431D81  |.  56            PUSH ESI
 00431D82  |.  8BF1          MOV ESI,ECX
 00431D84  |.  57            PUSH EDI
-00431D85  |.  68 27100620   PUSH 20061027 <--- crc²ÎÊıÖµ
+00431D85  |.  68 27100620   PUSH 20061027 <--- crcå‚æ•°å€¼
 00431D8A  |.  33DB          XOR EBX,EBX
 00431D8C  |.  33C0          XOR EAX,EAX
-00431D8E  |.  B9 41000000   MOV ECX,41 <--- ¹Ø¼ü×Ö
+00431D8E  |.  B9 41000000   MOV ECX,41 <--- å…³é”®å­—
 00431D93  |.  8D7E 10       LEA EDI,DWORD PTR DS:[ESI+10]
 00431D96  |.  F3:AB         REP STOS DWORD PTR ES:[EDI]
-00431D98  |.  6A 0F         PUSH 0F <--- ¹Ø¼ü×Ö£¨string²ÎÊı×Ö·û´®µÄ³¤¶È£©
-00431D9A  |.  68 18464800   PUSH sentitry.00484618£¨string²ÎÊı×Ö·û´®£©
+00431D98  |.  6A 0F         PUSH 0F <--- å…³é”®å­—ï¼ˆstringå‚æ•°å­—ç¬¦ä¸²çš„é•¿åº¦ï¼‰
+00431D9A  |.  68 18464800   PUSH sentitry.00484618ï¼ˆstringå‚æ•°å­—ç¬¦ä¸²ï¼‰
 00431D9F  |.  899E 14010000 MOV DWORD PTR DS:[ESI+114],EBX
 00431DA5  |.  899E 18010000 MOV DWORD PTR DS:[ESI+118],EBX
 00431DAB  |.  899E 1C010000 MOV DWORD PTR DS:[ESI+11C],EBX
 00431DB1  |.  899E 20010000 MOV DWORD PTR DS:[ESI+120],EBX
-00431DB7  |.  E8 8472FDFF   CALL sentitry.00409040                                              ;  crc32_(20061027,ÌåÑé°æ)
+00431DB7  |.  E8 8472FDFF   CALL sentitry.00409040                                              ;  crc32_(20061027,ä½“éªŒç‰ˆ)
 00431DBC  |.  83C4 0C       ADD ESP,0C
 00431DBF  |.  8D7E 08       LEA EDI,DWORD PTR DS:[ESI+8]
 00431DC2  |.  50            PUSH EAX
@@ -64,26 +64,26 @@ fread()·µ»Øºó¾ÍÊÇdecode()º¯Êı£¨buf,buf_len£©£¬ÕâÀïÒ»ÉÏÀ´»áÓĞ¸öÈ«¾Ö±äÁ¿
 00431DD3  |.  8986 24010000 MOV DWORD PTR DS:[ESI+124],EAX                                      ;  save decode_key
 */
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information AZSystem_cui_information = {
-	_T("casper ÊÏ"),		/* copyright */
+	_T("casper æ°"),		/* copyright */
 	_T("AZSystem"),			/* system */
 	_T(".arc"),				/* package */
 	_T("0.7.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-5-6 22:28"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP | ACUI_ATTRIBUTE_PRELOAD
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];			/* "ARC" */
 	u32 suffix_number;
 	u32 index_entries;
 	u32 compr_index_length;
-	s8 suffix[32];			/* À©Õ¹ÃûÁĞ±í */
+	s8 suffix[32];			/* æ‰©å±•ååˆ—è¡¨ */
 } arc_header_t;
 
 typedef struct {
@@ -97,16 +97,16 @@ typedef struct {
 typedef struct {
 	u32 offset;
 	u32 length;
-	u32 name_crc;			/* ²»°üº¬NULL */
+	u32 name_crc;			/* ä¸åŒ…å«NULL */
 	u32 always_zero;
 	s8 name[32];
 } arc_entry_t;
 
 typedef struct {
-	u32 crc;				/* Êı¾İ²¿·ÖµÄĞ£ÑéÖµ */
-	u32 bitmaplen;			/* Ñ¹Ëõ±êÖ¾³¤¶È */
-	u32 comprlen1;			/* ±êÖ¾×Ö½ÚÎª1Ê±Ê¹ÓÃµÄÑ¹ËõÊı¾İ³¤¶È */
-	u32 comprlen0;			/* ±êÖ¾×Ö½ÚÎª0Ê±Ê¹ÓÃµÄÑ¹ËõÊı¾İ³¤¶È */
+	u32 crc;				/* æ•°æ®éƒ¨åˆ†çš„æ ¡éªŒå€¼ */
+	u32 bitmaplen;			/* å‹ç¼©æ ‡å¿—é•¿åº¦ */
+	u32 comprlen1;			/* æ ‡å¿—å­—èŠ‚ä¸º1æ—¶ä½¿ç”¨çš„å‹ç¼©æ•°æ®é•¿åº¦ */
+	u32 comprlen0;			/* æ ‡å¿—å­—èŠ‚ä¸º0æ—¶ä½¿ç”¨çš„å‹ç¼©æ•°æ®é•¿åº¦ */
 	u32 uncomprlen;
 } arc1a_compr_index_t;
 
@@ -114,9 +114,9 @@ typedef struct {
 	s8 magic[4];			/* "MAP\x1a" */
 	u32 width;	
 	u32 height;	
-	u32 bitmaplen;			/* Ñ¹Ëõ±êÖ¾³¤¶È */
-	u32 comprlen0;			/* ±êÖ¾×Ö½ÚÎª0Ê±Ê¹ÓÃµÄÑ¹ËõÊı¾İ³¤¶È */
-	u32 comprlen1;			/* ±êÖ¾×Ö½ÚÎª1Ê±Ê¹ÓÃµÄÑ¹ËõÊı¾İ³¤¶È */
+	u32 bitmaplen;			/* å‹ç¼©æ ‡å¿—é•¿åº¦ */
+	u32 comprlen0;			/* æ ‡å¿—å­—èŠ‚ä¸º0æ—¶ä½¿ç”¨çš„å‹ç¼©æ•°æ®é•¿åº¦ */
+	u32 comprlen1;			/* æ ‡å¿—å­—èŠ‚ä¸º1æ—¶ä½¿ç”¨çš„å‹ç¼©æ•°æ®é•¿åº¦ */
 } map1a_header_t;
 
 typedef struct {
@@ -147,30 +147,30 @@ typedef struct {
 	u16 width;
 	u16 height;
 	u32 max_comprlen;
-	u32 comprlen[4];		/* RGBAÊÇ·Ö¿éÑ¹ËõµÄ */
+	u32 comprlen[4];		/* RGBAæ˜¯åˆ†å—å‹ç¼©çš„ */
 } cpb_header_t;
 
 typedef struct {
 	s8 magic[4];			/* "CPB" */
 	u8 unknown;				// 0	
-	u8 version;				// 1ÓĞĞ§
+	u8 version;				// 1æœ‰æ•ˆ
 	u16 width;
 	u16 color_depth;
 	u16 height;
 	u32 max_comprlen;
-	u32 comprlen[4];		/* RGBAÊÇ·Ö¿éÑ¹ËõµÄ */
+	u32 comprlen[4];		/* RGBAæ˜¯åˆ†å—å‹ç¼©çš„ */
 } cpb_old_header_t;
 
 typedef struct {
 	s8 magic[4];			/* "CPB" */
 	u8 color_depth;	
-	u8 version;				// 1ÓĞĞ§
+	u8 version;				// 1æœ‰æ•ˆ
 	u8 unknown;				// 0
 	u16 width;
 	u8 unknown1;			// 0
 	u16 height;
 	u32 max_comprlen;
-	u32 comprlen[4];		/* RGBAÊÇ·Ö¿éÑ¹ËõµÄ */
+	u32 comprlen[4];		/* RGBAæ˜¯åˆ†å—å‹ç¼©çš„ */
 } cpb_old2_header_t;
 
 typedef struct {
@@ -178,20 +178,20 @@ typedef struct {
 	u8 unknown;				// 0
 	u8 color_depth;
 	u8 unknown1;			// 0
-	u8 version;				// 1ÓĞĞ§
+	u8 version;				// 1æœ‰æ•ˆ
 	u16 width;
 	u16 height;
 	u32 max_comprlen;
-	u32 comprlen[4];		/* RGBAÊÇ·Ö¿éÑ¹ËõµÄ */
+	u32 comprlen[4];		/* RGBAæ˜¯åˆ†å—å‹ç¼©çš„ */
 } cpb1a_header_t;
 
-// Ã¿¿é×î³¤4096×Ö½Ú£¬Ã¿Ïî64×Ö½Ú£¨Ãû×ÖÇ°ÃæµÄ4×Ö½ÚÊÇÃû×ÖµÄcrc32Öµ£©
+// æ¯å—æœ€é•¿4096å­—èŠ‚ï¼Œæ¯é¡¹64å­—èŠ‚ï¼ˆåå­—å‰é¢çš„4å­—èŠ‚æ˜¯åå­—çš„crc32å€¼ï¼‰
 typedef struct {
 	s8 magic[4];		// "TBL"
 	u32 comprlen;
 	u32 uncomprlen;
-	u32 blocks;			// ¿éÊı
-	u32 entries;		// ×ÜÏîÊı
+	u32 blocks;			// å—æ•°
+	u32 entries;		// æ€»é¡¹æ•°
 } tbl_header_t;
 
 typedef struct {
@@ -217,27 +217,27 @@ typedef struct {
 
 
 static const TCHAR *simplified_chinese_strings[] = {
-	_T("[¾¯¸æ] %s: ½âÃÜkey±£´æÔÚsystem.arcÖĞ£¬")
-		_T("Òò´ËÄã±ØĞëÊ¹ÓÃ\"system\"²ÎÊıÖ¸¶¨ËüµÄÂ·¾¶¡£\n")
-		_T("ÀıÈç£º\n")
+	_T("[è­¦å‘Š] %s: è§£å¯†keyä¿å­˜åœ¨system.arcä¸­ï¼Œ")
+		_T("å› æ­¤ä½ å¿…é¡»ä½¿ç”¨\"system\"å‚æ•°æŒ‡å®šå®ƒçš„è·¯å¾„ã€‚\n")
+		_T("ä¾‹å¦‚ï¼š\n")
 		_T("\tcrage -p xxx.arc -O system=X:\\system.arc\n"),
-	_T("[´íÎó] %s: Ã»ÓĞÕÒµ½½âÃÜkey ...\n")
+	_T("[é”™è¯¯] %s: æ²¡æœ‰æ‰¾åˆ°è§£å¯†key ...\n")
 };
 
 static const TCHAR *traditional_chinese_strings[] = {
-	_T("[¾¯¸æ] %s: ½âÃÜkey±£´æÔÚsystem.arcÖĞ£¬")
-		_T("Òò´ËÄã±ØíšÊ¹ÓÃ\"system\"…¢”µÖ¸¶¨ËüµÄÂ·½¡£\n")
-		_T("ÀıÈç£º\n")
+	_T("[è­¦å‘Š] %s: è§£å¯†keyä¿å­˜åœ¨system.arcä¸­ï¼Œ")
+		_T("å› æ­¤ä½ å¿…é ˆä½¿ç”¨\"system\"åƒæ•¸æŒ‡å®šå®ƒçš„è·¯å¾‘ã€‚\n")
+		_T("ä¾‹å¦‚ï¼š\n")
 		_T("\tcrage -p xxx.arc -O system=X:\\system.arc\n"),
-	_T("[åeÕ`] %s: ›]ÓĞÕÒµ½½âÃÜkey ...\n")
+	_T("[éŒ¯èª¤] %s: æ²’æœ‰æ‰¾åˆ°è§£å¯†key ...\n")
 };
 
 static const TCHAR *japanese_strings[] = {
-	_T("[¾¯¸æ] %s: ½âÕi¥­©`¤Ïsystem.arc¤Ë±£´æ¤µ¤ì¤Æ¤¤¤Ş¤¹¤Î¤Ç¡¢")
-		_T("¥Ñ¥é¥á©`¥¿©`\"system\"¤òÊ¹¤Ã¤Æ¤½¤Î¥Ñ¥¹¤òÖ¸¶¨¤·¤Ê¤±¤ì¤Ğ¤Ê¤ê¤Ş¤»¤ó¡£\n")
-		_T("Àı¤¨¤Ğ£º\n")
+	_T("[è­¦å‘Š] %s: è§£èª­ã‚­ãƒ¼ã¯system.arcã«ä¿å­˜ã•ã‚Œã¦ã„ã¾ã™ã®ã§ã€")
+		_T("ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼\"system\"ã‚’ä½¿ã£ã¦ãã®ãƒ‘ã‚¹ã‚’æŒ‡å®šã—ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚\n")
+		_T("ä¾‹ãˆã°ï¼š\n")
 		_T("\tcrage -p xxx.arc -O system=X:\\system.arc\n"),
-	_T("[¥¨¥é©`] %s: ½âÕi¥­©`¤¬ÒŠ¤Ä¤«¤ê¤Ş¤»¤ó ...\n")
+	_T("[ã‚¨ãƒ©ãƒ¼] %s: è§£èª­ã‚­ãƒ¼ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ ...\n")
 };
 
 static const TCHAR *default_strings[] = {
@@ -274,9 +274,9 @@ enum {
 #define INI_ARRAY	\
 	u32 ini[MAX_INI][4] = { 	\
 		{ 0x2f4d7dfe, 0x47345292, 0x1ba5fe82, 0x7bc04525 },	\
-		{ 0xff2c9171, 0x4a676214, 0xb8c62e81, 0x504ab64a },	/* Zwei Worter -¥Ä¥ô¥¡¥¤ ¥¦¥©¥ë¥¿©` (ÇÒ²»ÓÃewf_crc) */ \
-		{ 0x7f7f85c1, 0x49a60caa, 0x97daf182, 0xb86a1a05 },	/* Sentinel WEBÌåòY°æ ver1.5 */ \
-		{ 0x76c9a719, 0x46e848d2, 0xb43713bf, 0x33770358 },	/* Zwei Worter ÌåòY°æ */ \
+		{ 0xff2c9171, 0x4a676214, 0xb8c62e81, 0x504ab64a },	/* Zwei Worter -ãƒ„ãƒ´ã‚¡ã‚¤ ã‚¦ã‚©ãƒ«ã‚¿ãƒ¼ (ä¸”ä¸ç”¨ewf_crc) */ \
+		{ 0x7f7f85c1, 0x49a60caa, 0x97daf182, 0xb86a1a05 },	/* Sentinel WEBä½“é¨“ç‰ˆ ver1.5 */ \
+		{ 0x76c9a719, 0x46e848d2, 0xb43713bf, 0x33770358 },	/* Zwei Worter ä½“é¨“ç‰ˆ */ \
 	}
 
 #define INIT_ASB_ARRAY	\
@@ -285,10 +285,10 @@ enum {
 		u32 crc;	\
 	} asb_decode_table[] = {	\
 		{	\
-			"Sentinel ‘ÌŒ±”Å", 0x20061215	\
+			"Sentinel æ‡±å°¡æ–‰", 0x20061215	\
 		},	\
 		{	\
-			"Sentinel ‘ÌŒ±”Å", 0x20061027	\
+			"Sentinel æ‡±å°¡æ–‰", 0x20061027	\
 		},	\
 		{	\
 			"ZWEI WORTER -TRIAL VERSION-", 0x20070323	\
@@ -299,7 +299,7 @@ enum {
 	}
 
 static int mt_mode;
-static int old_arc;	// ½éÓÚarc1aºÍarcÖ®¼äµÄÒ»ÖÖ¸ñÊ½
+static int old_arc;	// ä»‹äºarc1aå’Œarcä¹‹é—´çš„ä¸€ç§æ ¼å¼
 
 extern u32 ewf_crc(void *buffer, u32 buffer_size, u32 previous_key);
 extern void init_genrand(unsigned long s);
@@ -668,7 +668,7 @@ static int azsystem_find_key(const char *system_path, u32 *ret_key)
 		_ini[1] |= sfmt19937_gen_rand32() << 16;
 		_ini[2] = sfmt19937_gen_rand32();
 		_ini[3] = sfmt19937_gen_rand32();
-		*ret_key = gen_key(_ini, sizeof(_ini));	// ¸²¸Çmagic
+		*ret_key = gen_key(_ini, sizeof(_ini));	// è¦†ç›–magic
 	} else if (mt_mode == SFMT132049) {
 		sfmt132049_init_gen_rand(seed);
 		_ini[0] = sfmt132049_gen_rand32();
@@ -676,7 +676,7 @@ static int azsystem_find_key(const char *system_path, u32 *ret_key)
 		_ini[1] |= sfmt132049_gen_rand32() << 16;
 		_ini[2] = sfmt132049_gen_rand32();
 		_ini[3] = sfmt132049_gen_rand32();
-		*ret_key = gen_key(_ini, sizeof(_ini));	// ¸²¸Çmagic
+		*ret_key = gen_key(_ini, sizeof(_ini));	// è¦†ç›–magic
 	}
 	MyCloseFile(fd);
 
@@ -765,7 +765,7 @@ static int map1a_decompress(map1a_header_t *compr_index, BYTE *compr, DWORD comp
 
 /********************* arc *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int AZSystem_arc_match(struct package *pkg)
 {
 	arc_header_t *arc_header;
@@ -813,7 +813,7 @@ static int AZSystem_arc_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int AZSystem_arc_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -832,14 +832,14 @@ static int AZSystem_arc_extract_directory(struct package *pkg,
 	if (!compr_index)
 		return -CUI_EMEM;
 	
-	/* ¶Á²Ù×÷ºÍdecodeÊÇÒ»ÌåµÄ */
+	/* è¯»æ“ä½œå’Œdecodeæ˜¯ä¸€ä½“çš„ */
 	if (pkg->pio->read(pkg, compr_index, arc_header->compr_index_length)) {
 		free(compr_index);
 		return -CUI_EREAD;
 	}
 	decode(compr_index, arc_header->compr_index_length, sizeof(arc_header_t), key);
 
-	/* ewf crcºÍzlib½âÑ¹Ëõ²Ù×÷ÊÇÒ»ÌåµÄ */
+	/* ewf crcå’Œzlibè§£å‹ç¼©æ“ä½œæ˜¯ä¸€ä½“çš„ */
 	u32 crc = *(u32 *)compr_index;
 	if (crc == ewf_crc((BYTE *)(compr_index + 4), arc_header->compr_index_length - 4, 1))
 		old_arc = 0;
@@ -897,7 +897,7 @@ static int AZSystem_arc_extract_directory(struct package *pkg,
 				ini[1] |= sfmt19937_gen_rand32() << 16;
 				ini[2] = sfmt19937_gen_rand32();
 				ini[3] = sfmt19937_gen_rand32();
-				priv[1] = gen_key(ini, sizeof(ini));	// ¸²¸Çmagic
+				priv[1] = gen_key(ini, sizeof(ini));	// è¦†ç›–magic
 			} else if (mt_mode == SFMT132049) {
 				sfmt132049_init_gen_rand(seed);
 				ini[0] = sfmt132049_gen_rand32();
@@ -905,7 +905,7 @@ static int AZSystem_arc_extract_directory(struct package *pkg,
 				ini[1] |= sfmt132049_gen_rand32() << 16;
 				ini[2] = sfmt132049_gen_rand32();
 				ini[3] = sfmt132049_gen_rand32();
-				priv[1] = gen_key(ini, sizeof(ini));	// ¸²¸Çmagic
+				priv[1] = gen_key(ini, sizeof(ini));	// è¦†ç›–magic
 			}
 			found_key = 1;
 		}
@@ -930,7 +930,7 @@ static int AZSystem_arc_extract_directory(struct package *pkg,
 				return -CUI_EMATCH;
 			}
 		}
-		// ¾É°æ±¾µÄkeyÊ¹ÓÃµÄ¾ÍÊÇÇ°ÃæµÄkey
+		// æ—§ç‰ˆæœ¬çš„keyä½¿ç”¨çš„å°±æ˜¯å‰é¢çš„key
 		priv[1] = key;
 #else
 		if (!system) {
@@ -957,7 +957,7 @@ static int AZSystem_arc_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int AZSystem_arc_parse_resource_info(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -965,15 +965,15 @@ static int AZSystem_arc_parse_resource_info(struct package *pkg,
 
 	arc_entry = (arc_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, arc_entry->name, 32);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = arc_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = arc_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int AZSystem_arc_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -1137,7 +1137,7 @@ static int AZSystem_arc_extract_resource(struct package *pkg,
 			}
 
 			int act_pixel_bytes = pixel_bytes;
-			/* cpbµÄÑ¹ËõÊı¾İ°´A,G,B,RµÄË³ĞòÅÅ·Å£»¶øcpb_headerÖĞµÄÑ¹Ëõ³¤¶È×Ö¶Î°´B,G,A,RË³Ğò´æ´¢ */
+			/* cpbçš„å‹ç¼©æ•°æ®æŒ‰A,G,B,Rçš„é¡ºåºæ’æ”¾ï¼›è€Œcpb_headerä¸­çš„å‹ç¼©é•¿åº¦å­—æ®µæŒ‰B,G,A,Ré¡ºåºå­˜å‚¨ */
 			for (int i = 0; i < pixel_bytes; i++) {
 				if (!comprlen_block[tbl[i]]) {
 					pixel_bytes++;
@@ -1230,7 +1230,7 @@ static int AZSystem_arc_extract_resource(struct package *pkg,
 				ret = azsystem_decompress(blk_uncompr, blk_uncomprlen, cpb_compr, cpb_header->max_comprlen);
 			} else {
 				palette = NULL;
-				/* cpbµÄÑ¹ËõÊı¾İ°´A,B,G,RµÄË³ĞòÅÅ·Å£»¶øcpb_headerÖĞµÄÑ¹Ëõ³¤¶È×Ö¶Î°´B,R,G,AË³Ğò´æ´¢ */
+				/* cpbçš„å‹ç¼©æ•°æ®æŒ‰A,B,G,Rçš„é¡ºåºæ’æ”¾ï¼›è€Œcpb_headerä¸­çš„å‹ç¼©é•¿åº¦å­—æ®µæŒ‰B,R,G,Aé¡ºåºå­˜å‚¨ */
 				for (int i = pixel_bytes - 1; i >= 0; i--) {
 					ret = azsystem_decompress(blk_uncompr, blk_uncomprlen, cpb_compr, cpb_header->comprlen[i]);
 					if (ret)
@@ -1327,7 +1327,7 @@ out:
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int AZSystem_arc_save_resource(struct resource *res, 
 									  struct package_resource *pkg_res)
 {
@@ -1351,7 +1351,7 @@ static int AZSystem_arc_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void AZSystem_arc_release_resource(struct package *pkg, 
 										  struct package_resource *pkg_res)
 {
@@ -1365,7 +1365,7 @@ static void AZSystem_arc_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void AZSystem_arc_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
@@ -1385,7 +1385,7 @@ static void AZSystem_arc_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AZSystem_arc_operation = {
 	AZSystem_arc_match,					/* match */
 	AZSystem_arc_extract_directory,		/* extract_directory */
@@ -1417,7 +1417,7 @@ static void decode2(BYTE *buf, DWORD len, DWORD total_size, DWORD offset)
 	}
 }
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int AZSystem_new_arc_match(struct package *pkg)
 {
 	arc_header_t arc_header;
@@ -1444,7 +1444,7 @@ static int AZSystem_new_arc_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int AZSystem_new_arc_extract_directory(struct package *pkg,
 											  struct package_directory *pkg_dir)
 {
@@ -1468,7 +1468,7 @@ static int AZSystem_new_arc_extract_directory(struct package *pkg,
 	}
 	decode2(compr_index, arc_header.compr_index_length, fsize, sizeof(arc_header));
 
-	/* ewf crcºÍzlib½âÑ¹Ëõ²Ù×÷ÊÇÒ»ÌåµÄ */
+	/* ewf crcå’Œzlibè§£å‹ç¼©æ“ä½œæ˜¯ä¸€ä½“çš„ */
 	u32 crc = *(u32 *)compr_index;
 	if (crc == ewf_crc((BYTE *)(compr_index + 4), arc_header.compr_index_length - 4, 1))
 		old_arc = 0;
@@ -1521,7 +1521,7 @@ static int AZSystem_new_arc_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int AZSystem_new_arc_extract_resource(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -1625,7 +1625,7 @@ static int AZSystem_new_arc_extract_resource(struct package *pkg,
 				ret = azsystem_decompress(blk_uncompr, blk_uncomprlen, cpb_compr, cpb_header->max_comprlen);
 			} else {
 				palette = NULL;
-				/* cpbµÄÑ¹ËõÊı¾İ°´A,B,G,RµÄË³ĞòÅÅ·Å£»¶øcpb_headerÖĞµÄÑ¹Ëõ³¤¶È×Ö¶Î°´B,R,G,AË³Ğò´æ´¢ */
+				/* cpbçš„å‹ç¼©æ•°æ®æŒ‰A,B,G,Rçš„é¡ºåºæ’æ”¾ï¼›è€Œcpb_headerä¸­çš„å‹ç¼©é•¿åº¦å­—æ®µæŒ‰B,R,G,Aé¡ºåºå­˜å‚¨ */
 				for (int i = pixel_bytes - 1; i >= 0; i--) {
 					ret = azsystem_decompress(blk_uncompr, blk_uncomprlen, cpb_compr, cpb_header->comprlen[i]);
 					if (ret)
@@ -1702,7 +1702,7 @@ out:
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AZSystem_new_arc_operation = {
 	AZSystem_new_arc_match,				/* match */
 	AZSystem_new_arc_extract_directory,	/* extract_directory */
@@ -1715,7 +1715,7 @@ static cui_ext_operation AZSystem_new_arc_operation = {
 
 /********************* arc *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int AZSystem_arc1a_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -1736,7 +1736,7 @@ static int AZSystem_arc1a_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int AZSystem_arc1a_extract_directory(struct package *pkg,
 											struct package_directory *pkg_dir)
 {
@@ -1793,7 +1793,7 @@ static int AZSystem_arc1a_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int AZSystem_arc1a_parse_resource_info(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -1801,15 +1801,15 @@ static int AZSystem_arc1a_parse_resource_info(struct package *pkg,
 
 	arc1a_entry = (arc1a_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, arc1a_entry->name, 48);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = arc1a_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = arc1a_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int AZSystem_arc1a_extract_resource(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -1881,7 +1881,7 @@ static int AZSystem_arc1a_extract_resource(struct package *pkg,
 			palette = NULL;
 			int tbl[4] = { 2, 0, 1, 3 };
 			int act_pixel_bytes = pixel_bytes;
-			/* cpbµÄÑ¹ËõÊı¾İ°´A,B,G,RµÄË³ĞòÅÅ·Å£»¶øcpb_headerÖĞµÄÑ¹Ëõ³¤¶È×Ö¶Î°´B,G,A,RË³Ğò´æ´¢ */
+			/* cpbçš„å‹ç¼©æ•°æ®æŒ‰A,B,G,Rçš„é¡ºåºæ’æ”¾ï¼›è€Œcpb_headerä¸­çš„å‹ç¼©é•¿åº¦å­—æ®µæŒ‰B,G,A,Ré¡ºåºå­˜å‚¨ */
 			for (int i = 0; i < pixel_bytes; i++) {
 				if (!cpb1a_header->comprlen[tbl[i]]) {
 					pixel_bytes++;
@@ -2007,7 +2007,7 @@ out:
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int AZSystem_arc1a_save_resource(struct resource *res, 
 										struct package_resource *pkg_res)
 {
@@ -2031,7 +2031,7 @@ static int AZSystem_arc1a_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void AZSystem_arc1a_release_resource(struct package *pkg, 
 											struct package_resource *pkg_res)
 {
@@ -2045,7 +2045,7 @@ static void AZSystem_arc1a_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void AZSystem_arc1a_release(struct package *pkg, 
 								   struct package_directory *pkg_dir)
 {
@@ -2068,7 +2068,7 @@ static void AZSystem_arc1a_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AZSystem_arc1a_operation = {
 	AZSystem_arc1a_match,				/* match */
 	AZSystem_arc1a_extract_directory,	/* extract_directory */
@@ -2081,7 +2081,7 @@ static cui_ext_operation AZSystem_arc1a_operation = {
 
 /********************* mpp *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int AZSystem_mpp_match(struct package *pkg)
 {
 	mpp_header_t mpp_header;
@@ -2104,7 +2104,7 @@ static int AZSystem_mpp_match(struct package *pkg)
 	return 0;
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int AZSystem_mpp_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -2154,7 +2154,7 @@ static int AZSystem_mpp_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int AZSystem_mpp_parse_resource_info(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -2162,7 +2162,7 @@ static int AZSystem_mpp_parse_resource_info(struct package *pkg,
 
 	mpp_entry = (mpp_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, mpp_entry->name, 32);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = mpp_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = mpp_entry->offset;
@@ -2188,7 +2188,7 @@ static int AZSystem_mpp_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation AZSystem_mpp_operation = {
 	AZSystem_mpp_match,					/* match */
 	AZSystem_mpp_extract_directory,		/* extract_directory */
@@ -2199,10 +2199,10 @@ static cui_ext_operation AZSystem_mpp_operation = {
 	AZSystem_arc1a_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK AZSystem_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".arc"), NULL, 
 		NULL, &AZSystem_new_arc_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -2215,7 +2215,7 @@ int CALLBACK AZSystem_register_cui(struct cui_register_callback *callback)
 		NULL, &AZSystem_arc1a_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
 
-	// .cpb(old2)ÎÄ¼şºÏ¼¯
+	// .cpb(old2)æ–‡ä»¶åˆé›†
 	if (callback->add_extension(callback->cui, _T(".mpp"), NULL, 
 		NULL, &AZSystem_mpp_operation, CUI_EXT_FLAG_PKG// | CUI_EXT_FLAG_RES 
 		| CUI_EXT_FLAG_DIR))
@@ -2224,4 +2224,5 @@ int CALLBACK AZSystem_register_cui(struct cui_register_callback *callback)
 	AZSystem_locale_id = locale_app_register(AZSystem_locale_configurations, 3);
 
 	return 0;
+}
 }

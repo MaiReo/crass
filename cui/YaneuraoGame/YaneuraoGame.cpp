@@ -11,14 +11,14 @@
 #include <stdio.h>
 #include <cui_common.h>
 
-// M:\[unpack]\'[yanepkEx]Èé¤ÏSHOCK!!¡«¥Ñ¥¤¤òÈ¡¤ê‘ø¤»£¡¡«
+// M:\[unpack]\'[yanepkEx]ä¹³ã¯SHOCK!!ï½žãƒ‘ã‚¤ã‚’å–ã‚Šæˆ»ã›ï¼ï½ž
 
 struct acui_information YaneuraoGame_cui_information = {
 	NULL			,				/* copyright */
 	_T("YaneuraoGame"),				/* system */
 	_T(".dat .lay .scp"),			/* package */
 	_T("0.9.1"),					/* revision */
-	_T("³Õh¹«Ù\"),					/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),					/* author */
 	_T(""),							/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -80,9 +80,9 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -103,7 +103,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 				break;
 			win[nCurWindowByte++] = data;
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			nCurWindowByte &= win_size - 1;
 		} else {
 			unsigned int copy_bytes, win_offset;
@@ -122,7 +122,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 					return;
 				data = win[(win_offset + i) & (win_size - 1)];				
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -216,7 +216,7 @@ static int YaneuraoGame_dat_parse_resource_info(struct package *pkg,
 		strncpy(pkg_res->name, dat1_entry->name, sizeof(pkg_res->name));
 		pkg_res->name_length = sizeof(dat1_entry->name);
 		pkg_res->raw_data_length = dat1_entry->length;
-		pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+		pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 		pkg_res->offset = dat1_entry->offset;
 		break;
 	case 2:
@@ -224,7 +224,7 @@ static int YaneuraoGame_dat_parse_resource_info(struct package *pkg,
 		strncpy(pkg_res->name, dat2_entry->name, sizeof(pkg_res->name));
 		pkg_res->name_length = sizeof(dat2_entry->name);
 		pkg_res->raw_data_length = dat2_entry->comprlen;
-		pkg_res->actual_data_length = dat2_entry->comprlen == dat2_entry->uncomprlen ? 0 : dat2_entry->uncomprlen;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+		pkg_res->actual_data_length = dat2_entry->comprlen == dat2_entry->uncomprlen ? 0 : dat2_entry->uncomprlen;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 		pkg_res->offset = dat2_entry->offset;
 		break;
 	case 3:
@@ -232,7 +232,7 @@ static int YaneuraoGame_dat_parse_resource_info(struct package *pkg,
 		strncpy(pkg_res->name, dat3_entry->name, sizeof(pkg_res->name));
 		pkg_res->name_length = sizeof(dat3_entry->name);
 		pkg_res->raw_data_length = dat3_entry->comprlen;
-		pkg_res->actual_data_length = dat3_entry->comprlen == dat3_entry->uncomprlen ? 0 : dat3_entry->uncomprlen;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+		pkg_res->actual_data_length = dat3_entry->comprlen == dat3_entry->uncomprlen ? 0 : dat3_entry->uncomprlen;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 		pkg_res->offset = dat3_entry->offset;
 	}	
 
@@ -438,4 +438,5 @@ int CALLBACK YaneuraoGame_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

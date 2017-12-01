@@ -722,3 +722,4 @@ struct cxdec_callback kurenai_cxdec_callback = {
 	{ 0x16a, 0x492 },
 	xcode_building_stage1
 };
+;

@@ -15,14 +15,14 @@ struct acui_information DenSDK_cui_information = {
 	_T(""),					/* system */
 	_T(".dat"),				/* package */
 	_T("1.1.1"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2009-1-4 19:30"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };	
 
 #pragma pack (1)
-// 256×Ö½Ú
+// 256å­—èŠ‚
 typedef struct {
 	s8 magic[4];		// "DAF1"
 	u32 header_length;
@@ -37,12 +37,12 @@ typedef struct {
 	u32 offset;
 	u32 comprlen;
 	u32 uncomprlen;
-	u32 hash_index;		/* ÓÃÓÚ¿ìËÙË÷Òý×ÊÔ´ */
+	u32 hash_index;		/* ç”¨äºŽå¿«é€Ÿç´¢å¼•èµ„æº */
 	u32 is_compressed;
 	s8 *name;
 } daf1_entry_t;
 
-// 48×Ö½Ú
+// 48å­—èŠ‚
 typedef struct {
 	s8 magic[4];				// "DAF2"
 	u32 header_length;
@@ -177,8 +177,8 @@ static int DenSDK_dat_extract_directory(struct package *pkg,
 		daf2_header.unknown_entries ^= xor;
 		daf2_header.compr_index_length ^= xor;
 		daf2_header.uncompr_index_length ^= xor;
-		// MapleColors2 ÌåòY°æ, Õâ¸ö×Ö¶Î¾ÍÊÇÃ÷ÎÄ
-		//if ((daf_ver & 0xffff) != 0x0100)	// »³ÒÉ0x0100µÄÅÐ¶ÏÊÇ·ñÐèÒª¡¢×¼È·
+		// MapleColors2 ä½“é¨“ç‰ˆ, è¿™ä¸ªå­—æ®µå°±æ˜¯æ˜Žæ–‡
+		//if ((daf_ver & 0xffff) != 0x0100)	// æ€€ç–‘0x0100çš„åˆ¤æ–­æ˜¯å¦éœ€è¦ã€å‡†ç¡®
 		//	daf2_header.index_is_compressed ^= xor;
 		daf2_header.uncompr_data_offset ^= xor;
 
@@ -231,7 +231,7 @@ static int DenSDK_dat_extract_directory(struct package *pkg,
 			my_daf_entry->offset = (*p_entry++ ^ xor) + daf2_header.compr_index_length + sizeof(daf2_header);
 			my_daf_entry->comprlen = *p_entry++ ^ xor;
 			my_daf_entry->uncomprlen = *p_entry++ ^ xor;
-			if (entry_size > 20 + 32 /* md5 */+ 4 /* min name len */) {	// »³ÒÉ0x0100µÄÅÐ¶ÏÊÇ·ñÐèÒª¡¢×¼È·
+			if (entry_size > 20 + 32 /* md5 */+ 4 /* min name len */) {	// æ€€ç–‘0x0100çš„åˆ¤æ–­æ˜¯å¦éœ€è¦ã€å‡†ç¡®
 				memcpy(my_daf_entry->md5, p_entry, 32);
 				p_entry += 8;
 				name_length = entry_size - 52;				
@@ -269,7 +269,7 @@ static int DenSDK_dat_parse_resource_info(struct package *pkg,
 
 	my_daf_entry = (my_daf_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_daf_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_daf_entry->comprlen;
 	pkg_res->actual_data_length = my_daf_entry->uncomprlen;
 	pkg_res->offset = my_daf_entry->offset;
@@ -377,4 +377,5 @@ int CALLBACK DenSDK_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

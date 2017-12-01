@@ -3,68 +3,68 @@
 #include <windows.h>
 #include <stdio.h>
 #include <math.h>
-ËùÔÚº¯Êı¿âÎªmath.h¡¢stdlib.h¡¢string.h¡¢float.h
-int      abs(int i)                                      ·µ»ØÕûĞÍ²ÎÊıiµÄ¾ø¶ÔÖµ
-double cabs(struct complex znum)        ·µ»Ø¸´ÊıznumµÄ¾ø¶ÔÖµ
-double fabs(double x)                           ·µ»ØË«¾«¶È²ÎÊıxµÄ¾ø¶ÔÖµ
-long    labs(long n)                                 ·µ»Ø³¤ÕûĞÍ²ÎÊınµÄ¾ø¶ÔÖµ
-double   exp(double x)                             ·µ»ØÖ¸Êıº¯ÊıexµÄÖµ
-double frexp(double value,int *eptr)       ·µ»Øvalue=x*2nÖĞxµÄÖµ,n´æÖüÔÚeptrÖĞ
-double ldexp(double value,int exp);        ·µ»Øvalue*2expµÄÖµ
-double   log(double x)                             ·µ»ØlogexµÄÖµ
-double log10(double x)                           ·µ»Ølog10xµÄÖµ
-double   pow(double x,double y)             ·µ»ØxyµÄÖµ
-double pow10(int p)                                ·µ»Ø10pµÄÖµ
-double sqrt(double x)                             ·µ»Ø+¡ÌxµÄÖµ
-double acos(double x)                 ·µ»ØxµÄ·´ÓàÏÒcos-1(x)Öµ,xÎª»¡¶È
-double asin(double x)                 ·µ»ØxµÄ·´ÕıÏÒsin-1(x)Öµ,xÎª»¡¶È
-double atan(double x)                 ·µ»ØxµÄ·´ÕıÇĞtan-1(x)Öµ,xÎª»¡¶È
-double atan2(double y,double x)        ·µ»Øy/xµÄ·´ÕıÇĞtan-1(x)Öµ,yµÄxÎª»¡¶È
-double   cos(double x)                 ·µ»ØxµÄÓàÏÒcos(x)Öµ,xÎª»¡¶È
-double   sin(double x)                 ·µ»ØxµÄÕıÏÒsin(x)Öµ,xÎª»¡¶È
-double   tan(double x)                 ·µ»ØxµÄÕıÇĞtan(x)Öµ,xÎª»¡¶È
-double cosh(double x)                 ·µ»ØxµÄË«ÇúÓàÏÒcosh(x)Öµ,xÎª»¡¶È
-double sinh(double x)                 ·µ»ØxµÄË«ÇúÕıÏÒsinh(x)Öµ,xÎª»¡¶È
-double tanh(double x)                 ·µ»ØxµÄË«ÇúÕıÇĞtanh(x)Öµ,xÎª»¡¶È
-double hypot(double x,double y)        ·µ»ØÖ±½ÇÈı½ÇĞÎĞ±±ßµÄ³¤¶È(z),
-                                       xºÍyÎªÖ±½Ç±ßµÄ³¤¶È,z2=x2+y2
-double ceil(double x)                 ·µ»Ø²»Ğ¡ÓÚxµÄ×îĞ¡ÕûÊı
-double floor(double x)                 ·µ»Ø²»´óÓÚxµÄ×î´óÕûÊı
-void   srand(unsigned seed)            ³õÊ¼»¯Ëæ»úÊı·¢ÉúÆ÷
-int     rand()                         ²úÉúÒ»¸öËæ»úÊı²¢·µ»ØÕâ¸öÊı
-double poly(double x,int n,double c[])´Ó²ÎÊı²úÉúÒ»¸ö¶àÏîÊ½
-double modf(double value,double *iptr)½«Ë«¾«¶ÈÊıvalue·Ö½â³ÉÎ²ÊıºÍ½×
-double fmod(double x,double y)        ·µ»Øx/yµÄÓàÊı
-double frexp(double value,int *eptr)   ½«Ë«¾«¶ÈÊıvalue·Ö³ÉÎ²ÊıºÍ½×
-double atof(char *nptr)               ½«×Ö·û´®nptr×ª»»³É¸¡µãÊı²¢·µ»ØÕâ¸ö¸¡µãÊı
-double atoi(char *nptr)               ½«×Ö·û´®nptr×ª»»³ÉÕûÊı²¢·µ»ØÕâ¸öÕûÊı
-double atol(char *nptr)               ½«×Ö·û´®nptr×ª»»³É³¤ÕûÊı²¢·µ»ØÕâ¸öÕûÊı
+æ‰€åœ¨å‡½æ•°åº“ä¸ºmath.hã€stdlib.hã€string.hã€float.h
+int      abs(int i)                                      è¿”å›æ•´å‹å‚æ•°içš„ç»å¯¹å€¼
+double cabs(struct complex znum)        è¿”å›å¤æ•°znumçš„ç»å¯¹å€¼
+double fabs(double x)                           è¿”å›åŒç²¾åº¦å‚æ•°xçš„ç»å¯¹å€¼
+long    labs(long n)                                 è¿”å›é•¿æ•´å‹å‚æ•°nçš„ç»å¯¹å€¼
+double   exp(double x)                             è¿”å›æŒ‡æ•°å‡½æ•°exçš„å€¼
+double frexp(double value,int *eptr)       è¿”å›value=x*2nä¸­xçš„å€¼,nå­˜è´®åœ¨epträ¸­
+double ldexp(double value,int exp);        è¿”å›value*2expçš„å€¼
+double   log(double x)                             è¿”å›logexçš„å€¼
+double log10(double x)                           è¿”å›log10xçš„å€¼
+double   pow(double x,double y)             è¿”å›xyçš„å€¼
+double pow10(int p)                                è¿”å›10pçš„å€¼
+double sqrt(double x)                             è¿”å›+âˆšxçš„å€¼
+double acos(double x)                 è¿”å›xçš„åä½™å¼¦cos-1(x)å€¼,xä¸ºå¼§åº¦
+double asin(double x)                 è¿”å›xçš„åæ­£å¼¦sin-1(x)å€¼,xä¸ºå¼§åº¦
+double atan(double x)                 è¿”å›xçš„åæ­£åˆ‡tan-1(x)å€¼,xä¸ºå¼§åº¦
+double atan2(double y,double x)        è¿”å›y/xçš„åæ­£åˆ‡tan-1(x)å€¼,yçš„xä¸ºå¼§åº¦
+double   cos(double x)                 è¿”å›xçš„ä½™å¼¦cos(x)å€¼,xä¸ºå¼§åº¦
+double   sin(double x)                 è¿”å›xçš„æ­£å¼¦sin(x)å€¼,xä¸ºå¼§åº¦
+double   tan(double x)                 è¿”å›xçš„æ­£åˆ‡tan(x)å€¼,xä¸ºå¼§åº¦
+double cosh(double x)                 è¿”å›xçš„åŒæ›²ä½™å¼¦cosh(x)å€¼,xä¸ºå¼§åº¦
+double sinh(double x)                 è¿”å›xçš„åŒæ›²æ­£å¼¦sinh(x)å€¼,xä¸ºå¼§åº¦
+double tanh(double x)                 è¿”å›xçš„åŒæ›²æ­£åˆ‡tanh(x)å€¼,xä¸ºå¼§åº¦
+double hypot(double x,double y)        è¿”å›ç›´è§’ä¸‰è§’å½¢æ–œè¾¹çš„é•¿åº¦(z),
+                                       xå’Œyä¸ºç›´è§’è¾¹çš„é•¿åº¦,z2=x2+y2
+double ceil(double x)                 è¿”å›ä¸å°äºxçš„æœ€å°æ•´æ•°
+double floor(double x)                 è¿”å›ä¸å¤§äºxçš„æœ€å¤§æ•´æ•°
+void   srand(unsigned seed)            åˆå§‹åŒ–éšæœºæ•°å‘ç”Ÿå™¨
+int     rand()                         äº§ç”Ÿä¸€ä¸ªéšæœºæ•°å¹¶è¿”å›è¿™ä¸ªæ•°
+double poly(double x,int n,double c[])ä»å‚æ•°äº§ç”Ÿä¸€ä¸ªå¤šé¡¹å¼
+double modf(double value,double *iptr)å°†åŒç²¾åº¦æ•°valueåˆ†è§£æˆå°¾æ•°å’Œé˜¶
+double fmod(double x,double y)        è¿”å›x/yçš„ä½™æ•°
+double frexp(double value,int *eptr)   å°†åŒç²¾åº¦æ•°valueåˆ†æˆå°¾æ•°å’Œé˜¶
+double atof(char *nptr)               å°†å­—ç¬¦ä¸²nptrè½¬æ¢æˆæµ®ç‚¹æ•°å¹¶è¿”å›è¿™ä¸ªæµ®ç‚¹æ•°
+double atoi(char *nptr)               å°†å­—ç¬¦ä¸²nptrè½¬æ¢æˆæ•´æ•°å¹¶è¿”å›è¿™ä¸ªæ•´æ•°
+double atol(char *nptr)               å°†å­—ç¬¦ä¸²nptrè½¬æ¢æˆé•¿æ•´æ•°å¹¶è¿”å›è¿™ä¸ªæ•´æ•°
 char   *ecvt(double value,int ndigit,int *decpt,int *sign)
-         ½«¸¡µãÊıvalue×ª»»³É×Ö·û´®²¢·µ»Ø¸Ã×Ö·û´®
+         å°†æµ®ç‚¹æ•°valueè½¬æ¢æˆå­—ç¬¦ä¸²å¹¶è¿”å›è¯¥å­—ç¬¦ä¸²
 char   *fcvt(double value,int ndigit,int *decpt,int *sign)
-         ½«¸¡µãÊıvalue×ª»»³É×Ö·û´®²¢·µ»Ø¸Ã×Ö·û´®
+         å°†æµ®ç‚¹æ•°valueè½¬æ¢æˆå­—ç¬¦ä¸²å¹¶è¿”å›è¯¥å­—ç¬¦ä¸²
 char   *gcvt(double value,int ndigit,char *buf)
-         ½«Êıvalue×ª»»³É×Ö·û´®²¢´æÓÚbufÖĞ,²¢·µ»ØbufµÄÖ¸Õë
+         å°†æ•°valueè½¬æ¢æˆå­—ç¬¦ä¸²å¹¶å­˜äºbufä¸­,å¹¶è¿”å›bufçš„æŒ‡é’ˆ
 char *ultoa(unsigned long value,char *string,int radix)
-         ½«ÎŞ·ûºÅÕûĞÍÊıvalue×ª»»³É×Ö·û´®²¢·µ»Ø¸Ã×Ö·û´®,radixÎª×ª»»Ê±ËùÓÃ»ùÊı
+         å°†æ— ç¬¦å·æ•´å‹æ•°valueè½¬æ¢æˆå­—ç¬¦ä¸²å¹¶è¿”å›è¯¥å­—ç¬¦ä¸²,radixä¸ºè½¬æ¢æ—¶æ‰€ç”¨åŸºæ•°
 char   *ltoa(long value,char *string,int radix)
-         ½«³¤ÕûĞÍÊıvalue×ª»»³É×Ö·û´®²¢·µ»Ø¸Ã×Ö·û´®,radixÎª×ª»»Ê±ËùÓÃ»ùÊı
+         å°†é•¿æ•´å‹æ•°valueè½¬æ¢æˆå­—ç¬¦ä¸²å¹¶è¿”å›è¯¥å­—ç¬¦ä¸²,radixä¸ºè½¬æ¢æ—¶æ‰€ç”¨åŸºæ•°
 char   *itoa(int value,char *string,int radix)
-         ½«ÕûÊıvalue×ª»»³É×Ö·û´®´æÈëstring,radixÎª×ª»»Ê±ËùÓÃ»ùÊı
-double atof(char *nptr) ½«×Ö·û´®nptr×ª»»³ÉË«¾«¶ÈÊı,²¢·µ»ØÕâ¸öÊı,´íÎó·µ»Ø0
-int    atoi(char *nptr) ½«×Ö·û´®nptr×ª»»³ÉÕûĞÍÊı, ²¢·µ»ØÕâ¸öÊı,´íÎó·µ»Ø0
-long   atol(char *nptr) ½«×Ö·û´®nptr×ª»»³É³¤ÕûĞÍÊı,²¢·µ»ØÕâ¸öÊı,´íÎó·µ»Ø0
-double strtod(char *str,char **endptr)½«×Ö·û´®str×ª»»³ÉË«¾«¶ÈÊı,²¢·µ»ØÕâ¸öÊı,
-long   strtol(char *str,char **endptr,int base)½«×Ö·û´®str×ª»»³É³¤ÕûĞÍÊı,
-                                               ²¢·µ»ØÕâ¸öÊı,
+         å°†æ•´æ•°valueè½¬æ¢æˆå­—ç¬¦ä¸²å­˜å…¥string,radixä¸ºè½¬æ¢æ—¶æ‰€ç”¨åŸºæ•°
+double atof(char *nptr) å°†å­—ç¬¦ä¸²nptrè½¬æ¢æˆåŒç²¾åº¦æ•°,å¹¶è¿”å›è¿™ä¸ªæ•°,é”™è¯¯è¿”å›0
+int    atoi(char *nptr) å°†å­—ç¬¦ä¸²nptrè½¬æ¢æˆæ•´å‹æ•°, å¹¶è¿”å›è¿™ä¸ªæ•°,é”™è¯¯è¿”å›0
+long   atol(char *nptr) å°†å­—ç¬¦ä¸²nptrè½¬æ¢æˆé•¿æ•´å‹æ•°,å¹¶è¿”å›è¿™ä¸ªæ•°,é”™è¯¯è¿”å›0
+double strtod(char *str,char **endptr)å°†å­—ç¬¦ä¸²strè½¬æ¢æˆåŒç²¾åº¦æ•°,å¹¶è¿”å›è¿™ä¸ªæ•°,
+long   strtol(char *str,char **endptr,int base)å°†å­—ç¬¦ä¸²strè½¬æ¢æˆé•¿æ•´å‹æ•°,
+                                               å¹¶è¿”å›è¿™ä¸ªæ•°,
 int          matherr(struct exception *e)
-              ÓÃ»§ĞŞ¸ÄÊıÑ§´íÎó·µ»ØĞÅÏ¢º¯Êı(Ã»ÓĞ±ØÒªÊ¹ÓÃ)
+              ç”¨æˆ·ä¿®æ”¹æ•°å­¦é”™è¯¯è¿”å›ä¿¡æ¯å‡½æ•°(æ²¡æœ‰å¿…è¦ä½¿ç”¨)
 double       _matherr(_mexcep why,char *fun,double *arg1p,
                       double *arg2p,double retval)
-                ÓÃ»§ĞŞ¸ÄÊıÑ§´íÎó·µ»ØĞÅÏ¢º¯Êı(Ã»ÓĞ±ØÒªÊ¹ÓÃ)
-unsigned int _clear87()   Çå³ı¸¡µã×´Ì¬×Ö²¢·µ»ØÔ­À´µÄ¸¡µã×´Ì¬
-void         _fpreset()   ÖØĞÂ³õÊ¹»¯¸¡µãÊıÑ§³ÌĞò°ü
-unsigned int _status87() ·µ»Ø¸¡µã×´Ì¬×Ö
+                ç”¨æˆ·ä¿®æ”¹æ•°å­¦é”™è¯¯è¿”å›ä¿¡æ¯å‡½æ•°(æ²¡æœ‰å¿…è¦ä½¿ç”¨)
+unsigned int _clear87()   æ¸…é™¤æµ®ç‚¹çŠ¶æ€å­—å¹¶è¿”å›åŸæ¥çš„æµ®ç‚¹çŠ¶æ€
+void         _fpreset()   é‡æ–°åˆä½¿åŒ–æµ®ç‚¹æ•°å­¦ç¨‹åºåŒ…
+unsigned int _status87() è¿”å›æµ®ç‚¹çŠ¶æ€å­—
 int main(int argc, char* argv[])
 {
 	double b;
@@ -74,4 +74,6 @@ int main(int argc, char* argv[])
 		printf("Hello World! %f %f\n", sqrt(b));
 	return 0;
 }
+
+
 

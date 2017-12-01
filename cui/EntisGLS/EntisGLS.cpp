@@ -14,31 +14,31 @@
 #include <xerisa.h>
 
 /* 
-¡¾game²ÎÊıÓÎÏ·Ö§³ÖÁĞ±í¡¿
-¡¤¥ÉSŠ—¤È¥Ü¥¯¤Î·ÅÄòév‚S
+ã€gameå‚æ•°æ¸¸æˆæ”¯æŒåˆ—è¡¨ã€‘
+Â·ãƒ‰Så§‰ã¨ãƒœã‚¯ã®æ”¾å°¿é–¢ä¿‚
 game=ane
-¡¤Òª£¡¥¨¥×¥í¥ó×ÅÓÃ ÌåÑé°æ
+Â·è¦ï¼ã‚¨ãƒ—ãƒ­ãƒ³ç€ç”¨ ä½“éªŒç‰ˆ
 game=ApronedOnly
-¡¤¤¤¤í¤Ï ¡«Çï¤ÎÏ¦ÈÕ¤ËÓ°¤Õ¤ß¤ò¡« ÌåòY°æ
+Â·ã„ã‚ã¯ ï½ç§‹ã®å¤•æ—¥ã«å½±ãµã¿ã‚’ï½ ä½“é¨“ç‰ˆ
 game=rural
-¡¤Alea £­¥¢¥ì¥¢£­ ¼t¤­ÔÂ¤òßb¤«¤ËÍû¤ß ÌåòY°æ
+Â·Alea ï¼ã‚¢ãƒ¬ã‚¢ï¼ ç´…ãæœˆã‚’é™ã‹ã«æœ›ã¿ ä½“é¨“ç‰ˆ
 game=Alea
-¡¤donor£Û¥É¥Ê©`£İ ÌåòY°æ
+Â·donorï¼»ãƒ‰ãƒŠãƒ¼ï¼½ ä½“é¨“ç‰ˆ
 game=donor
-¡¤½~ŒÅ®×Óå¼Óò£¡ÌåòY°æ
+Â·çµ¶å¯¾å¥³å­å¯®åŸŸï¼ä½“é¨“ç‰ˆ
 game=aftrial
-¡¤ÒùÈé¥Õ¥¡¥ß¥ì¥¹ ¡«ÉîÒ¹¤ÎÄ¸Èé¥µ©`¥Ó¥¹¤Ï¤¤¤«¤¬£¿
+Â·æ·«ä¹³ãƒ•ã‚¡ãƒŸãƒ¬ã‚¹ ï½æ·±å¤œã®æ¯ä¹³ã‚µãƒ¼ãƒ“ã‚¹ã¯ã„ã‹ãŒï¼Ÿ
 game=fami
-¡¤ëO¤êÆŞ2 ¡«Òù»ó¤Îé|·¿¡« ÌåòY°æ
+Â·éš£ã‚Šå¦»2 ï½æ·«æƒ‘ã®é–¨æˆ¿ï½ ä½“é¨“ç‰ˆ
 game=NWives2
-¡¤¥¢¥á¥µ¥é¥µ ¡«Óê¤È²»Ë¼×h¤Ê¾ı¤Ë¡¢Áµ¤ò¤¹¤ë ÌåòY°æ
+Â·ã‚¢ãƒ¡ã‚µãƒ©ã‚µ ï½é›¨ã¨ä¸æ€è­°ãªå›ã«ã€æ‹ã‚’ã™ã‚‹ ä½“é¨“ç‰ˆ
 game=ame
 
-Chanter£¨¥·¥ã¥ó¥Æ£© -¥­¥ß¤Î¸è¤¬¤È¤É¤¤¤¿¤é-.rar
-[081205]¥è¥¹¥¬¥Î¥½¥é
+Chanterï¼ˆã‚·ãƒ£ãƒ³ãƒ†ï¼‰ -ã‚­ãƒŸã®æ­ŒãŒã¨ã©ã„ãŸã‚‰-.rar
+[081205]ãƒ¨ã‚¹ã‚¬ãƒã‚½ãƒ©
 
-ËÑË÷ÃÜÂë:
-CÔ´Âë
+æœç´¢å¯†ç :
+Cæºç 
 00405060  /$  83EC 10       SUB ESP,10                               ;  dec
 00405063  |.  53            PUSH EBX
 00405064  |.  55            PUSH EBP
@@ -52,22 +52,22 @@ CÔ´Âë
 00405075  |.  8B55 08       MOV EDX,DWORD PTR SS:[EBP+8]             ;  113fa90? ERISADecodeContext
 00405078  |.  3BC3          CMP EAX,EBX                              ;  orig_i VS ERISADecodeContextLength
 0040507A  |.  895C24 18     MOV DWORD PTR SS:[ESP+18],EBX            ;  save ERISADecodeContextLength
-0040507E  |.  895424 1C     MOV DWORD PTR SS:[ESP+1C],EDX            ;  ERISADecodeContext <-- ²é¿´Õâ¸öbuffer
+0040507E  |.  895424 1C     MOV DWORD PTR SS:[ESP+1C],EDX            ;  ERISADecodeContext <-- æŸ¥çœ‹è¿™ä¸ªbuffer
 00405082  |.  7C 07         JL SHORT noa32c.0040508B
 00405084  |.  C745 14 00000>MOV DWORD PTR SS:[EBP+14],0              ;  i = 0
 0040508B  |>  8D7D 58       LEA EDI,DWORD PTR SS:[EBP+58]            ;  array32_1
-0040508E  |.  BA A8FFFFFF   MOV EDX,-58                              ;  -58 <---¹Ø¼ü×Ö
+0040508E  |.  BA A8FFFFFF   MOV EDX,-58                              ;  -58 <---å…³é”®å­—
 00405093  |.  8BC7          MOV EAX,EDI                              ;  array32_1
 00405095  |.  2BD5          SUB EDX,EBP                              ;  -58 - obj
 00405097  |>  C640 C0 00    /MOV BYTE PTR DS:[EAX-40],0              ;  memset(array32_0, 0, 32)
 0040509B  |.  C600 00       |MOV BYTE PTR DS:[EAX],0                 ;  memset(array32_1, 0, 32)
-»ã±à£º
+æ±‡ç¼–ï¼š
 ERIBshfBuffer@@DecodeBuffer	PROC	NEAR32 SYSCALL USES ebx esi edi
 
 	mov	ebx, ecx
 	ASSUME	ebx:PTR ERIBshfBuffer
 	;
-	; ÍºÅ¤ÎœÊ‚ä
+	; å¾©å·ã®æº–å‚™
 	;
 	mov	eax, [ebx].m_dwPassOffset
 	mov	esi, eax			; esi = iPos
@@ -85,10 +85,10 @@ ERIBshfBuffer@@DecodeBuffer	PROC	NEAR32 SYSCALL USES ebx esi edi
 		add	ecx, 4
 	.UNTIL	ecx >= 32
 	;
-	; °µºÅ¤òÍºÅ
+	; æš—å·ã‚’å¾©å·
 	;
 	xor	edi, edi			; edi = iBit
-	mov	edx, [ebx].m_strPassword.m_pszString ¡¶---ÃÜÂë
+	mov	edx, [ebx].m_strPassword.m_pszString ã€Š---å¯†ç 
 	push	ebp
 	mov	ebp, 256
 	.REPEAT
@@ -109,19 +109,19 @@ ERIBshfBuffer@@DecodeBuffer	PROC	NEAR32 SYSCALL USES ebx esi edi
 		.WHILE	[ebx].m_maskBSHF[eax] == 0FFH
 			inc	eax
 			add	edi, 8
-			and	eax, 1FH  ¡¶-- ¹Ø¼üÖ¸Áî
+			and	eax, 1FH  ã€Š-- å…³é”®æŒ‡ä»¤
 			and	edi, 0FFH
 		.ENDW
-¶ÏµãÍ¦Ö±ºó£¬ËÑË÷ÄÚ´æ£¬¹Ø¼ü×Ökey=£¬È»ºódumpÕâ¶ÎÄÚ´æ£¬±£´æµÄ¾ÍÊÇxmlÊı¾İ
+æ–­ç‚¹æŒºç›´åï¼Œæœç´¢å†…å­˜ï¼Œå…³é”®å­—key=ï¼Œç„¶ådumpè¿™æ®µå†…å­˜ï¼Œä¿å­˜çš„å°±æ˜¯xmlæ•°æ®
 */
 
 /*
-exeÄÚ²Ø¼ÓÃÜ×ÊÔ´ĞÍÃÜÂë·ÖÎöÓÃ£º
-M:\Program Files\highsox\â‘Î—q—¾ˆæI ‘ÌŒ±”Å
-exeÄÚ²Ø¼ÓÃÜ×ÊÔ´ĞÍÃÜÂë²âÊÔÓÃ£º
+exeå†…è—åŠ å¯†èµ„æºå‹å¯†ç åˆ†æç”¨ï¼š
+M:\Program Files\highsox\æ„¨æ‡³å½ˆå·•æ¤Œå Ÿä¸¡ æ‡±å°¡æ–‰
+exeå†…è—åŠ å¯†èµ„æºå‹å¯†ç æµ‹è¯•ç”¨ï¼š
 Q:\Program Files\highsox\SpycyTrial
-exe¼Ó¿Ç£¬ÃÜÂëÎ´Öª£º
-Q:\[unpack]\[noa](18½û¥²©`¥à)¤¹¤Ú¡«¤¹¡î¤È¤é¤Ö¤ë
+exeåŠ å£³ï¼Œå¯†ç æœªçŸ¥ï¼š
+Q:\[unpack]\[noa](18ç¦ã‚²ãƒ¼ãƒ )ã™ãºï½ã™â˜†ã¨ã‚‰ã¶ã‚‹
 */
 
 using namespace std;
@@ -131,18 +131,18 @@ static int debug;
 static int EntisGLS_locale_id;
 
 static const TCHAR *simplified_chinese_strings[] = {
-	_T("%s: crcĞ£ÑéÊ§°Ü(0x%08x), Ó¦¸ÃÊÇ0x%08x.\n"),
-	_T("%s: Ö¸¶¨µÄexeÎÄ¼ş²»´æÔÚ, ÇëÔÚexe=µÄºóÃæÓÃ\"\"°ÑÂ·¾¶ĞÅÏ¢À¨ÆğÀ´.\n"),
+	_T("%s: crcæ ¡éªŒå¤±è´¥(0x%08x), åº”è¯¥æ˜¯0x%08x.\n"),
+	_T("%s: æŒ‡å®šçš„exeæ–‡ä»¶ä¸å­˜åœ¨, è¯·åœ¨exe=çš„åé¢ç”¨\"\"æŠŠè·¯å¾„ä¿¡æ¯æ‹¬èµ·æ¥.\n"),
 };
 
 static const TCHAR *traditional_chinese_strings[] = {
-	_T("%s: crcĞ£òÊ§”¡(0x%08x), ‘ªÔ“ÊÇ0x%08x.\n"),
-	_T("%s: Ö¸¶¨µÄexeÎÄ¼ş²»´æÔÚ, ÕˆÔÚexe=µÄááÃæÓÃ\"\"°ÑÂ·½ĞÅÏ¢À¨Æğí.\n"),
+	_T("%s: crcæ ¡é©—å¤±æ•—(0x%08x), æ‡‰è©²æ˜¯0x%08x.\n"),
+	_T("%s: æŒ‡å®šçš„exeæ–‡ä»¶ä¸å­˜åœ¨, è«‹åœ¨exe=çš„å¾Œé¢ç”¨\"\"æŠŠè·¯å¾‘ä¿¡æ¯æ‹¬èµ·ä¾†.\n"),
 };
 
 static const TCHAR *japanese_strings[] = {
-	_T("%s: crc¥Á¥§¥Ã¥¯Ê§”¡(0x%08x)¡¢¤â¤È¤¤0x%08x¡£\n"),
-	_T("%s: Ö¸¶¨¤µ¤ì¤¿exe¥Õ¥¡¥¤¥ë¤Ï´æÔÚ¤·¤Ş¤»¤ó¡¢exe=¤Îáá¤Ë\"\"¤Ç¥Ñ¥¹¥á¥Ã¥»©`¥¸¤òÀ¨¤Ã¤Æ¤¯¤À¤µ¤¤¡£\n"),
+	_T("%s: crcãƒã‚§ãƒƒã‚¯å¤±æ•—(0x%08x)ã€ã‚‚ã¨ã„0x%08xã€‚\n"),
+	_T("%s: æŒ‡å®šã•ã‚ŒãŸexeãƒ•ã‚¡ã‚¤ãƒ«ã¯å­˜åœ¨ã—ã¾ã›ã‚“ã€exe=ã®å¾Œã«\"\"ã§ãƒ‘ã‚¹ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ‹¬ã£ã¦ãã ã•ã„ã€‚\n"),
 };
 
 static const TCHAR *default_strings[] = {
@@ -165,19 +165,19 @@ static struct locale_configuration EntisGLS_locale_configurations[4] = {
 	},
 };
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information EntisGLS_cui_information = {
 	_T("Leshade Entis, Entis-soft."),	/* copyright */
 	_T("Entis Generalized Library Set version 3"),	/* system */
 	_T(".noa .dat .arc"),	/* package */
 	_T("0.5.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-5-2 17:08"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 header_code[8];		// "Entis\x1a\x00\x00"
@@ -199,11 +199,11 @@ typedef struct {
 	s8 dir_record_code[8];	// "DirEntry"
 	u32 dir_record_len_lo;
 	u32 dir_record_len_hi;
-	//u32 index_entries;	// °üº¬ÔÚdir_record_len
+	//u32 index_entries;	// åŒ…å«åœ¨dir_record_len
 } noa_dir_record_t;
 
 typedef struct {
-	u32 data_len_lo;		// Ô­Ê¼³¤¶È
+	u32 data_len_lo;		// åŸå§‹é•¿åº¦
 	u32 data_len_hi;	
 	/*	erisafile.h:
 		attrNormal			= 0x00000000,
@@ -222,7 +222,7 @@ typedef struct {
 		etERISACrypt		= 0xC0000010
 	*/
 	u32 encode_type;
-	u32 data_offset_lo;		// Ïà¶ÔÓÚÄ¿Â¼Ïî
+	u32 data_offset_lo;		// ç›¸å¯¹äºç›®å½•é¡¹
 	u32 data_offset_hi;
 	u8 second;
 	u8 minute;
@@ -255,12 +255,12 @@ typedef struct {
 } my_noa_entry_t;
 
 struct game_key_sub_table {
-	char path[32];	// ·â°üÃû
+	char path[32];	// å°åŒ…å
 	char password[256];
 };
 
 struct game_key_table {
-	char caption[128];	// ÓÎÏ·Ãû
+	char caption[128];	// æ¸¸æˆå
 	unsigned int number;
 	struct game_key_sub_table sub_table[32];
 };
@@ -269,10 +269,10 @@ static struct game_key_table default_key_table = {
 	"default", 1, { { "", " " }, }
 };
 
-// ¶ÔÓÚexe²»ÄÜÌáÈ¡µÄÓÎÏ·(±ÈÈçexe¼Ó¿Ç)£¬Ê¹ÓÃgame²ÎÊı
+// å¯¹äºexeä¸èƒ½æå–çš„æ¸¸æˆ(æ¯”å¦‚exeåŠ å£³)ï¼Œä½¿ç”¨gameå‚æ•°
 static struct game_key_table game_key_table_list[] = {
 #if 0
-	/* Òª£¡¥¨¥×¥í¥ó×ÅÓÃ ÌåÑé°æ(ÁÙÊ±ÓÃ) */
+	/* è¦ï¼ã‚¨ãƒ—ãƒ­ãƒ³ç€ç”¨ ä½“éªŒç‰ˆ(ä¸´æ—¶ç”¨) */
 	{
 		"ApronedOnly", 1,
 		{
@@ -282,7 +282,7 @@ static struct game_key_table game_key_table_list[] = {
 			}
 		}
 	},
-	/* Alea £­¥¢¥ì¥¢£­ ¼t¤­ÔÂ¤òßb¤«¤ËÍû¤ß ÌåòY°æ(ÁÙÊ±ÓÃ) */
+	/* Alea ï¼ã‚¢ãƒ¬ã‚¢ï¼ ç´…ãæœˆã‚’é™ã‹ã«æœ›ã¿ ä½“é¨“ç‰ˆ(ä¸´æ—¶ç”¨) */
 	{
 		"Alea", 1,
 		{
@@ -292,7 +292,7 @@ static struct game_key_table game_key_table_list[] = {
 			}
 		}
 	},
-	/* donor£Û¥É¥Ê©`£İ ÌåòY°æ(ÁÙÊ±ÓÃ) */
+	/* donorï¼»ãƒ‰ãƒŠãƒ¼ï¼½ ä½“é¨“ç‰ˆ(ä¸´æ—¶ç”¨) */
 	{
 		"donor", 2,
 		{
@@ -304,7 +304,7 @@ static struct game_key_table game_key_table_list[] = {
 			}
 		}
 	},
-	/* ½~ŒÅ®×Óå¼Óò£¡ÌåòY°æ(ÁÙÊ±ÓÃ) */
+	/* çµ¶å¯¾å¥³å­å¯®åŸŸï¼ä½“é¨“ç‰ˆ(ä¸´æ—¶ç”¨) */
 	{
 		"aftrial", 1,
 		{
@@ -319,7 +319,7 @@ static struct game_key_table game_key_table_list[] = {
 			"4rg75JoiXnTbkQFM"
 		}
 	},
-	/* ¥ÉSŠ—¤È¥Ü¥¯¤Î·ÅÄòév‚S(ÁÙÊ±ÓÃ) */
+	/* ãƒ‰Så§‰ã¨ãƒœã‚¯ã®æ”¾å°¿é–¢ä¿‚(ä¸´æ—¶ç”¨) */
 	{
 		"ane", 2,
 		{
@@ -353,7 +353,7 @@ static struct game_key_table game_key_table_list[] = {
 		}
 #endif
 	},
-	/* ÒùÈé¥Õ¥¡¥ß¥ì¥¹¡«ÉîÒ¹¤ÎÄ¸Èé¥µ©`¥Ó¥¹¤Ï¤¤¤«¤¬£¿(ÁÙÊ±ÓÃ) */
+	/* æ·«ä¹³ãƒ•ã‚¡ãƒŸãƒ¬ã‚¹ï½æ·±å¤œã®æ¯ä¹³ã‚µãƒ¼ãƒ“ã‚¹ã¯ã„ã‹ãŒï¼Ÿ(ä¸´æ—¶ç”¨) */
 	{
 		"fami", 2, 
 		{
@@ -367,7 +367,7 @@ static struct game_key_table game_key_table_list[] = {
 			},
 		}
 	},
-	/* ëO¤êÆŞ2 ÌåòY°æ(ÁÙÊ±ÓÃ) */
+	/* éš£ã‚Šå¦»2 ä½“é¨“ç‰ˆ(ä¸´æ—¶ç”¨) */
 	{
 		"NWives2", 2, 
 		{
@@ -381,7 +381,7 @@ static struct game_key_table game_key_table_list[] = {
 			},
 		}
 	},
-	/* ¥¢¥á¥µ¥é¥µ ¡«Óê¤È²»Ë¼×h¤Ê¾ı¤Ë¡¢Áµ¤ò¤¹¤ë ÌåòY°æ(ÁÙÊ±ÓÃ) */
+	/* ã‚¢ãƒ¡ã‚µãƒ©ã‚µ ï½é›¨ã¨ä¸æ€è­°ãªå›ã«ã€æ‹ã‚’ã™ã‚‹ ä½“é¨“ç‰ˆ(ä¸´æ—¶ç”¨) */
 	{
 		"ame", 1,
 		{
@@ -390,7 +390,7 @@ static struct game_key_table game_key_table_list[] = {
 			}
 		}
 	},
-	/* ¤¤¤í¤Ï ¡«Çï¤ÎÏ¦ÈÕ¤ËÓ°¤Õ¤ß¤ò¡« ÌåòY°æ(ÁÙÊ±ÓÃ) */
+	/* ã„ã‚ã¯ ï½ç§‹ã®å¤•æ—¥ã«å½±ãµã¿ã‚’ï½ ä½“é¨“ç‰ˆ(ä¸´æ—¶ç”¨) */
 	{
 		"rural", 2,
 		{
@@ -405,13 +405,13 @@ static struct game_key_table game_key_table_list[] = {
 		}
 	},
 #endif
-	/* ÖÕÖ¹Ïî */
+	/* ç»ˆæ­¢é¡¹ */
 	{
 		"", 0, 
 	}
 };
 
-/* °üº¬ÔËĞĞÊ±ĞèÒªµÄËùÓĞ¿ÉÄÜµÄtbl */
+/* åŒ…å«è¿è¡Œæ—¶éœ€è¦çš„æ‰€æœ‰å¯èƒ½çš„tbl */
 static vector<struct game_key_table> runtime_game_key_table;
 static struct game_key_sub_table *cur_sub_table;
 
@@ -594,8 +594,8 @@ static void parse_xml_data(char *xml_cfg)
 		else
 			++dim;
 
-		// Í¨³£Çé¿ö£¬xmlÀï»á¶Ô¼ÓÃÜµÄnoaËùÔÚ¹âÅÌºÍÓ²ÅÌÉÏ²»Í¬µÄÎ»ÖÃÓĞ
-		// 2×ékey£¬ÄÚÈİ¶¼Ò»Ñù£¬ËùÒÔÕâÀï½øĞĞ¼ì²é£¬²»¼ÓÈëÖØ¸´µÄkey¡£
+		// é€šå¸¸æƒ…å†µï¼Œxmlé‡Œä¼šå¯¹åŠ å¯†çš„noaæ‰€åœ¨å…‰ç›˜å’Œç¡¬ç›˜ä¸Šä¸åŒçš„ä½ç½®æœ‰
+		// 2ç»„keyï¼Œå†…å®¹éƒ½ä¸€æ ·ï¼Œæ‰€ä»¥è¿™é‡Œè¿›è¡Œæ£€æŸ¥ï¼Œä¸åŠ å…¥é‡å¤çš„keyã€‚
 		for (DWORD k = 0; k < i; ++k) {
 			if (!strcmp(entry.sub_table[k].path, &xml[dim]))
 				goto not_insert;
@@ -656,7 +656,7 @@ static int load_exe_xml(const char *exe_file)
 
 /********************* noa *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int EntisGLS_noa_match(struct package *pkg)
 {
 	noa_header_t noa_header;
@@ -733,7 +733,7 @@ static int noa_dir_record_process(struct package *pkg,
 		p_dir += 4 + *(u32 *)p_dir;
 		my_noa_index.push_back(entry);
 		if (attr == 0x00000010)	{	// attrDirectory
-			noa_file_record_t file_rec;	// Ä¿Â¼ÏîÒ²ÊÇ¸öfiledata
+			noa_file_record_t file_rec;	// ç›®å½•é¡¹ä¹Ÿæ˜¯ä¸ªfiledata
 
 			if (pkg->pio->readvec64(pkg, &file_rec, sizeof(file_rec), 0, 
 					(u32)entry.offset, (u32)(entry.offset >> 32), IO_SEEK_SET)) {
@@ -754,7 +754,7 @@ static int noa_dir_record_process(struct package *pkg,
 	return ret;
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int EntisGLS_noa_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -810,7 +810,7 @@ static int EntisGLS_noa_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int EntisGLS_noa_parse_resource_info(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -818,7 +818,7 @@ static int EntisGLS_noa_parse_resource_info(struct package *pkg,
 
 	my_noa_entry = (my_noa_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_noa_entry->path);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = (u32)my_noa_entry->length;
 	pkg_res->actual_data_length = (u32)my_noa_entry->length;
 	pkg_res->offset = (u32)my_noa_entry->offset;
@@ -826,7 +826,7 @@ static int EntisGLS_noa_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int EntisGLS_noa_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -937,7 +937,7 @@ static int EntisGLS_noa_extract_resource(struct package *pkg,
 		}
 
 		if (!ERIBshfDecode(dec, pkg_res->actual_data_length, raw, raw_len)) {
-			printf("%s: crc²»ÕıÈ·, ¿ÉÄÜÊÇÎÄ¼şËğ»µ»òÕßĞèÒªÖ¸¶¨ÕıÈ·µÄexe/game/pwd²ÎÊıÌá¹©ÃÜÂë.\n", pkg_res->name);
+			printf("%s: crcä¸æ­£ç¡®, å¯èƒ½æ˜¯æ–‡ä»¶æŸåæˆ–è€…éœ€è¦æŒ‡å®šæ­£ç¡®çš„exe/game/pwdå‚æ•°æä¾›å¯†ç .\n", pkg_res->name);
 			printf("%s: crc is incorrect, maybe the data is corrupt or need correct parameter exe/game/pwd to provide the password.\n", pkg_res->name);
 			delete [] dec;
 			delete [] raw;
@@ -957,7 +957,7 @@ static int EntisGLS_noa_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int EntisGLS_noa_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -981,7 +981,7 @@ static int EntisGLS_noa_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void EntisGLS_noa_release_resource(struct package *pkg, 
 										  struct package_resource *pkg_res)
 {
@@ -995,7 +995,7 @@ static void EntisGLS_noa_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void EntisGLS_noa_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
@@ -1011,7 +1011,7 @@ static void EntisGLS_noa_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation EntisGLS_noa_operation = {
 	EntisGLS_noa_match,					/* match */
 	EntisGLS_noa_extract_directory,		/* extract_directory */
@@ -1022,32 +1022,32 @@ static cui_ext_operation EntisGLS_noa_operation = {
 	EntisGLS_noa_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK EntisGLS_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".noa"), NULL, 
-		_T("ERISA-Archive file£¨ÄË†¥¢©`¥«¥¤¥Ğ£©"), &EntisGLS_noa_operation, 
+		_T("ERISA-Archive fileï¼ˆä¹ƒäºã‚¢ãƒ¼ã‚«ã‚¤ãƒï¼‰"), &EntisGLS_noa_operation, 
 		CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_RES | CUI_EXT_FLAG_RECURSION))
 			return -1;
 
 	if (callback->add_extension(callback->cui, _T(".dat"), NULL, 
-		_T("ERISA-Archive file£¨ÄË†¥¢©`¥«¥¤¥Ğ£©"), &EntisGLS_noa_operation, 
+		_T("ERISA-Archive fileï¼ˆä¹ƒäºã‚¢ãƒ¼ã‚«ã‚¤ãƒï¼‰"), &EntisGLS_noa_operation, 
 		CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_RES | CUI_EXT_FLAG_RECURSION))
 			return -1;
 
 	if (callback->add_extension(callback->cui, _T(".arc"), NULL, 
-		_T("ERISA-Archive file£¨ÄË†¥¢©`¥«¥¤¥Ğ£©"), &EntisGLS_noa_operation, 
+		_T("ERISA-Archive fileï¼ˆä¹ƒäºã‚¢ãƒ¼ã‚«ã‚¤ãƒï¼‰"), &EntisGLS_noa_operation, 
 		CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_RES | CUI_EXT_FLAG_RECURSION))
 			return -1;
 
 #if 0
 	if (callback->add_extension(callback->cui, _T(".eri"), NULL, 
-		_T("Entis Rasterized Image - 1£¨¥¨¥ê¤Á¤ã¤ó£©"), &EntisGLS_eri_operation, 
+		_T("Entis Rasterized Image - 1ï¼ˆã‚¨ãƒªã¡ã‚ƒã‚“ï¼‰"), &EntisGLS_eri_operation, 
 		CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_RES))
 			return -1;
 
 	if (callback->add_extension(callback->cui, _T(".mio"), NULL, 
-		_T("Music Interleaved and Orthogonal transformaed£¨¥ß©`¥ª£©"), 
+		_T("Music Interleaved and Orthogonal transformaedï¼ˆãƒŸãƒ¼ã‚ªï¼‰"), 
 		&EntisGLS_mio_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_RES))
 			return -1;
 
@@ -1100,4 +1100,5 @@ int CALLBACK EntisGLS_register_cui(struct cui_register_callback *callback)
 	}
 
 	return 0;
+}
 }

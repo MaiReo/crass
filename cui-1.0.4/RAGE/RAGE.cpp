@@ -15,7 +15,7 @@ struct acui_information RAGE_cui_information = {
 	_T("RAGE's Adventure Game Engine"),		/* system */
 	_T(".Pac"),				/* package */
 	_T("1.0.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-6-19 17:56"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -24,14 +24,14 @@ struct acui_information RAGE_cui_information = {
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// "PAC1"
-	u32 index_entries;	// Ã¿Ïî32×Ö½Ú
+	u32 index_entries;	// æ¯é¡¹32å­—èŠ‚
 } Pac_header_t;
 
 typedef struct {
 	s8 name[16];
 	u32 length;
-	u8 data_header[8];	// ×ÊÔ´µÄÍ·²¿Êý¾Ý
-	u32 offset;			// Ô­±¾ÊÇºÍµÚ2¸ö×ÊÔ´Í·Êý¾ÝÒ»ÖÂ£»ËùÒÔ¸ÄÓÃÎªoffset
+	u8 data_header[8];	// èµ„æºçš„å¤´éƒ¨æ•°æ®
+	u32 offset;			// åŽŸæœ¬æ˜¯å’Œç¬¬2ä¸ªèµ„æºå¤´æ•°æ®ä¸€è‡´ï¼›æ‰€ä»¥æ”¹ç”¨ä¸ºoffset
 } Pac_entry_t;
 
 typedef struct {
@@ -50,9 +50,9 @@ static void lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 							unsigned char *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0x7ef;
 	BYTE win[2048];
@@ -61,7 +61,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 	memset(win, 0x20, nCurWindowByte);
 	bits_init(&bits, compr, comprlen);
 	while (1) {
-		/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+		/* å¦‚æžœä¸º0, è¡¨ç¤ºæŽ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŽŸæ ·è¾“å‡º */
 		unsigned int flag;
 
 		if (bits_get_high(&bits, 1, &flag))
@@ -72,7 +72,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 			if (bits_get_high(&bits, 8, &data))
 				break;
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= sizeof(win) - 1;
 		} else {
@@ -90,7 +90,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD uncomprlen,
 
 				data = win[(win_offset + i) & (sizeof(win) - 1)];
 				uncompr[act_uncomprlen++] = data;		
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= sizeof(win) - 1;	
 			}
@@ -170,9 +170,9 @@ static int RAGE_Pac_parse_resource_info(struct package *pkg,
 
 	Pac_entry = (Pac_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, Pac_entry->name, 16);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = Pac_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = Pac_entry->offset;
 
 	return 0;
@@ -318,4 +318,5 @@ int CALLBACK RAGE_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

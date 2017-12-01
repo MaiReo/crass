@@ -13,7 +13,7 @@ struct acui_information DJSYSTEM_cui_information = {
 	_T("DJSYSTEM"),			/* system */
 	_T(".dat"),				/* package */
 	_T("1.0.1"),			/* revision */
-	_T("痴漢公賊"),			/* author */
+	_T("鐥存饥鍏硦"),			/* author */
 	_T("2009-4-20 21:32"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -142,9 +142,9 @@ static int DJSYSTEM_dat_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1表示名称以NULL结尾 */
+	pkg_res->name_length = -1;			/* -1琛ㄧず鍚嶇О浠ULL缁撳熬 */
 	pkg_res->raw_data_length = dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* 数据都是明文 */
+	pkg_res->actual_data_length = 0;	/* 鏁版嵁閮芥槸鏄庢枃 */
 	pkg_res->offset = dat_entry->offset;
 
 	return 0;
@@ -256,4 +256,5 @@ int CALLBACK DJSYSTEM_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

@@ -125,7 +125,7 @@ static struct resource *resource_alloc(const TCHAR *full_path)
 	alloc_len = sizeof(*res) + sizeof(struct package_resource) + (_tcslen(full_path) + 1) * sizeof(TCHAR);		
 	res = (struct resource *)GlobalAlloc(GPTR, alloc_len);
 	if (!res) {
-		crass_printf(_T("·ÖÅäresourceÊ±·¢Éú´íÎó\n"));
+		crass_printf(_T("åˆ†é…resourceæ—¶å‘ç”Ÿé”™è¯¯\n"));
 		return NULL;		
 	}
 	res->release = resource_free;
@@ -179,18 +179,18 @@ static int __resource_search_file(const TCHAR *path)
 
 	find_file = FindFirstFile(path, &find_data);
 	if (find_file == INVALID_HANDLE_VALUE) {
-		crass_printf(_T("%s: ËÑÑ°µ¥¸öresourceÊ±·¢Éú´íÎó\n"), path);
+		crass_printf(_T("%s: æœå¯»å•ä¸ªresourceæ—¶å‘ç”Ÿé”™è¯¯\n"), path);
 		return -1;
 	}
 	FindClose(find_file);
 
 	if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-		crass_printf(_T("%s: ¸ÃÂ·¾¶²»ÊÇÎÄ¼þ¶øÊÇÄ¿Â¼\n"), path);
+		crass_printf(_T("%s: è¯¥è·¯å¾„ä¸æ˜¯æ–‡ä»¶è€Œæ˜¯ç›®å½•\n"), path);
 		return 0;
 	}
 
 	if (!BUILD_QWORD(find_data.nFileSizeLow, find_data.nFileSizeHigh)) {
-		crass_printf(_T("%s: resourceÎÄ¼þ³¤¶ÈÎª0\n"), path);
+		crass_printf(_T("%s: resourceæ–‡ä»¶é•¿åº¦ä¸º0\n"), path);
 		return -1;
 	}
 
@@ -219,7 +219,7 @@ static int __resource_search_directory(const TCHAR *base_dir,
 
 	_stprintf(full_path, base_dir);
 	if (PathAppend(full_path, sub_dir) == FALSE) {
-		crass_printf(_T("%s: ÎÞÐ§µÄresourceÂ·¾¶ (%s)\n"), sub_dir, base_dir);
+		crass_printf(_T("%s: æ— æ•ˆçš„resourceè·¯å¾„ (%s)\n"), sub_dir, base_dir);
 		return -1;
 	}
 
@@ -227,7 +227,7 @@ static int __resource_search_directory(const TCHAR *base_dir,
 	_stprintf(search, _T("%s\\*"), full_path);
 	find_file = FindFirstFile(search, &find_data);
 	if (find_file == INVALID_HANDLE_VALUE) {
-		crass_printf(_T("%s: ËÑÑ°µÚÒ»¸öpackageÊ±·¢Éú´íÎó (%d)\n"), full_path, GetLastError());
+		crass_printf(_T("%s: æœå¯»ç¬¬ä¸€ä¸ªpackageæ—¶å‘ç”Ÿé”™è¯¯ (%d)\n"), full_path, GetLastError());
 		return -1;
 	}
 	
@@ -236,7 +236,7 @@ static int __resource_search_directory(const TCHAR *base_dir,
 		&& _tcscmp(find_data.cFileName, _T(".."))) {
 			_stprintf(new_sub_path, sub_dir);
 			if (PathAppend(new_sub_path, find_data.cFileName) == FALSE) {
-				crass_printf(_T("%s: ÎÞÐ§µÄpackageÂ·¾¶ (%s)\n"), find_data.cFileName, sub_dir);
+				crass_printf(_T("%s: æ— æ•ˆçš„packageè·¯å¾„ (%s)\n"), find_data.cFileName, sub_dir);
 				FindClose(find_file);
 				return -1;
 			}
@@ -250,7 +250,7 @@ static int __resource_search_directory(const TCHAR *base_dir,
 				count += err;
 			} else {
 				if (!BUILD_QWORD(find_data.nFileSizeLow, find_data.nFileSizeHigh)) {
-					crass_printf(_T("%s: ¸ÃÎÄ¼þ³¤¶ÈÎª0\n"), find_data.cFileName);
+					crass_printf(_T("%s: è¯¥æ–‡ä»¶é•¿åº¦ä¸º0\n"), find_data.cFileName);
 					return -1;
 				}
 				err = resource_register(base_dir, new_sub_path);
@@ -268,7 +268,7 @@ static int __resource_search_directory(const TCHAR *base_dir,
 				&& _tcscmp(find_data.cFileName, _T(".."))) {					
 			_stprintf(new_sub_path, sub_dir);
 			if (PathAppend(new_sub_path, find_data.cFileName) == FALSE) {
-				crass_printf(_T("%s: ÎÞÐ§µÄpackageÂ·¾¶ (%s)\n"), find_data.cFileName, sub_dir);
+				crass_printf(_T("%s: æ— æ•ˆçš„packageè·¯å¾„ (%s)\n"), find_data.cFileName, sub_dir);
 				err = -1;
 				break;
 			}
@@ -280,7 +280,7 @@ static int __resource_search_directory(const TCHAR *base_dir,
 				count += err;
 			} else {				
 				if (!BUILD_QWORD(find_data.nFileSizeLow, find_data.nFileSizeHigh)) {
-					crass_printf(_T("%s: resourceÎÄ¼þ³¤¶ÈÎª0\n"), find_data.cFileName);
+					crass_printf(_T("%s: resourceæ–‡ä»¶é•¿åº¦ä¸º0\n"), find_data.cFileName);
 					return -1;
 				}
 				
@@ -735,7 +735,7 @@ RESOURCE_CORE_API struct resource *resource_create(const TCHAR *base_dir, const 
 		base_len = 0;
 		
 	if (PathAppend(full_path, path) == FALSE) {
-		crass_printf( _T("%s: ÎÞÐ§µÄpackageÂ·¾¶ (%s)\n"), path, base_dir);
+		crass_printf( _T("%s: æ— æ•ˆçš„packageè·¯å¾„ (%s)\n"), path, base_dir);
 		return NULL;
 	}
 
@@ -746,7 +746,7 @@ RESOURCE_CORE_API struct resource *resource_create(const TCHAR *base_dir, const 
 	res->path = res->full_path + base_len;
 	res->name = PathFindFileName(res->full_path);
 	if (!res->name) {
-		crass_printf(_T("%s: ÎÞÐ§µÄresourceÂ·¾¶\n"), res->full_path);
+		crass_printf(_T("%s: æ— æ•ˆçš„resourceè·¯å¾„\n"), res->full_path);
 		__resource_put(res);
 		return NULL;
 	}
@@ -780,4 +780,5 @@ RESOURCE_CORE_API int resource_search_file(const TCHAR *path)
 RESOURCE_CORE_API int resource_search_directory(const TCHAR *base_dir, const TCHAR *sub_dir)
 {
 	return __resource_search_directory(base_dir, sub_dir);
+}
 }

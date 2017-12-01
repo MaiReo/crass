@@ -10,28 +10,28 @@
 #include <utility.h>
 
 /*
-Ñ°ÕÒpic²ÎÊı½âÃÜµÄË³Ğò£º
-²éÕÒ£º
+å¯»æ‰¾picå‚æ•°è§£å¯†çš„é¡ºåºï¼š
+æŸ¥æ‰¾ï¼š
 CML AL, 61
 CMP AL, 62
 
   MOV DWORD PTR SS:[EBP+10],EAX
 */
-// ·ÖÎöÀ¬»øÊı¾İµÄÓÃÍ¾£ºJ:\Program Files\TinkerBell\kasumi2
+// åˆ†æåƒåœ¾æ•°æ®çš„ç”¨é€”ï¼šJ:\Program Files\TinkerBell\kasumi2
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Csystem_cui_information = {
 	_T("Cyberworks"),		/* copyright */
 	_T("C,system"),			/* system */
 	_T(".dat .00 .01 .02 .03. 04 .05 .06"),	/* package */
 	_T("1.0.3"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-6-20 12:58"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	u8 uncomprlen[8];
@@ -220,7 +220,7 @@ static struct game_config yumekoi_config = {
 	8
 };
 
-// ÁxÄ¸¤ÎÍÂÏ¢¡«±³ÔĞÄ¤ËÆ¯¤¦Ä¸¤ÎÉ«Ïã¡«
+// ç¾©æ¯ã®åæ¯ï½èƒŒå¾³å¿ƒã«æ¼‚ã†æ¯ã®è‰²é¦™ï½
 static struct game_config gibo_config = {
 	"gibo",
 	{
@@ -237,7 +237,7 @@ static struct game_config gibo_config = {
 	8
 };
 
-// µû¥Î‰ô
+// è¶ãƒå¤¢
 static struct game_config tyou_config = {
 	"tyou",
 	{
@@ -254,7 +254,7 @@ static struct game_config tyou_config = {
 	8
 };
 
-// ÈËÆŞ?¤«¤¹¤ß¤µ¤ó2 ¡«°Â˜”?Î´ÍöÈË¥ª©`¥Ê©`¤È¹²Í¬ĞÔ»î¡«
+// äººå¦»?ã‹ã™ã¿ã•ã‚“2 ï½å¥¥æ§˜?æœªäº¡äººã‚ªãƒ¼ãƒŠãƒ¼ã¨å…±åŒæ€§æ´»ï½
 static struct game_config kasumi2_config = {
 	"kasumi2",
 	{
@@ -271,7 +271,7 @@ static struct game_config kasumi2_config = {
 	8
 };
 
-// ¤Ï¤Ê¥Ş¥ë¥Ã£¡
+// ã¯ãªãƒãƒ«ãƒƒï¼
 static struct game_config hanamaru_config = {
 	"hanamaru",
 	{
@@ -288,7 +288,7 @@ static struct game_config hanamaru_config = {
 	6
 };
 
-// Ïx»ó¤Î¿Ì webÌåòY°æ
+// èŸ²æƒ‘ã®åˆ» webä½“é¨“ç‰ˆ
 static struct game_config kowakunotoki_config = {
 	"kowakunotoki",
 	{
@@ -321,7 +321,7 @@ static struct game_config suzune_config = {
 	8
 };
 
-// [¤Ô¤ó¤¯¤Ï¤Æ¤Ê]Šª¡×Éñ1/2 ÌåòY°æ
+// [ã´ã‚“ãã¯ã¦ãª]å§«âˆ½ç¥1/2 ä½“é¨“ç‰ˆ
 static struct game_config himekami_config = {
 	"himekami",
 	{
@@ -338,7 +338,7 @@ static struct game_config himekami_config = {
 	8
 };
 
-// [WendyBell] ³ÕhîŠÍû ÌåòY°æ
+// [WendyBell] ç—´æ¼¢é¡˜æœ› ä½“é¨“ç‰ˆ
 static struct game_config tikangan_config = {
 	"tikangan",
 	{
@@ -355,7 +355,7 @@ static struct game_config tikangan_config = {
 	8
 };
 
-// [TinkerBell]ÔĞÅ® ¡«°³¤Ï¤³¤ÎÑ§ˆ@¤ÇÍ×‰¤ò³É¤·¤È¤²¤ë¡« ÌåòY°æ
+// [TinkerBell]å­•å¥³ ï½ä¿ºã¯ã“ã®å­¦åœ’ã§å¾©è®ã‚’æˆã—ã¨ã’ã‚‹ï½ ä½“é¨“ç‰ˆ
 static struct game_config harame_config = {
 	"harame",
 	{
@@ -372,7 +372,7 @@ static struct game_config harame_config = {
 	8
 };
 
-// [WendyBell]³ÕhĞn„Ó ÌåòY°æ
+// [WendyBell]ç—´æ¼¢è¡å‹• ä½“é¨“ç‰ˆ
 static struct game_config tikansyou_config = {
 	"tikansyou",
 	{
@@ -389,7 +389,7 @@ static struct game_config tikansyou_config = {
 	8
 };
 
-// [WendyBell]¤´·îÊË¡ï¥×¥ê¥ó¥»¥¹ ÌåòY°æ
+// [WendyBell]ã”å¥‰ä»•â˜…ãƒ—ãƒªãƒ³ã‚»ã‚¹ ä½“é¨“ç‰ˆ
 static struct game_config princess_config = {
 	"princess",
 	{
@@ -406,7 +406,7 @@ static struct game_config princess_config = {
 	8
 };
 
-// [WendyBell]¾A?¿ì˜SÒÀ´æÖ¢ ¡«¤½¤Îáá¤Î›ö×Ó¤µ¤ó¡«
+// [WendyBell]ç¶š?å¿«æ¥½ä¾å­˜ç—‡ ï½ãã®å¾Œã®æ¶¼å­ã•ã‚“ï½
 static struct game_config zoku_kairaku_config = {
 	"zoku_kairaku",
 	{
@@ -423,7 +423,7 @@ static struct game_config zoku_kairaku_config = {
 	8
 };
 
-// [TinkerBell]¤Ï¤Ê¥Ş¥ë¥Ã£¡2 ÌåòY°æ
+// [TinkerBell]ã¯ãªãƒãƒ«ãƒƒï¼2 ä½“é¨“ç‰ˆ
 static struct game_config hanamaru2_config = {
 	"hanamaru2",
 	{
@@ -440,7 +440,7 @@ static struct game_config hanamaru2_config = {
 	8
 };
 
-// [TinkerBell]¥¤¥«¥ì¥¿½ÌÊÒ ¡«¤³¤ó¤Ê¤Î¤¬µ±¤êÇ°¤ÎÊÚ˜IïL¾°£¡£¿¡«
+// [TinkerBell]ã‚¤ã‚«ãƒ¬ã‚¿æ•™å®¤ ï½ã“ã‚“ãªã®ãŒå½“ã‚Šå‰ã®æˆæ¥­é¢¨æ™¯ï¼ï¼Ÿï½
 static struct game_config ikareta_config = {
 	"ikareta",
 	{
@@ -457,7 +457,7 @@ static struct game_config ikareta_config = {
 	8
 };
 
-// [TinkerBell]ĞÖ¼Ş¤Ï¤¤¤¸¤Ã¤Ñ¤ê WebÌåòY°æ
+// [TinkerBell]å…„å«ã¯ã„ã˜ã£ã±ã‚Š Webä½“é¨“ç‰ˆ
 static struct game_config aniyomeiji_config = {
 	"aniyomeiji",
 	{
@@ -515,7 +515,7 @@ enum {
 
 //[00000039] 320 258 0 29 23 75300 0 0
 
-// ¼Ù¶¨Ç°¼¸ÕÅÍ¼Ò»¶¨ÊÇmaskÍ¼£¨800 x 600 x 256£©
+// å‡å®šå‰å‡ å¼ å›¾ä¸€å®šæ˜¯maskå›¾ï¼ˆ800 x 600 x 256ï¼‰
 static void guess_parameter(DWORD para[8], DWORD curbyte, DWORD total_len)
 {
 	if (current_pic_parameter_state == STATE_END)
@@ -586,9 +586,9 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -613,7 +613,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 			data = compr[curbyte++];
 			if (act_uncomprlen != uncomprlen)
 				uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -637,7 +637,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 				data = win[(win_offset + i) & (win_size - 1)];
 				if (act_uncomprlen != uncomprlen)
 					uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -649,7 +649,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* Arc00.dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Csystem_Arc00_match(struct package *pkg)
 {
 	if (lstrcmp(pkg->name, _T("Arc00.dat")) && lstrcmp(pkg->name, _T("data.00")))
@@ -661,7 +661,7 @@ static int Csystem_Arc00_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Csystem_Arc00_extract_resource(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -805,7 +805,7 @@ static int Csystem_Arc00_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Csystem_Arc00_save_resource(struct resource *res, 
 									   struct package_resource *pkg_res)
 {
@@ -829,7 +829,7 @@ static int Csystem_Arc00_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Csystem_Arc00_release_resource(struct package *pkg, 
 										   struct package_resource *pkg_res)
 {
@@ -843,7 +843,7 @@ static void Csystem_Arc00_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Csystem_Arc00_release(struct package *pkg, 
 								  struct package_directory *pkg_dir)
 {
@@ -855,7 +855,7 @@ static void Csystem_Arc00_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Csystem_Arc00_operation = {
 	Csystem_Arc00_match,			/* match */
 	NULL,							/* extract_directory */
@@ -868,7 +868,7 @@ static cui_ext_operation Csystem_Arc00_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Csystem_dat_match(struct package *pkg)
 {
 	if (!lstrcmpi(pkg->name, _T("Arc00.dat")) || !lstrcmpi(pkg->name, _T("data.00")))
@@ -900,7 +900,7 @@ static int Csystem_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Csystem_dat_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -1003,11 +1003,11 @@ static int Csystem_dat_extract_directory(struct package *pkg,
 		entry.type = *p_entry++;
 		entry.unknown = *p_entry++;
 		/* Arc05.dat(picture)
-		 * Ò»°ã24bitsÍ¼ -> 62 30 ff ff ff ff
-		 * Î»ÖÃË÷ÒıÊı¾İ(ºóÀ´µÄÏµÍ³°æ±¾TinkerBell°æ) -> 63 30 ff ff ff ff
-		 * mask picture(256É«) -> 6e 30 ff ff ff ff
-		 * maskÈ¡¾°Í¼+Î»ÖÃË÷ÒıÊı¾İ(ÔçÒ»µãµÄWendyBell°æ)(256É«) -> 6f 30 ff ff ff ff
-		 * £¿£¿ -> 62 0 ff ff ff ff
+		 * ä¸€èˆ¬24bitså›¾ -> 62 30 ff ff ff ff
+		 * ä½ç½®ç´¢å¼•æ•°æ®(åæ¥çš„ç³»ç»Ÿç‰ˆæœ¬TinkerBellç‰ˆ) -> 63 30 ff ff ff ff
+		 * mask picture(256è‰²) -> 6e 30 ff ff ff ff
+		 * maskå–æ™¯å›¾+ä½ç½®ç´¢å¼•æ•°æ®(æ—©ä¸€ç‚¹çš„WendyBellç‰ˆ)(256è‰²) -> 6f 30 ff ff ff ff
+		 * ï¼Ÿï¼Ÿ -> 62 0 ff ff ff ff
 		 */
 		/* Arc04.dat(script)
 			61 30 ff ff ff ff
@@ -1038,7 +1038,7 @@ static int Csystem_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Csystem_dat_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -1046,7 +1046,7 @@ static int Csystem_dat_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dat_entry->comprlen;
 	pkg_res->actual_data_length = dat_entry->uncomprlen == dat_entry->comprlen ? 0 : dat_entry->uncomprlen;
 	pkg_res->offset = dat_entry->offset;
@@ -1054,7 +1054,7 @@ static int Csystem_dat_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Csystem_dat_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1172,7 +1172,7 @@ static int Csystem_dat_extract_resource(struct package *pkg,
 				BYTE *__mask_dib = mask_dib;
 				BYTE *org_src0 = src0;
 				BYTE *org_src1 = src1;
-				// Ã¿ÏñËØÓÃ1Î»±àÂë
+				// æ¯åƒç´ ç”¨1ä½ç¼–ç 
 				for (DWORD i = 0; i < width * height; ++i) {
 					DWORD mi = i & 7;
 					DWORD bi = i / 8;
@@ -1258,7 +1258,7 @@ static int Csystem_dat_extract_resource(struct package *pkg,
 					return -CUI_EMEM;
 				}
 				BYTE *__rgb = rgb;
-				// Ã¿ÏñËØÓÃ1Î»±àÂë
+				// æ¯åƒç´ ç”¨1ä½ç¼–ç 
 				for (DWORD i = 0; i < width * height; ++i) {
 					DWORD mi = i & 7;
 					DWORD bi = i / 8;
@@ -1365,7 +1365,7 @@ static cui_ext_operation Csystem_dat_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Csystem_old_dat_match(struct package *pkg)
 {
 	if (lstrcmpi(pkg->lst->name, _T("head.dat")))
@@ -1382,7 +1382,7 @@ static int Csystem_old_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Csystem_old_dat_extract_directory(struct package *pkg,
 											 struct package_directory *pkg_dir)
 {
@@ -1394,7 +1394,7 @@ static int Csystem_old_dat_extract_directory(struct package *pkg,
 	/*
       pkg_id == 0: arc.dat or arc2.dat
       pkg_id != 0: arcX2.dat
-      2ÓÉis_sub_pkg±êÖ¾×Ö¶Î¾ö¶¨; XÓÉpkg_id×Ö¶Î¾ö¶¨
+      2ç”±is_sub_pkgæ ‡å¿—å­—æ®µå†³å®š; Xç”±pkg_idå­—æ®µå†³å®š
      */
 	for (DWORD i = 0; i < index_entries; ++i) {
 		u32 res_id, offset, length;
@@ -1429,7 +1429,7 @@ static int Csystem_old_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Csystem_old_dat_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -1437,7 +1437,7 @@ static int Csystem_old_dat_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dat_entry->comprlen;
 	pkg_res->actual_data_length = dat_entry->uncomprlen == dat_entry->comprlen ? 0 : dat_entry->uncomprlen;
 	pkg_res->offset = dat_entry->offset;
@@ -1445,7 +1445,7 @@ static int Csystem_old_dat_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Csystem_old_dat_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1472,7 +1472,7 @@ static cui_ext_operation Csystem_old_dat_operation = {
 	Csystem_Arc00_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK Csystem_register_cui(struct cui_register_callback *callback)
 {	
 	if (callback->add_extension(callback->cui, _T(".dat"), NULL, 
@@ -1509,4 +1509,5 @@ int CALLBACK Csystem_register_cui(struct cui_register_callback *callback)
 		Debug = 0;
 
 	return 0;
+}
 }

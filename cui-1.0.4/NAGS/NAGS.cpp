@@ -16,7 +16,7 @@ struct acui_information NAGS_cui_information = {
 	_T("NAGS"),					/* system */
 	_T(".nfs"),					/* package */
 	_T("1.0.0"),				/* revision */
-	_T("痴漢公賊"),				/* author */
+	_T("鐥存饥鍏硦"),				/* author */
 	_T("2008-5-4 13:16"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -138,9 +138,9 @@ static int NAGS_nfs_parse_resource_info(struct package *pkg,
 
 	nfs_entry = (nfs_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, nfs_entry->name, 24);
-	pkg_res->name_length = 24;			/* -1表示名称以NULL结尾 */
+	pkg_res->name_length = 24;			/* -1琛ㄧず鍚嶇О浠ULL缁撳熬 */
 	pkg_res->raw_data_length = nfs_entry->length;
-	pkg_res->actual_data_length = 0;	/* 数据都是明文 */
+	pkg_res->actual_data_length = 0;	/* 鏁版嵁閮芥槸鏄庢枃 */
 	pkg_res->offset = nfs_entry->offset + resource_base_offset;
 
 	return 0;
@@ -253,4 +253,5 @@ int CALLBACK NAGS_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

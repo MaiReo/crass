@@ -9,61 +9,61 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information CaramelBox_cui_information = {
-	_T("¥­¥ã¥é¥á¥ëBOX"),	/* copyright */
+	_T("ã‚­ãƒ£ãƒ©ãƒ¡ãƒ«BOX"),	/* copyright */
 	NULL,					/* system */
 	_T(".bin .dat .ar3"),		/* package */
 	_T("0.8.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-6-18 19:12"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];			/* "arc3" */
 	u32 version;			/* 0, 1, 2 */
 	u32 chunk_size;
-	u32 data_offset;		/* ÒÔ¿éÎªµ¥Î» */
-	u32 total_chunk_nr;		/* Õû¸öÎÄ¼þÕ¼ÓÃµÄ¿éÊý */
+	u32 data_offset;		/* ä»¥å—ä¸ºå•ä½ */
+	u32 total_chunk_nr;		/* æ•´ä¸ªæ–‡ä»¶å ç”¨çš„å—æ•° */
 	u32 unknown1;
-	u32 directory_offset;	/* ÒÔ¿éÎªµ¥Î» */
-	u32 directory_length;	/* Êµ¼ÊµÄ×Ö½ÚÊý */
-	u32 directory_chunk_nr;	/* Ä¿Â¼Õ¼ÓÃµÄ¿éÊý */
+	u32 directory_offset;	/* ä»¥å—ä¸ºå•ä½ */
+	u32 directory_length;	/* å®žé™…çš„å­—èŠ‚æ•° */
+	u32 directory_chunk_nr;	/* ç›®å½•å ç”¨çš„å—æ•° */
 	u32 unknown3;
 	u32 unknown4;
 	u16 unknown5;
 } bin_header_t;
 
-typedef struct {			// Ã¿¸ö×ÊÔ´Ç°ÃæµÄÊý¾ÝÍ·
+typedef struct {			// æ¯ä¸ªèµ„æºå‰é¢çš„æ•°æ®å¤´
 	u32 unknown0;
 	u32 length0;
 	u32 length1;
 	u32 unknown1;
 	u32 unknown2;
-	u32 type;				/* Êý¾Ý±àÂëÄ£Ê½ */
+	u32 type;				/* æ•°æ®ç¼–ç æ¨¡å¼ */
 	u32 pad0;
 	u32 pad1;
 } resource_header_t;
 
-typedef struct {			// Ã¿¸ö×ÊÔ´Ç°ÃæµÄÊý¾ÝÍ·
+typedef struct {			// æ¯ä¸ªèµ„æºå‰é¢çš„æ•°æ®å¤´
 	u32 unknown;			// ??
 	u32 comprlen;
 	u32 uncomprlen;
-	u32 type;				/* Êý¾Ý±àÂëÄ£Ê½ 0, 1(not?), 2(zlib) */
+	u32 type;				/* æ•°æ®ç¼–ç æ¨¡å¼ 0, 1(not?), 2(zlib) */
 } resource2_header_t;
 
 typedef struct {
 	s8 magic[2];			/* "lz" */
-	u32 total_uncomprlen;	/* ×Ü½âÑ¹ºóµÄ³¤¶È */
+	u32 total_uncomprlen;	/* æ€»è§£åŽ‹åŽçš„é•¿åº¦ */
 } lz_header_t;
 
 typedef struct {
 	s8 sync[2];				/* "ze" */
-	u16 uncomprlen;			/* µ±Ç°¿é½âÑ¹ºóµÄ³¤¶È */
+	u16 uncomprlen;			/* å½“å‰å—è§£åŽ‹åŽçš„é•¿åº¦ */
 } lz_chunk_t;
 
 typedef struct {
@@ -72,24 +72,24 @@ typedef struct {
 	u32 compr_index_length;	// ARC4_header+lz3_header+(lz3_block_header+lz3_block_data)*N
 	u32 chunk_size;			// @ 0c
 	u32 index_entries;		// @ 10
-	u32 fat_offset;			// ½âÑ¹ºóµÄfatÊý¾ÝµÄÆ«ÒÆ
-	u32 fat_size;			// ½âÑ¹Ëõºófat±íµÄ³¤¶È
-	u32 name_space_offset;	// ½âÑ¹ºóµÄname_spaceÊý¾ÝµÄÆ«ÒÆ
-	u32 name_space_size;	// ½âÑ¹Ëõºó×ÊÔ´Ãû±íµÄ³¤¶È
-	u32 index_offset;		// ½âÑ¹ºóµÄindexÊý¾ÝµÄÆ«ÒÆ
-	u32 index_size;			// ½âÑ¹ËõºóindexµÄ³¤¶È
+	u32 fat_offset;			// è§£åŽ‹åŽçš„fatæ•°æ®çš„åç§»
+	u32 fat_size;			// è§£åŽ‹ç¼©åŽfatè¡¨çš„é•¿åº¦
+	u32 name_space_offset;	// è§£åŽ‹åŽçš„name_spaceæ•°æ®çš„åç§»
+	u32 name_space_size;	// è§£åŽ‹ç¼©åŽèµ„æºåè¡¨çš„é•¿åº¦
+	u32 index_offset;		// è§£åŽ‹åŽçš„indexæ•°æ®çš„åç§»
+	u32 index_size;			// è§£åŽ‹ç¼©åŽindexçš„é•¿åº¦
 	u32 unknown;			// @ 2c
 } ARC4_header_t;
 
 typedef struct {
 	s8 magic[2];			/* "tZ" */
-	u32 length;				/* ËùÓÐblock½âÑ¹ºóµÄ×Ü³¤¶È */
+	u32 length;				/* æ‰€æœ‰blockè§£åŽ‹åŽçš„æ€»é•¿åº¦ */
 } lz3_header_t;
 
 typedef struct {
 	s8 header[2];			/* "Zt" or "St" */
-	u16 comprlen;			/* Ñ¹ËõµÄÊý¾Ý°üÀ¨fat+name_space+index */
-	u16 uncomprlen;			/* ½âÑ¹ºóµÄ³¤¶È */
+	u16 comprlen;			/* åŽ‹ç¼©çš„æ•°æ®åŒ…æ‹¬fat+name_space+index */
+	u16 uncomprlen;			/* è§£åŽ‹åŽçš„é•¿åº¦ */
 	u16 crc;
 } lz3_block_header_t;
 
@@ -378,7 +378,7 @@ static int lze_bits_get(struct lze_bits *lze_bits, int req_bits, unsigned int *r
 	return 0;
 }
 
-/* Ê×ÏÈ»ñµÃÊý¾Ý³¤¶È£¨Í¨¹ý¼ÆËã×óÆðÁ¬ÐøµÄbit0µÄ¸öÊý+1£©,È»ºó·µ»ØÖ¸¶¨³¤¶ÈµÄÊý¾Ý */
+/* é¦–å…ˆèŽ·å¾—æ•°æ®é•¿åº¦ï¼ˆé€šè¿‡è®¡ç®—å·¦èµ·è¿žç»­çš„bit0çš„ä¸ªæ•°+1ï¼‰,ç„¶åŽè¿”å›žæŒ‡å®šé•¿åº¦çš„æ•°æ® */
 static int lze_get_data(struct lze_bits *lze_bits, unsigned int *ret_data)
 {
 	DWORD total_length = 0;
@@ -386,7 +386,7 @@ static int lze_get_data(struct lze_bits *lze_bits, unsigned int *ret_data)
 	DWORD curbits = lze_bits->curbits;
 	struct lze_bits backup_lze_bits = *lze_bits;
 
-	/* »ñµÃÊý¾Ý³¤¶È */
+	/* èŽ·å¾—æ•°æ®é•¿åº¦ */
 	while (1) {
 		DWORD length = 0;
 		
@@ -487,7 +487,7 @@ static DWORD lze_uncompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr,  DWORD
 
 /********************* bin *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int CaramelBox_bin_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -519,7 +519,7 @@ static int CaramelBox_bin_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int CaramelBox_bin_extract_directory(struct package *pkg,
 											struct package_directory *pkg_dir)
 {
@@ -554,15 +554,15 @@ static int CaramelBox_bin_extract_directory(struct package *pkg,
 		name_len = *p_dir & 0xf;
 		name_offset = *p_dir >> 4;
 		p_dir++;
-		if (name_offset != 0xf) {	// Ö»ÓÐ²¿·ÖÃû×Ö
+		if (name_offset != 0xf) {	// åªæœ‰éƒ¨åˆ†åå­—
 			memcpy(&entry_name[name_offset], p_dir, name_len);			
 			entry_name[name_offset + name_len] = 0;
 			p_dir += name_len;
 		} else if (name_len) {
-			if (name_len == 0xf)	// Ãû³ÆÐòºÅ×öÀÛ¼Ó
+			if (name_len == 0xf)	// åç§°åºå·åšç´¯åŠ 
 				entry_name[strlen(entry_name) - 1]++;
-			else {	// Ê×Ïî
-				/* Ê×ÏîÓµÓÐÍêÕûµÄÃû×Ö */
+			else {	// é¦–é¡¹
+				/* é¦–é¡¹æ‹¥æœ‰å®Œæ•´çš„åå­— */
 				memcpy(entry_name, p_dir, name_len);
 				entry_name[name_len] = 0;				
 				p_dir += name_len;
@@ -570,9 +570,9 @@ static int CaramelBox_bin_extract_directory(struct package *pkg,
 			}
 		}
 
-		p_dir += 3;	// ºöÂÔÊý¾ÝÆ«ÒÆ
+		p_dir += 3;	// å¿½ç•¥æ•°æ®åç§»
 
-		/* Ê×Ïî»¹ÒªºöÂÔµ½ÏÂÒ»¸öÊ×ÏàµÄdirectoryÆ«ÒÆ×Ö¶Î(¸Ã×Ö¶Î½öÔÚ²éÕÒÊ±Ê¹ÓÃ) */
+		/* é¦–é¡¹è¿˜è¦å¿½ç•¥åˆ°ä¸‹ä¸€ä¸ªé¦–ç›¸çš„directoryåç§»å­—æ®µ(è¯¥å­—æ®µä»…åœ¨æŸ¥æ‰¾æ—¶ä½¿ç”¨) */
 		if (is_first_entry) {
 			p_dir += 3;
 			is_first_entry = 0;
@@ -602,15 +602,15 @@ static int CaramelBox_bin_extract_directory(struct package *pkg,
 		name_len = *p_dir & 0xf;
 		name_offset = *p_dir >> 4;
 		p_dir++;
-		if (name_offset != 0xf) {	// Ö»ÓÐ²¿·ÖÃû×Ö
+		if (name_offset != 0xf) {	// åªæœ‰éƒ¨åˆ†åå­—
 			memcpy(&entry_name[name_offset], p_dir, name_len);			
 			entry_name[name_offset + name_len] = 0;
 			p_dir += name_len;
 		} else if (name_len) {
-			if (name_len == 0xf)	// Ãû³ÆÐòºÅ×öÀÛ¼Ó
+			if (name_len == 0xf)	// åç§°åºå·åšç´¯åŠ 
 				entry_name[strlen(entry_name) - 1]++;
-			else {	// Ê×Ïî
-				/* Ê×ÏîÓµÓÐÍêÕûµÄÃû×Ö */
+			else {	// é¦–é¡¹
+				/* é¦–é¡¹æ‹¥æœ‰å®Œæ•´çš„åå­— */
 				memcpy(entry_name, p_dir, name_len);
 				entry_name[name_len] = 0;				
 				p_dir += name_len;
@@ -630,7 +630,7 @@ static int CaramelBox_bin_extract_directory(struct package *pkg,
 		//entry_ARC4a_offset = abs(entry_ARC4a_offset - bin_header.directory_offset);
 		p_dir += 3;
 
-		/* Ê×Ïî»¹ÒªºöÂÔµ½ÏÂÒ»¸öÊ×ÏàµÄdirectoryÆ«ÒÆ×Ö¶Î(¸Ã×Ö¶Î½öÔÚ²éÕÒÊ±Ê¹ÓÃ) */
+		/* é¦–é¡¹è¿˜è¦å¿½ç•¥åˆ°ä¸‹ä¸€ä¸ªé¦–ç›¸çš„directoryåç§»å­—æ®µ(è¯¥å­—æ®µä»…åœ¨æŸ¥æ‰¾æ—¶ä½¿ç”¨) */
 		if (is_first_entry) {
 			p_dir += 3;
 			is_first_entry = 0;
@@ -651,7 +651,7 @@ static int CaramelBox_bin_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int CaramelBox_bin_parse_resource_info(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -677,7 +677,7 @@ static int CaramelBox_bin_parse_resource_info(struct package *pkg,
 	strcpy(pkg_res->name, name + 3);
 	strcat(pkg_res->name, ".");
 	strncat(pkg_res->name, name, 3);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 
 	switch (SWAP4(res_header.type)) {
 	case 2:
@@ -705,7 +705,7 @@ static int CaramelBox_bin_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int CaramelBox_bin_extract_resource(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -784,7 +784,7 @@ static int CaramelBox_bin_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int CaramelBox_bin_save_resource(struct resource *res, 
 										struct package_resource *pkg_res)
 {
@@ -808,7 +808,7 @@ static int CaramelBox_bin_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void CaramelBox_bin_release_resource(struct package *pkg, 
 											struct package_resource *pkg_res)
 {
@@ -822,7 +822,7 @@ static void CaramelBox_bin_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void CaramelBox_bin_release(struct package *pkg, 
 								   struct package_directory *pkg_dir)
 {
@@ -834,7 +834,7 @@ static void CaramelBox_bin_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation CaramelBox_bin_operation = {
 	CaramelBox_bin_match,					/* match */
 	CaramelBox_bin_extract_directory,		/* extract_directory */
@@ -847,7 +847,7 @@ static cui_ext_operation CaramelBox_bin_operation = {
 
 /********************* ARC4 *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int CaramelBox_ARC4_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -879,7 +879,7 @@ static int CaramelBox_ARC4_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int CaramelBox_ARC4_extract_directory(struct package *pkg,
 											struct package_directory *pkg_dir)
 {
@@ -962,7 +962,7 @@ static int CaramelBox_ARC4_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int CaramelBox_ARC4_parse_resource_info(struct package *pkg,
 											   struct package_resource *pkg_res)
 {
@@ -992,7 +992,7 @@ static int CaramelBox_ARC4_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int CaramelBox_ARC4_extract_resource(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -1301,7 +1301,7 @@ static int CaramelBox_ARC4_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int CaramelBox_ARC4_save_resource(struct resource *res,
 										 struct package_resource *pkg_res)
 {
@@ -1325,7 +1325,7 @@ static int CaramelBox_ARC4_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void CaramelBox_ARC4_release_resource(struct package *pkg, 
 											 struct package_resource *pkg_res)
 {
@@ -1339,7 +1339,7 @@ static void CaramelBox_ARC4_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void CaramelBox_ARC4_release(struct package *pkg, 
 									struct package_directory *pkg_dir)
 {
@@ -1351,7 +1351,7 @@ static void CaramelBox_ARC4_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation CaramelBox_ARC4_operation = {
 	CaramelBox_ARC4_match,				/* match */
 	CaramelBox_ARC4_extract_directory,	/* extract_directory */
@@ -1362,15 +1362,15 @@ static cui_ext_operation CaramelBox_ARC4_operation = {
 	CaramelBox_ARC4_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK CaramelBox_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".bin"), NULL, 
 		NULL, &CaramelBox_ARC4_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
 
-	if (callback->add_extension(callback->cui, _T(".¥Ç©`¥¿"), NULL, 
+	if (callback->add_extension(callback->cui, _T(".ãƒ‡ãƒ¼ã‚¿"), NULL, 
 		NULL, &CaramelBox_ARC4_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR
 		| CUI_EXT_FLAG_NOEXT))
 			return -1;
@@ -1388,4 +1388,5 @@ int CALLBACK CaramelBox_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

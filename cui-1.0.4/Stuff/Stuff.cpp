@@ -11,11 +11,11 @@
 #include <stdio.h>
 
 struct acui_information Stuff_cui_information = {
-	_T("©Z¥¦¥£¥ë"),			/* copyright */
-	_T("Stuff ¥¹¥¯¥ê¥×¥È¥¨¥ó¥¸¥ó"),					/* system */
+	_T("ãˆ±ã‚¦ã‚£ãƒ«"),			/* copyright */
+	_T("Stuff ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚¨ãƒ³ã‚¸ãƒ³"),					/* system */
 	_T(".mpk .msc"),		/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T("2007-11-6 20:26"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -624,4 +624,5 @@ int CALLBACK Stuff_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

@@ -17,7 +17,7 @@ using std::vector;
 using std::string;
 
 /*
-1. ÕÒinit_tableµÄ·½·¨£º
+1. æ‰¾init_tableçš„æ–¹æ³•ï¼š
 004010A0  /$  A1 C81E5300   MOV EAX,DWORD PTR DS:[531EC8]                      ;  init_decrypt_table
 004010A5  |.  81EC BC040000 SUB ESP,4BC 
 004010AB  |.  85C0          TEST EAX,EAX
@@ -27,13 +27,13 @@ using std::string;
 004010B7  |.  C3            RETN
 004010B8  |>  33C9          XOR ECX,ECX                                        ;  i=0
 004010BA  |.  8D9B 00000000 LEA EBX,DWORD PTR DS:[EBX]
-004010C0  |>  0FB691 50AB4E>/MOVZX EDX,BYTE PTR DS:[ECX+4EAB50]                ;  init_table[i] <-- ÕâÀï
+004010C0  |>  0FB691 50AB4E>/MOVZX EDX,BYTE PTR DS:[ECX+4EAB50]                ;  init_table[i] <-- è¿™é‡Œ
 004010C7  |.  33C0          |XOR EAX,EAX                                       ;  n=0
 004010C9  |.  8DA424 000000>|LEA ESP,DWORD PTR SS:[ESP]
 004010D0  |>  3BD0          |/CMP EDX,EAX                                      ;  init_table[i] VS n
 004010D2  |.  74 0A         ||JE SHORT Django_t.004010DE
 004010D4  |.  40            ||INC EAX                                          ;  init_table[i] != n: n++
-004010D5  |.  3D 00010000   ||CMP EAX,100	<-- ËÑË÷¸ÃÖ¸Áî
+004010D5  |.  3D 00010000   ||CMP EAX,100	<-- æœç´¢è¯¥æŒ‡ä»¤
 004010DA  |.^ 72 F4         |\JB SHORT Django_t.004010D0
 004010DC  |.  EB 06         |JMP SHORT Django_t.004010E4
 004010DE  |>  8888 00BE4E00 |MOV BYTE PTR DS:[EAX+4EBE00],CL                   ;  init_table[i] == n: decrypt_table[n] = i
@@ -41,30 +41,30 @@ using std::string;
 004010E5  |.  81F9 00010000 |CMP ECX,100
 004010EB  |.^ 72 D3         \JB SHORT Django_t.004010C0
 
-2. ËÑË÷main¹Ø¼ü×Ö ÆäÏÂÃæ´óÔ¼0x28×Ö½Úºó¾ÍÊÇdecrypt_tableµÄÄÚÈÝ
-1£©Èí¼þ£ºollydbg WinHex£¨¶¼ÓÐºº»¯°æ£©
-2£©ÔËÐÐÓÎÏ·exe µ±³öÏÖN+ logoÊ± Æô¶¯ollydbg
-3) ÎÄ¼þ->¸½¼þ£¬Ë«»÷ÓÎÏ·exeµÄÏî
-4) Æô¶¯WinHex£¬¹¤¾ß->´ò¿ªRAM
-5) Ñ¡ÔñÓÎÏ·exeµÄÄÇÏî Õ¹¿ªÒÔºóÑ¡µÚÒ»ÏîPrimary Memory È·¶¨ Èç¹û³öÏÖÌáÊ¾ÔÙÈ·¶¨
-6) ÎÄ¼þ->Áí´æÎª ÎÄ¼þÃû×Ô¶¨Òå
-7) ½«±£´æ³öÀ´µÄÎÄ¼þÑ¹ËõÈ»ºóÉÏ´«µ½ÍøÅÌÉÏ²¢Ìù³öÀ´
-8) Á¬Í¬system.npa·â°üÎÄ¼þÒ»ÆðÉÏ´«
+2. æœç´¢mainå…³é”®å­— å…¶ä¸‹é¢å¤§çº¦0x28å­—èŠ‚åŽå°±æ˜¯decrypt_tableçš„å†…å®¹
+1ï¼‰è½¯ä»¶ï¼šollydbg WinHexï¼ˆéƒ½æœ‰æ±‰åŒ–ç‰ˆï¼‰
+2ï¼‰è¿è¡Œæ¸¸æˆexe å½“å‡ºçŽ°N+ logoæ—¶ å¯åŠ¨ollydbg
+3) æ–‡ä»¶->é™„ä»¶ï¼ŒåŒå‡»æ¸¸æˆexeçš„é¡¹
+4) å¯åŠ¨WinHexï¼Œå·¥å…·->æ‰“å¼€RAM
+5) é€‰æ‹©æ¸¸æˆexeçš„é‚£é¡¹ å±•å¼€ä»¥åŽé€‰ç¬¬ä¸€é¡¹Primary Memory ç¡®å®š å¦‚æžœå‡ºçŽ°æç¤ºå†ç¡®å®š
+6) æ–‡ä»¶->å¦å­˜ä¸º æ–‡ä»¶åè‡ªå®šä¹‰
+7) å°†ä¿å­˜å‡ºæ¥çš„æ–‡ä»¶åŽ‹ç¼©ç„¶åŽä¸Šä¼ åˆ°ç½‘ç›˜ä¸Šå¹¶è´´å‡ºæ¥
+8) è¿žåŒsystem.npaå°åŒ…æ–‡ä»¶ä¸€èµ·ä¸Šä¼ 
  */
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information N2System_cui_information = {
-	_T("ÖêÊ½»áÉç¥Ë¥È¥í¥×¥é¥¹"),	/* copyright */
+	_T("æ ªå¼ä¼šç¤¾ãƒ‹ãƒˆãƒ­ãƒ—ãƒ©ã‚¹"),	/* copyright */
 	_T("Nitroplus system 2"),	/* system */
 	_T(".npa"),					/* package */
 	_T("1.0.5"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2009-6-27 15:28"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[3];				/* "NPA" */
@@ -73,20 +73,20 @@ typedef struct {
 	u32 hash1;
 	u8 is_compressed;
 	u8 is_crypted;
-	u32 total_index_entries;	/* ×ÜÏîÊý */
-	u32 dir_entries;			/* Ä¿Â¼ÏîµÄ¸öÊý */
-	u32 file_entries;			/* ÎÄ¼þµÄÏîµÄ¸öÊý */
+	u32 total_index_entries;	/* æ€»é¡¹æ•° */
+	u32 dir_entries;			/* ç›®å½•é¡¹çš„ä¸ªæ•° */
+	u32 file_entries;			/* æ–‡ä»¶çš„é¡¹çš„ä¸ªæ•° */
 	u32 reserved0;
 	u32 reserved1;
-	u32 index_length;			/* Ë÷Òý¶ÎµÄ×Ö½Ú³¤¶È */
+	u32 index_length;			/* ç´¢å¼•æ®µçš„å­—èŠ‚é•¿åº¦ */
 } npa_header_t;
 #pragma pack ()
 
 typedef struct npa_entry {
 	std::string name;	
 	DWORD name_length;
-	DWORD type;					// 1 - Ä¿Â¼Ïî; 2 - ÎÄ¼þÏî
-	DWORD dir_number;			// ËùÊôµÄÄ¿Â¼±àºÅ(0±êÊ¶¸ùÄ¿Â¼)
+	DWORD type;					// 1 - ç›®å½•é¡¹; 2 - æ–‡ä»¶é¡¹
+	DWORD dir_number;			// æ‰€å±žçš„ç›®å½•ç¼–å·(0æ ‡è¯†æ ¹ç›®å½•)
 	DWORD data_offset;
 	DWORD comprlen;
 	DWORD uncomprlen;
@@ -203,7 +203,7 @@ static void Django_do_decrypt(npa_entry_t *npa_entry, BYTE *buffer, DWORD length
 #define ChaosHeadTrial_do_decrypt	Django_do_decrypt
 #define ChaosHead_do_decrypt		Django_do_decrypt
 
-// Óè¸æ¾Ž £ÛLamento -FRAGMENT-£Ý
+// äºˆå‘Šç·¨ ï¼»Lamento -FRAGMENT-ï¼½
 static struct N2System_game_configure LamentoF = {
 	"LamentoF",
 	{
@@ -253,7 +253,7 @@ static struct N2System_game_configure LamentoBTV = {
 	Lamento_do_decrypt,
 };
 
-// ¾A¡¤š¢Â¾¤Î¥¸¥ã¥ó¥´ £­µØªz¤ÎÙp½ðÊ×£­ ÌåòY°æ
+// ç¶šÂ·æ®ºæˆ®ã®ã‚¸ãƒ£ãƒ³ã‚´ ï¼åœ°ç„ã®è³žé‡‘é¦–ï¼ ä½“é¨“ç‰ˆ
 static struct N2System_game_configure Django_trial = {
 	"DjangoTrial",
 	{
@@ -278,7 +278,7 @@ static struct N2System_game_configure Django_trial = {
 	DjangoTrial_do_decrypt,
 };
 
-// ¾A¡¤š¢Â¾¤Î¥¸¥ã¥ó¥´ £­µØªz¤ÎÙp½ðÊ×£­
+// ç¶šÂ·æ®ºæˆ®ã®ã‚¸ãƒ£ãƒ³ã‚´ ï¼åœ°ç„ã®è³žé‡‘é¦–ï¼
 static struct N2System_game_configure Django = {
 	"Django",
 	{
@@ -303,7 +303,7 @@ static struct N2System_game_configure Django = {
 	Django_do_decrypt,
 };
 
-// CHAOS£»HEAD ÌåòY°æ
+// CHAOSï¼›HEAD ä½“é¨“ç‰ˆ
 static struct N2System_game_configure ChaosHead_trial = {
 	"ChaosHeadTrial",
 	{
@@ -328,7 +328,7 @@ static struct N2System_game_configure ChaosHead_trial = {
 	ChaosHeadTrial_do_decrypt,
 };
 
-// CHAOS£»HEAD ÌåòY°æ Ver.2
+// CHAOSï¼›HEAD ä½“é¨“ç‰ˆ Ver.2
 static struct N2System_game_configure ChaosHead_trial2 = {
 	"ChaosHeadTrial2",
 	{
@@ -380,7 +380,7 @@ static struct N2System_game_configure ChaosHead = {
 #define SMGTrial_prepare_decrypt	Django_prepare_decrypt
 #define SMGTrial_do_decrypt			Django_do_decrypt
 
-// ¥¹¥Þ¥¬ 3£¥ÌåòY°æ	Nitro+
+// ã‚¹ãƒžã‚¬ 3ï¼…ä½“é¨“ç‰ˆ	Nitro+
 static struct N2System_game_configure SMGTrial = {
 	"SMGTrial",
 	{
@@ -528,7 +528,7 @@ static const struct N2System_game_configure *N2System_game_configure[] = {
 
 /********************* npa *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int N2System_npa_match(struct package *pkg)
 {
 	const char *game = get_options("game");
@@ -572,7 +572,7 @@ static int N2System_npa_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int N2System_npa_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -672,7 +672,7 @@ static int N2System_npa_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int N2System_npa_parse_resource_info(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -688,7 +688,7 @@ static int N2System_npa_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int N2System_npa_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -739,7 +739,7 @@ static int N2System_npa_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int N2System_npa_save_resource(struct resource *res, 
 									  struct package_resource *pkg_res)
 {
@@ -763,7 +763,7 @@ static int N2System_npa_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void N2System_npa_release_resource(struct package *pkg, 
 										  struct package_resource *pkg_res)
 {
@@ -777,7 +777,7 @@ static void N2System_npa_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void N2System_npa_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
@@ -789,7 +789,7 @@ static void N2System_npa_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation N2System_npa_operation = {
 	N2System_npa_match,					/* match */
 	N2System_npa_extract_directory,		/* extract_directory */
@@ -800,7 +800,7 @@ static cui_ext_operation N2System_npa_operation = {
 	N2System_npa_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK N2System_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".npa"), NULL, 
@@ -809,4 +809,5 @@ int CALLBACK N2System_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

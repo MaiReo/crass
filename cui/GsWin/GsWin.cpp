@@ -11,11 +11,11 @@
 #include <cui_common.h>
 
 struct acui_information GsWin_cui_information = {
-	_T("ÖêÊ½»áÉç¤Á¤§¤ê©`¤½¤Õ¤È"),	/* copyright */
+	_T("æ ªå¼ä¼šç¤¾ã¡ã‡ã‚Šãƒ¼ããµã¨"),	/* copyright */
 	_T("GsWin3.0.0.0 Project11"),	/* system */
 	_T(".pak"),						/* package */
 	_T(""),							/* revision */
-	_T("³Õh¹«Ù\"),					/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),					/* author */
 	_T(""),							/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -96,7 +96,7 @@ static int GsWin_pak_parse_resource_info(struct package *pkg,
 
 	pak_entry = (pak_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, pak_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = pak_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = pak_entry->offset;
@@ -152,4 +152,5 @@ int CALLBACK GsWin_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

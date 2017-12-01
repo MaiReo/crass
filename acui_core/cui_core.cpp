@@ -10,8 +10,8 @@
 #include <stdio.h>
 
 struct cui_core {
-	struct cui root;	/* 根cui */
-	unsigned int count;	/* 已注册的cui个数 */
+	struct cui root;	/* 鏍筩ui */
+	unsigned int count;	/* 宸叉敞鍐岀殑cui涓暟 */
 };
 
 static struct cui_core cui_core;
@@ -88,7 +88,7 @@ static inline void cui_list_add_core(struct cui *cui)
 
 /*********** register_cui API **************/
 
-/* 允许添加具有相同扩展名的extension结构 */
+/* 鍏佽娣诲姞鍏锋湁鐩稿悓鎵╁睍鍚嶇殑extension缁撴瀯 */
 static int cui_add_extension(struct cui *cui, const TCHAR *extension, 
 		const TCHAR *replace_extension, const TCHAR *description,
 		struct cui_ext_operation *operation, unsigned long flags)
@@ -96,53 +96,53 @@ static int cui_add_extension(struct cui *cui, const TCHAR *extension,
 	struct cui_extension *ext;
 
 	if (!cui || !operation) {
-		crass_printf(_T("%s: 注册extension时发生错误\n"), cui->name);
+		crass_printf(_T("%s: 娉ㄥ唽extension鏃跺彂鐢熼敊璇痋n"), cui->name);
 		return -1;
 	}
 
 	if (!extension && !(flags & CUI_EXT_FLAG_NOEXT)) {
-		crass_printf(_T("%s: 必须指定CUI_EXT_FLAG_NOEXT标志\n"), cui->name);	
+		crass_printf(_T("%s: 蹇呴』鎸囧畾CUI_EXT_FLAG_NOEXT鏍囧織\n"), cui->name);	
 		return -1;	
 	}
 
 	if (flags & CUI_EXT_FLAG_DIR) {
 		if (!operation->extract_directory) {
-			crass_printf(_T("%s: 目录型封包必须支持extract_directory()\n"), cui->name);
+			crass_printf(_T("%s: 鐩綍鍨嬪皝鍖呭繀椤绘敮鎸乪xtract_directory()\n"), cui->name);
 			return -1;	
 		}
 		if (!operation->parse_resource_info) {
-			crass_printf(_T("%s: 目录型封包必须支持parse_resource_info()\n"), cui->name);
+			crass_printf(_T("%s: 鐩綍鍨嬪皝鍖呭繀椤绘敮鎸乸arse_resource_info()\n"), cui->name);
 			return -1;	
 		}
 
 		if (!operation->release) {
-			crass_printf(_T("%s: 目录型封包必须支持release()\n"), cui->name);
+			crass_printf(_T("%s: 鐩綍鍨嬪皝鍖呭繀椤绘敮鎸乺elease()\n"), cui->name);
 			return -1;	
 		}
 	}
 
 	if (!operation->match) {
-		crass_printf(_T("%s: 必须支持match()\n"), cui->name);
+		crass_printf(_T("%s: 蹇呴』鏀寔match()\n"), cui->name);
 		return -1;
 	}
 
 	if (operation->extract_resource) {
 		if (!operation->release_resource) {
-			crass_printf(_T("%s: 必须支持release_resource()\n"), cui->name);
+			crass_printf(_T("%s: 蹇呴』鏀寔release_resource()\n"), cui->name);
 			return -1;
 		}
 	}
 
 	if (operation->release_resource) {
 		if (!operation->extract_resource) {
-			crass_printf(_T("%s: 必须支持extract_resource()\n"), cui->name);
+			crass_printf(_T("%s: 蹇呴』鏀寔extract_resource()\n"), cui->name);
 			return -1;
 		}
 	}
 
 	ext = (struct cui_extension *)GlobalAlloc(GPTR, sizeof(*ext));
 	if (!ext) {
-		crass_printf(_T("%s: 分配extension时发生错误\n"), 
+		crass_printf(_T("%s: 鍒嗛厤extension鏃跺彂鐢熼敊璇痋n"), 
 			cui->name);
 		return -1;
 	}
@@ -173,7 +173,7 @@ static struct cui *cui_alloc(const TCHAR *cui_name)
 	alloc_len = (_tcslen(cui_name) + 1) * sizeof(TCHAR) + sizeof(*cui);		
 	cui = (struct cui *)GlobalAlloc(GPTR, alloc_len);
 	if (!cui) {
-		crass_printf(_T("%s: 分配cui时发生错误\n"), cui_name);
+		crass_printf(_T("%s: 鍒嗛厤cui鏃跺彂鐢熼敊璇痋n"), cui_name);
 		return NULL;		
 	}
 	cui->name = (TCHAR *)(cui + 1);
@@ -197,12 +197,12 @@ static int cui_register(const TCHAR *path)
 
 	name = PathFindFileName(path);
 	if (!name) {
-		crass_printf(_T("%s: 无效的cui路径\n"), path);
+		crass_printf(_T("%s: 鏃犳晥鐨刢ui璺緞\n"), path);
 		return -1;
 	}
 	_tcscpy(cui_name, name);
 	if (!PathRenameExtension(cui_name, _T(""))) {
-		crass_printf(_T("%s: 无效的cui名称\n"), cui_name);
+		crass_printf(_T("%s: 鏃犳晥鐨刢ui鍚嶇О\n"), cui_name);
 		return -1;
 	}
 
@@ -212,7 +212,7 @@ static int cui_register(const TCHAR *path)
 
 	cui->module = LoadLibrary(path);
 	if (!cui->module) {		
-		crass_printf(_T("%s: 加载cui时发生错误\n"), cui_name);
+		crass_printf(_T("%s: 鍔犺浇cui鏃跺彂鐢熼敊璇痋n"), cui_name);
 		cui_free(cui);
 		return -1;
 	}
@@ -220,7 +220,7 @@ static int cui_register(const TCHAR *path)
 
 	reg_cui = (register_cui_t)cui_import(cui, _T("_register_cui"));
 	if (!reg_cui) {
-		crass_printf(_T("%s: cui不支持register_cui()\n"), cui_name);
+		crass_printf(_T("%s: cui涓嶆敮鎸乺egister_cui()\n"), cui_name);
 		FreeLibrary(cui->module);
 		cui_free(cui);
 		return -1;
@@ -229,7 +229,7 @@ static int cui_register(const TCHAR *path)
 	cui_register_callback.cui = cui;
 	cui_register_callback.add_extension = cui_add_extension;
 	if (reg_cui(&cui_register_callback)) {
-		crass_printf(_T("%s: cui注册失败\n"), cui_name);
+		crass_printf(_T("%s: cui娉ㄥ唽澶辫触\n"), cui_name);
 		FreeLibrary(cui->module);
 		cui_free(cui);
 		return -1;		
@@ -270,7 +270,7 @@ static int cui_load(const TCHAR *dir)
 	_stprintf(search, _T("%s\\*.cui"), dir);	
 	find_file = FindFirstFile(search, &find_data);
 	if (find_file == INVALID_HANDLE_VALUE) {
-		crass_printf(_T("%s: 搜寻cui时发生错误\n"), dir);
+		crass_printf(_T("%s: 鎼滃cui鏃跺彂鐢熼敊璇痋n"), dir);
 		return -1;
 	}
 
@@ -278,12 +278,12 @@ static int cui_load(const TCHAR *dir)
 	_stprintf(path, _T("%s\\%s"), dir, find_data.cFileName);
 	if (!cui_register(path)) 
 		count++;
-		/* 忽略注册失败的cui */
+		/* 蹇界暐娉ㄥ唽澶辫触鐨刢ui */
 
 	while (FindNextFile(find_file, &find_data)) {
 		_stprintf(path, _T("%s\\%s"), dir, find_data.cFileName);
 		if (cui_register(path)) {
-			crass_printf(_T("%s: 注册失败\n"), find_data.cFileName);
+			crass_printf(_T("%s: 娉ㄥ唽澶辫触\n"), find_data.cFileName);
 		} else
 			count++;
 	}
@@ -366,11 +366,11 @@ ACUI_CORE_API int cui_core_init(const TCHAR *cui_dir)
 	struct cui *root_cui;
 
 	if (!cui_dir) {
-		crass_printf(_T("%s: 无效的cui目录\n"), cui_dir);
+		crass_printf(_T("%s: 鏃犳晥鐨刢ui鐩綍\n"), cui_dir);
 		return -1;
 	}
 	memset(&cui_core, 0, sizeof(cui_core));
-	/* 初始化根cui */
+	/* 鍒濆鍖栨牴cui */
 	root_cui = &cui_core.root;
 	cui_list_init(root_cui);
 	root_cui->name = _T("root");
@@ -407,4 +407,5 @@ ACUI_CORE_API void cui_print_information(struct cui *cui)
 		locale_printf(LOC_ID_CRASS_CUI_TIME, info->date);
 	if (info->notion)
 		locale_printf(LOC_ID_CRASS_CUI_NOTICE, info->notion);
+}
 }

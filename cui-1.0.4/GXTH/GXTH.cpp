@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information GXTH_cui_information = {
 	_T("Experience Inc"),		/* copyright */
 	_T("Generation Xth -Code Breaker-"),	/* system */
 	_T(".uni .dat .EVT .efc"),	/* package */
 	_T("1.0.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-1-11 19:05"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[2];	// "UF"
@@ -30,7 +30,7 @@ typedef struct {
 	u8 bpp;
 	u8 unknown;		// bpp=3: 1, bpp=4, 2
 	u32 header_size;
-	u32 length;		// Í¨³£±ÈÊµ¼ÊµÄrgbÊý¾Ý¶à2×Ö½Ú£¬µ«Ò²ÓÐºÍÊµ¼ÊÖµ²»Æ¥ÅäµÄÇé¿ö
+	u32 length;		// é€šå¸¸æ¯”å®žé™…çš„rgbæ•°æ®å¤š2å­—èŠ‚ï¼Œä½†ä¹Ÿæœ‰å’Œå®žé™…å€¼ä¸åŒ¹é…çš„æƒ…å†µ
 } uni_header_t;
 
 typedef struct {
@@ -106,7 +106,7 @@ static int GXTH_uncompress(BYTE **ret_uncompr, DWORD *ret_uncomprlen,
 
 /********************* uni *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int GXTH_uni_match(struct package *pkg)
 {
 	s8 magic[2];
@@ -127,7 +127,7 @@ static int GXTH_uni_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int GXTH_uni_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -159,7 +159,7 @@ static int GXTH_uni_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int GXTH_uni_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -183,7 +183,7 @@ static int GXTH_uni_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void GXTH_uni_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -197,7 +197,7 @@ static void GXTH_uni_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void GXTH_uni_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
@@ -209,7 +209,7 @@ static void GXTH_uni_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation GXTH_uni_operation = {
 	GXTH_uni_match,				/* match */
 	NULL,						/* extract_directory */
@@ -222,7 +222,7 @@ static cui_ext_operation GXTH_uni_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int GXTH_dat_match(struct package *pkg)
 {
 	s8 magic[36];
@@ -243,7 +243,7 @@ static int GXTH_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int GXTH_dat_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -266,7 +266,7 @@ static int GXTH_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation GXTH_dat_operation = {
 	GXTH_dat_match,				/* match */
 	NULL,						/* extract_directory */
@@ -279,7 +279,7 @@ static cui_ext_operation GXTH_dat_operation = {
 
 /********************* compr *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int GXTH_compr_match(struct package *pkg)
 {
 	if (!lstrcmpi(pkg->name, L"tutorial.dat"))
@@ -303,7 +303,7 @@ static int GXTH_compr_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int GXTH_compr_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -330,7 +330,7 @@ static int GXTH_compr_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation GXTH_compr_operation = {
 	GXTH_compr_match,			/* match */
 	NULL,						/* extract_directory */
@@ -343,7 +343,7 @@ static cui_ext_operation GXTH_compr_operation = {
 
 /********************* tutorial.dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int GXTH_tutorial_match(struct package *pkg)
 {
 	if (lstrcmpi(pkg->name, L"tutorial.dat"))
@@ -367,7 +367,7 @@ static int GXTH_tutorial_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int GXTH_tutorial_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -418,7 +418,7 @@ static int GXTH_tutorial_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int GXTH_tutorial_parse_resource_info(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -426,15 +426,15 @@ static int GXTH_tutorial_parse_resource_info(struct package *pkg,
 
 	my_entry = (my_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int GXTH_tutorial_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -453,7 +453,7 @@ static int GXTH_tutorial_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation GXTH_tutorial_operation = {
 	GXTH_tutorial_match,				/* match */
 	GXTH_tutorial_extract_directory,	/* extract_directory */
@@ -466,7 +466,7 @@ static cui_ext_operation GXTH_tutorial_operation = {
 
 /********************* efc *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int GXTH_efc_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -487,7 +487,7 @@ static int GXTH_efc_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int GXTH_efc_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -541,7 +541,7 @@ static int GXTH_efc_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int GXTH_efc_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -549,15 +549,15 @@ static int GXTH_efc_parse_resource_info(struct package *pkg,
 
 	my_entry = (my_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int GXTH_efc_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -610,7 +610,7 @@ static void GXTH_efc_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation GXTH_efc_operation = {
 	GXTH_efc_match,					/* match */
 	GXTH_efc_extract_directory,		/* extract_directory */
@@ -621,7 +621,7 @@ static cui_ext_operation GXTH_efc_operation = {
 	GXTH_efc_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK GXTH_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".uni"), _T(".bmp"), 
@@ -649,4 +649,5 @@ int CALLBACK GXTH_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

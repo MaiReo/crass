@@ -466,3 +466,4 @@ struct cxdec_callback ruitomo_cxdec_callback = {
 	{ 0x2e4, 0x0c7 },
 	xcode_building_stage1
 };
+;

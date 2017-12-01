@@ -463,3 +463,4 @@ struct cxdec_callback FairChild_cxdec_callback = {
 	{ 0x231, 0x52e },
 	xcode_building_stage1
 };
+;

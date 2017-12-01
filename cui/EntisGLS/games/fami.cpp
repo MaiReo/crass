@@ -27,8 +27,9 @@ char *fami_xml = " \
 \
 	<archive path=\"$(CURRENT)\\Data\\v01.dat\"/>	\
 \
-	<display caption=\"ˆú“ûƒtƒ@ƒ~ƒŒƒX\" width=\"800\" height=\"600\" depth=\"32\" frequency=\"0\" CooperationLevel=\"window\"/>	\
+	<display caption=\"å ¹æ“•åƒ¼å‚½å„ˆå„—åƒ—\" width=\"800\" height=\"600\" depth=\"32\" frequency=\"0\" CooperationLevel=\"window\"/>	\
 	<icon id=\"1\" src=\"$(CURRENT)\\Data\\game.ico\"/>	\
 </script>	\
 \
 ";
+;

@@ -67,20 +67,20 @@ static void usage(void)
 {
 	cout << endl;
 	if (GetACP() == 936) {
-		cout << "Majiro mask me - MajiroÍ¼ÏñºÏ³ÉÆ÷version " VERSION " By ³Õºº¹«Ôô" << endl << endl;
-		cout << "ÓÃ·¨£º" << endl;
+		cout << "Majiro mask me - Majiroå›¾åƒåˆæˆå™¨version " VERSION " By ç—´æ±‰å…¬è´¼" << endl << endl;
+		cout << "ç”¨æ³•ï¼š" << endl;
 		cout << "\tMajiro_mask_me -s src_bmp -m mask_bmp -d delta_bmp -o output_dir [-a]" << endl;
-		cout << "¾ÙÀý:" << endl << endl;
+		cout << "ä¸¾ä¾‹:" << endl << endl;
 		cout << "\t1) Majiro_mask_me -s src_bmp -m mask_bmp" << endl;
-		cout << "\tÓÃÓÚ±íÇéÍ¼ÓëÆämaskÍ¼×öºÏ³É¡£" << endl << endl;
+		cout << "\tç”¨äºŽè¡¨æƒ…å›¾ä¸Žå…¶maskå›¾åšåˆæˆã€‚" << endl << endl;
 		cout << "\t2) Majiro_mask_me -s src_bmp -d delta_bmp" << endl;
-		cout << "\tÓÃÓÚ±³¾°/CGÍ¼ÓëÆä²î·ÖÍ¼×öºÏ³É¡£" << endl << endl;
+		cout << "\tç”¨äºŽèƒŒæ™¯/CGå›¾ä¸Žå…¶å·®åˆ†å›¾åšåˆæˆã€‚" << endl << endl;
 		cout << "\t3) Majiro_mask_me -s src_bmp -m mask_bmp -d delta_bmp" << endl;
-		cout << "\tÓÃÓÚÁ¢»æÍ¼ÓëÆä²î·ÖºÍmaskÍ¼×öºÏ³É." << endl << endl;
+		cout << "\tç”¨äºŽç«‹ç»˜å›¾ä¸Žå…¶å·®åˆ†å’Œmaskå›¾åšåˆæˆ." << endl << endl;
 		cout << "\t4) Majiro_mask_me -s src_bmp -m mask_bmp -d delta_bmp -a" << endl;
-		cout << "\tÓë3)ÀàËÆ, µ«²»×öalpha blending." << endl << endl;
+		cout << "\tä¸Ž3)ç±»ä¼¼, ä½†ä¸åšalpha blending." << endl << endl;
 	} else {
-		cout << "Majiro mask me - Majiro image synthesizer version " VERSION " By ³Õºº¹«Ôô" << endl << endl;
+		cout << "Majiro mask me - Majiro image synthesizer version " VERSION " By ç—´æ±‰å…¬è´¼" << endl << endl;
 		cout << "Usage:" << endl;
 		cout << "\tMajiro_mask_me -s src_bmp -m mask_bmp -d delta_bmp -o output_dir [-a]" << endl;
 		cout << "For example:" << endl << endl;
@@ -97,24 +97,24 @@ static void usage(void)
 }
 
 static char *simpified_chinese_string_table[] = {
-	"´ò¿ªsrc_bmpÊ§°Ü",
-	"ÎÞ·¨Îªsrc_bmp·ÖÅäÄÚ´æ",
-	"src_bmp²»ÊÇbmpÎÄ¼þ",
-	"´ò¿ªmask_bmpÊ§°Ü",
-	"ÎÞ·¨Îªmask_bmp·ÖÅäÄÚ´æ",
-	"mask_bmp²»ÊÇbmpÎÄ¼þ",
-	"´ò¿ªdelta_bmpÊ§°Ü",
-	"ÎÞ·¨Îªdelta_bmp·ÖÅäÄÚ´æ",
-	"delta_bmp²»ÊÇbmpÎÄ¼þ",
-	"src_bmpÓ¦¸ÃÊÇ24Î»É«µÄbmpÎÄ¼þ",
-	"mask_bmpµÄ¿í¶ÈÓësrc_bmp²»Ò»ÖÂ",
-	"mask_bmpµÄ¸ß¶ÈÓësrc_bmp²»Ò»ÖÂ",
-	"mask_bmpÓ¦¸ÃÊÇ8Î»É«µÄbmpÎÄ¼þ",
-	"delta_bmpµÄ¿í¶ÈÓësrc_bmp²»Ò»ÖÂ",
-	"delta_bmpµÄ¸ß¶ÈÓësrc_bmp²»Ò»ÖÂ",
-	"delta_bmpÓ¦¸ÃÊÇ24Î»É«µÄbmpÎÄ¼þ",
-	"ÎÞ·¨´´½¨ºÏ³ÉºóµÄbmpÎÄ¼þ",
-	"ÎÞ·¨Îªout_bmp·ÖÅäÄÚ´æ",
+	"æ‰“å¼€src_bmpå¤±è´¥",
+	"æ— æ³•ä¸ºsrc_bmpåˆ†é…å†…å­˜",
+	"src_bmpä¸æ˜¯bmpæ–‡ä»¶",
+	"æ‰“å¼€mask_bmpå¤±è´¥",
+	"æ— æ³•ä¸ºmask_bmpåˆ†é…å†…å­˜",
+	"mask_bmpä¸æ˜¯bmpæ–‡ä»¶",
+	"æ‰“å¼€delta_bmpå¤±è´¥",
+	"æ— æ³•ä¸ºdelta_bmpåˆ†é…å†…å­˜",
+	"delta_bmpä¸æ˜¯bmpæ–‡ä»¶",
+	"src_bmpåº”è¯¥æ˜¯24ä½è‰²çš„bmpæ–‡ä»¶",
+	"mask_bmpçš„å®½åº¦ä¸Žsrc_bmpä¸ä¸€è‡´",
+	"mask_bmpçš„é«˜åº¦ä¸Žsrc_bmpä¸ä¸€è‡´",
+	"mask_bmpåº”è¯¥æ˜¯8ä½è‰²çš„bmpæ–‡ä»¶",
+	"delta_bmpçš„å®½åº¦ä¸Žsrc_bmpä¸ä¸€è‡´",
+	"delta_bmpçš„é«˜åº¦ä¸Žsrc_bmpä¸ä¸€è‡´",
+	"delta_bmpåº”è¯¥æ˜¯24ä½è‰²çš„bmpæ–‡ä»¶",
+	"æ— æ³•åˆ›å»ºåˆæˆåŽçš„bmpæ–‡ä»¶",
+	"æ— æ³•ä¸ºout_bmpåˆ†é…å†…å­˜",
 };
 
 static char *english_string_table[] = {
@@ -434,4 +434,5 @@ int main(int argc, char *argv[])
 	cout << "Done!" << endl;
 
 	return 0;
+}
 }

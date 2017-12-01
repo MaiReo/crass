@@ -8,16 +8,16 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-//ÒÔÏÂgameµÄSall.snlÎÄ¼ş±È½ÏÆæ¹Ö£¬modeºóÃæÖ±½ÓÊÇlzssÑ¹ËõÊı¾İ¡£¶øÃ»ÓĞuncomprLen
-//¥Ç¥å¥¢¥ë¥½¥¦¥ë
-//Ä§Å®á÷¤ê¤ÎÒ¹¤Ë
+//ä»¥ä¸‹gameçš„Sall.snlæ–‡ä»¶æ¯”è¾ƒå¥‡æ€ªï¼Œmodeåé¢ç›´æ¥æ˜¯lzsså‹ç¼©æ•°æ®ã€‚è€Œæ²¡æœ‰uncomprLen
+//ãƒ‡ãƒ¥ã‚¢ãƒ«ã‚½ã‚¦ãƒ«
+//é­”å¥³ç‹©ã‚Šã®å¤œã«
 
 struct acui_information AIL_cui_information = {
-	_T("¥¢¥¤¥ë"),			/* copyright */
+	_T("ã‚¢ã‚¤ãƒ«"),			/* copyright */
 	_T(""),					/* system */
 	_T(".dat .snl .anm"),	/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-5-4 18:54"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -34,7 +34,7 @@ typedef struct {
 
 typedef struct {
 	u16 type;
-	u32 actual_length;	// Õâ¸ölengthÊÇogg½âÂëÎªwav¡¢png½âÂëÎªbmpºóµÄ³¤¶È
+	u32 actual_length;	// è¿™ä¸ªlengthæ˜¯oggè§£ç ä¸ºwavã€pngè§£ç ä¸ºbmpåçš„é•¿åº¦
 } dat_info_t;
 #pragma pack ()
 
@@ -48,9 +48,9 @@ static void lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -71,7 +71,7 @@ static void lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 				break;
 			data = compr[curbyte++];
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -93,7 +93,7 @@ static void lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 
 				data = win[(win_offset + i) & (win_size - 1)];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -169,9 +169,9 @@ static int AIL_dat_parse_resource_info(struct package *pkg,
 
 	my_dat_entry = (my_dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_dat_entry->offset;
 
 	return 0;
@@ -216,7 +216,7 @@ static int AIL_dat_extract_resource(struct package *pkg,
 		if (!compr)
 			return -CUI_EREADVECONLY;
 
-		if ((dat_info->type & 8) || (dat_info->type & 0x10)) {// 24Î»PNGºÍ32Î»PNG£¬actual_lengthÊÇ½âÑ¹ÎªbmpÒÔºóµÄ³¤¶È
+		if ((dat_info->type & 8) || (dat_info->type & 0x10)) {// 24ä½PNGå’Œ32ä½PNGï¼Œactual_lengthæ˜¯è§£å‹ä¸ºbmpä»¥åçš„é•¿åº¦
 			uncomprlen = comprlen;
 			uncompr = (BYTE *)malloc(comprlen);
 			if (!uncompr)
@@ -332,4 +332,5 @@ int CALLBACK AIL_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

@@ -463,3 +463,4 @@ struct cxdec_callback nidaime_cxdec_callback = {
 	{ 0x1fb, 0x750 },
 	xcode_building_stage1
 };
+;

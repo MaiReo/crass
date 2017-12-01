@@ -9,9 +9,9 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information rUGP_cui_information = {
-	_T("age(¥¢©`¥¸¥å)"),				/* copyright */
+	_T("age(ã‚¢ãƒ¼ã‚¸ãƒ¥)"),				/* copyright */
 	_T("relic Unified Game Platform)"),	/* system */
 	_T(".rio .ici"),					/* package */
 	_T(""),								/* revision */
@@ -21,11 +21,11 @@ struct acui_information rUGP_cui_information = {
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
-	u32 length0;	// ¼ÓÃÜµÄÊý¾Ý³¤¶È(ÑéÖ¤ÓÃ)
-	u32 length;		// ¼ÓÃÜµÄÊý¾Ý³¤¶È
+	u32 length0;	// åŠ å¯†çš„æ•°æ®é•¿åº¦(éªŒè¯ç”¨)
+	u32 length;		// åŠ å¯†çš„æ•°æ®é•¿åº¦
 } ici_header_t;
 
 typedef struct {
@@ -49,7 +49,7 @@ typedef struct {
 
 /*********************ici *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int rUGP_ici_match(struct package *pkg)
 {
 	ici_header_t ici_header;
@@ -71,7 +71,7 @@ static int rUGP_ici_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int rUGP_ici_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -177,7 +177,7 @@ static int rUGP_ici_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int rUGP_ici_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -201,7 +201,7 @@ static int rUGP_ici_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void rUGP_ici_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -215,14 +215,14 @@ static void rUGP_ici_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void rUGP_ici_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation rUGP_ici_operation = {
 	rUGP_ici_match,				/* match */
 	NULL,						/* extract_directory */
@@ -235,7 +235,7 @@ static cui_ext_operation rUGP_ici_operation = {
 
 /********************* rio *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int Lambda_rio_match(struct package *pkg)
 {
 	u32 magic;
@@ -252,7 +252,7 @@ static int Lambda_rio_match(struct package *pkg)
 			&& magic != 0x32D49E0
 			&& magic != 0x1EDB927C 
 			&& magic != 0x29F6CBA4
-			&& magic != 0x673CE92A // ¾ý¤¬Íû¤àÓÀßh¡«Latest Edition¡« .ici
+			&& magic != 0x673CE92A // å›ãŒæœ›ã‚€æ°¸é ï½žLatest Editionï½ž .ici
 			&& magic != 0xEF137E2D) {
 		pkg->pio->close(pkg);
 		return -CUI_EMATCH;	
@@ -265,7 +265,7 @@ static int Lambda_rio_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Lambda_rio_extract_directory(struct package *pkg,
 										struct package_directory *pkg_dir)
 {
@@ -311,7 +311,7 @@ static int Lambda_rio_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int Lambda_rio_parse_resource_info(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -319,15 +319,15 @@ static int Lambda_rio_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = dat_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Lambda_rio_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -354,7 +354,7 @@ static int Lambda_rio_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Lambda_rio_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -366,7 +366,7 @@ static void Lambda_rio_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Lambda_rio_operation = {
 	Lambda_rio_match,				/* match */
 	Lambda_rio_extract_directory,	/* extract_directory */
@@ -377,7 +377,7 @@ static cui_ext_operation Lambda_rio_operation = {
 	Lambda_rio_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK rUGP_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".rio"), NULL, 
@@ -389,4 +389,5 @@ int CALLBACK rUGP_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

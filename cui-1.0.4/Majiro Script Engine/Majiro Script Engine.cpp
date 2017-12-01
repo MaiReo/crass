@@ -12,15 +12,15 @@
 #include <stdio.h>
 
 /*
-���ܴ����ܲ���start.mjo��
-TS00 ���ܴ�
+解密串可能藏在start.mjo中
+TS00 解密串
 00443980  /$  55            PUSH    EBP
 00443981  |.  56            PUSH    ESI
 00443982  |.  8B7424 0C     MOV     ESI, DWORD PTR SS:[ESP+C]
 00443986  |.  83C9 FF       OR      ECX, FFFFFFFF
 00443989  |.  33C0          XOR     EAX, EAX
 0044398B  |.  57            PUSH    EDI
-0044398C  |.  8BFE          MOV     EDI, ESI  <--��
+0044398C  |.  8BFE          MOV     EDI, ESI  <--串
 0044398E  |.  F2:AE         REPNE   SCAS BYTE PTR ES:[EDI]
 00443990  |.  A1 182A5700   MOV     EAX, DWORD PTR DS:[572A18]
 00443995  |.  F7D1          NOT     ECX
@@ -28,24 +28,24 @@ TS00 ���ܴ�
 00443998  |.  83CA FF       OR      EDX, FFFFFFFF
 0044399B  |.  85C0          TEST    EAX, EAX
 0044399D  |.  8BE9          MOV     EBP, ECX
-0044399F  |.  75 3E         JNZ     SHORT �I�b�`��.004439DF
+0044399F  |.  75 3E         JNZ     SHORT 怚廱乣枀.004439DF
 004439A1  |.  53            PUSH    EBX
 004439A2  |.  33FF          XOR     EDI, EDI
-004439A4  |.  BE 18265700   MOV     ESI, �I�b�`��.00572618
+004439A4  |.  BE 18265700   MOV     ESI, 怚廱乣枀.00572618
 004439A9  |>  8BC7          /MOV     EAX, EDI
 004439AB  |.  BB 08000000   |MOV     EBX, 8
 004439B0  |>  A8 01         |/TEST    AL, 1
-004439B2  |.  74 09         ||JE      SHORT �I�b�`��.004439BD
+004439B2  |.  74 09         ||JE      SHORT 怚廱乣枀.004439BD
 004439B4  |.  D1E8          ||SHR     EAX, 1
-004439B6  |.  35 2083B8ED   ||XOR     EAX, EDB88320 <-- ��λ�ؼ���
+004439B6  |.  35 2083B8ED   ||XOR     EAX, EDB88320 <-- 定位关键字
 */
 
 struct acui_information Majiro_Script_Engine_cui_information = {
-	_T("Խ�x ��̫/ܥ�� ����"),		/* copyright */
-	_T("�ͣ��ʣɣңϡ�������ץȥ��󥸥�"),		/* system */
+	_T("越畑 声太/堀井 康弘"),		/* copyright */
+	_T("ＭＡＪＩＲＯ　スクリプトエンジン"),		/* system */
 	_T(".arc .rct"),				/* package */
 	_T("1.2.1"),					/* revision */
-	_T("�՝h���\"),					/* author */
+	_T("痴漢公賊"),					/* author */
 	_T("2009-7-5 20:28"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -71,14 +71,14 @@ typedef struct {
 } arc2_entry_t;
 
 typedef struct {				
-	s8 magic[8];		/* "����TC00" and "����TC01" and "����TS00" and "����TS01" */
+	s8 magic[8];		/* "六丁TC00" and "六丁TC01" and "六丁TS00" and "六丁TS01" */
 	u32 width;
 	u32 height;
 	u32 data_length;
 } rct_header_t;
 
-typedef struct {		/* ������0x300�ֽ��ǵ�ɫ�� */			
-	s8 magic[8];		/* "����8_00" */
+typedef struct {		/* 接下来0x300字节是调色版 */			
+	s8 magic[8];		/* "六丁8_00" */
 	u32 width;
 	u32 height;
 	u32 data_length;
@@ -94,7 +94,7 @@ typedef struct {
 	u8 *data_buffer;	
 } mjo_header_t;
 
-typedef struct {		/* ������0x300�ֽ��ǵ�ɫ�� */			
+typedef struct {		/* 接下来0x300字节是调色版 */			
 	s8 magic[16];		/* "MajiroObjV1.000" */
 	u32 unknown0;
 	u32 unknown1;
@@ -115,80 +115,80 @@ struct game_config {
 	const TCHAR *name;
 	const char *ts_key;
 } game_list[] = {
-	{	// ���ߥڥå� ���᥹�ˤʤä��勵����
+	{	// 催眠ペット ～メスになったワタシ～
 		_T("saimin"),
-		// "���ߥڥå�"
-		"�Ö��y�b�g"
+		// "催眠ペット"
+		"嵜柊儁僢僩"
 	},
-	{	// ���˥�ޥ��� ����������󥺤ϴ̼��ģ���
+	{	// 姉ニモマケズ ～お姉ちゃんズは刺激的！～
 		_T("anetai"),
-		"�o�j���}�P�Y"
+		"巓僯儌儅働僘"
 	},
-	{	// �����û������Ԫ��� ������ʤȤ������餪аħ���ޤ���
+	{	// 神出鬼没！異次元肉棒 ～こんなところからお邪魔します～
 		_T("Nikubo"),
-		"�������݂邭"
+		"偄偪偛傒傞偔"
 	},
-	{	// �դ�ꥳ��ץ�å���
+	{	// ふわりコンプレックス
 		_T("f_complex"),
 		"googlechrome"
 	},
-	{	// �l���Τ���˳����뤳�� ��Innocent Identity��
+	{	// 誰かのために出来ること ～Innocent Identity～
 		_T("I2"),
-		// ������¤�˼�鷺�ˤϤ����ʤ��ä���
-		"����Ȏ����v�킸�ɂ͂����Ȃ������B"
+		// そんな事を思わずにはいられなかった。
+		"偦傫側帠傪巚傢偢偵偼偄傜傟側偐偭偨丅"
 	},
-	{	// ����Щ`�����`��
+	{	// アンバークォーツ
 		_T("AmberQuartz"),
-		// Ϧ������ѧУ�����ϡ���������Ӥ���Ĥ�Ӱ��
-		"�[�Ă��B�w�Z�̉���B�����ɐL�т��̉e�B"
+		// 夕焼け。学校の屋上。そこに伸びる二つの影。
+		"梉從偗丅妛峑偺壆忋丅偦偙偵怢傃傞擇偮偺塭丅"
 	},
-	{	// �����o�l ���ץ�󥷥ѥ뤿�������ա�
+	{	// 暁の護衛 ～プリンシパルたちの休日～
 		_T("akatsuki_fd"),
-		// �⤦�㤬ᘤΤ褦����
-		"���������j�̂悤����"
+		// もう足が針のようだよ
+		"傕偆懌偑恓偺傛偆偩傛"
 	},
-	{	// �՝h�ץ쥤 �܇���Фǡ�������ʤ���
+	{	// 痴漢プレイ 電車の中で○○や××なこと
 		_T("cplay"),
-		// ���ˤϥ�����
-		"���l�̓`�J��"
+		// 恋人はチカン
+		"楒恖偼僠僇儞"
 	},
-	{	// �桫�ѥ顡������������Ժ�С�
+	{	// ゆ～パラ　～ただいま乳院中～
 		_T("you"),
-		// ���ޥ�Ժ�ˣţ�
-		"�K�}���a�@�j�d�x"
+		// ガマン病院ＫＥＹ
+		"僈儅儞昦堾俲俤倄"
 	},
-	{	// ���礳�äȣ��ե���ǥ�����
+	{	// ちょこっと！ファンディスク
 		_T("ochige"),
-		// �ߩ`��ߥ�ߥ�ߩ`��
-		"�~�[���~���~���~�[���c"
+		// ミーンミンミンミーン…
+		"儈乕儞儈儞儈儞儈乕儞乧"
 	},
-	{	// �ϤäԤ��ץ�󥻥� Another Fairytale
+	{	// はっぴぃプリンセス Another Fairytale
 		_T("hpaf"),
 		"042314925971"
 	},
-	{	// �����o�l
+	{	// 暁の護衛
 		_T("akatsuki"),
-		// ���̤���ʳ�٤룿
-		"���ʂ���H�ׂ�H"
+		// おぬぐり食べる？
+		"偍偸偖傝怘傋傞丠"
 	},
-	{	// �����g�� ���u��ޤߤ�ν~픡�
+	{	// 催淫術師 ～恥辱まみれの絶頂～
 		_T("jutu"),
-		// ���Ϥ��ϥХ�󥿥���
-		"���͂��̓o�����^�C��"
+		// うはうはバレンタイン
+		"偆偼偆偼僶儗儞僞僀儞"
 	},
-	{	// �����å����� ���ܥ����ʥĤ��뤦���ȡ�
+	{	// すいっチ！！ ～ボクがナツに想うこと～
 		_T("swops"),
 		"WinCVS"
 	},
-	{	// �ʥ�����
+	{	// ナギサの
 		_T("nagisano"),
-		// �त�դ��򤫤äơ���Ϣ��һ�Ĥ��ܤ���
-		"����Ɍ������āA����������ڂ��B"
+		// 青い空に向かって、溜息を一つこぼす。
+		"惵偄嬻偵岦偐偭偰丄棴懅傪堦偮偙傏偡丅"
 	},
-	{	// �g�����äΤ����ꡫ����
+	{	// 蝕獣～妹のおしり～美羽編
 		_T("SYOKUJYU"),
-		// ���ꥸ�������ʥץ饳�å�
-		"�X���W���������_�i�v���R�b�e"
+		// スリジャヤワルダナプラコッテ
+		"僗儕僕儍儎儚儖僟僫僾儔僐僢僥"
 	},
 	{
 		NULL, NULL
@@ -1258,4 +1258,5 @@ int CALLBACK Majiro_Script_Engine_register_cui(struct cui_register_callback *cal
 		init_hash2((BYTE *)ts_key, strlen(ts_key));
 
 	return 0;
+}
 }

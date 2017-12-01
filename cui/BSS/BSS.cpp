@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information BSS_cui_information = {
 	_T("BISHOP"),			/* copyright */
 	_T(""),					/* system */
 	_T(".bsa"),				/* package */
 	_T("0.5.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-7-18 23:45"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[8];		/* "BSArc" */
@@ -39,8 +39,8 @@ typedef struct {
 typedef struct {
 	s8 magic[16];			// [0x00]"BSS-Graphics"
 	u8 unknown;				// [0x10]0
-	u8 number;				// [0x11]Í¼Æ¬¸öÊı(1)
-	u32 uncomprlen;			// [0x12]½âÑ¹ËõÊı¾İ³¤¶È
+	u8 number;				// [0x11]å›¾ç‰‡ä¸ªæ•°(1)
+	u32 uncomprlen;			// [0x12]è§£å‹ç¼©æ•°æ®é•¿åº¦
 	u16 width;				// [0x16]
 	u16 height;				// [0x16]
 	u16 unknown0;			// [0x1a]no use
@@ -56,8 +56,8 @@ typedef struct {
 	u16 unknown8;			// [0x2e]no use	
 	u8 color_type;			// [0x30]0: 32 bits; 1: 24 bits+mask; 2: 8 bits
 	u8 mode;				// [0x31]0 or 1
-	u32 compr_data_offset;	// [0x32]Ñ¹ËõÊı¾İµÄÆğÊ¼Î»ÖÃ£¨µÚÒ»¸ö4×Ö½ÚÊÇ±¾¶ÎµÄÑ¹Ëõ³¤¶È£©
-	u32 compr_data_length;	// [0x36]mode==0: Êµ¼ÊÊı¾İ³¤¶È£¨Ã»ÓĞ³¤¶È×Ö¶Î£¬Ò²Ã»ÓĞÑ¹Ëõ£©; mode==1: Ñ¹ËõÊı¾İµÄ³¤¶È£¨²»°üº¬¸÷¶ÎµÄÑ¹Ëõ³¤¶È×Ö¶Î£©
+	u32 compr_data_offset;	// [0x32]å‹ç¼©æ•°æ®çš„èµ·å§‹ä½ç½®ï¼ˆç¬¬ä¸€ä¸ª4å­—èŠ‚æ˜¯æœ¬æ®µçš„å‹ç¼©é•¿åº¦ï¼‰
+	u32 compr_data_length;	// [0x36]mode==0: å®é™…æ•°æ®é•¿åº¦ï¼ˆæ²¡æœ‰é•¿åº¦å­—æ®µï¼Œä¹Ÿæ²¡æœ‰å‹ç¼©ï¼‰; mode==1: å‹ç¼©æ•°æ®çš„é•¿åº¦ï¼ˆä¸åŒ…å«å„æ®µçš„å‹ç¼©é•¿åº¦å­—æ®µï¼‰
 	u32 palette_offset;		// [0x3a]
 	u8 reserved[2];
 } bsg_header_t;
@@ -65,8 +65,8 @@ typedef struct {
 typedef struct {
 	s8 magic[16];			// [0x00]"BSS-Composition"
 	u8 unknown;				// [0x10]
-	u8 number;				// [0x11]Í¼Æ¬¸öÊı
-	u32 uncomprlen;			// [0x12]½âÑ¹ËõÊı¾İ³¤¶È
+	u8 number;				// [0x11]å›¾ç‰‡ä¸ªæ•°
+	u32 uncomprlen;			// [0x12]è§£å‹ç¼©æ•°æ®é•¿åº¦
 	u16 width;				// [0x16]
 	u16 height;				// [0x16]
 	u16 unknown0;			// [0x1a]no use
@@ -94,14 +94,14 @@ static void bsg_uncompress(BYTE *uncompr, BYTE *compr, DWORD comprlen, int step)
 		int copy_bytes, i;
 
 		flag = compr[curbyte++];
-		if ((char)flag >= 0) {	/* ¿½±´·ÇÖØ¸´µÄÊı¾İ */
+		if ((char)flag >= 0) {	/* æ‹·è´éé‡å¤çš„æ•°æ® */
 			copy_bytes = flag + 1;
 			for (i = 0; i < copy_bytes; i++) {
 				*uncompr = compr[curbyte++];
 				uncompr += step;
 			}
 		} else {
-			if (257 - flag > 0) {	/* ¿½±´ÖØ¸´µÄÊı¾İ */
+			if (257 - flag > 0) {	/* æ‹·è´é‡å¤çš„æ•°æ® */
 				copy_bytes = 257 - flag;
 				for (i = 0; i < copy_bytes; i++) {
 					*uncompr = compr[curbyte];
@@ -115,7 +115,7 @@ static void bsg_uncompress(BYTE *uncompr, BYTE *compr, DWORD comprlen, int step)
 
 /********************* bsa *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int BSS_bsa_match(struct package *pkg)
 {
 	s8 magic[8];
@@ -147,7 +147,7 @@ static int BSS_bsa_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int BSS_bsa_extract_directory(struct package *pkg,
 									 struct package_directory *pkg_dir)
 {
@@ -177,30 +177,30 @@ static int BSS_bsa_extract_directory(struct package *pkg,
 	pkg_dir->directory = index_buffer;
 	pkg_dir->directory_length = index_buffer_length;
 	pkg_dir->index_entry_length = sizeof(bsa_entry_t);
-	pkg_dir->flags = PKG_DIR_FLAG_SKIP0;	// Õë¶Ôver2ÖĞ³öÏÖµÄÎŞĞ§ÎÄ¼ş
+	pkg_dir->flags = PKG_DIR_FLAG_SKIP0;	// é’ˆå¯¹ver2ä¸­å‡ºç°çš„æ— æ•ˆæ–‡ä»¶
 
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int BSS_bsa_parse_resource_info(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
 	bsa_entry_t *bsa_entry;
 
 	bsa_entry = (bsa_entry_t *)pkg_res->actual_index_entry;
-	if (bsa_entry->name[0] == '>')	// ±íÊ¾ÎŞĞ§µÄÎÄ¼ş
+	if (bsa_entry->name[0] == '>')	// è¡¨ç¤ºæ— æ•ˆçš„æ–‡ä»¶
 		bsa_entry->name[0] = '-';
 	strncpy(pkg_res->name, bsa_entry->name, sizeof(bsa_entry->name));
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = bsa_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = bsa_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int BSS_bsa_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -239,7 +239,7 @@ static int BSS_bsa_extract_resource(struct package *pkg,
 					bsg_uncompress(uncompr_data + p, compr_data + 4, *(u32 *)compr_data, 4);
 					compr_data += 4 + *(u32 *)compr_data;
 				}
-				/* ÓÎÏ·ÖĞ¸ù¾İuncomprlen³¤¶È½«alpha¶¼ÉèÎª0xff */
+				/* æ¸¸æˆä¸­æ ¹æ®uncomprlené•¿åº¦å°†alphaéƒ½è®¾ä¸º0xff */
 				for (p = 0; p < bsg_header->uncomprlen; p += 4) {
 					uncompr_data[3] = 0xff;
 					uncompr_data += 4;
@@ -272,7 +272,7 @@ static int BSS_bsa_extract_resource(struct package *pkg,
 			palette = NULL;
 			palette_size = 0;
 		} else if (bsg_header->color_type == 1) {
-			bpp = 32;	/* 24 Bits + ²»Í¸Ãûalpha */
+			bpp = 32;	/* 24 Bits + ä¸é€åalpha */
 			palette = NULL;
 			palette_size = 0;
 		} else if (bsg_header->color_type == 2) {
@@ -307,7 +307,7 @@ static int BSS_bsa_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int BSS_bsa_save_resource(struct resource *res, 
 								 struct package_resource *pkg_res)
 {
@@ -331,7 +331,7 @@ static int BSS_bsa_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void BSS_bsa_release_resource(struct package *pkg, 
 									 struct package_resource *pkg_res)
 {
@@ -343,7 +343,7 @@ static void BSS_bsa_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void BSS_bsa_release(struct package *pkg, 
 							struct package_directory *pkg_dir)
 {
@@ -355,7 +355,7 @@ static void BSS_bsa_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation BSS_bsa_operation = {
 	BSS_bsa_match,					/* match */
 	BSS_bsa_extract_directory,		/* extract_directory */
@@ -368,7 +368,7 @@ static cui_ext_operation BSS_bsa_operation = {
 
 /********************* bsc *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int BSS_bsc_match(struct package *pkg)
 {
 	s8 magic[16];
@@ -389,7 +389,7 @@ static int BSS_bsc_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int BSS_bsc_extract_directory(struct package *pkg,
 									 struct package_directory *pkg_dir)
 {
@@ -429,7 +429,7 @@ static int BSS_bsc_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int BSS_bsc_parse_resource_info(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -437,15 +437,15 @@ static int BSS_bsc_parse_resource_info(struct package *pkg,
 
 	bsc_entry = (bsc_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, bsc_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = bsc_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = bsc_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int BSS_bsc_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -495,7 +495,7 @@ static int BSS_bsc_extract_resource(struct package *pkg,
 					bsg_uncompress(uncompr_data + p, compr_data + 4, *(u32 *)compr_data, 4);
 					compr_data += 4 + *(u32 *)compr_data;
 				}
-				/* ÓÎÏ·ÖĞ¸ù¾İuncomprlen³¤¶È½«alpha¶¼ÉèÎª0xff */
+				/* æ¸¸æˆä¸­æ ¹æ®uncomprlené•¿åº¦å°†alphaéƒ½è®¾ä¸º0xff */
 				for (p = 0; p < bsg_header->uncomprlen; p += 4) {
 					uncompr_data[3] = 0xff;
 					uncompr_data += 4;
@@ -528,7 +528,7 @@ static int BSS_bsc_extract_resource(struct package *pkg,
 			palette = NULL;
 			palette_size = 0;
 		} else if (bsg_header->color_type == 1) {
-			bpp = 32;	/* 24 Bits + ²»Í¸Ãûalpha */
+			bpp = 32;	/* 24 Bits + ä¸é€åalpha */
 			palette = NULL;
 			palette_size = 0;
 		} else if (bsg_header->color_type == 2) {
@@ -573,7 +573,7 @@ static void BSS_bsc_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation BSS_bsc_operation = {
 	BSS_bsc_match,					/* match */
 	BSS_bsc_extract_directory,		/* extract_directory */
@@ -584,10 +584,10 @@ static cui_ext_operation BSS_bsc_operation = {
 	BSS_bsa_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK BSS_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".bsa"), NULL, 
 		NULL, &BSS_bsa_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -597,4 +597,5 @@ int CALLBACK BSS_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

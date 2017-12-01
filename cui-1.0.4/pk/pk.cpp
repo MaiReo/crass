@@ -16,7 +16,7 @@ struct acui_information pk_cui_information = {
 	NULL,					/* system */
 	_T(".pk"),				/* package */
 	_T("0.0.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-2-11 22:20"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -24,15 +24,15 @@ struct acui_information pk_cui_information = {
 
 
 static const TCHAR *simplified_chinese_strings[] = {
-	_T("%s¿ÉÄÜÊÇÒ»¸özipÎÄ¼ş£¬ÄãÖ»Òª°ÑÀ©Õ¹Ãû¸Ä³É.zip¾ÍÄÜÓÃwinrar»òwinzipÌáÈ¡ÁË¡£\n")
+	_T("%så¯èƒ½æ˜¯ä¸€ä¸ªzipæ–‡ä»¶ï¼Œä½ åªè¦æŠŠæ‰©å±•åæ”¹æˆ.zipå°±èƒ½ç”¨winraræˆ–winzipæå–äº†ã€‚\n")
 };
 
 static const TCHAR *traditional_chinese_strings[] = {
-	_T("%s¿ÉÄÜÊÇÒ»‚€zipÎÄ¼ş£¬ÄãÖ»Òª°Ñ”UÕ¹Ãû¸Ä³É.zip¾ÍÄÜÓÃwinrar»òwinzipÌáÈ¡ÁË¡£\n")
+	_T("%så¯èƒ½æ˜¯ä¸€å€‹zipæ–‡ä»¶ï¼Œä½ åªè¦æŠŠæ“´å±•åæ”¹æˆ.zipå°±èƒ½ç”¨winraræˆ–winzipæå–äº†ã€‚\n")
 };
 
 static const TCHAR *japanese_strings[] = {
-	_T("%s¤Ï…g¤Ê¤ëÒ»‚€¤Îzip¥Õ¥¡¥¤¥ë¤«¤â¤·¤ì¤Ê¤¤¡¢’ˆˆ×Ó¤ò.zip¤Ë‰ä¸ü¤µ¤¨¤¹¤ì¤Ğwinrar¤Ş¤¿¤Ïwinzip¤Ç³é³ö¤¹¤ëÊÂ¤¬¤Ç¤­¤ë¤Ç¤·¤ç¤¦¡£\n")
+	_T("%sã¯å˜ãªã‚‹ä¸€å€‹ã®zipãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‚ã—ã‚Œãªã„ã€æ‹¡å¼µå­ã‚’.zipã«å¤‰æ›´ã•ãˆã™ã‚Œã°winrarã¾ãŸã¯winzipã§æŠ½å‡ºã™ã‚‹äº‹ãŒã§ãã‚‹ã§ã—ã‚‡ã†ã€‚\n")
 };
 
 static const TCHAR *default_strings[] = {
@@ -130,4 +130,5 @@ int CALLBACK pk_register_cui(struct cui_register_callback *callback)
 	pk_locale_id = locale_app_register(pk_locale_configurations, 3);
 
 	return 0;
+}
 }

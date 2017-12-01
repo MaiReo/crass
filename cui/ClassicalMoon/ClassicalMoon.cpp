@@ -12,11 +12,11 @@
 #include <bzlib.h>
 
 struct acui_information ClassicalMoon_cui_information = {
-	_T("¾øÇéµçÄÔÓÎÏ·´´×÷Èº"),	/* copyright */
-	_T("¡¶¹ÅÔÂ¡·ÒýÇæ"),			/* system */
+	_T("ç»æƒ…ç”µè„‘æ¸¸æˆåˆ›ä½œç¾¤"),	/* copyright */
+	_T("ã€Šå¤æœˆã€‹å¼•æ“Ž"),			/* system */
 	_T(".HAC *.HacPack"),		/* package */
 	_T("1.0.0"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2007-10-22 18:07"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -128,7 +128,7 @@ static int ClassicalMoon_HAC_extract_directory(struct package *pkg,
 	}
 	free(root_dir_name);
 	
-	if (pkg->pio->read(pkg, &dirs, 4))	/* µ±Ç°Ä¿Â¼ÏÂ×ÓÄ¿Â¼µÄ¸öÊý */
+	if (pkg->pio->read(pkg, &dirs, 4))	/* å½“å‰ç›®å½•ä¸‹å­ç›®å½•çš„ä¸ªæ•° */
 		return -CUI_EREAD;
 	
 	if (pkg->pio->read(pkg, &index_entries, 4))
@@ -190,9 +190,9 @@ static int ClassicalMoon_HAC_parse_resource_info(struct package *pkg,
 
 	my_HAC_entry = (my_HAC_entry_t *)pkg_res->actual_index_entry;
 	wcscpy((WCHAR *)pkg_res->name, my_HAC_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_HAC_entry->comprlen;
-	pkg_res->actual_data_length = my_HAC_entry->uncomprlen;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = my_HAC_entry->uncomprlen;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_HAC_entry->offset;
 	pkg_res->flags = PKG_RES_FLAG_UNICODE;
 
@@ -288,4 +288,5 @@ int CALLBACK ClassicalMoon_register_cui(struct cui_register_callback *callback)
 			return -1;
 	
 	return 0;
+}
 }

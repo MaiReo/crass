@@ -81,7 +81,7 @@ UTILITY_API int bit_get_high(struct bits *bits, void *retval)
 
 #else
 
-/* °Ñ¾àÀë×î¸ßÎ»×î½üµÄµØ·½µÄÖµ·µ»Ø¸øretval */
+/* æŠŠè·ç¦»æœ€é«˜ä½æœ€è¿‘çš„åœ°æ–¹çš„å€¼è¿”å›ç»™retval */
 UTILITY_API int bit_get_high(struct bits *bits, void *retval)
 {
 	if (!bits->curbits) {
@@ -97,7 +97,7 @@ UTILITY_API int bit_get_high(struct bits *bits, void *retval)
 	return 0;
 }
 
-/* FIXME£ºÊµÏÖ´íÎó£¨Ó¦¸ÃÊÇ°Ñ¾àÀë×î¸ßÎ»×î½üµÄµØ·½µÄÖµÒÀ´Î·µ»Ø¸øretvalµÄ´Ó¸ßµ½µÍ×Ö½Ú£© */
+/* FIXMEï¼šå®ç°é”™è¯¯ï¼ˆåº”è¯¥æ˜¯æŠŠè·ç¦»æœ€é«˜ä½æœ€è¿‘çš„åœ°æ–¹çš„å€¼ä¾æ¬¡è¿”å›ç»™retvalçš„ä»é«˜åˆ°ä½å­—èŠ‚ï¼‰ */
 #if 1
 UTILITY_API int bits_get_high(struct bits *bits, unsigned int req_bits, unsigned int *retval)
 {
@@ -142,7 +142,7 @@ UTILITY_API int bits_get_high(struct bits *bits, unsigned int req_bits, unsigned
 
 #endif
 
-/* °ÑsetvalµÄ×îµÍÎ»ÉèÖÃµ½Àë×î¸ßÎ»×î½üµÄµØ·½¿ªÊ¼ */
+/* æŠŠsetvalçš„æœ€ä½ä½è®¾ç½®åˆ°ç¦»æœ€é«˜ä½æœ€è¿‘çš„åœ°æ–¹å¼€å§‹ */
 UTILITY_API int bit_put_high(struct bits *bits, unsigned char setval)
 {
 	bits->curbits++;
@@ -157,7 +157,7 @@ UTILITY_API int bit_put_high(struct bits *bits, unsigned char setval)
 	return 0;
 }
 
-/* °´ÕÕ´Ó¸ß×Ö½Úµ½µÍ×Ö½ÚµÄË³Ğò°ÑsetvalÖĞµÄÖµÉèÖÃµ½Àë×î¸ßÎ»×î½üµÄµØ·½¿ªÊ¼ */
+/* æŒ‰ç…§ä»é«˜å­—èŠ‚åˆ°ä½å­—èŠ‚çš„é¡ºåºæŠŠsetvalä¸­çš„å€¼è®¾ç½®åˆ°ç¦»æœ€é«˜ä½æœ€è¿‘çš„åœ°æ–¹å¼€å§‹ */
 UTILITY_API int bits_put_high(struct bits *bits, unsigned int req_bits, void *setval)
 {
 	unsigned int this_bits;
@@ -213,3 +213,4 @@ int bit_get_low(struct bits *bits, void *retval)
 	return 0;
 }
 #endif
+f

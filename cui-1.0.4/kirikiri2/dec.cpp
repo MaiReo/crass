@@ -31,7 +31,7 @@ static void xp3filter_decode_xor_ror(BYTE *buf, DWORD len, DWORD offset, DWORD h
 }
 
 // nxorn
-// XP3∞µ∫≈ªØ•◊•È•∞•§•ÛC by PORING SOFT @ http://www.poringsoft.net/
+// XP3ÊöóÂè∑Âåñ„Éó„É©„Ç∞„Ç§„É≥C by PORING SOFT @ http://www.poringsoft.net/
 static void xp3filter_decode_not_xor_not(BYTE *buf, DWORD len, DWORD offset, DWORD hash)
 {
 	BYTE xor = (BYTE)hash;
@@ -41,7 +41,7 @@ static void xp3filter_decode_not_xor_not(BYTE *buf, DWORD len, DWORD offset, DWO
 }
 
 // ixorn
-// XP3∞µ∫≈ªØ•◊•È•∞•§•ÛB by PORING SOFT @ http://www.poringsoft.net/
+// XP3ÊöóÂè∑Âåñ„Éó„É©„Ç∞„Ç§„É≥B by PORING SOFT @ http://www.poringsoft.net/
 static void xp3filter_decode_inc_xor_not(BYTE *buf, DWORD len, DWORD offset, DWORD hash)
 {
 	BYTE xor = (BYTE)hash;
@@ -60,7 +60,7 @@ static void xp3filter_decode_xor_inc(BYTE *buf, DWORD len, DWORD offset, DWORD h
 }
 
 // sftrx
-// XP3∞µ∫≈ªØ•◊•È•∞•§•ÛA by PORING SOFT @ http://www.poringsoft.net/
+// XP3ÊöóÂè∑Âåñ„Éó„É©„Ç∞„Ç§„É≥A by PORING SOFT @ http://www.poringsoft.net/
 static void xp3filter_decode_shiftr_xor(BYTE *buf, DWORD len, DWORD offset, DWORD hash)
 {
 	for (DWORD i = offset; i < offset + len; i++)
@@ -105,17 +105,17 @@ static void xp3filter_decode_segment_decoder(BYTE *buf, DWORD len, DWORD offset,
 	}
 }
 
-// £Ã£Æ£œ£Æ£÷£Æ£≈°´∏Ê∞◊°´
-//  µº …œ’‚∏ˆ”Œœ∑∏˘æ›ƒ⁄≤øµƒlist.bin÷–º«¬ºµƒ–≈œ¢£¨”Î
-// –Ë“™Ω‚√‹µƒ◊ ‘¥◊ˆ±»Ωœ£¨»Áπ˚∑˚∫œ£¨‘Ú π”√“ª∏ˆÃÿ∂®
-// ∑ß÷µ£®÷ªΩ‚√‹–°”⁄∑ß÷µ≥§∂»µƒ ˝æ›£©∂‘◊ ‘¥Ω¯––Ω‚√‹°£
-// ’‚¿Ô”√¡À“ª∏ˆÕ∂ª˙µƒ∞Ï∑®£∫¿˚”√crc±©¡¶≤¬≤‚’‚∏ˆ∑ß÷µ£¨
-// ≤ªπ˝±ÿ–Îº∆À„»´≤ø ˝æ›µƒcrc≤≈ƒ‹Ω¯––≤¬≤‚£¨À˘“‘±ÿ–Î¥˝
-// offset + len == total_length ±≤≈ƒ‹ø™ ºΩ¯––°£
+// Ôº¨ÔºéÔºØÔºéÔº∂ÔºéÔº•ÔΩûÂëäÁôΩÔΩû
+// ÂÆûÈôÖ‰∏äËøô‰∏™Ê∏∏ÊàèÊ†πÊçÆÂÜÖÈÉ®ÁöÑlist.bin‰∏≠ËÆ∞ÂΩïÁöÑ‰ø°ÊÅØÔºå‰∏é
+// ÈúÄË¶ÅËß£ÂØÜÁöÑËµÑÊ∫êÂÅöÊØîËæÉÔºåÂ¶ÇÊûúÁ¨¶ÂêàÔºåÂàô‰ΩøÁî®‰∏Ä‰∏™ÁâπÂÆö
+// ÈòÄÂÄºÔºàÂè™Ëß£ÂØÜÂ∞è‰∫éÈòÄÂÄºÈïøÂ∫¶ÁöÑÊï∞ÊçÆÔºâÂØπËµÑÊ∫êËøõË°åËß£ÂØÜ„ÄÇ
+// ËøôÈáåÁî®‰∫Ü‰∏Ä‰∏™ÊäïÊú∫ÁöÑÂäûÊ≥ïÔºöÂà©Áî®crcÊö¥ÂäõÁåúÊµãËøô‰∏™ÈòÄÂÄºÔºå
+// ‰∏çËøáÂøÖÈ°ªËÆ°ÁÆóÂÖ®ÈÉ®Êï∞ÊçÆÁöÑcrcÊâçËÉΩËøõË°åÁåúÊµãÔºåÊâÄ‰ª•ÂøÖÈ°ªÂæÖ
+// offset + len == total_lengthÊó∂ÊâçËÉΩÂºÄÂßãËøõË°å„ÄÇ
 static void xp3filter_decode_love(WCHAR *name, BYTE *buf, DWORD len, 
 								  DWORD offset, DWORD total_length, DWORD hash)
 {
-	// Ωˆ‘⁄◊Ó∫Û“ªøÈ¥¶¿Ì, “ÚŒ™crcµƒº∆À„‘⁄Ω‚√‹∫ÛΩ¯––(postæÕÕÌ¡À)
+	// ‰ªÖÂú®ÊúÄÂêé‰∏ÄÂùóÂ§ÑÁêÜ, Âõ†‰∏∫crcÁöÑËÆ°ÁÆóÂú®Ëß£ÂØÜÂêéËøõË°å(postÂ∞±Êôö‰∫Ü)
 	if (!len || (offset + len != total_length))
 		return;
 
@@ -141,7 +141,7 @@ static void xp3filter_decode_love(WCHAR *name, BYTE *buf, DWORD len,
 	}
 }
 
-// [Le.Chocolat] §—?§‘?§≥?§Û°´À´◊”§ŒƒÔ§œ§…§¶§≠§Â§¶§ª§§°´
+// [Le.Chocolat] „Å±?„Å¥?„Åì?„ÇìÔΩûÂèåÂ≠ê„ÅÆÂ®ò„ÅØ„Å©„ÅÜ„Åç„ÇÖ„ÅÜ„Åõ„ÅÑÔΩû
 static void xp3filter_decode_papicon(WCHAR *resource_path, BYTE *buf, DWORD len, DWORD offset, DWORD hash)
 {
 	if (!lstrcmp(resource_path, L"plugins/kwlib.dll") 
@@ -163,7 +163,7 @@ static void xp3filter_decode_papicon(WCHAR *resource_path, BYTE *buf, DWORD len,
 		buf[i] ^= i ^ key[i & 3];
 }
 
-// §»§≠§…§≠•—•Ø•√§¡§„§™£°: krlib.tpm @ 10003720
+// „Å®„Åç„Å©„Åç„Éë„ÇØ„ÉÉ„Å°„ÇÉ„ÅäÔºÅ: krlib.tpm @ 10003720
 static void xp3filter_post_decode_suffix_xor(WCHAR *resource_path,
 											 BYTE *data, DWORD data_length)
 {
@@ -953,4 +953,5 @@ void xp3filter_decode_dec(struct xp3filter *xp3filter)
 		else if (!strcmpi(dec_string, "sufxor"))
 			xp3filter_post_decode_suffix_xor(xp3filter->resource_name, xp3filter->buffer, xp3filter->total_length);
 	}
+}
 }

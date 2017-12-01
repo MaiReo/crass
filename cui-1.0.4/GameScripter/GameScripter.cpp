@@ -13,7 +13,7 @@ struct acui_information GameScripter_cui_information = {
 	_T(""),					/* system */
 	_T(".pak"),				/* package */
 	_T("1.0.2"),			/* revision */
-	_T("痴漢公賊"),			/* author */
+	_T("鐥存饥鍏硦"),			/* author */
 	_T("2009-2-25 19:21"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -22,7 +22,7 @@ struct acui_information GameScripter_cui_information = {
 #pragma pack (1)
 typedef struct {
 	s8 magic[6];		// "\x5PACK2"
-	u32 index_entries;	// 每项32字节
+	u32 index_entries;	// 姣忛」32瀛楄妭
 } pak_header_t;
 
 typedef struct {
@@ -40,12 +40,12 @@ typedef struct {
 
 typedef struct {
 	s8 magic[4];		// "char"
-	u32 offset;			// face图的offset
+	u32 offset;			// face鍥剧殑offset
 } chr_header_t;
 
-// 第一项前面有u32 index_entries;	// 表情个数
+// 绗竴椤瑰墠闈㈡湁u32 index_entries;	// 琛ㄦ儏涓暟
 typedef struct {	
-	u8 name_length;		// 包括NULL
+	u8 name_length;		// 鍖呮嫭NULL
 	s8 *name;
 	u32 length;
 	u16 top_x;		// 0
@@ -143,9 +143,9 @@ static int GameScripter_pak_parse_resource_info(struct package *pkg,
 
 	my_pak_entry = (my_pak_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_pak_entry->name);
-	pkg_res->name_length = -1;			/* -1表示名称以NULL结尾 */
+	pkg_res->name_length = -1;			/* -1琛ㄧず鍚嶇О浠ULL缁撳熬 */
 	pkg_res->raw_data_length = my_pak_entry->length;
-	pkg_res->actual_data_length = 0;	/* 数据都是明文 */
+	pkg_res->actual_data_length = 0;	/* 鏁版嵁閮芥槸鏄庢枃 */
 	pkg_res->offset = my_pak_entry->offset;
 
 	return 0;
@@ -358,9 +358,9 @@ static int GameScripter_chr_parse_resource_info(struct package *pkg,
 
 	my_chr_entry = (my_chr_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, my_chr_entry->name, 16);
-	pkg_res->name_length = -1;			/* -1表示名称以NULL结尾 */
+	pkg_res->name_length = -1;			/* -1琛ㄧず鍚嶇О浠ULL缁撳熬 */
 	pkg_res->raw_data_length = my_chr_entry->length;
-	pkg_res->actual_data_length = 0;	/* 数据都是明文 */
+	pkg_res->actual_data_length = 0;	/* 鏁版嵁閮芥槸鏄庢枃 */
 	pkg_res->offset = my_chr_entry->offset;
 
 	return 0;
@@ -464,4 +464,5 @@ int CALLBACK GameScripter_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

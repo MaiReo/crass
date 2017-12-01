@@ -11,10 +11,10 @@
 
 struct acui_information ComicPlayer2_cui_information = {
 	_T("Masaya Hikida"),			/* copyright */
-	_T("•≥•ﬂ•√•Ø•◊•Ï©`•‰©`£≤"),			/* system */
+	_T("„Ç≥„Éü„ÉÉ„ÇØ„Éó„É¨„Éº„É§„ÉºÔºí"),			/* system */
 	_T(".cpf"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("≥’ùhπ´Ÿ\"),			/* author */
+	_T("Áó¥Êº¢ÂÖ¨Ë≥ä"),			/* author */
 	_T("2009-2-20 23:31"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -206,4 +206,5 @@ int CALLBACK ComicPlayer2_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

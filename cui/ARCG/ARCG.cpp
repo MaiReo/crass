@@ -9,41 +9,41 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information ARCG_cui_information = {
 	NULL,						/* copyright */
 	NULL,						/* system */
 	_T(".arc .vpk .bmx .scb .wsm"),	/* package */
 	_T("0.9.6"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2009-7-20 16:02"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// "ARCG"
 	u32 version;		// 0x00010000
 	u32 index_offset;
 	u32 index_length;
-	u16 dir_entries;	// Ä¿Â¼Ïî¸öÊý(°üº¬¸ùÄ¿Â¼)
-	u32 file_entries;	// ÎÄ¼þÏî¸öÊý
+	u16 dir_entries;	// ç›®å½•é¡¹ä¸ªæ•°(åŒ…å«æ ¹ç›®å½•)
+	u32 file_entries;	// æ–‡ä»¶é¡¹ä¸ªæ•°
 	u8 resrved[10];		// 0
 } ARCG_header_t;
 
 #if 0
-typedef struct {		// ÓÃÓÚÃèÊöºÍ½¨Á¢Ò»¸ö2¼¶µÄÄ¿Â¼ºÍÎÄ¼þ½á¹¹µÄÍ¨ÓÃÊý¾Ý½á¹¹
-	u8 name_length;		// ±¾×Ö¶ÎºÍÃû×Ö³¤¶È(ÒÔNULL½áÎ²²¢°üº¬)µÄ×Ü³¤¶È
-	s8 *name;			// ÒÔNULL½áÎ²	
-	u32 offset;			// ¶ÔÓÚ¸ùÄ¿Â¼Ïî(ÇÒ°üº¬×ÓÄ¿Â¼Ïî),Ö¸ÏòµÚÒ»¸öÎÄ¼þÏîÖ®Ç°4¸ö×Ö½Ú
-						// (¸Ð¾õÓ¦¸ÃÊÇÖ¸Ïò×¼±¸½¨Á¢µ«Ã»½¨Á¢µÄ×îÐÂÒ»¸ö¿ÕÄ¿Â¼Ïî)
-						// ¶ÔÓÚ¸ùÄ¿Â¼Ïî(ÇÒ²»°üº¬×ÓÄ¿Â¼)»ò×ÓÄ¿Â¼Ïî,Ö¸ÏòµÚÒ»¸öÎÄ¼þÏî
-						// ¶ÔÓÚÎÄ¼þÏî£¬Ö¸ÏòÆäÊý¾Ý¿ªÊ¼µÄÎ»ÖÃ
-	u32 length;			// ¶ÔÓÚ¸ùÄ¿Â¼Ïî(ÇÒ°üº¬×ÓÄ¿Â¼Ïî),×ÜÎª0
-						// ¶ÔÓÚ¸ùÄ¿Â¼Ïî(ÇÒ²»°üº¬×ÓÄ¿Â¼)»ò×ÓÄ¿Â¼Ïî,±íÊ¾°üº¬µÄÎÄ¼þÊý
-						// ¶ÔÓÚÎÄ¼þÏî,±íÊ¾Êý¾Ý³¤¶È
+typedef struct {		// ç”¨äºŽæè¿°å’Œå»ºç«‹ä¸€ä¸ª2çº§çš„ç›®å½•å’Œæ–‡ä»¶ç»“æž„çš„é€šç”¨æ•°æ®ç»“æž„
+	u8 name_length;		// æœ¬å­—æ®µå’Œåå­—é•¿åº¦(ä»¥NULLç»“å°¾å¹¶åŒ…å«)çš„æ€»é•¿åº¦
+	s8 *name;			// ä»¥NULLç»“å°¾	
+	u32 offset;			// å¯¹äºŽæ ¹ç›®å½•é¡¹(ä¸”åŒ…å«å­ç›®å½•é¡¹),æŒ‡å‘ç¬¬ä¸€ä¸ªæ–‡ä»¶é¡¹ä¹‹å‰4ä¸ªå­—èŠ‚
+						// (æ„Ÿè§‰åº”è¯¥æ˜¯æŒ‡å‘å‡†å¤‡å»ºç«‹ä½†æ²¡å»ºç«‹çš„æœ€æ–°ä¸€ä¸ªç©ºç›®å½•é¡¹)
+						// å¯¹äºŽæ ¹ç›®å½•é¡¹(ä¸”ä¸åŒ…å«å­ç›®å½•)æˆ–å­ç›®å½•é¡¹,æŒ‡å‘ç¬¬ä¸€ä¸ªæ–‡ä»¶é¡¹
+						// å¯¹äºŽæ–‡ä»¶é¡¹ï¼ŒæŒ‡å‘å…¶æ•°æ®å¼€å§‹çš„ä½ç½®
+	u32 length;			// å¯¹äºŽæ ¹ç›®å½•é¡¹(ä¸”åŒ…å«å­ç›®å½•é¡¹),æ€»ä¸º0
+						// å¯¹äºŽæ ¹ç›®å½•é¡¹(ä¸”ä¸åŒ…å«å­ç›®å½•)æˆ–å­ç›®å½•é¡¹,è¡¨ç¤ºåŒ…å«çš„æ–‡ä»¶æ•°
+						// å¯¹äºŽæ–‡ä»¶é¡¹,è¡¨ç¤ºæ•°æ®é•¿åº¦
 } ARCG_entry_t;
 #endif
 
@@ -56,7 +56,7 @@ typedef struct {
 typedef struct {
 	s8 magic[4];			// "MBF0"
 	u32 index_entries;
-	u32 data_offset;		// µÚÒ»¸öÎÄ¼þÏîÊý¾ÝµÄÎ»ÖÃ
+	u32 data_offset;		// ç¬¬ä¸€ä¸ªæ–‡ä»¶é¡¹æ•°æ®çš„ä½ç½®
 	u32 flag;
 	u32 mbf_size;
 	u32 reserved[3];		// 0
@@ -72,21 +72,21 @@ typedef struct {
 	u8 resrved[40];		// 0
 } wsm_header_t;
 
-typedef struct {		// 0x1a8×Ö½Ú
-	u32 index_number;	// ´Ó1¿ªÊ¼¼ÆÊý
+typedef struct {		// 0x1a8å­—èŠ‚
+	u32 index_number;	// ä»Ž1å¼€å§‹è®¡æ•°
 	s8 name[64];
 	s8 description[128];
 	u32 unknown0;		// 1
 	u32 unknown1;		// 1
 	u32 unknown2;		// 0x63
-	u32 id;				// ´Ó0¿ªÊ¼¼ÆÊý
+	u32 id;				// ä»Ž0å¼€å§‹è®¡æ•°
 	u32 offset;
 	u32 length;
 	u32 unknown3;		// 3
 	u8 unknown[200];	// 0
 } wsm_name_entry_t;
 
-typedef struct {		// 0x24×Ö½Ú
+typedef struct {		// 0x24å­—èŠ‚
 	u32 offset;
 	u32 length;
 	u32 zero;
@@ -235,7 +235,7 @@ static int bc_uncompress(void *data, DWORD data_len, BYTE **ret_uncompr, DWORD *
 
 /********************* *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int ARCG_match(struct package *pkg)
 {
 	ARCG_header_t ARCG_header;
@@ -261,7 +261,7 @@ static int ARCG_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int ARCG_extract_directory(struct package *pkg,
 								  struct package_directory *pkg_dir)
 {
@@ -284,7 +284,7 @@ static int ARCG_extract_directory(struct package *pkg,
 		return -CUI_EMEM;
 	}
 
-	// ÒòÎªËùÓÐ·â°ü¶¼ÊÇÍ¬Ãû
+	// å› ä¸ºæ‰€æœ‰å°åŒ…éƒ½æ˜¯åŒå
 	char base_dir[MAX_PATH];
 	unicode2acp(base_dir, MAX_PATH, pkg->extension + 1, -1);
 	strcat(base_dir, "/");
@@ -326,7 +326,7 @@ static int ARCG_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int ARCG_parse_resource_info(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -336,7 +336,7 @@ static int ARCG_parse_resource_info(struct package *pkg,
 	ARCG_entry = (ARCG_entry_t *)pkg_res->actual_index_entry;
 	name_len = strlen(ARCG_entry->name);
 	strncpy(pkg_res->name, ARCG_entry->name, name_len);
-	// sight_select\P_É£Ô­Ð¢ŽÚ?
+	// sight_select\P_æ¡‘åŽŸå­åºƒ?
 	if (pkg_res->name[name_len - 1] == '?')
 		pkg_res->name[name_len - 1] = '_';
 	pkg_res->name_length = name_len;
@@ -347,7 +347,7 @@ static int ARCG_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int ARCG_extract_resource(struct package *pkg,
 								 struct package_resource *pkg_res)
 {
@@ -394,7 +394,7 @@ static int ARCG_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int ARCG_save_resource(struct resource *res, 
 							  struct package_resource *pkg_res)
 {
@@ -418,7 +418,7 @@ static int ARCG_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void ARCG_release_resource(struct package *pkg, 
 								  struct package_resource *pkg_res)
 {
@@ -432,7 +432,7 @@ static void ARCG_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void ARCG_release(struct package *pkg, 
 						 struct package_directory *pkg_dir)
 {
@@ -444,7 +444,7 @@ static void ARCG_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ARCG_operation = {
 	ARCG_match,					/* match */
 	ARCG_extract_directory,		/* extract_directory */
@@ -457,7 +457,7 @@ static cui_ext_operation ARCG_operation = {
 
 /********************* mbf *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int ARCG_mbf_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -478,7 +478,7 @@ static int ARCG_mbf_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int ARCG_mbf_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -498,7 +498,7 @@ static int ARCG_mbf_extract_directory(struct package *pkg,
 
 	BYTE *p = index;
 
-	// baseÏî,ÒâÒå²»Ã÷
+	// baseé¡¹,æ„ä¹‰ä¸æ˜Ž
 	if (mbf_header.flag & 1)
 		p += *p;
 
@@ -549,7 +549,7 @@ static int ARCG_mbf_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ARCG_mbf_operation = {
 	ARCG_mbf_match,				/* match */
 	ARCG_mbf_extract_directory,	/* extract_directory */
@@ -582,7 +582,7 @@ static int ARCG_wsm_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int ARCG_wsm_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -646,7 +646,7 @@ static cui_ext_operation ARCG_wsm_operation = {
 	ARCG_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK ARCG_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".arc"), NULL, 
@@ -674,4 +674,5 @@ int CALLBACK ARCG_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

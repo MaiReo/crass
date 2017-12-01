@@ -8,19 +8,19 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information WindomXP_cui_information = {
 	_T("Y.Kamada"),	/* copyright */
-	_T("Ultimate Knight ¥¦¥£¥ó¥À¥àXP"),	/* system */
+	_T("Ultimate Knight ã‚¦ã‚£ãƒ³ãƒ€ãƒ XP"),	/* system */
 	_T(".png .jpg .bmp .x .spt .dds"),				/* package */
 	_T("1.0.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-1-15 22:44"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];
@@ -28,7 +28,7 @@ typedef struct {
 } dat_header_t;
 #pragma pack ()
 
-/* .dat·â°üµÄË÷ÒýÏî½á¹¹ */
+/* .datå°åŒ…çš„ç´¢å¼•é¡¹ç»“æž„ */
 typedef struct {
 	s8 name[256];
 	u32 name_length;
@@ -44,7 +44,7 @@ static void xor_decode(BYTE *data, DWORD length)
 
 /********************* xor *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int WindomXP_png_match(struct package *pkg)
 {
 	u32 magic;
@@ -65,7 +65,7 @@ static int WindomXP_png_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int WindomXP_xor_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -89,7 +89,7 @@ static int WindomXP_xor_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int WindomXP_xor_save_resource(struct resource *res, 
 									  struct package_resource *pkg_res)
 {
@@ -113,7 +113,7 @@ static int WindomXP_xor_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void WindomXP_xor_release_resource(struct package *pkg, 
 										  struct package_resource *pkg_res)
 {
@@ -127,14 +127,14 @@ static void WindomXP_xor_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void WindomXP_xor_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation WindomXP_png_operation = {
 	WindomXP_png_match,				/* match */
 	NULL,							/* extract_directory */
@@ -147,7 +147,7 @@ static cui_ext_operation WindomXP_png_operation = {
 
 /********************* x *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int WindomXP_x_match(struct package *pkg)
 {
 	u32 magic;
@@ -168,7 +168,7 @@ static int WindomXP_x_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation WindomXP_x_operation = {
 	WindomXP_x_match,				/* match */
 	NULL,							/* extract_directory */
@@ -181,7 +181,7 @@ static cui_ext_operation WindomXP_x_operation = {
 
 /********************* jpg *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int WindomXP_jpg_match(struct package *pkg)
 {
 	u32 magic;
@@ -202,7 +202,7 @@ static int WindomXP_jpg_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation WindomXP_jpg_operation = {
 	WindomXP_jpg_match,				/* match */
 	NULL,							/* extract_directory */
@@ -215,7 +215,7 @@ static cui_ext_operation WindomXP_jpg_operation = {
 
 /********************* bmp *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int WindomXP_bmp_match(struct package *pkg)
 {
 	u16 magic;
@@ -236,7 +236,7 @@ static int WindomXP_bmp_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation WindomXP_bmp_operation = {
 	WindomXP_bmp_match,				/* match */
 	NULL,							/* extract_directory */
@@ -249,7 +249,7 @@ static cui_ext_operation WindomXP_bmp_operation = {
 
 /********************* spt *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int WindomXP_spt_match(struct package *pkg)
 {
 	u16 magic;
@@ -270,7 +270,7 @@ static int WindomXP_spt_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation WindomXP_spt_operation = {
 	WindomXP_spt_match,				/* match */
 	NULL,							/* extract_directory */
@@ -283,7 +283,7 @@ static cui_ext_operation WindomXP_spt_operation = {
 
 /********************* dds *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int WindomXP_dds_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -304,7 +304,7 @@ static int WindomXP_dds_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation WindomXP_dds_operation = {
 	WindomXP_dds_match,				/* match */
 	NULL,							/* extract_directory */
@@ -315,7 +315,7 @@ static cui_ext_operation WindomXP_dds_operation = {
 	WindomXP_xor_release			/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK WindomXP_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".png"), _T(".png"), 
@@ -343,4 +343,5 @@ int CALLBACK WindomXP_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

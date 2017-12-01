@@ -463,3 +463,4 @@ struct cxdec_callback mogla_cxdec_callback = {
 	{ 0x262, 0x70a },
 	xcode_building_stage1
 };
+;

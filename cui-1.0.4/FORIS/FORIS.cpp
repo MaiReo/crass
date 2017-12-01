@@ -10,19 +10,19 @@
 #include <zlib.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information FORIS_cui_information = {
 	_T("STACK"),			/* copyright */
 	_T(""),					/* system */
 	_T(".GPK .GPK.*"),				/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-7-21 10:16"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 sig0[12];
@@ -46,7 +46,7 @@ typedef struct {
 } GPK_pidx_t;
 #pragma pack ()
 
-/* .dat·â°üµÄË÷ÒýÏî½á¹¹ */
+/* .datå°åŒ…çš„ç´¢å¼•é¡¹ç»“æž„ */
 typedef struct {
 	s8 name[256];
 	u32 name_length;
@@ -70,7 +70,7 @@ static void GPK_decode(BYTE *buffer, DWORD buffer_len)
 
 /********************* GPK *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int FORIS_GPK_match(struct package *pkg)
 {
 	if (no_exe_parameter)
@@ -106,7 +106,7 @@ static int FORIS_GPK_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int FORIS_GPK_extract_directory(struct package *pkg,
 									   struct package_directory *pkg_dir)
 {
@@ -168,7 +168,7 @@ static int FORIS_GPK_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int FORIS_GPK_parse_resource_info(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -195,7 +195,7 @@ static int FORIS_GPK_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int FORIS_GPK_extract_resource(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -237,7 +237,7 @@ static int FORIS_GPK_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int FORIS_GPK_save_resource(struct resource *res, 
 									struct package_resource *pkg_res)
 {
@@ -261,7 +261,7 @@ static int FORIS_GPK_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void FORIS_GPK_release_resource(struct package *pkg, 
 										struct package_resource *pkg_res)
 {
@@ -275,7 +275,7 @@ static void FORIS_GPK_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void FORIS_GPK_release(struct package *pkg, 
 							   struct package_directory *pkg_dir)
 {
@@ -287,7 +287,7 @@ static void FORIS_GPK_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation FORIS_GPK_operation = {
 	FORIS_GPK_match,				/* match */
 	FORIS_GPK_extract_directory,	/* extract_directory */
@@ -298,7 +298,7 @@ static cui_ext_operation FORIS_GPK_operation = {
 	FORIS_GPK_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK FORIS_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".GPK"), NULL, 
@@ -344,4 +344,5 @@ int CALLBACK FORIS_register_cui(struct cui_register_callback *callback)
 	}
 
 	return 0;
+}
 }

@@ -15,7 +15,7 @@ struct acui_information gbyFlagGame_cui_information = {
 	_T("gbyFlagGame"),			/* system */
 	_T(".FA2 .C24"),			/* package */
 	_T("0.7.0"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2009-1-29 12:26"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -31,7 +31,7 @@ typedef struct {
 
 typedef struct {
 	s8 name[15];
-	u8 flags;		// bit 1 - is_compressed, bit 0 - ºÃÏñ·ÇÑ¹ËõÊý¾Ý¾ÍÊÇ1£¿
+	u8 flags;		// bit 1 - is_compressed, bit 0 - å¥½åƒéžåŽ‹ç¼©æ•°æ®å°±æ˜¯1ï¼Ÿ
 	u32 time_stamp0;
 	u32 time_stamp1;
 	u32 uncomprlen;
@@ -357,9 +357,9 @@ static int gbyFlagGame_FA2_parse_resource_info(struct package *pkg,
 
 	FA2_entry = (FA2_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, FA2_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = FA2_entry->comprlen;
-	pkg_res->actual_data_length = FA2_entry->uncomprlen;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = FA2_entry->uncomprlen;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = FA2_entry->time_stamp0;
 
 	return 0;
@@ -601,7 +601,7 @@ static int gbyFlagGame_C24_parse_resource_info(struct package *pkg,
 
 	entry = (my_c24_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = entry->offset;
@@ -671,4 +671,5 @@ int CALLBACK gbyFlagGame_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

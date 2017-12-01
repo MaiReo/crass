@@ -14,7 +14,7 @@ struct acui_information origin_cui_information = {
 	NULL,					/* system */
 	_T(".DAT"),				/* package */
 	_T("1.0.0"),			/* revision */
-	_T("痴汉公贼"),			/* author */
+	_T("鐥存眽鍏醇"),			/* author */
 	_T("2007-10-22 18:07"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -125,9 +125,9 @@ static int origin_DAT_parse_resource_info(struct package *pkg,
 
 	my_DAT_entry = (my_DAT_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_DAT_entry->name);
-	pkg_res->name_length = -1;			/* -1表示名称以NULL结尾 */
+	pkg_res->name_length = -1;			/* -1琛ㄧず鍚嶇О浠ULL缁撳熬 */
 	pkg_res->raw_data_length = my_DAT_entry->length;
-	pkg_res->actual_data_length = 0;	/* 数据都是明文 */
+	pkg_res->actual_data_length = 0;	/* 鏁版嵁閮芥槸鏄庢枃 */
 	pkg_res->offset = my_DAT_entry->offset;
 
 	return 0;
@@ -238,4 +238,5 @@ int CALLBACK origin_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

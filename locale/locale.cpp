@@ -25,32 +25,32 @@ static const TCHAR *default_early_strings[] = {
 };
 
 static const TCHAR *simplified_chinese_early_strings[] = {
-	_T("ËÑË÷language×é¼þÊ±·¢Éú´íÎó\n"),
-	_T("%s: ÎÞÐ§µÄlocÂ·¾¶\n"),
-	_T("%s: ÎÞÐ§µÄlocÃû³Æ\n"),
-	_T("%s: ¼ÓÔØlocÊ±·¢Éú´íÎó\n"),
-	_T("%s: Ã»ÓÐÕÒµ½locÅäÖÃÐÅÏ¢\n"),
-	_T("¼ÓÔØ%d¸ölanguage×é¼þ ...\n\n\n"),
+	_T("æœç´¢languageç»„ä»¶æ—¶å‘ç”Ÿé”™è¯¯\n"),
+	_T("%s: æ— æ•ˆçš„locè·¯å¾„\n"),
+	_T("%s: æ— æ•ˆçš„locåç§°\n"),
+	_T("%s: åŠ è½½locæ—¶å‘ç”Ÿé”™è¯¯\n"),
+	_T("%s: æ²¡æœ‰æ‰¾åˆ°locé…ç½®ä¿¡æ¯\n"),
+	_T("åŠ è½½%dä¸ªlanguageç»„ä»¶ ...\n\n\n"),
 	NULL
 };
 
 static const TCHAR *traditional_chinese_early_strings[] = {
-	_T("ËÑË÷language½M¼þ•r°lÉúåeÕ`\n"),
-	_T("%s: ŸoÐ§µÄlocÂ·½\n"),
-	_T("%s: ŸoÐ§µÄlocÃû·Q\n"),
-	_T("%s: ¼ÓÝdloc•r°lÉúåeÕ`\n"),
-	_T("%s: ›]ÓÐÕÒµ½locÅäÖÃÐÅÏ¢\n"),
-	_T("¼ÓÝd%d‚€language½M¼þ ...\n\n\n"),
+	_T("æœç´¢languageçµ„ä»¶æ™‚ç™¼ç”ŸéŒ¯èª¤\n"),
+	_T("%s: ç„¡æ•ˆçš„locè·¯å¾‘\n"),
+	_T("%s: ç„¡æ•ˆçš„locåç¨±\n"),
+	_T("%s: åŠ è¼‰locæ™‚ç™¼ç”ŸéŒ¯èª¤\n"),
+	_T("%s: æ²’æœ‰æ‰¾åˆ°locé…ç½®ä¿¡æ¯\n"),
+	_T("åŠ è¼‰%då€‹languageçµ„ä»¶ ...\n\n\n"),
 	NULL
 };
 
 static const TCHAR *japanese_early_strings[] = {
-	_T("language¥Ñ©`¥Ä¤Î’ÈË÷•r¤Ë¥¨¥é©`¤¬°kÉú¤·¤Þ¤¹\n"),
-	_T("%s: Ÿo„¿¤Êloc¥Ñ¥¹\n"),
-	_T("%s: Ÿo„¿¤ÊlocÃû³Æ\n"),
-	_T("%s: loc¤ÎÕi¤ßÞz¤ß•r¤Ë¥¨¥é©`¤¬°kÉú¤·¤Þ¤¹\n"),
-	_T("%s: loc¤ÎÅäÖÃ¥á¥Ã¥»©`¥¸¤¬ÒŠ¤Ä¤«¤ê¤Þ¤»¤ó\n"),
-	_T("language¥Ñ©`¥Ä%d‚€¤òÕi¤ßÞz¤à ...\n\n\n"),
+	_T("languageãƒ‘ãƒ¼ãƒ„ã®æœç´¢æ™‚ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã™\n"),
+	_T("%s: ç„¡åŠ¹ãªlocãƒ‘ã‚¹\n"),
+	_T("%s: ç„¡åŠ¹ãªlocåç§°\n"),
+	_T("%s: locã®èª­ã¿è¾¼ã¿æ™‚ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã™\n"),
+	_T("%s: locã®é…ç½®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“\n"),
+	_T("languageãƒ‘ãƒ¼ãƒ„%då€‹ã‚’èª­ã¿è¾¼ã‚€ ...\n\n\n"),
 	NULL
 };
 
@@ -175,7 +175,7 @@ LOCALE_API int locale_init(void)
 
 	const TCHAR *last_msg = locale_current_configuration.string_table[locale_current_configuration.max_id-1];
 
-	/* ºöÂÔ×¢²áÊ§°ÜµÄloc */
+	/* å¿½ç•¥æ³¨å†Œå¤±è´¥çš„loc */
 	int ret = locale_module_register(loc_path);
 	if (ret >= 0) {
 		++count;
@@ -236,4 +236,5 @@ LOCALE_API int locale_app_register(struct locale_configuration *config, DWORD co
 		locale_app_configurations.push_back(*def_config);
 out:
 	return locale_app_configurations.size() - 1;
+}
 }

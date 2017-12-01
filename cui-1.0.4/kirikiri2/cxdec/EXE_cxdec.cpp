@@ -463,3 +463,4 @@ struct cxdec_callback EXE_cxdec_callback = {
 	{ 0x161, 0x5c9 },
 	xcode_building_stage1
 };
+;

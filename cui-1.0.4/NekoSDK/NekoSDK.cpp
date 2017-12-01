@@ -12,19 +12,19 @@
 
 using namespace std;
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information NekoSDK_cui_information = {
-	_T("¤Õ¤ï¤Õ¤ïÃ¨¤·¤Ã¤Ý"),	/* copyright */
+	_T("ãµã‚ãµã‚çŒ«ã—ã£ã½"),	/* copyright */
 	NULL,					/* system */
 	_T(".pak .dat"),		/* package */
 	_T("1.0.6"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-6-30 22:39"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[10];		/* "NEKOPACK4A" */
@@ -66,9 +66,9 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -89,7 +89,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 			if (curbyte > comprlen)
 				break;
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -111,7 +111,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 				data = win[(win_offset + i) & (win_size - 1)];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -123,7 +123,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* pak *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int NekoSDK_pak_match(struct package *pkg)
 {
 	s8 magic[10];
@@ -144,7 +144,7 @@ static int NekoSDK_pak_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int NekoSDK_pak_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -205,7 +205,7 @@ static int NekoSDK_pak_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int NekoSDK_pak_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -213,7 +213,7 @@ static int NekoSDK_pak_parse_resource_info(struct package *pkg,
 
 	my_pak_entry = (my_pak_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_pak_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_pak_entry->length;
 	pkg_res->actual_data_length = 0;
 	pkg_res->offset = my_pak_entry->offset;
@@ -221,7 +221,7 @@ static int NekoSDK_pak_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int NekoSDK_pak_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -238,8 +238,8 @@ static int NekoSDK_pak_extract_resource(struct package *pkg,
 		return -CUI_EREADVEC;
 	}
 
-	/* .alpÊÇ¶ÔÓ¦µÄÍ¬ÃûbmpÎÄ¼þµÄalphaÐÅÏ¢¡£
-	 * ÒòÎª´¦ÀíÉÏ²»Ì«·½±ã£¬ËùÒÔ¾Í²»ÌáÈ¡ÁË¡£
+	/* .alpæ˜¯å¯¹åº”çš„åŒåbmpæ–‡ä»¶çš„alphaä¿¡æ¯ã€‚
+	 * å› ä¸ºå¤„ç†ä¸Šä¸å¤ªæ–¹ä¾¿ï¼Œæ‰€ä»¥å°±ä¸æå–äº†ã€‚
 	 */
 	BYTE xor_magic;
 
@@ -274,7 +274,7 @@ static int NekoSDK_pak_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int NekoSDK_pak_save_resource(struct resource *res, 
 									 struct package_resource *pkg_res)
 {
@@ -298,7 +298,7 @@ static int NekoSDK_pak_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void NekoSDK_pak_release_resource(struct package *pkg, 
 										 struct package_resource *pkg_res)
 {
@@ -312,7 +312,7 @@ static void NekoSDK_pak_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void NekoSDK_pak_release(struct package *pkg, 
 								struct package_directory *pkg_dir)
 {
@@ -324,7 +324,7 @@ static void NekoSDK_pak_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation NekoSDK_pak_operation = {
 	NekoSDK_pak_match,					/* match */
 	NekoSDK_pak_extract_directory,		/* extract_directory */
@@ -337,7 +337,7 @@ static cui_ext_operation NekoSDK_pak_operation = {
 
 /********************* pak *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int NekoSDK_paks_match(struct package *pkg)
 {
 	s8 magic[10];
@@ -358,7 +358,7 @@ static int NekoSDK_paks_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int NekoSDK_paks_parse_resource_info(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -400,7 +400,7 @@ static int NekoSDK_paks_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int NekoSDK_paks_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -449,7 +449,7 @@ static int NekoSDK_paks_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int NekoSDK_paks_save_resource(struct resource *res, 
 									 struct package_resource *pkg_res)
 {
@@ -473,7 +473,7 @@ static int NekoSDK_paks_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void NekoSDK_paks_release_resource(struct package *pkg, 
 										 struct package_resource *pkg_res)
 {
@@ -487,14 +487,14 @@ static void NekoSDK_paks_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void NekoSDK_paks_release(struct package *pkg, 
 								 struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation NekoSDK_paks_operation = {
 	NekoSDK_paks_match,					/* match */
 	NULL,								/* extract_directory */
@@ -507,7 +507,7 @@ static cui_ext_operation NekoSDK_paks_operation = {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int NekoSDK_dat_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -516,7 +516,7 @@ static int NekoSDK_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int NekoSDK_dat_extract_directory(struct package *pkg,
 										 struct package_directory *pkg_dir)
 {
@@ -551,7 +551,7 @@ static int NekoSDK_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int NekoSDK_dat_parse_resource_info(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -559,7 +559,7 @@ static int NekoSDK_dat_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dat_entry->comprlen;
 	pkg_res->actual_data_length = dat_entry->uncomprlen;
 	pkg_res->offset = dat_entry->offset;
@@ -567,7 +567,7 @@ static int NekoSDK_dat_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int NekoSDK_dat_extract_resource(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -605,7 +605,7 @@ static int NekoSDK_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation NekoSDK_dat_operation = {
 	NekoSDK_dat_match,					/* match */
 	NekoSDK_dat_extract_directory,		/* extract_directory */
@@ -618,7 +618,7 @@ static cui_ext_operation NekoSDK_dat_operation = {
 
 /********************* old dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int NekoSDK_old_dat_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -650,7 +650,7 @@ static int NekoSDK_old_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int NekoSDK_old_dat_extract_directory(struct package *pkg,
 											 struct package_directory *pkg_dir)
 {
@@ -678,7 +678,7 @@ static int NekoSDK_old_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int NekoSDK_old_dat_parse_resource_info(struct package *pkg,
 											   struct package_resource *pkg_res)
 {
@@ -686,7 +686,7 @@ static int NekoSDK_old_dat_parse_resource_info(struct package *pkg,
 
 	old_dat_entry = (old_dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, old_dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = old_dat_entry->comprlen;
 	pkg_res->actual_data_length = old_dat_entry->uncomprlen;
 	pkg_res->offset = old_dat_entry->offset;
@@ -694,7 +694,7 @@ static int NekoSDK_old_dat_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation NekoSDK_old_dat_operation = {
 	NekoSDK_old_dat_match,				/* match */
 	NekoSDK_old_dat_extract_directory,	/* extract_directory */
@@ -706,10 +706,10 @@ static cui_ext_operation NekoSDK_old_dat_operation = {
 };
 
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK NekoSDK_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".pak"), NULL, 
 		NULL, &NekoSDK_pak_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -728,4 +728,5 @@ int CALLBACK NekoSDK_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

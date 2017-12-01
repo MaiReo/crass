@@ -8,19 +8,19 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information CLS_cui_information = {
 	_T("Kyoya Yuro"),		/* copyright */
-	_T("¥é¥à¥À"),			/* system */
+	_T("ãƒ©ãƒ ãƒ€"),			/* system */
 	_T(".dat .dmf .la"),	/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-11-2 22:08"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[16];	// "CLS_FILELINK"
@@ -31,7 +31,7 @@ typedef struct {
 	u32 reserved[8];
 } dat_header_t;
 
-/* .dat·â°üµÄË÷ÒýÏî½á¹¹ */
+/* .datå°åŒ…çš„ç´¢å¼•é¡¹ç»“æž„ */
 typedef struct {
 	s8 name[40];
 	u8 unknown0;
@@ -66,7 +66,7 @@ typedef struct {
 
 /********************* dat *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int CLS_dat_match(struct package *pkg)
 {
 	s8 magic[12];
@@ -87,7 +87,7 @@ static int CLS_dat_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int CLS_dat_extract_directory(struct package *pkg,
 									 struct package_directory *pkg_dir)
 {
@@ -115,7 +115,7 @@ static int CLS_dat_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int CLS_dat_parse_resource_info(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
@@ -123,15 +123,15 @@ static int CLS_dat_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = dat_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int CLS_dat_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -155,7 +155,7 @@ static int CLS_dat_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int CLS_dat_save_resource(struct resource *res, 
 								 struct package_resource *pkg_res)
 {
@@ -179,7 +179,7 @@ static int CLS_dat_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void CLS_dat_release_resource(struct package *pkg, 
 									 struct package_resource *pkg_res)
 {
@@ -193,7 +193,7 @@ static void CLS_dat_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void CLS_dat_release(struct package *pkg, 
 							struct package_directory *pkg_dir)
 {
@@ -205,7 +205,7 @@ static void CLS_dat_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation CLS_dat_operation = {
 	CLS_dat_match,					/* match */
 	CLS_dat_extract_directory,		/* extract_directory */
@@ -216,7 +216,7 @@ static cui_ext_operation CLS_dat_operation = {
 	CLS_dat_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK CLS_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".DAT"), NULL, 
@@ -224,4 +224,5 @@ int CALLBACK CLS_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

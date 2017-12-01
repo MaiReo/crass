@@ -9,25 +9,25 @@
 #include <stdio.h>
 #include <utility.h>
 
-// Q:\ƒ}ƒ}‚µ‚Ú‚è‚Q
+// Q:\å„…å„…åŸå‚å‚ä¿€
 
-/* µ÷ÊÔC4.exeµÄ·½·¨£º
- ´´½¨Ö¸ÏòC4.exeµÄ¿ì½İ·½Ê½£¬È»ºó±à¼­Æô¶¯ÃüÁî£¬½áÎ²¼ÓÉÏ" PL"¼´¿ÉÍÑÀëÆô¶¯³ÌĞòµ¥¶ÀÔËĞĞ¡£
+/* è°ƒè¯•C4.exeçš„æ–¹æ³•ï¼š
+ åˆ›å»ºæŒ‡å‘C4.exeçš„å¿«æ·æ–¹å¼ï¼Œç„¶åç¼–è¾‘å¯åŠ¨å‘½ä»¤ï¼Œç»“å°¾åŠ ä¸Š" PL"å³å¯è„±ç¦»å¯åŠ¨ç¨‹åºå•ç‹¬è¿è¡Œã€‚
  */
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information C4_cui_information = {
 	_T(""),		/* copyright */
 	_T("C4"),			/* system */
 	_T(".GD"),				/* package */
 	_T("0.5.0"),			/* revision */
-	_T("³Õºº¹«Ôô"),			/* author */
+	_T("ç—´æ±‰å…¬è´¼"),			/* author */
 	_T(""),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];		// "Mp17"
@@ -225,7 +225,7 @@ static int GD_p_uncompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD c
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int C4_save_resource(struct resource *res, 
 								struct package_resource *pkg_res)
 {
@@ -249,7 +249,7 @@ static int C4_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void C4_release_resource(struct package *pkg, 
 									struct package_resource *pkg_res)
 {
@@ -263,7 +263,7 @@ static void C4_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void C4_release(struct package *pkg, 
 						   struct package_directory *pkg_dir)
 {
@@ -273,7 +273,7 @@ static void C4_release(struct package *pkg,
 #if 0
 /********************* MPX *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int C4_MPX_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -297,7 +297,7 @@ static int C4_MPX_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int C4_MPX_extract_resource(struct package *pkg,
 								   struct package_resource *pkg_res)
 {
@@ -338,7 +338,7 @@ static int C4_MPX_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation C4_MPX_operation = {
 	C4_MPX_match,			/* match */
 	NULL,					/* extract_directory */
@@ -353,7 +353,7 @@ static cui_ext_operation C4_MPX_operation = {
 
 /********************* GD *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int C4_GD_match(struct package *pkg)
 {
 	s8 magic[3];
@@ -377,7 +377,7 @@ static int C4_GD_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int C4_GD_extract_resource(struct package *pkg,
 								  struct package_resource *pkg_res)
 {
@@ -468,7 +468,7 @@ static int C4_GD_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation C4_GD_operation = {
 	C4_GD_match,			/* match */
 	NULL,					/* extract_directory */
@@ -481,7 +481,7 @@ static cui_ext_operation C4_GD_operation = {
 
 /********************* VMD *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int C4_VMD_match(struct package *pkg)
 {
 	u32 vmd_size;
@@ -509,7 +509,7 @@ static int C4_VMD_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int C4_VMD_extract_resource(struct package *pkg,
 								   struct package_resource *pkg_res)
 {
@@ -536,7 +536,7 @@ static int C4_VMD_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation C4_VMD_operation = {
 	C4_VMD_match,			/* match */
 	NULL,					/* extract_directory */
@@ -562,4 +562,5 @@ int CALLBACK C4_register_cui(struct cui_register_callback *callback)
 //			return -1;
 
 	return 0;
+}
 }

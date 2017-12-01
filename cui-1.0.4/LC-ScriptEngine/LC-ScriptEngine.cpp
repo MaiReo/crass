@@ -15,7 +15,7 @@ struct acui_information LC_ScriptEngine_cui_information = {
 	_T("LC-ScriptEngine"),	/* system */
 	_T(".lst lcbody*"),		/* package */
 	_T("1.0.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-10-23 20:21"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -48,7 +48,7 @@ static const TCHAR *suffix[6] = {
 	_T(".OGG")
 };
 
-static u32 xor_magic;	// ¾É°æ±¾ÊÇ0x01010101£¬ĞÂ°æ±¾ÊÇ0x02020202
+static u32 xor_magic;	// æ—§ç‰ˆæœ¬æ˜¯0x01010101ï¼Œæ–°ç‰ˆæœ¬æ˜¯0x02020202
 
 /*********************  *********************/
 
@@ -119,9 +119,9 @@ static int LC_ScriptEngine_parse_resource_info(struct package *pkg,
 		lst_entry->type = -lst_entry->type;
 
 	strcpy(pkg_res->name, lst_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = lst_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = lst_entry->offset;
 
 	return 0;
@@ -145,8 +145,8 @@ static int LC_ScriptEngine_extract_resource(struct package *pkg,
 
 	lst_entry = (lst_entry_t *)pkg_res->actual_index_entry;
 	if (lst_entry->type == 1) {
-		/* ÎÄ±¾¶¨Î»ÊÇÔÚÇ°°ë²¿·ÖµÄÖ¸ÁîÇø£¬ÓÉ11 00 00 00 02 00 00 00 xx xx xx xx Ö¸Áî±êÊ¾£¬
-		 * xxÊÇÆ«ÒÆÖµ£¨´Ó0¿ªÊ¼£©
+		/* æ–‡æœ¬å®šä½æ˜¯åœ¨å‰åŠéƒ¨åˆ†çš„æŒ‡ä»¤åŒºï¼Œç”±11 00 00 00 02 00 00 00 xx xx xx xx æŒ‡ä»¤æ ‡ç¤ºï¼Œ
+		 * xxæ˜¯åç§»å€¼ï¼ˆä»0å¼€å§‹ï¼‰
 		 */
 		for (unsigned int i = 0; i < lst_entry->length; ++i)
 			((u8 *)pkg_res->raw_data)[i] ^= xor_magic + 1;
@@ -211,4 +211,5 @@ int CALLBACK LC_ScriptEngine_register_cui(struct cui_register_callback *callback
 				return -1;
 
 	return 0;
+}
 }

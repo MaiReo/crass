@@ -12,25 +12,25 @@
 #include <crass/locale.h>
 
 /*
-¸½¼Ó£¬ÕÒ4D434653£¬ÍùÏÂ¾Í¿´µ½ÁË
+é™„åŠ ï¼Œæ‰¾4D434653ï¼Œå¾€ä¸‹å°±çœ‹åˆ°äº†
  */
-//Q:\Program Files\ˆÃ•Œ€ê\ˆú–\‚Ì˜f¯`”j‰ó‚Æ—~–]‚ÌÕ“®`
-//Q:\Program Files\“FŒ€ê\­—’B‚Ì‚³‚¦‚¸‚è
-//Q:\Program Files\ˆÃ•Œ€ê\â–]­—|•œQ‚Ì«Ù‹³Žº|
+//Q:\Program Files\åŸ«å´Ÿå¯‘å¿œ\å ¹æœ¶åºæ¦æƒŽä¹£æ”‹å¤¡å²æ¢¸æœ·åºå¾´æ‘¦ä¹£
+//Q:\Program Files\æ·æ€“å¯‘å¿œ\å½®å½ˆæ‰•åºååŠå¢å‚
+//Q:\Program Files\åŸ«å´Ÿå¯‘å¿œ\æ„¨æœ·å½®å½ˆäº…æš…å»žåºæƒˆåµ¸å«µå¹’äº…
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information DAC_cui_information = {
-	_T("Exception(¥¨¥¯¥»¥×¥·¥ç¥ó)"),/* copyright */
-	_T("£Ä£Á£Ã"),					/* system */
+	_T("Exception(ã‚¨ã‚¯ã‚»ãƒ—ã‚·ãƒ§ãƒ³)"),/* copyright */
+	_T("ï¼¤ï¼¡ï¼£"),					/* system */
 	_T(".dpk"),						/* package */
 	_T("0.8.1"),					/* revision */
-	_T("³Õh¹«Ù\"),					/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),					/* author */
 	_T("2009-6-13 8:56"),			/* date */
 	NULL,							/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {		// 0x18 bytes
 	s8 magic[4];		// "DPK"
@@ -42,7 +42,7 @@ typedef struct {		// 0x18 bytes
 
 typedef struct {
 	s8 magic[4];		// "DGC"
-	u32 colors;			// ×î¸ß×Ö½ÚÊÇflags: bit0 - ?; bit1 - palette; bit2 - mask?; bit3-7 - ??
+	u32 colors;			// æœ€é«˜å­—èŠ‚æ˜¯flags: bit0 - ?; bit1 - palette; bit2 - mask?; bit3-7 - ??
 	u16 width;
 	u16 height;
 } DGC_header_t;
@@ -57,15 +57,15 @@ typedef struct {
 
 
 static const TCHAR *simplified_chinese_strings[] = {
-	_T("%s: Ã»ÓÐÖ¸¶¨ÌØÊâ²ÎÊýgame£¬Ê¹ÓÃÄ¬ÈÏ½âÃÜËã·¨£¬¾ßÌå²Î¼ûDAC.txt¡£\n"),
+	_T("%s: æ²¡æœ‰æŒ‡å®šç‰¹æ®Šå‚æ•°gameï¼Œä½¿ç”¨é»˜è®¤è§£å¯†ç®—æ³•ï¼Œå…·ä½“å‚è§DAC.txtã€‚\n"),
 };
 
 static const TCHAR *traditional_chinese_strings[] = {
-	_T("›]ÓÐÖ¸¶¨ÌØÊâ…¢”µgame£¬Ê¹ÓÃÄ¬ÕJ½âÃÜËã·¨£¬¾ßów…¢ÒŠDAC.txt¡£\n"),
+	_T("æ²’æœ‰æŒ‡å®šç‰¹æ®Šåƒæ•¸gameï¼Œä½¿ç”¨é»˜èªè§£å¯†ç®—æ³•ï¼Œå…·é«”åƒè¦‹DAC.txtã€‚\n"),
 };
 
 static const TCHAR *japanese_strings[] = {
-	_T("%s: ÌØÊâ¥Ñ¥é¥á©`¥¿©`game¤¬Ö¸¶¨¤µ¤ì¤Æ¤¤¤Þ¤»¤ó¤Î¤Ç¡¢¥Ç¥Õ¥©¥ë¥È½âÕiËã·¨¤òÐÐ¤¤¤Þ¤¹¡¢Ô”¤·¤¯¤ÏDAC.txt¤òÒŠ¤Æ¤¯¤À¤µ¤¤¡£\n"),
+	_T("%s: ç‰¹æ®Šãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼gameãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ã®ã§ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè§£èª­ç®—æ³•ã‚’è¡Œã„ã¾ã™ã€è©³ã—ãã¯DAC.txtã‚’è¦‹ã¦ãã ã•ã„ã€‚\n"),
 };
 
 static const TCHAR *default_strings[] = {
@@ -179,7 +179,7 @@ static struct game_config game_config[] = {
 
 /********************* dpk *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int DAC_dpk_match(struct package *pkg)
 {
 	DWORD cfg = -1;
@@ -216,7 +216,7 @@ static int DAC_dpk_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int DAC_dpk_extract_directory(struct package *pkg,
 									 struct package_directory *pkg_dir)
 {
@@ -283,16 +283,16 @@ static int DAC_dpk_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int DAC_dpk_parse_resource_info(struct package *pkg,
 									   struct package_resource *pkg_res)
 {
 	dpk_entry_t *dpk_entry = (dpk_entry_t *)pkg_res->actual_index_entry;
 
 	strcpy(pkg_res->name, dpk_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dpk_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = dpk_entry->offset;
 
 	return 0;
@@ -352,7 +352,7 @@ static void DGC_uncompress(BYTE &*uncompr, BYTE *compr, DWORD comprlen, BYTE *pa
 }
 #endif
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int DAC_dpk_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -455,7 +455,7 @@ static int DAC_dpk_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int DAC_dpk_save_resource(struct resource *res, 
 								 struct package_resource *pkg_res)
 {
@@ -474,7 +474,7 @@ static int DAC_dpk_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void DAC_dpk_release_resource(struct package *pkg, 
 									 struct package_resource *pkg_res)
 {
@@ -484,7 +484,7 @@ static void DAC_dpk_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void DAC_dpk_release(struct package *pkg, 
 							struct package_directory *pkg_dir)
 {
@@ -496,7 +496,7 @@ static void DAC_dpk_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation DAC_dpk_operation = {
 	DAC_dpk_match,				/* match */
 	DAC_dpk_extract_directory,	/* extract_directory */
@@ -507,7 +507,7 @@ static cui_ext_operation DAC_dpk_operation = {
 	DAC_dpk_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK DAC_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".dpk"), NULL, 
@@ -517,4 +517,5 @@ int CALLBACK DAC_register_cui(struct cui_register_callback *callback)
 	DAC_locale_id = locale_app_register(DAC_locale_configurations, 3);
 
 	return 0;
+}
 }

@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information Leaf_cui_information = {
 	_T("Leaf"),				/* copyright */
 	NULL,					/* system */
 	_T(".pak .ar1 .ar2 .LAC .wmv"),	/* package */
 	_T("0.5.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-6-27 13:05"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 head[4];		// "KCAP"	
@@ -60,8 +60,8 @@ typedef struct {
 
 typedef struct {
 	s8 fname[62];
-	s8 bCompress;		// 0 - ·ÇÑ¹Ëõ; ·Ç0 - Êµ¼Êpack_sizeÒª¼õÈ¥4×Ö½Ú
-	s8 unused_count;	// ¸ÃÖµ²»µÈÓÚ0µÄ×ÊÔ´½«²»±»°²×°ÔÚÓÎÏ·Ä¿Â¼ÖĞ
+	s8 bCompress;		// 0 - éå‹ç¼©; é0 - å®é™…pack_sizeè¦å‡å»4å­—èŠ‚
+	s8 unused_count;	// è¯¥å€¼ä¸ç­‰äº0çš„èµ„æºå°†ä¸è¢«å®‰è£…åœ¨æ¸¸æˆç›®å½•ä¸­
 	/* while (i < unused && byte_43A4EE + 1 != unused_map[i]))
           ++i;
 	 */
@@ -105,8 +105,8 @@ typedef struct {
 	u8 bpp;
 	u16 width;
 	u16 height;
-	u16 width0;		// ? ¿ÉÒÔÊÇ0
-	u16 height0;	// ? ¿ÉÒÔÊÇ0
+	u16 width0;		// ? å¯ä»¥æ˜¯0
+	u16 height0;	// ? å¯ä»¥æ˜¯0
 } ANIHEAD;
 
 typedef struct {
@@ -243,9 +243,9 @@ static void *my_malloc(DWORD len)
 static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -269,7 +269,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD
 
 			data = compr[curbyte++];
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -290,7 +290,7 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD
 
 				data = win[(win_offset + i) & (win_size - 1)];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -303,9 +303,9 @@ static DWORD lzss_uncompress(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD
 static DWORD lzss_uncompress3(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -329,7 +329,7 @@ static DWORD lzss_uncompress3(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWOR
 
 			data = compr[curbyte++];
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -350,7 +350,7 @@ static DWORD lzss_uncompress3(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWOR
 
 				data = win[(win_offset + i) & (win_size - 1)];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -363,9 +363,9 @@ static DWORD lzss_uncompress3(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWOR
 static void lzss_uncompress2(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -389,7 +389,7 @@ static void lzss_uncompress2(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD
 			uncompr[act_uncomprlen++] = data;
 			if (act_uncomprlen >= uncomprlen)
 				break;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -413,7 +413,7 @@ static void lzss_uncompress2(BYTE *uncompr, DWORD uncomprlen, BYTE *compr, DWORD
 				uncompr[act_uncomprlen++] = data;
 				if (act_uncomprlen >= uncomprlen)
 					return;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -461,7 +461,7 @@ printf("%s...\n", BJR_name);
 
 /********************* pak *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_pak_match(struct package *pkg)
 {
 	s8 head[4];
@@ -482,7 +482,7 @@ static int Leaf_pak_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Leaf_pak_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -532,7 +532,7 @@ static int Leaf_pak_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Leaf_pak_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -552,7 +552,7 @@ static int Leaf_pak_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_pak_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -618,7 +618,7 @@ static int Leaf_pak_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int Leaf_pak_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -642,7 +642,7 @@ static int Leaf_pak_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Leaf_pak_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -654,7 +654,7 @@ static void Leaf_pak_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Leaf_pak_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
@@ -672,7 +672,7 @@ static void Leaf_pak_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_pak_operation = {
 	Leaf_pak_match,					/* match */
 	Leaf_pak_extract_directory,		/* extract_directory */
@@ -685,7 +685,7 @@ static cui_ext_operation Leaf_pak_operation = {
 
 /********************* ar1 *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_ar1_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -706,7 +706,7 @@ static int Leaf_ar1_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Leaf_ar1_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -763,7 +763,7 @@ static int Leaf_ar1_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Leaf_ar1_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -779,7 +779,7 @@ static int Leaf_ar1_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_ar1_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -823,7 +823,7 @@ static int Leaf_ar1_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void Leaf_ar1_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -837,7 +837,7 @@ static void Leaf_ar1_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void Leaf_ar1_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
@@ -849,7 +849,7 @@ static void Leaf_ar1_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_ar1_operation = {
 	Leaf_ar1_match,					/* match */
 	Leaf_ar1_extract_directory,		/* extract_directory */
@@ -862,7 +862,7 @@ static cui_ext_operation Leaf_ar1_operation = {
 
 /********************* ar2 *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_ar2_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -883,7 +883,7 @@ static int Leaf_ar2_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Leaf_ar2_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -938,7 +938,7 @@ static int Leaf_ar2_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Leaf_ar2_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -954,7 +954,7 @@ static int Leaf_ar2_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_ar2_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -987,7 +987,7 @@ static int Leaf_ar2_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_ar2_operation = {
 	Leaf_ar2_match,					/* match */
 	Leaf_ar2_extract_directory,		/* extract_directory */
@@ -1000,7 +1000,7 @@ static cui_ext_operation Leaf_ar2_operation = {
 
 /********************* cz2 *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_cz2_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -1021,7 +1021,7 @@ static int Leaf_cz2_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Leaf_cz2_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -1069,7 +1069,7 @@ static int Leaf_cz2_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Leaf_cz2_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1086,7 +1086,7 @@ static int Leaf_cz2_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_cz2_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -1140,7 +1140,7 @@ static int Leaf_cz2_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_cz2_operation = {
 	Leaf_cz2_match,					/* match */
 	Leaf_cz2_extract_directory,		/* extract_directory */
@@ -1153,7 +1153,7 @@ static cui_ext_operation Leaf_cz2_operation = {
 
 /********************* lac *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_lac_match(struct package *pkg)
 {
 	s8 head[4];
@@ -1174,7 +1174,7 @@ static int Leaf_lac_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Leaf_lac_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -1202,7 +1202,7 @@ static int Leaf_lac_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Leaf_lac_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1222,7 +1222,7 @@ static int Leaf_lac_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_lac_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -1303,7 +1303,7 @@ static int Leaf_lac_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_lac_operation = {
 	Leaf_lac_match,					/* match */
 	Leaf_lac_extract_directory,		/* extract_directory */
@@ -1316,7 +1316,7 @@ static cui_ext_operation Leaf_lac_operation = {
 
 /********************* LAC *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_LAC_match(struct package *pkg)
 {
 	s8 head[4];
@@ -1337,7 +1337,7 @@ static int Leaf_LAC_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Leaf_LAC_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -1365,7 +1365,7 @@ static int Leaf_LAC_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Leaf_LAC_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1381,7 +1381,7 @@ static int Leaf_LAC_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_LAC_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -1392,7 +1392,7 @@ static int Leaf_LAC_extract_resource(struct package *pkg,
 	if (!compr)
 		return -CUI_EREADVECONLY;
 
-	if (lac_entry->bCompress) {	// ´ı²âÊÔ
+	if (lac_entry->bCompress) {	// å¾…æµ‹è¯•
 		DWORD uncomprlen = *(u32 *)compr;
 		comprlen -= 4;
 		BYTE *uncompr = (BYTE *)malloc(uncomprlen);
@@ -1408,7 +1408,7 @@ static int Leaf_LAC_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_LAC_operation = {
 	Leaf_LAC_match,					/* match */
 	Leaf_LAC_extract_directory,		/* extract_directory */
@@ -1421,7 +1421,7 @@ static cui_ext_operation Leaf_LAC_operation = {
 
 /********************* wmv *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_wmv_match(struct package *pkg)
 {
 	s8 head[10];
@@ -1442,7 +1442,7 @@ static int Leaf_wmv_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_wmv_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -1465,7 +1465,7 @@ static int Leaf_wmv_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_wmv_operation = {
 	Leaf_wmv_match,				/* match */
 	NULL,						/* extract_directory */
@@ -1478,7 +1478,7 @@ static cui_ext_operation Leaf_wmv_operation = {
 
 /********************* TEX *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_TEX_match(struct package *pkg)
 {
 	TEXHEAD head;
@@ -1499,7 +1499,7 @@ static int Leaf_TEX_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Leaf_TEX_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -1530,7 +1530,7 @@ static int Leaf_TEX_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Leaf_TEX_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1546,7 +1546,7 @@ static int Leaf_TEX_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_TEX_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -1565,7 +1565,7 @@ static int Leaf_TEX_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_TEX_operation = {
 	Leaf_TEX_match,					/* match */
 	Leaf_TEX_extract_directory,		/* extract_directory */
@@ -1578,7 +1578,7 @@ static cui_ext_operation Leaf_TEX_operation = {
 
 /********************* ANI *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_ANI_match(struct package *pkg)
 {
 	s8 head[4];
@@ -1599,7 +1599,7 @@ static int Leaf_ANI_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Leaf_ANI_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -1648,7 +1648,7 @@ static int Leaf_ANI_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Leaf_ANI_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1664,7 +1664,7 @@ static int Leaf_ANI_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_ANI_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -1741,7 +1741,7 @@ static int Leaf_ANI_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_ANI_operation = {
 	Leaf_ANI_match,					/* match */
 	Leaf_ANI_extract_directory,		/* extract_directory */
@@ -1754,7 +1754,7 @@ static cui_ext_operation Leaf_ANI_operation = {
 
 /********************* LEAFPACK *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int Leaf_LEAFPACK_match(struct package *pkg)
 {
 	s8 head[8];
@@ -1775,7 +1775,7 @@ static int Leaf_LEAFPACK_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int Leaf_LEAFPACK_extract_directory(struct package *pkg,
 										   struct package_directory *pkg_dir)
 {
@@ -1810,7 +1810,7 @@ static int Leaf_LEAFPACK_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int Leaf_LEAFPACK_parse_resource_info(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -1829,7 +1829,7 @@ static int Leaf_LEAFPACK_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int Leaf_LEAFPACK_extract_resource(struct package *pkg,
 										  struct package_resource *pkg_res)
 {
@@ -1857,7 +1857,7 @@ static int Leaf_LEAFPACK_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation Leaf_LEAFPACK_operation = {
 	Leaf_LEAFPACK_match,				/* match */
 	Leaf_LEAFPACK_extract_directory,	/* extract_directory */
@@ -1868,7 +1868,7 @@ static cui_ext_operation Leaf_LEAFPACK_operation = {
 	Leaf_pak_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK Leaf_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".pak"), NULL, 
@@ -1912,4 +1912,5 @@ int CALLBACK Leaf_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

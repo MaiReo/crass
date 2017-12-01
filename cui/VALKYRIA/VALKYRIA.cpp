@@ -12,19 +12,19 @@
 
 using namespace std;
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information VALKYRIA_cui_information = {
 	NULL,					/* copyright */
 	NULL,					/* system */
 	_T(".odn .dat .ini"),	/* package */
 	_T("0.9.7"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-8-23 16:40"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];
@@ -119,7 +119,7 @@ static DWORD back_uncompress(BYTE *uncompr, DWORD uncomprLen,
 
 /********************* odn *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int VALKYRIA_odn_match(struct package *pkg)
 {
 	s8 magic[4];
@@ -151,7 +151,7 @@ static int VALKYRIA_odn_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int VALKYRIA_odn_extract_directory(struct package *pkg,
 										  struct package_directory *pkg_dir)
 {
@@ -360,7 +360,7 @@ static int VALKYRIA_odn_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int VALKYRIA_odn_parse_resource_info(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -368,15 +368,15 @@ static int VALKYRIA_odn_parse_resource_info(struct package *pkg,
 
 	odn_entry = (odn_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, odn_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = odn_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = odn_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int VALKYRIA_odn_extract_resource(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -419,7 +419,7 @@ static int VALKYRIA_odn_extract_resource(struct package *pkg,
 			DWORD curbyte = back_uncompress(uncompr, uncomprlen, 
 				raw, pkg_res->raw_data_length);
 			if (curbyte == pkg_res->raw_data_length || curbyte + 1 == pkg_res->raw_data_length) {
-				// ²»È·¶¨Õâ¸ö´¦ÀíÊÇ·ñÔÚ640 * 480Ê±ÓĞ¹ı
+				// ä¸ç¡®å®šè¿™ä¸ªå¤„ç†æ˜¯å¦åœ¨640 * 480æ—¶æœ‰è¿‡
 				for (DWORD i = 0; i < uncomprlen; ++i)
 					uncompr[i] = (uncompr[i] * 255) >> 8;
 
@@ -456,7 +456,7 @@ static int VALKYRIA_odn_extract_resource(struct package *pkg,
 			DWORD curbyte = data_uncompress(uncompr, uncomprlen, 
 				raw, pkg_res->raw_data_length);
 			if (curbyte == pkg_res->raw_data_length || curbyte + 1 == pkg_res->raw_data_length) {
-				// ²»È·¶¨Õâ¸ö´¦ÀíÊÇ·ñÔÚ640 * 480Ê±ÓĞ¹ı
+				// ä¸ç¡®å®šè¿™ä¸ªå¤„ç†æ˜¯å¦åœ¨640 * 480æ—¶æœ‰è¿‡
 				for (DWORD i = 0; i < uncomprlen; ++i)
 					uncompr[i] = (uncompr[i] * 255) >> 8;
 
@@ -500,7 +500,7 @@ static int VALKYRIA_odn_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int VALKYRIA_odn_save_resource(struct resource *res, 
 								 struct package_resource *pkg_res)
 {
@@ -524,7 +524,7 @@ static int VALKYRIA_odn_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void VALKYRIA_odn_release_resource(struct package *pkg, 
 									 struct package_resource *pkg_res)
 {
@@ -538,7 +538,7 @@ static void VALKYRIA_odn_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void VALKYRIA_odn_release(struct package *pkg, 
 							struct package_directory *pkg_dir)
 {
@@ -550,7 +550,7 @@ static void VALKYRIA_odn_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation VALKYRIA_odn_operation = {
 	VALKYRIA_odn_match,					/* match */
 	VALKYRIA_odn_extract_directory,		/* extract_directory */
@@ -563,7 +563,7 @@ static cui_ext_operation VALKYRIA_odn_operation = {
 
 /********************* ini *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int VALKYRIA_ini_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -572,7 +572,7 @@ static int VALKYRIA_ini_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int VALKYRIA_ini_extract_resource(struct package *pkg,
 									struct package_resource *pkg_res)
 {
@@ -627,7 +627,7 @@ static int VALKYRIA_ini_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int VALKYRIA_ini_save_resource(struct resource *res, 
 								 struct package_resource *pkg_res)
 {
@@ -651,7 +651,7 @@ static int VALKYRIA_ini_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void VALKYRIA_ini_release_resource(struct package *pkg, 
 									 struct package_resource *pkg_res)
 {
@@ -663,14 +663,14 @@ static void VALKYRIA_ini_release_resource(struct package *pkg,
 		pkg_res->raw_data = NULL;
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void VALKYRIA_ini_release(struct package *pkg, 
 							struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation VALKYRIA_ini_operation = {
 	VALKYRIA_ini_match,				/* match */
 	NULL,							/* extract_directory */
@@ -684,7 +684,7 @@ static cui_ext_operation VALKYRIA_ini_operation = {
 #if 0
 /********************* save *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int VALKYRIA_save_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -704,7 +704,7 @@ static int VALKYRIA_save_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int VALKYRIA_save_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -748,7 +748,7 @@ static int VALKYRIA_save_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation VALKYRIA_save_operation = {
 	VALKYRIA_save_match,				/* match */
 	NULL,						/* extract_directory */
@@ -760,7 +760,7 @@ static cui_ext_operation VALKYRIA_save_operation = {
 };
 
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int VALKYRIA_setup_extract_resource(struct package *pkg,
 										   struct package_resource *pkg_res)
 {
@@ -784,7 +784,7 @@ static int VALKYRIA_setup_extract_resource(struct package *pkg,
 	// read 1f400
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation VALKYRIA_setup_operation = {
 	VALKYRIA_setup_match,			/* match */
 	NULL,							/* extract_directory */
@@ -796,7 +796,7 @@ static cui_ext_operation VALKYRIA_setup_operation = {
 };
 #endif
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK VALKYRIA_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".odn"), NULL, 
@@ -820,4 +820,5 @@ int CALLBACK VALKYRIA_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

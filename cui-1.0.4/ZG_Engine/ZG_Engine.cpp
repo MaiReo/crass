@@ -15,7 +15,7 @@ struct acui_information ZG_Engine_cui_information = {
 	_T("ZG-Engine"),			/* system */
 	_T(".wav .png .map .bmp"),				/* package */
 	_T("1.0.1"),		/* revision */
-	_T("≥’ùhπ´Ÿ\"),		/* author */
+	_T("Áó¥Êº¢ÂÖ¨Ë≥ä"),		/* author */
 	_T("2009-7-12 11:45"),/* date */
 	NULL,				/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -294,4 +294,5 @@ int CALLBACK ZG_Engine_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

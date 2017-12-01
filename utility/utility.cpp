@@ -89,12 +89,12 @@ static DWORD jcrage_print(const TCHAR *msg)
 /******* CrageGui *******/
 
 #pragma data_seg("CrageGUI")
-static TCHAR tMsgInfo[64 * 1024] = { 0 }; //ÏûÏ¢
-static HWND hWnd = NULL;	//Ä¿µÄ´°¿Ú¾ä±ú
+static TCHAR tMsgInfo[64 * 1024] = { 0 }; //æ¶ˆæ¯
+static HWND hWnd = NULL;	//ç›®çš„çª—å£å¥æŸ„
 #pragma data_seg()
 #pragma comment(linker, "/section:CrageGUI,rws")
 
-//¶¨Òå×Ö·û´®ÏûÏ¢
+//å®šä¹‰å­—ç¬¦ä¸²æ¶ˆæ¯
 #define WM_MYSTRING       WM_USER+0x100
 
 static DWORD cragegui_print(const TCHAR *fmt)
@@ -458,7 +458,7 @@ UTILITY_API const char *get_options(const char *key)
 					post_key = &key[k + 1];
 					post_key_len = key_len - k - 1;
 				}
-				break;	/* Ö»ÔÊĞíÒ»¸öÍ¨Åä·û */
+				break;	/* åªå…è®¸ä¸€ä¸ªé€šé…ç¬¦ */
 			}
 		}
 
@@ -521,7 +521,7 @@ UTILITY_API const TCHAR *get_options2(const TCHAR *key)
 					post_key = &key[k + 1];
 					post_key_len = key_len - k - 1;
 				}
-				break;	/* Ö»ÔÊĞíÒ»¸öÍ¨Åä·û */
+				break;	/* åªå…è®¸ä¸€ä¸ªé€šé…ç¬¦ */
 			}
 		}
 
@@ -579,4 +579,6 @@ UTILITY_API alpha_blending_reverse(BYTE *dib, DWORD width, DWORD height, DWORD b
 		}
 	}
 }
+
+
 

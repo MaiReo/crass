@@ -463,3 +463,4 @@ struct cxdec_callback FHA_cxdec_callback = {
 	{ 0x143, 0x787 },
 	xcode_building_stage1
 };
+;

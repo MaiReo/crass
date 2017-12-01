@@ -10,33 +10,33 @@
 #include <stdio.h>
 #include <crass/locale.h>
 
-/* Ñ°ÕÒoffsetºÍkeyµÄ·½·¨
- ÏÖËÑË÷×Ö·û´®"ARCHIVE",ÔÙÍùÉÏÕÒÏÂÃæµÄÊý¾Ý
- µÚÒ»´Î¶ÁÈ¡8×Ö½ÚµÄÎ»ÖÃ¾ÍÊÇinit_offset
- ¶ÁÈ¡0x24×Ö½ÚheaderµÄÎ»ÖÃ¾ÍÊÇsec_offset
- 2´ÎÆÚ¼äµÄxorÓÃµÄ¾ÍÊÇkey
+/* å¯»æ‰¾offsetå’Œkeyçš„æ–¹æ³•
+ çŽ°æœç´¢å­—ç¬¦ä¸²"ARCHIVE",å†å¾€ä¸Šæ‰¾ä¸‹é¢çš„æ•°æ®
+ ç¬¬ä¸€æ¬¡è¯»å–8å­—èŠ‚çš„ä½ç½®å°±æ˜¯init_offset
+ è¯»å–0x24å­—èŠ‚headerçš„ä½ç½®å°±æ˜¯sec_offset
+ 2æ¬¡æœŸé—´çš„xorç”¨çš„å°±æ˜¯key
 
-ÓÃÕâ¸ö¹Ø¼ü×ÖÔÚexeÖÐ¶¨Î»key£º
-  iskanji:unknown Kanji code type(ÔÚÆäÏÂÃæ¼¸ÐÐ£©
-»òÕßkey×Ö¶ÎÐ´ÎªARCHIVE£¬ÄæÍÆ³östring
+ç”¨è¿™ä¸ªå…³é”®å­—åœ¨exeä¸­å®šä½keyï¼š
+  iskanji:unknown Kanji code type(åœ¨å…¶ä¸‹é¢å‡ è¡Œï¼‰
+æˆ–è€…keyå­—æ®µå†™ä¸ºARCHIVEï¼Œé€†æŽ¨å‡ºstring
 
 00417DC2  |.  6A 04         PUSH    4
 00417DC4  |.  51            PUSH    ECX
-00417DC5  |.  E8 33150300   CALL    Adv.004492FD ¡¶£­£­¶Ácode
+00417DC5  |.  E8 33150300   CALL    Adv.004492FD ã€Šï¼ï¼è¯»code
 00417DCA  |.  53            PUSH    EBX                              ; |Arg4
 00417DCB  |.  6A 24         PUSH    24                               ; |Arg3 = 00000024
 00417DCD  |.  8D9424 8C0000>LEA     EDX, DWORD PTR SS:[ESP+8C]       ; |
 00417DD4  |.  6A 01         PUSH    1                                ; |Arg2 = 00000001
 00417DD6  |.  52            PUSH    EDX                              ; |Arg1
-00417DD7  |.  E8 21150300   CALL    Adv.004492FD                     ; \¶Áheader
-00417DDC  |.  8B3D FCD74700 MOV     EDI, DWORD PTR DS:[47D7FC]       ;  ¡¶£­key
+00417DD7  |.  E8 21150300   CALL    Adv.004492FD                     ; \è¯»header
+00417DDC  |.  8B3D FCD74700 MOV     EDI, DWORD PTR DS:[47D7FC]       ;  ã€Šï¼key
  */
 struct acui_information AdvTry_cui_information = {
 	_T(""),					/* copyright */
 	_T(""),					/* system */
 	_T(".dat"),				/* package */
 	_T("1.1.1"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2009-6-30 22:20"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_STABLE
@@ -70,15 +70,15 @@ typedef struct {
 } AdvTry_game_context_t;
 
 static const TCHAR *simplified_chinese_strings[] = {
-	_T("×Ô¶¯²Â²â½á¹û: key=%s, init_offset=0x%x, sec_offset=0x%x\n"),
+	_T("è‡ªåŠ¨çŒœæµ‹ç»“æžœ: key=%s, init_offset=0x%x, sec_offset=0x%x\n"),
 };
 
 static const TCHAR *traditional_chinese_strings[] = {
-	_T("×Ô„Ó²Âœy½Y¹û: key=%s, init_offset=0x%x, sec_offset=0x%x\n"),
+	_T("è‡ªå‹•çŒœæ¸¬çµæžœ: key=%s, init_offset=0x%x, sec_offset=0x%x\n"),
 };
 
 static const TCHAR *japanese_strings[] = {
-	_T("×Ô„ÓÍÆœy½Y¹û: key=%s, init_offset=0x%x, sec_offset=0x%x\n"),
+	_T("è‡ªå‹•æŽ¨æ¸¬çµæžœ: key=%s, init_offset=0x%x, sec_offset=0x%x\n"),
 };
 
 static const TCHAR *default_strings[] = {
@@ -106,39 +106,39 @@ static int app_locale_id;
 #define AdvTry_games		11
 
 /*
-Ã¿¸öÓÎÏ·ÐèÒªÌá¹©3¸ö²ÎÊý²ÅÄÜÕýÈ·ÌáÈ¡£ºinit_offset¡¢sec_offsetºÍkey¡£Ç°2¸öÊÇ2¸öÆ«ÒÆÖµ£¬×îºóÒ»¸öÊÇ½âÃÜ×Ö·û´®¡£
-±¾cuiÄ¿Ç°ÒÑ¾­¼¯³ÉÁË¼¸¸öÓÎÏ·µÄÉÏÊö²ÎÊý£¬ËùÒÔÔÚÌáÈ¡ÒÔÏÂÓÎÏ·Ê±£¬ÎÞÐèÔÙÌá¹©Õâ3¸ö²ÎÊý¡£
-¡¤Clover Point
+æ¯ä¸ªæ¸¸æˆéœ€è¦æä¾›3ä¸ªå‚æ•°æ‰èƒ½æ­£ç¡®æå–ï¼šinit_offsetã€sec_offsetå’Œkeyã€‚å‰2ä¸ªæ˜¯2ä¸ªåç§»å€¼ï¼Œæœ€åŽä¸€ä¸ªæ˜¯è§£å¯†å­—ç¬¦ä¸²ã€‚
+æœ¬cuiç›®å‰å·²ç»é›†æˆäº†å‡ ä¸ªæ¸¸æˆçš„ä¸Šè¿°å‚æ•°ï¼Œæ‰€ä»¥åœ¨æå–ä»¥ä¸‹æ¸¸æˆæ—¶ï¼Œæ— éœ€å†æä¾›è¿™3ä¸ªå‚æ•°ã€‚
+Â·Clover Point
 init_offset=0x11,sec_offset=0x46,key=ClOVeRrE
-¡¤Clover Point ÌåÑé°æ
+Â·Clover Point ä½“éªŒç‰ˆ
 init_offset=0x1c,sec_offset=0x45,key=CVPTTRY1
-¡¤¤Á¤ç¤³¤Ã¤È¡î¤Ð¤ó¤Ñ¤¤¤¢! 
+Â·ã¡ã‚‡ã“ã£ã¨â˜†ã°ã‚“ã±ã„ã‚! 
 init_offset=0x35,sec_offset=0x51,key=CHOKOPAI
-¡¤¤Á¤ç¤³¤Ã¤È¡î¤Ð¤ó¤Ñ¤¤¤¢! ÌåÑé°æ
+Â·ã¡ã‚‡ã“ã£ã¨â˜†ã°ã‚“ã±ã„ã‚! ä½“éªŒç‰ˆ
 init_offset=0x11,sec_offset=0x49,key=CPTRYVER
-¡¤ÁµQ£¡¡«Áµ¤ÈH¤ÎÂÒ¤ìÉä¤Á¡« ÌåÑé°æ
+Â·æ‹Qï¼ï½žæ‹ã¨Hã®ä¹±ã‚Œå°„ã¡ï½ž ä½“éªŒç‰ˆ
 init_offset=0x08,sec_offset=0x10,key=KOIQ_WEB
-¡¤ÁµQ£¡¡«Áµ¤ÈH¤ÎÂÒ¤ìÉä¤Á¡«
+Â·æ‹Qï¼ï½žæ‹ã¨Hã®ä¹±ã‚Œå°„ã¡ï½ž
 init_offset=0x08,sec_offset=0x10,key=RE_MAJIQ
-¡¤Éñ˜ä¤Îð^ ÌåÑé°æ
+Â·ç¥žæ¨¹ã®é¤¨ ä½“éªŒç‰ˆ
 init_offset=0x00,sec_offset=0x08,key=METEOR01
-¡¤ÔÂ¤ÈÄ§·¨¤ÈÌ«ê–¤È
+Â·æœˆã¨é­”æ³•ã¨å¤ªé™½ã¨
 init_offset=0x08,sec_offset=0x10,key=TrpAdTRY
-¡¤¾cž¼Ò¤Î¥ª¥ó¥Ê ¡«ÒùÈA¤ÎÑªÃ}¡«
+Â·ç¶¾ç€¬å®¶ã®ã‚ªãƒ³ãƒŠ ï½žæ·«è¯ã®è¡€è„ˆï½ž
 init_offset=0x0c,sec_offset=0x15,key=-AYASEKE
 
-Èç¹û±¾ÎÄµµÃ»ÓÐ¼ÇÂ¼ÄãÒªÌáÈ¡µÄÓÎÏ·£¬¿ÉÒÔÖ¸¶¨Õâ3¸ö²ÎÊýÀ´ÌáÈ¡¡£
+å¦‚æžœæœ¬æ–‡æ¡£æ²¡æœ‰è®°å½•ä½ è¦æå–çš„æ¸¸æˆï¼Œå¯ä»¥æŒ‡å®šè¿™3ä¸ªå‚æ•°æ¥æå–ã€‚
 
 0 - Clover Point
-1 - Clover Point ÌåÑé°æ
-2 - ¤Á¤ç¤³¤Ã¤È¡î¤Ð¤ó¤Ñ¤¤¤¢! ÌåÑé°æ
-3 - ÁµQ£¡¡«Áµ¤ÈH¤ÎÂÒ¤ìÉä¤Á¡« ÌåÑé°æ
-4 - ÁµQ£¡¡«Áµ¤ÈH¤ÎÂÒ¤ìÉä¤Á¡«
-5 - Éñ˜ä¤Îð^ ÌåÑé°æ
-6 - ÔÂ¤ÈÄ§·¨¤ÈÌ«ê–¤È ÌåÑé°æ
-7 - ¾cž¼Ò¤Î¥ª¥ó¥Ê ¡«ÒùÈA¤ÎÑªÃ}¡«
-8 - ¤Á¤ç¤³¤Ã¤È¡î¤Ð¤ó¤Ñ¤¤¤¢! 
-9 - ´ú¡©Ä¾ÈËÆÞŒŸéTÑ§Ôº ¡«ÈéÆÞ¤¿¤Á¤Î¥¢¥ó¥Ë¥å¥¤¡« ÌåòY°æ µÚ2Ž
+1 - Clover Point ä½“éªŒç‰ˆ
+2 - ã¡ã‚‡ã“ã£ã¨â˜†ã°ã‚“ã±ã„ã‚! ä½“éªŒç‰ˆ
+3 - æ‹Qï¼ï½žæ‹ã¨Hã®ä¹±ã‚Œå°„ã¡ï½ž ä½“éªŒç‰ˆ
+4 - æ‹Qï¼ï½žæ‹ã¨Hã®ä¹±ã‚Œå°„ã¡ï½ž
+5 - ç¥žæ¨¹ã®é¤¨ ä½“éªŒç‰ˆ
+6 - æœˆã¨é­”æ³•ã¨å¤ªé™½ã¨ ä½“éªŒç‰ˆ
+7 - ç¶¾ç€¬å®¶ã®ã‚ªãƒ³ãƒŠ ï½žæ·«è¯ã®è¡€è„ˆï½ž
+8 - ã¡ã‚‡ã“ã£ã¨â˜†ã°ã‚“ã±ã„ã‚! 
+9 - ä»£ã€…æœ¨äººå¦»å°‚é–€å­¦é™¢ ï½žä¹³å¦»ãŸã¡ã®ã‚¢ãƒ³ãƒ‹ãƒ¥ã‚¤ï½ž ä½“é¨“ç‰ˆ ç¬¬2å¼¾
 */
 static DWORD AdvTry_game_init_offset[AdvTry_games] = { 0x11, 0x1c, 0x11, 0x08, 0x08, 0x00, 0x08, 0x0c, 0x35, 0x11, 0x08, };
 static DWORD AdvTry_game_sec_offset[AdvTry_games] = { 0x46, 0x45, 0x49, 0x10, 0x10, 0x08, 0x10, 0x15, 0x51, 0x1e, 0x10, };
@@ -359,9 +359,9 @@ static int AdvTry_dat_parse_resource_info(struct package *pkg,
 
 	dat_entry = (dat_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, dat_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = dat_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = dat_entry->offset;
 
 	return 0;
@@ -450,4 +450,5 @@ int CALLBACK AdvTry_register_cui(struct cui_register_callback *callback)
 	app_locale_id = locale_app_register(app_locale_configurations, 3);
 
 	return 0;
+}
 }

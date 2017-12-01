@@ -16,14 +16,14 @@ struct acui_information FFDSystem_cui_information = {
 	_T("FLOATING FRAME DIRECTOR"),			/* system */
 	_T(".dat"),								/* package */
 	_T("1.0.3"),							/* revision */
-	_T("³Õh¹«Ù\"),							/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),							/* author */
 	_T("2008-6-24 14:04"),					/* date */
 	NULL,									/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
 #define MIN_NAME_LEN		4
-#define MAX_NAME_LEN		64				/* À´×Ôver2µÄË÷ÒýÏîÍÆ¶Ï */
+#define MAX_NAME_LEN		64				/* æ¥è‡ªver2çš„ç´¢å¼•é¡¹æŽ¨æ–­ */
 
 #pragma pack (1)
 typedef struct {
@@ -40,7 +40,7 @@ typedef struct {
 	u32 reserved;	// always 0
 } dat_entry_t;
 
-typedef struct {	// ver2°æµÄË÷ÒýÏî
+typedef struct {	// ver2ç‰ˆçš„ç´¢å¼•é¡¹
 	s8 name[64];
 	u32 offset;
 	u32 uncomprlen;
@@ -57,29 +57,29 @@ struct resource_type {
 	int (*probe)(BYTE *, DWORD);
 };
 
-/* Ç°2¸öÓÃÓÚ½âÃÜdat name,ºó2¸öÓÃÓÚ½âÃÜindex */
+/* å‰2ä¸ªç”¨äºŽè§£å¯†dat name,åŽ2ä¸ªç”¨äºŽè§£å¯†index */
 static u32 dat_decode_list[][4] = {
-	// ÉÙÅ®Ä§·¨Ñ§¥ê¥È¥ë¥¦¥£¥Ã¥Á¥í¥Þ¥Í¥¹¥¯ editio perfecta ver5
+	// å°‘å¥³é­”æ³•å­¦ãƒªãƒˆãƒ«ã‚¦ã‚£ãƒƒãƒãƒ­ãƒžãƒã‚¹ã‚¯ editio perfecta ver5
 	{ 0xF358ACE6, 0x77DF8518, 0xBD42D5EF, 0x77DF8518 },
-	// ¥Ô¥ê¥ª¥É ver5
+	// ãƒ”ãƒªã‚ªãƒ‰ ver5
 	{ 0xDED5A4D1, 0xFA871AB2, 0x8128CFA5, 0xFA871AB2 },
-	// ¥Ô¥ê¥ª¥É ÌåÑé°æ ver5
+	// ãƒ”ãƒªã‚ªãƒ‰ ä½“éªŒç‰ˆ ver5
 	{ 0xEB561409, 0x13C55B05, 0x7DFF2A18, 0x13C55B05 },
-	// ¥í¥ó¥É¡¤¥ê©`¥Õ¥ì¥Ã¥È ver5
+	// ãƒ­ãƒ³ãƒ‰Â·ãƒªãƒ¼ãƒ•ãƒ¬ãƒƒãƒˆ ver5
 	{ 0x8AF4622E, 0xCE4985A0, 0x1AF56CDB, 0xCE4985A0 },
-	// ÉÙÅ®Ä§·¨Ñ§ ¥ê¥È¥ë¥¦¥£¥Ã¥Á¥í¥Þ¥Í¥¹¥¯ÌØ„eÆó»­·¬Íâ¾Ž ver5
+	// å°‘å¥³é­”æ³•å­¦ ãƒªãƒˆãƒ«ã‚¦ã‚£ãƒƒãƒãƒ­ãƒžãƒã‚¹ã‚¯ç‰¹åˆ¥ä¼ç”»ç•ªå¤–ç·¨ ver5
 	{ 0x7D59CAB4, 0x37C1ADE2, 0x805F2CAD, 0x37C1ADE2 },
-	// ÉÙÅ®Ä§·¨Ñ§¥ê¥È¥ë¥¦¥£¥Ã¥Á¥í¥Þ¥Í¥¹¥¯ ver5
+	// å°‘å¥³é­”æ³•å­¦ãƒªãƒˆãƒ«ã‚¦ã‚£ãƒƒãƒãƒ­ãƒžãƒã‚¹ã‚¯ ver5
 	{ 0xBD42D5EF, 0x77DF8518, 0xF358ACE6, 0x77DF8518 },
 	// Quartett! Standard Edition ver4
 	{ 0xB76522AB, 0x38F5CB86, 0xF5FACF01, 0x38F5CB86 },
 	{ 0x361F8AA5, 0x8B4E16D9, 0x5C920F8A, 0x8B4E16D9 },
-	// Quartett! ÌåÑé°æ ver3
+	// Quartett! ä½“éªŒç‰ˆ ver3
 	{ 0x84F6BD90, 0xF497265C, 0xCAB563AB, 0xF497265C },
-	//°×Ô‘²ÝÔ’·¬Íâ¾Ž ver2
+	//ç™½è©°è‰è©±ç•ªå¤–ç·¨ ver2
 	{ 0xD107AF35, 0x389ABB57, 0x21F5ACCD, 0x389ABB57 },
-	// °×Ô‘²ÝÔ’ -Episode of the Clovers- Standard Edition ver2
-	// °×Ô‘²ÝÔ’ -Episode of the Clovers- ver2
+	// ç™½è©°è‰è©± -Episode of the Clovers- Standard Edition ver2
+	// ç™½è©°è‰è©± -Episode of the Clovers- ver2
 	{ 0x837FC07A, 0x98FCDBA2, 0xF517AA26, 0x98FCDBA2 },
 	// terminated
 	{ 0, 0, 0, 0 }
@@ -93,7 +93,7 @@ static int check_if_plain_data(BYTE *data, DWORD data_length)
 	return !MultiByteToWideChar(932, MB_ERR_INVALID_CHARS, (LPCSTR)data, data_length, NULL, 0) ? -1 : 0;
 }
 
-/* °´ÕÕÆ¥ÅäÄÑ¶È´Ó¼òµ¥µ½¸´ÔÓÅÅÐò */
+/* æŒ‰ç…§åŒ¹é…éš¾åº¦ä»Žç®€å•åˆ°å¤æ‚æŽ’åº */
 struct resource_type resource_type[] = {
 	{ "OggS", 4, _T(".ogg"), ".ogg", NULL },
 	{ "RIFF", 4, _T(".wav"), ".wav", NULL },
@@ -167,9 +167,9 @@ static int lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 						   BYTE *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖÐµÄµ±Ç°×Ö½ÚÖÐµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖÐµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -195,7 +195,7 @@ static int lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 
 			data = compr[curbyte++];
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= win_size - 1;
 		} else {
@@ -219,7 +219,7 @@ static int lzss_decompress(BYTE *uncompr, DWORD uncomprlen,
 					goto out;
 				data = win[(win_offset + i) & (win_size - 1)];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;	
 			}
@@ -489,7 +489,7 @@ static int FFDSystem_dat_match(struct package *pkg)
 		if (!name) {
 			wcprintf(_T("you must specify the resource name for extraction, ")
 				_T("otherwise use crack parameter to brute cracking\n"));
-			wcprintf(_T("Äã±ØÐëÖ¸¶¨ÒªÌáÈ¡µÄ×ÊÔ´µÄÃû×Ö£¬»òÕßÊ¹ÓÃcrack²ÎÊý±©Á¦ÆÆ½âÌáÈ¡¡£\n"));
+			wcprintf(_T("ä½ å¿…é¡»æŒ‡å®šè¦æå–çš„èµ„æºçš„åå­—ï¼Œæˆ–è€…ä½¿ç”¨crackå‚æ•°æš´åŠ›ç ´è§£æå–ã€‚\n"));
 			pkg->pio->close(pkg);
 			return -CUI_EMATCH;
 		} 
@@ -888,4 +888,5 @@ int CALLBACK FFDSystem_register_cui(struct cui_register_callback *callback)
 		brute_crack = 0;
 
 	return 0;
+}
 }

@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information IkuraGDL_cui_information = {
 	_T("IKURA / Iguchi Satoshi"),			/* copyright */
 	_T("IKURA Game Development Library"),	/* system */
 	_T(""),									/* package */
 	_T("0.9.2"),							/* revision */
-	_T("³Õºº¹«Ôô"),							/* author */
+	_T("ç—´æ±‰å…¬è´¼"),							/* author */
 	_T("2007-11-5 20:07"),					/* date */
 	NULL,									/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[8];			// "SM2MPX10"
@@ -52,10 +52,10 @@ typedef struct {
 	u16 height;
 	u16 unknown;			// 0
 	u8 color_depth;
-	u8 flag;				// bit0 - alpha; bit5 - parameter£»bit4 - always 1
+	u8 flag;				// bit0 - alpha; bit5 - parameterï¼›bit4 - always 1
 	u32 data_offset;
 	u32 data_length;
-	u32 parameter_offset;	// Ã¿Ïî12×Ö½Ú£¬ÓÃÓÚÃèÊö×éºÏÍ¼ÄÚ¸÷¸ö×ÓÍ¼ÓÃ
+	u32 parameter_offset;	// æ¯é¡¹12å­—èŠ‚ï¼Œç”¨äºæè¿°ç»„åˆå›¾å†…å„ä¸ªå­å›¾ç”¨
 	u32 parameter_length;
 	u32 reserved[4];		// 0
 } ggd_header_t;
@@ -621,7 +621,7 @@ static char hex_table[36] = {
 };
 
 static int isf_check_ok;
-static char *code_table = secret_filter_code_table[0];	// Ä¬ÈÏ
+static char *code_table = secret_filter_code_table[0];	// é»˜è®¤
 
 static char inline __chr2hex(char chr)
 {	
@@ -870,9 +870,9 @@ static void lzss_decompress(unsigned char *uncompr, DWORD *uncomprlen,
 							unsigned char *compr, DWORD comprlen)
 {
 	unsigned int act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	unsigned int curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	unsigned int curbyte = 0;
 	unsigned int nCurWindowByte = 0xfee;
 	unsigned int win_size = 4096;
@@ -880,7 +880,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD *uncomprlen,
 	
 	memset(win, 0, sizeof(win));
 	while (1) {
-		/* Èç¹ûÎª0, ±íÊ¾½ÓÏÂÀ´µÄ1¸ö×Ö½ÚÔ­ÑùÊä³ö */
+		/* å¦‚æœä¸º0, è¡¨ç¤ºæ¥ä¸‹æ¥çš„1ä¸ªå­—èŠ‚åŸæ ·è¾“å‡º */
 		BYTE flag;
 
 		if (curbyte >= comprlen)
@@ -899,7 +899,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD *uncomprlen,
 
 				data = compr[curbyte++];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= win_size - 1;
 			} else {
@@ -925,7 +925,7 @@ static void lzss_decompress(unsigned char *uncompr, DWORD *uncomprlen,
 
 					data = win[(win_offset + i) & (win_size - 1)];
 					uncompr[act_uncomprlen++] = data;		
-					/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+					/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 					win[nCurWindowByte++] = data;
 					nCurWindowByte &= win_size - 1;	
 				}
@@ -1073,7 +1073,7 @@ static int ggd_extract(BYTE *__ggd, DWORD ggd_length, BYTE **ret, DWORD *ret_len
 
 /********************* *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int IkuraGDL_match(struct package *pkg)
 {
 	s8 magic[8];
@@ -1094,7 +1094,7 @@ static int IkuraGDL_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int IkuraGDL_extract_directory(struct package *pkg,
 									  struct package_directory *pkg_dir)
 {
@@ -1123,7 +1123,7 @@ static int IkuraGDL_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int IkuraGDL_parse_resource_info(struct package *pkg,
 										struct package_resource *pkg_res)
 {
@@ -1131,15 +1131,15 @@ static int IkuraGDL_parse_resource_info(struct package *pkg,
 
 	IkuraGDL_entry = (IkuraGDL_entry_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, IkuraGDL_entry->name, 12);
-	pkg_res->name_length = strlen(pkg_res->name);			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = strlen(pkg_res->name);			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = IkuraGDL_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = IkuraGDL_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int IkuraGDL_extract_resource(struct package *pkg,
 									 struct package_resource *pkg_res)
 {
@@ -1303,7 +1303,7 @@ static int IkuraGDL_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int IkuraGDL_save_resource(struct resource *res, 
 								  struct package_resource *pkg_res)
 {
@@ -1327,7 +1327,7 @@ static int IkuraGDL_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void IkuraGDL_release_resource(struct package *pkg, 
 									  struct package_resource *pkg_res)
 {
@@ -1341,7 +1341,7 @@ static void IkuraGDL_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void IkuraGDL_release(struct package *pkg, 
 							 struct package_directory *pkg_dir)
 {
@@ -1353,7 +1353,7 @@ static void IkuraGDL_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation IkuraGDL_operation = {
 	IkuraGDL_match,					/* match */
 	IkuraGDL_extract_directory,		/* extract_directory */
@@ -1366,7 +1366,7 @@ static cui_ext_operation IkuraGDL_operation = {
 
 /********************* *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int IkuraGDL_match2(struct package *pkg)
 {
 	u16 index_length;
@@ -1413,7 +1413,7 @@ static int IkuraGDL_match2(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int IkuraGDL_extract_directory2(struct package *pkg,
 									   struct package_directory *pkg_dir)
 {
@@ -1457,7 +1457,7 @@ static int IkuraGDL_extract_directory2(struct package *pkg,
 
 	free(index_buffer);
 
-	/* ×îºóÒ»ÏîÊÇÎ±Ïî */
+	/* æœ€åä¸€é¡¹æ˜¯ä¼ªé¡¹ */
 	pkg_dir->index_entries = index_entries - 1;
 	pkg_dir->directory = my_index_buffer;
 	pkg_dir->directory_length = my_index_length - sizeof(my_IkuraGDL_entry2_t);
@@ -1473,15 +1473,15 @@ static int IkuraGDL_parse_resource_info2(struct package *pkg,
 
 	my_IkuraGDL_entry2 = (my_IkuraGDL_entry2_t *)pkg_res->actual_index_entry;
 	strncpy(pkg_res->name, my_IkuraGDL_entry2->name, 12);
-	pkg_res->name_length = strlen(pkg_res->name);			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = strlen(pkg_res->name);			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_IkuraGDL_entry2->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_IkuraGDL_entry2->offset;
 
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation IkuraGDL_operation2 = {
 	IkuraGDL_match2,				/* match */
 	IkuraGDL_extract_directory2,	/* extract_directory */
@@ -1492,13 +1492,13 @@ static cui_ext_operation IkuraGDL_operation2 = {
 	IkuraGDL_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK IkuraGDL_register_cui(struct cui_register_callback *callback)
 {
 	const char *sec_num;
 	int num;
 
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, NULL, NULL, 
 		NULL, &IkuraGDL_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_NOEXT))
 			return -1;
@@ -1521,10 +1521,10 @@ int CALLBACK IkuraGDL_register_cui(struct cui_register_callback *callback)
 	}
 	return 0;
 }
-/* ISFÎÄ¼ş½âÎö£º¼Ò×åÓ‹»­¡«¤½¤·¤Æ¤Ş¤¿¼Ò×åÓ‹»­¤ò¡«¡¡¤ª·µ¤·¥Ç¥£¥¹¥¯
+/* ISFæ–‡ä»¶è§£æï¼šå®¶æ—è¨ˆç”»ï½ãã—ã¦ã¾ãŸå®¶æ—è¨ˆç”»ã‚’ï½ã€€ãŠè¿”ã—ãƒ‡ã‚£ã‚¹ã‚¯
 0042F35E  |.  8B46 14       MOV EAX,DWORD PTR DS:[ESI+14]
 0042F361  |.  33DB          XOR EBX,EBX
-0042F363  |.  66:8B48 04    MOV CX,WORD PTR DS:[EAX+4] µÚÒ»¸ö×Ö½Ú
+0042F363  |.  66:8B48 04    MOV CX,WORD PTR DS:[EAX+4] ç¬¬ä¸€ä¸ªå­—èŠ‚
 0042F367  |.  8A50 06       MOV DL,BYTE PTR DS:[EAX+6]
 0042F36A  |.  8D78 08       LEA EDI,DWORD PTR DS:[EAX+8]
 0042F36D  |.  33C0          XOR EAX,EAX
@@ -1700,7 +1700,7 @@ int CALLBACK IkuraGDL_register_cui(struct cui_register_callback *callback)
 0042F540  \.  C2 0400       RETN 4
 */
 
-/* ¼ÓÃÜµÄisf½âÎö
+/* åŠ å¯†çš„isfè§£æ
 0044B560  |.  66:8B48 04    MOV CX,WORD PTR DS:[EAX+4]
 0044B564  |.  8A50 06       MOV DL,BYTE PTR DS:[EAX+6]
 0044B567  |.  8D78 08       LEA EDI,DWORD PTR DS:[EAX+8]
@@ -1877,4 +1877,6 @@ int CALLBACK IkuraGDL_register_cui(struct cui_register_callback *callback)
 0044B742  |.  83C4 08       ADD ESP,8
 0044B745  \.  C2 0400       RETN 4
 */
+
+
 

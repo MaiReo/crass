@@ -10,19 +10,19 @@
 #include <zlib.h>
 #include <utility.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information ScenePlayer_cui_information = {
 	_T(""),					/* copyright */
 	_T(""),					/* system */
 	_T(".Pmx .PMP .PMA .PMW"),	/* package */
 	_T("0.9.2"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-10-19 12:20"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];
@@ -73,7 +73,7 @@ static int PMA_read(struct package *pkg, void *data, DWORD len)
 
 /********************* Pmx *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int ScenePlayer_Pmx_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -82,7 +82,7 @@ static int ScenePlayer_Pmx_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int ScenePlayer_Pmx_extract_resource(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -110,7 +110,7 @@ static int ScenePlayer_Pmx_extract_resource(struct package *pkg,
 
 		pkg_res->actual_data_length = uncomprlen;
 		int ret = uncompress(uncompr, &pkg_res->actual_data_length, compr, pkg_res->raw_data_length);
-		// Ê§¸ñÒ½ŸÌåÑé°æ: PMP\EV_CG\HA13RB.PMP
+		// å¤±æ ¼åŒ»å¸«ä½“éªŒç‰ˆ: PMP\EV_CG\HA13RB.PMP
 		if (ret == Z_OK)
 			break;
 		delete [] uncompr;	
@@ -123,7 +123,7 @@ static int ScenePlayer_Pmx_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int ScenePlayer_Pmx_save_resource(struct resource *res, 
 										 struct package_resource *pkg_res)
 {
@@ -147,7 +147,7 @@ static int ScenePlayer_Pmx_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void ScenePlayer_Pmx_release_resource(struct package *pkg, 
 											 struct package_resource *pkg_res)
 {
@@ -161,7 +161,7 @@ static void ScenePlayer_Pmx_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void ScenePlayer_Pmx_release(struct package *pkg, 
 									struct package_directory *pkg_dir)
 {
@@ -173,7 +173,7 @@ static void ScenePlayer_Pmx_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ScenePlayer_Pmx_operation = {
 	ScenePlayer_Pmx_match,					/* match */
 	NULL,
@@ -186,7 +186,7 @@ static cui_ext_operation ScenePlayer_Pmx_operation = {
 
 /********************* PMP *********************/
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int ScenePlayer_PMP_extract_resource(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -214,7 +214,7 @@ static int ScenePlayer_PMP_extract_resource(struct package *pkg,
 
 		pkg_res->actual_data_length = uncomprlen;
 		int ret = uncompress(uncompr, &pkg_res->actual_data_length, compr, pkg_res->raw_data_length);
-		// Ê§¸ñÒ½ŸÌåÑé°æ: PMP\EV_CG\HA13RB.PMP
+		// å¤±æ ¼åŒ»å¸«ä½“éªŒç‰ˆ: PMP\EV_CG\HA13RB.PMP
 		if (ret == Z_OK)
 			break;
 
@@ -232,7 +232,7 @@ static int ScenePlayer_PMP_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ScenePlayer_PMP_operation = {
 	ScenePlayer_Pmx_match,					/* match */
 	NULL,
@@ -245,7 +245,7 @@ static cui_ext_operation ScenePlayer_PMP_operation = {
 
 /********************* PMP *********************/
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int ScenePlayer_PMA_extract_resource(struct package *pkg,
 											struct package_resource *pkg_res)
 {
@@ -286,7 +286,7 @@ static int ScenePlayer_PMA_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ScenePlayer_PMA_operation = {
 	ScenePlayer_Pmx_match,					/* match */
 	NULL,
@@ -299,7 +299,7 @@ static cui_ext_operation ScenePlayer_PMA_operation = {
 
 /********************* PMA2 *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int ScenePlayer_PMA2_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -308,7 +308,7 @@ static int ScenePlayer_PMA2_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int ScenePlayer_PMA2_extract_directory(struct package *pkg,
 											  struct package_directory *pkg_dir)
 {
@@ -322,13 +322,13 @@ static int ScenePlayer_PMA2_extract_directory(struct package *pkg,
 
 	DWORD offset = 5;
 	for (DWORD i = 0; i < pkg_dir->index_entries; ++i) {
-		// ¿ç¹ı"BM"±êÇ©
+		// è·¨è¿‡"BM"æ ‡ç­¾
 		if (pkg->pio->readvec(pkg, &index_buffer[i].length, 4, offset + 2, IO_SEEK_SET))
 			break;
 
 		sprintf(index_buffer[i].name, "%08d", i);
 		index_buffer[i].offset = offset;
-		offset += index_buffer[i].length + 1;	// Ã¿¸ö"BM"Ç°×ÜÓĞ1×Ö½ÚÖµÎª1µÄÊı¾İ
+		offset += index_buffer[i].length + 1;	// æ¯ä¸ª"BM"å‰æ€»æœ‰1å­—èŠ‚å€¼ä¸º1çš„æ•°æ®
 	}
 	if (i != pkg_dir->index_entries) {
 		delete [] index_buffer;
@@ -342,7 +342,7 @@ static int ScenePlayer_PMA2_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int ScenePlayer_PMA2_parse_resource_info(struct package *pkg,
 												struct package_resource *pkg_res)
 {
@@ -350,15 +350,15 @@ static int ScenePlayer_PMA2_parse_resource_info(struct package *pkg,
 
 	MA_entry = (PMA_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, MA_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = MA_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = MA_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int ScenePlayer_PMA2_extract_resource(struct package *pkg,
 											 struct package_resource *pkg_res)
 {
@@ -377,7 +377,7 @@ static int ScenePlayer_PMA2_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ScenePlayer_PMA2_operation = {
 	ScenePlayer_Pmx_match,					/* match */
 	ScenePlayer_PMA2_extract_directory,
@@ -390,7 +390,7 @@ static cui_ext_operation ScenePlayer_PMA2_operation = {
 
 /********************* PMW *********************/
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation ScenePlayer_PMW_operation = {
 	ScenePlayer_Pmx_match,					/* match */
 	NULL,
@@ -401,7 +401,7 @@ static cui_ext_operation ScenePlayer_PMW_operation = {
 	ScenePlayer_Pmx_release					/* release */
 };
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK ScenePlayer_register_cui(struct cui_register_callback *callback)
 {
 	if (callback->add_extension(callback->cui, _T(".Pmx"), _T(".Pmx_"), 
@@ -426,4 +426,5 @@ int CALLBACK ScenePlayer_register_cui(struct cui_register_callback *callback)
 			return -1;
 
 	return 0;
+}
 }

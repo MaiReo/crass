@@ -343,3 +343,5 @@ DECLARE_MULTIPLE_FILE_TYPE("VAG Audio File (*.VAG)", vag);
 DECLARE_MULTIPLE_FILE_TYPE("GMS Audio File (*.GMS)", gms);
 DECLARE_MULTIPLE_FILE_TYPE("STR Audio File (*.STR)", str);
 
+
+

@@ -16,15 +16,15 @@
 using namespace std;
 using std::vector;
 
-/*TODO: GameDataÏÂµÄ·â°ü´æÔÚ.neiÎÄ¼şĞèÒªÆÆ½â
-DefMapÏÂÃæµÄ.kmapĞèÒªÆÆ½â
+/*TODO: GameDataä¸‹çš„å°åŒ…å­˜åœ¨.neiæ–‡ä»¶éœ€è¦ç ´è§£
+DefMapä¸‹é¢çš„.kmapéœ€è¦ç ´è§£
 */
 struct acui_information cmvs_cui_information = {
-	_T("£¨Öê£©¥¯¥ê¥¢¥Ö¥ë©`¥³¥ß¥å¥Ë¥±©`¥·¥ç¥ó¥º"),		/* copyright */
+	_T("ï¼ˆæ ªï¼‰ã‚¯ãƒªã‚¢ãƒ–ãƒ«ãƒ¼ã‚³ãƒŸãƒ¥ãƒ‹ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚º"),		/* copyright */
 	NULL,					/* system */
 	_T(".cpz .ps2"),		/* package */
 	_T("0.2.0"),			/* revision */
-	_T("³Õh¹«Ù\"),			/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),			/* author */
 	_T("2008-8-2 0:27"),	/* date */
 	NULL,					/* notion */
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
@@ -87,25 +87,25 @@ static void cmvs_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-// "½âÎö¤·¤Á¤ã¤¦™¤¤×Ó¤Ï¤ªÊËÖÃ¤­¤Ê¤ó¤À¤è¡¢¥á¥Ã£¡¡õ¡­Õl¤ËÑÔ¤Ã¤Æ¤ë¤Î£¿"
-// "ÆÆ½âÕâ¸öÓÎÏ·µÄ»µº¢×Ó±ØĞëÒªÊÜµ½´¦·£Ó´£¬¥á¥Ã£¡£¨Ó¦¸ÃÊÇÓïÆø´Ê£©¡­Õâ»°¸Ã¶ÔË­ËµÄØ£¿"
-static char cmvs_cpz3_decode_string[] = "‰ğÍ‚µ‚¿‚á‚¤ˆ«‚¢q‚Í‚¨d’u‚«‚È‚ñ‚¾‚æAƒƒbIôc’N‚ÉŒ¾‚Á‚Ä‚é‚ÌH";	
-// "½âÎö¤¹¤ë™¤¤×Ó¤Ï¥ê¥³¤¬¤ªÊËÖÃ¤­¤·¤Á¤ã¤¤¤Ş¤¹¡£…â¤ï¤ì¤Á¤ã¤¤¤Ş¤¹¤è¡«¡¢¤È¤¤¤¦¤«¤â¤¦…â¤Ã¤Á¤ã¤¤¤Ş¤·¤¿¡õ"
-// "¥ê¥³ÕıÔÚ³Í·£ÆÆ½âµÄ»µº¢×Ó.»á±»×çÖäßÏ~²»¹ıÒÑ¾­×çÖä¹ıÁË"
-static char cmvs_cpz5_decode_string[] = "‰ğÍ‚·‚éˆ«‚¢q‚ÍƒŠƒR‚ª‚¨d’u‚«‚µ‚¿‚á‚¢‚Ü‚·Bô‚í‚ê‚¿‚á‚¢‚Ü‚·‚æ`A‚Æ‚¢‚¤‚©‚à‚¤ô‚Á‚¿‚á‚¢‚Ü‚µ‚½ô";
+// "è§£æã—ã¡ã‚ƒã†æ‚ªã„å­ã¯ãŠä»•ç½®ããªã‚“ã ã‚ˆã€ãƒ¡ãƒƒï¼â–¡â€¦èª°ã«è¨€ã£ã¦ã‚‹ã®ï¼Ÿ"
+// "ç ´è§£è¿™ä¸ªæ¸¸æˆçš„åå­©å­å¿…é¡»è¦å—åˆ°å¤„ç½šå“Ÿï¼Œãƒ¡ãƒƒï¼ï¼ˆåº”è¯¥æ˜¯è¯­æ°”è¯ï¼‰â€¦è¿™è¯è¯¥å¯¹è°è¯´å‘¢ï¼Ÿ"
+static char cmvs_cpz3_decode_string[] = "å¤æ„…åŸåªå‚–å†åŸ†å„å·•å¼åå·‡æŠ²å’å´å‚«å©å‚›ä¸„å„Šåƒ¢ä¸¡ä¾“ä¹§æ‰¤åµå°µå­å°å‚åºä¸ ";	
+// "è§£æã™ã‚‹æ‚ªã„å­ã¯ãƒªã‚³ãŒãŠä»•ç½®ãã—ã¡ã‚ƒã„ã¾ã™ã€‚å‘ªã‚ã‚Œã¡ã‚ƒã„ã¾ã™ã‚ˆï½ã€ã¨ã„ã†ã‹ã‚‚ã†å‘ªã£ã¡ã‚ƒã„ã¾ã—ãŸâ–¡"
+// "ãƒªã‚³æ­£åœ¨æƒ©ç½šç ´è§£çš„åå­©å­.ä¼šè¢«è¯…å’’å‘¦~ä¸è¿‡å·²ç»è¯…å’’è¿‡äº†"
+static char cmvs_cpz5_decode_string[] = "å¤æ„…å¡å‚åŸ†å„å·•å¼å„•åƒå‘åå·‡æŠ²å’åŸåªå‚–å„å‚‘å¡ä¸…åººå‚¢å‚Ÿåªå‚–å„å‚‘å¡å‚›ä¹£ä¸„å²å„å†åå‚•å†åººå­åªå‚–å„å‚‘åŸå¨ä¾“";
 static BYTE cpz5_decode_table[256];
 
 #pragma pack (1)
 typedef struct {
 	s8 magic[4];				// "CPZ5"
-	u32 dir_entries;			// Ä¿Â¼Ïî¸öÊı
-	u32 total_dir_entries_size;	// ËùÓĞÄ¿Â¼ÏîµÄ×Ü³¤¶È
-	u32 total_file_entries_size;// ËùÓĞÎÄ¼şÏîµÄ×Ü³¤¶È
+	u32 dir_entries;			// ç›®å½•é¡¹ä¸ªæ•°
+	u32 total_dir_entries_size;	// æ‰€æœ‰ç›®å½•é¡¹çš„æ€»é•¿åº¦
+	u32 total_file_entries_size;// æ‰€æœ‰æ–‡ä»¶é¡¹çš„æ€»é•¿åº¦
 	u32 index_verify[4];
 	u32 md5_data[4];
-	u32 index_key;				// ½âÃÜindexµÄkey
+	u32 index_key;				// è§£å¯†indexçš„key
 	u32 is_encrypt;
-	u32 is_compressed;			// £¿µ±È»ÏÖÔÚÈÔÊÇ0
+	u32 is_compressed;			// ï¼Ÿå½“ç„¶ç°åœ¨ä»æ˜¯0
 	u32 header_crc;
 } cpz5_header_t;
 
@@ -121,7 +121,7 @@ typedef struct {
 	u32 entry_size;
 	u32 length;
 	u32 offset_lo;
-	u32 offset_hi;			// always 0(²Â²â)
+	u32 offset_hi;			// always 0(çŒœæµ‹)
 	u32 crc;
 	u32 key;
 	s8 *name;				// name may be 4 bytes aligned
@@ -132,7 +132,7 @@ typedef struct {
 	u32 header_length;		// 0x30
 	u32 unknown0;			// 0x205b8
 	u32 key;
-	u32 unknown1_count;		// Ã¿Ïî4×Ö½Ú
+	u32 unknown1_count;		// æ¯é¡¹4å­—èŠ‚
 	u32 unknown2_length;
 	u32 unknown3_length;
 	u32 name_index_length;
@@ -144,8 +144,8 @@ typedef struct {
 
 typedef struct {
 	s8 magic[4];			// "BP3B"
-	u32 payload_length;		// ¸ºÔØÊı¾İµÄ³¤¶È
-	u32 pictures;			// ¸ºÔØµÄÍ¼Æ¬Êı
+	u32 payload_length;		// è´Ÿè½½æ•°æ®çš„é•¿åº¦
+	u32 pictures;			// è´Ÿè½½çš„å›¾ç‰‡æ•°
 } pb3b_header_t;
 
 typedef struct {
@@ -475,9 +475,9 @@ static int cmvs_cpz_parse_resource_info(struct package *pkg,
 
 	my_cpz_entry = (my_cpz_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_cpz_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_cpz_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êı¾İ¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜æ–‡ */
 	pkg_res->offset = my_cpz_entry->offset_lo;
 
 	return 0;
@@ -604,7 +604,7 @@ static int cmvs_cpz5_extract_directory(struct package *pkg,
     key[2] = cpz5_header.md5_data[2] ^ (cpz5_header.index_key + 0x10000000);
     key[3] = cpz5_header.index_key ^ cpz5_header.md5_data[3];
 
-	// ½âÃÜÄ¿Â¼Ïî
+	// è§£å¯†ç›®å½•é¡¹
 	DWORD seed = 0x76548AEF;
 	BYTE *p = index;
     for (DWORD i = 0; i < cpz5_header.total_dir_entries_size / 4; ++i) {
@@ -639,7 +639,7 @@ static int cmvs_cpz5_extract_directory(struct package *pkg,
 		key[2] = cpz5_header.md5_data[2] ^ entries_key;
 		key[3] = cpz5_header.md5_data[3] ^ (entries_key + 0x34258765);
 
-		// ½âÃÜÎÄ¼şÏî
+		// è§£å¯†æ–‡ä»¶é¡¹
 		seed = 0x2A65CB4E;
 		p = file_entries;
 		for (j = 0; j < cur_file_entries_size / 4; ++j) {
@@ -860,4 +860,5 @@ int CALLBACK cmvs_register_cui(struct cui_register_callback *callback)
 	}
 	
 	return 0;
+}
 }

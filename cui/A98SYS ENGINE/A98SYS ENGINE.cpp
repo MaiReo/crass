@@ -13,10 +13,10 @@
 // TODO: pak("ACPACK32", "@\0", and etc) @ 4258b0
 
 //K:\Program Files\JOKYOUSI
-//U:\ÐÂ½¨ÎÄ¼þ¼Ð
+//U:\æ–°å»ºæ–‡ä»¶å¤¹
 //Q:\[old A98]
 
-/* ½Ó¿ÚÊý¾Ý½á¹¹: ±íÊ¾cui²å¼þµÄÒ»°ãÐÅÏ¢ */
+/* æŽ¥å£æ•°æ®ç»“æž„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information A98SYS_ENGINE_cui_information = {
 	_T("GEAR/Active"),		/* copyright */
 	_T("A98SYS ENGINE"),	/* system */
@@ -28,20 +28,20 @@ struct acui_information A98SYS_ENGINE_cui_information = {
 	ACUI_ATTRIBUTE_LEVEL_DEVELOP
 };
 
-/* ËùÓÐµÄ·â°üÌØ¶¨µÄÊý¾Ý½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æž„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
-typedef struct {		// 16×Ö½Ú
+typedef struct {		// 16å­—èŠ‚
 	s8 magic[8];		// "ACPACK32" or "ADPACK32"
 	u16 minor_version;	// 0
 	u16 major_version;	// 1
-	u16 index_entries;	// ×îºóÒ»ÏîÊÇ¿ÕÏî
+	u16 index_entries;	// æœ€åŽä¸€é¡¹æ˜¯ç©ºé¡¹
 	u16 pad;			// 0
 } PAK_header_t;
 
-// ×îºóÒ»Ïî¿ÕÏîµÄÃû×Ö×Ö¶ÎÈ«0£¬crc×Ö¶ÎÎÞÐ§£¬offsetµÈÓÚPAKÎÄ¼þ×Ü³¤¶È
-typedef struct {		// 32×Ö½Ú
+// æœ€åŽä¸€é¡¹ç©ºé¡¹çš„åå­—å­—æ®µå…¨0ï¼Œcrcå­—æ®µæ— æ•ˆï¼Œoffsetç­‰äºŽPAKæ–‡ä»¶æ€»é•¿åº¦
+typedef struct {		// 32å­—èŠ‚
 	s8 name[26];		// NULL terminated
-	u16 name_crc;		// Õâ¸öcrcÊÇ·â°üÊ±Õë¶Ô63×Ö½ÚµÄÃû×Ö¶ø¼ÆËã³öÀ´µÄ£¬´ó¸ÅÊÇÓÃÓÚ¿ìËÙ²éÕÒ×ÊÔ´ÓÃµÄ
+	u16 name_crc;		// è¿™ä¸ªcrcæ˜¯å°åŒ…æ—¶é’ˆå¯¹63å­—èŠ‚çš„åå­—è€Œè®¡ç®—å‡ºæ¥çš„ï¼Œå¤§æ¦‚æ˜¯ç”¨äºŽå¿«é€ŸæŸ¥æ‰¾èµ„æºç”¨çš„
 	u32 offset;
 } PAK_entry_t;
 
@@ -50,18 +50,18 @@ typedef struct {
 	u32 offset;
 } old_PAK_entry_t;
 
-typedef struct {		// 4×Ö½Ú
-	u32 segments;		// Çø¶ÎÊý
+typedef struct {		// 4å­—èŠ‚
+	u32 segments;		// åŒºæ®µæ•°
 } HGO_header_t;
 
-typedef struct {		// 36×Ö½Ú
-	s8 name[28];		// Çø¶ÎÃû³Æ
-	u32 type;			// 1, 2(Ñ¡Ïî) or 3
+typedef struct {		// 36å­—èŠ‚
+	s8 name[28];		// åŒºæ®µåç§°
+	u32 type;			// 1, 2(é€‰é¡¹) or 3
 	u32 offset;
 } HGO_entry_t;
 
-typedef struct {			// 34×Ö½Ú
-	s8 magic[10];			// ".TRUE]ŒË" (.TRUE½­‘õ)
+typedef struct {			// 34å­—èŠ‚
+	s8 magic[10];			// ".TRUEå³•å±—" (.TRUEæ±Ÿæˆ¸)
 	u32 unknown0;			// 0x0a
 	u16 width;				// 0x0e
 	u16 height;				// 0x10
@@ -71,8 +71,8 @@ typedef struct {			// 34×Ö½Ú
 	u32 pixel_data_length;	// 0x1e
 } edt_header_t;
 
-typedef struct {			// 26×Ö½Ú
-	s8 magic[10];			// ".8Bit]ŒË" (.8Bit½­‘õ)
+typedef struct {			// 26å­—èŠ‚
+	s8 magic[10];			// ".8Bitå³•å±—" (.8Bitæ±Ÿæˆ¸)
 	u16 type;				// 0x0a
 	u16 unknown1;			// 0x0c
 	u16 width;				// 0x0e
@@ -119,7 +119,7 @@ static void name_convert(BYTE *name)
 	unsigned int chr;
 
 	for (chr = *name; chr; chr = *name) {
-		// ÊÇ·ñÊÇË«×Ö½ÚÖµ
+		// æ˜¯å¦æ˜¯åŒå­—èŠ‚å€¼
 		if (name_table[chr] & 1) {
 			if (!*++name)
 				return;
@@ -159,7 +159,7 @@ static u16 name_crc(char *_name)
 	return CRC16(name, strlen((char *)name));
 }
 
-/* ½«10/16½øÖÆÊýÊý×ª»»ÎªÓÃ16½øÖÆ±íÊ¾µÄ255½øÖÆÊý */
+/* å°†10/16è¿›åˆ¶æ•°æ•°è½¬æ¢ä¸ºç”¨16è¿›åˆ¶è¡¨ç¤ºçš„255è¿›åˆ¶æ•° */
 static unsigned int decode1(unsigned int data)
 {
     return (((data >> 24) & 0xff) * 255 * 255 * 255 + ((data >> 16) & 0xff) * 255 * 255
@@ -168,7 +168,7 @@ static unsigned int decode1(unsigned int data)
 
 /********************* PAK *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int A98SYS_ENGINE_PAK_match(struct package *pkg)
 {
 	s8 magic[8];
@@ -206,7 +206,7 @@ static int A98SYS_ENGINE_PAK_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int A98SYS_ENGINE_PAK_extract_directory(struct package *pkg,
 											   struct package_directory *pkg_dir)
 {
@@ -273,7 +273,7 @@ static int A98SYS_ENGINE_PAK_extract_directory(struct package *pkg,
 							break;
 						strcpy(entry->name, index_buffer[i].name);
 					}
-					/* ×ÊÔ´Ãû³Æ¹ý³¤ */
+					/* èµ„æºåç§°è¿‡é•¿ */
 					if (!suffix_list[k]) {
 						strcpy(entry->name, index_buffer[i].name);
 						printf("%s: name too long!!\n", index_buffer[i].name);
@@ -301,7 +301,7 @@ static int A98SYS_ENGINE_PAK_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒýÏî½âÎöº¯Êý */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æžå‡½æ•° */
 static int A98SYS_ENGINE_PAK_parse_resource_info(struct package *pkg,
 												 struct package_resource *pkg_res)
 {
@@ -309,15 +309,15 @@ static int A98SYS_ENGINE_PAK_parse_resource_info(struct package *pkg,
 
 	my_PAK_entry = (my_PAK_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_PAK_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_PAK_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_PAK_entry->offset;
 
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int A98SYS_ENGINE_PAK_extract_resource(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -335,7 +335,7 @@ static int A98SYS_ENGINE_PAK_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êý */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int A98SYS_ENGINE_save_resource(struct resource *res, 
 									   struct package_resource *pkg_res)
 {
@@ -359,7 +359,7 @@ static int A98SYS_ENGINE_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êý */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void A98SYS_ENGINE_release_resource(struct package *pkg, 
 										   struct package_resource *pkg_res)
 {
@@ -373,7 +373,7 @@ static void A98SYS_ENGINE_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üÐ¶ÔØº¯Êý */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void A98SYS_ENGINE_release(struct package *pkg, 
 								  struct package_directory *pkg_dir)
 {
@@ -385,7 +385,7 @@ static void A98SYS_ENGINE_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation A98SYS_ENGINE_PAK_operation = {
 	A98SYS_ENGINE_PAK_match,				/* match */
 	A98SYS_ENGINE_PAK_extract_directory,	/* extract_directory */
@@ -398,7 +398,7 @@ static cui_ext_operation A98SYS_ENGINE_PAK_operation = {
 
 /********************* old_PAK *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int A98SYS_ENGINE_old_PAK_match(struct package *pkg)
 {
 	u16 index_entries;
@@ -430,7 +430,7 @@ static int A98SYS_ENGINE_old_PAK_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒýÄ¿Â¼ÌáÈ¡º¯Êý */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int A98SYS_ENGINE_old_PAK_extract_directory(struct package *pkg,
 												   struct package_directory *pkg_dir)
 {
@@ -487,7 +487,7 @@ static int A98SYS_ENGINE_old_PAK_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation A98SYS_ENGINE_old_PAK_operation = {
 	A98SYS_ENGINE_old_PAK_match,			/* match */
 	A98SYS_ENGINE_old_PAK_extract_directory,/* extract_directory */
@@ -500,7 +500,7 @@ static cui_ext_operation A98SYS_ENGINE_old_PAK_operation = {
 
 /********************* edt *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int A98SYS_ENGINE_edt_match(struct package *pkg)
 {
 	edt_header_t header;
@@ -513,7 +513,7 @@ static int A98SYS_ENGINE_edt_match(struct package *pkg)
 		return -CUI_EREAD;
 	}
 
-	if (strncmp(header.magic, ".TRUE]ŒË", 10)) {
+	if (strncmp(header.magic, ".TRUEå³•å±—", 10)) {
 		pkg->pio->close(pkg);
 		return -CUI_EMATCH;	
 	}
@@ -605,7 +605,7 @@ static int get_ffns(struct bits_struct *bits)
 	return count;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int A98SYS_ENGINE_edt_extract_resource(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -632,8 +632,8 @@ static int A98SYS_ENGINE_edt_extract_resource(struct package *pkg,
 	BYTE *compr = flag + header->flag_length;
 
 	if ((header->diff_length == 0x4e) && !strcmp((char *)diff, ".EDT_DIFF")) {
-		//diff += 10;	// point to mask value, 4×Ö½Ú£¬Í¨³£ÊÇ0xff£¨À¶É«£©
-		//½ÓÏÂÀ´ÊÇ»ù´¡Í¼µÄÎÄ¼þÃû£¨ÎÞÀ©Õ¹Ãû£©
+		//diff += 10;	// point to mask value, 4å­—èŠ‚ï¼Œé€šå¸¸æ˜¯0xffï¼ˆè“è‰²ï¼‰
+		//æŽ¥ä¸‹æ¥æ˜¯åŸºç¡€å›¾çš„æ–‡ä»¶åï¼ˆæ— æ‰©å±•åï¼‰
 	}
 
 	DWORD uncomprlen = 3 * header->width * header->height;
@@ -779,7 +779,7 @@ static int A98SYS_ENGINE_edt_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation A98SYS_ENGINE_edt_operation = {
 	A98SYS_ENGINE_edt_match,			/* match */
 	NULL,								/* extract_directory */
@@ -792,7 +792,7 @@ static cui_ext_operation A98SYS_ENGINE_edt_operation = {
 
 /********************* ed8 *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êý */
+/* å°åŒ…åŒ¹é…å›žè°ƒå‡½æ•° */
 static int A98SYS_ENGINE_ed8_match(struct package *pkg)
 {
 	ed8_header_t header;
@@ -805,7 +805,7 @@ static int A98SYS_ENGINE_ed8_match(struct package *pkg)
 		return -CUI_EREAD;
 	}
 
-	if (strncmp(header.magic, ".8Bit]ŒË", 10)) {
+	if (strncmp(header.magic, ".8Bitå³•å±—", 10)) {
 		pkg->pio->close(pkg);
 		return -CUI_EMATCH;	
 	}
@@ -813,7 +813,7 @@ static int A98SYS_ENGINE_ed8_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êý */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int A98SYS_ENGINE_ed8_extract_resource(struct package *pkg,
 											  struct package_resource *pkg_res)
 {
@@ -933,7 +933,7 @@ static int A98SYS_ENGINE_ed8_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êý¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›žè°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation A98SYS_ENGINE_ed8_operation = {
 	A98SYS_ENGINE_ed8_match,			/* match */
 	NULL,								/* extract_directory */
@@ -944,10 +944,10 @@ static cui_ext_operation A98SYS_ENGINE_ed8_operation = {
 	A98SYS_ENGINE_release				/* release */
 };
 
-/* ½Ó¿Úº¯Êý: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàÐÍ */
+/* æŽ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»åž‹ */
 int CALLBACK A98SYS_ENGINE_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼þÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊýºÍ·â°üÊôÐÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›žè°ƒå‡½æ•°å’Œå°åŒ…å±žæ€§ */
 	if (callback->add_extension(callback->cui, _T(".PAK"), NULL, 
 		NULL, &A98SYS_ENGINE_PAK_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
@@ -970,4 +970,5 @@ int CALLBACK A98SYS_ENGINE_register_cui(struct cui_register_callback *callback)
 
 
 	return 0;
+}
 }

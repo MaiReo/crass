@@ -8,7 +8,7 @@
 #include <cui_error.h>
 #include <stdio.h>
 
-/* ½Ó¿ÚÊı¾İ½á¹¹: ±íÊ¾cui²å¼şµÄÒ»°ãĞÅÏ¢ */
+/* æ¥å£æ•°æ®ç»“æ„: è¡¨ç¤ºcuiæ’ä»¶çš„ä¸€èˆ¬ä¿¡æ¯ */
 struct acui_information J2WIN_cui_information = {
 	_T(""),		/* copyright */
 	_T(""),			/* system */
@@ -20,7 +20,7 @@ struct acui_information J2WIN_cui_information = {
 	ACUI_ATTRIBUTE_LEVEL_STABLE
 };
 
-/* ËùÓĞµÄ·â°üÌØ¶¨µÄÊı¾İ½á¹¹¶¼Òª·ÅÔÚÕâ¸ö#pragma¶ÎÀï */
+/* æ‰€æœ‰çš„å°åŒ…ç‰¹å®šçš„æ•°æ®ç»“æ„éƒ½è¦æ”¾åœ¨è¿™ä¸ª#pragmaæ®µé‡Œ */
 #pragma pack (1)
 typedef struct {
 	s8 name[14];
@@ -52,9 +52,9 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 							 BYTE *compr, DWORD comprlen)
 {
 	DWORD act_uncomprlen = 0;
-	/* comprÖĞµÄµ±Ç°×Ö½ÚÖĞµÄÏÂÒ»¸öÉ¨ÃèÎ»µÄÎ»ÖÃ */
+	/* comprä¸­çš„å½“å‰å­—èŠ‚ä¸­çš„ä¸‹ä¸€ä¸ªæ‰«æä½çš„ä½ç½® */
 	DWORD curbit = 0;
-	/* comprÖĞµÄµ±Ç°É¨Ãè×Ö½Ú */
+	/* comprä¸­çš„å½“å‰æ‰«æå­—èŠ‚ */
 	DWORD curbyte = 0;
 	DWORD nCurWindowByte = 0xfee;
 	BYTE win[4096];
@@ -99,14 +99,14 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 			for (i = 0; i < copy_bytes; i++) {	
 				BYTE data = win[(win_offset + i) & 0xfff];
 				uncompr[act_uncomprlen++] = data;
-				/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+				/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 				win[nCurWindowByte++] = data;
 				nCurWindowByte &= 0xfff;	
 			}
 		} else {
 			BYTE data = compr[curbyte++];
 			uncompr[act_uncomprlen++] = data;
-			/* Êä³öµÄ1×Ö½Ú·ÅÈë»¬¶¯´°¿Ú */
+			/* è¾“å‡ºçš„1å­—èŠ‚æ”¾å…¥æ»‘åŠ¨çª—å£ */
 			win[nCurWindowByte++] = data;
 			nCurWindowByte &= 0xfff;			
 		}
@@ -115,7 +115,7 @@ static void lzss_uncompress(BYTE *uncompr, DWORD uncomprlen,
 
 /********************* DAT *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int J2WIN_DAT_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -129,7 +129,7 @@ static int J2WIN_DAT_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int J2WIN_DAT_extract_directory(struct package *pkg,
 									   struct package_directory *pkg_dir)
 {
@@ -156,7 +156,7 @@ static int J2WIN_DAT_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üË÷ÒıÏî½âÎöº¯Êı */
+/* å°åŒ…ç´¢å¼•é¡¹è§£æå‡½æ•° */
 static int J2WIN_DAT_parse_resource_info(struct package *pkg,
 										 struct package_resource *pkg_res)
 {
@@ -175,7 +175,7 @@ static int J2WIN_DAT_parse_resource_info(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int J2WIN_DAT_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -192,7 +192,7 @@ static int J2WIN_DAT_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ×ÊÔ´±£´æº¯Êı */
+/* èµ„æºä¿å­˜å‡½æ•° */
 static int J2WIN_DAT_save_resource(struct resource *res, 
 								   struct package_resource *pkg_res)
 {
@@ -219,7 +219,7 @@ static int J2WIN_DAT_save_resource(struct resource *res,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void J2WIN_DAT_release_resource(struct package *pkg, 
 									   struct package_resource *pkg_res)
 {
@@ -229,7 +229,7 @@ static void J2WIN_DAT_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void J2WIN_DAT_release(struct package *pkg, 
 							  struct package_directory *pkg_dir)
 {
@@ -242,7 +242,7 @@ static void J2WIN_DAT_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation J2WIN_DAT_operation = {
 	J2WIN_DAT_match,				/* match */
 	J2WIN_DAT_extract_directory,	/* extract_directory */
@@ -255,7 +255,7 @@ static cui_ext_operation J2WIN_DAT_operation = {
 
 /********************* exe *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int J2WIN_exe_match(struct package *pkg)
 {
 	exe_tailer_t tailer;
@@ -283,7 +283,7 @@ static int J2WIN_exe_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°üË÷ÒıÄ¿Â¼ÌáÈ¡º¯Êı */
+/* å°åŒ…ç´¢å¼•ç›®å½•æå–å‡½æ•° */
 static int J2WIN_exe_extract_directory(struct package *pkg,
 									   struct package_directory *pkg_dir)
 {
@@ -322,7 +322,7 @@ static int J2WIN_exe_extract_directory(struct package *pkg,
 	return 0;
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void J2WIN_exe_release(struct package *pkg, 
 							  struct package_directory *pkg_dir)
 {
@@ -334,7 +334,7 @@ static void J2WIN_exe_release(struct package *pkg,
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation J2WIN_exe_operation = {
 	J2WIN_exe_match,				/* match */
 	J2WIN_exe_extract_directory,	/* extract_directory */
@@ -347,7 +347,7 @@ static cui_ext_operation J2WIN_exe_operation = {
 
 /********************* SO4 *********************/
 
-/* ·â°üÆ¥Åä»Øµ÷º¯Êı */
+/* å°åŒ…åŒ¹é…å›è°ƒå‡½æ•° */
 static int J2WIN_SO4_match(struct package *pkg)
 {
 	if (pkg->pio->open(pkg, IO_READONLY))
@@ -356,7 +356,7 @@ static int J2WIN_SO4_match(struct package *pkg)
 	return 0;	
 }
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int J2WIN_SO4_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -394,7 +394,7 @@ static int J2WIN_SO4_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü×ÊÔ´ÊÍ·Åº¯Êı */
+/* å°åŒ…èµ„æºé‡Šæ”¾å‡½æ•° */
 static void J2WIN_SO4_release_resource(struct package *pkg, 
 									   struct package_resource *pkg_res)
 {
@@ -408,14 +408,14 @@ static void J2WIN_SO4_release_resource(struct package *pkg,
 	}
 }
 
-/* ·â°üĞ¶ÔØº¯Êı */
+/* å°åŒ…å¸è½½å‡½æ•° */
 static void J2WIN_SO4_release(struct package *pkg, 
 							  struct package_directory *pkg_dir)
 {
 	pkg->pio->close(pkg);
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation J2WIN_SO4_operation = {
 	J2WIN_SO4_match,				/* match */
 	NULL,							/* extract_directory */
@@ -428,7 +428,7 @@ static cui_ext_operation J2WIN_SO4_operation = {
 
 /********************* WA1 *********************/
 
-/* ·â°ü×ÊÔ´ÌáÈ¡º¯Êı */
+/* å°åŒ…èµ„æºæå–å‡½æ•° */
 static int J2WIN_WA1_extract_resource(struct package *pkg,
 									  struct package_resource *pkg_res)
 {
@@ -485,7 +485,7 @@ static int J2WIN_WA1_extract_resource(struct package *pkg,
 	return 0;
 }
 
-/* ·â°ü´¦Àí»Øµ÷º¯Êı¼¯ºÏ */
+/* å°åŒ…å¤„ç†å›è°ƒå‡½æ•°é›†åˆ */
 static cui_ext_operation J2WIN_WA1_operation = {
 	J2WIN_SO4_match,				/* match */
 	NULL,							/* extract_directory */
@@ -497,10 +497,10 @@ static cui_ext_operation J2WIN_WA1_operation = {
 };
 
 
-/* ½Ó¿Úº¯Êı: Ïòcui_core×¢²áÖ§³ÖµÄ·â°üÀàĞÍ */
+/* æ¥å£å‡½æ•°: å‘cui_coreæ³¨å†Œæ”¯æŒçš„å°åŒ…ç±»å‹ */
 int CALLBACK J2WIN_register_cui(struct cui_register_callback *callback)
 {
-	/* ×¢²ácui²å¼şÖ§³ÖµÄÀ©Õ¹Ãû¡¢×ÊÔ´·ÅÈëÀ©Õ¹Ãû¡¢´¦Àí»Øµ÷º¯ÊıºÍ·â°üÊôĞÔ */
+	/* æ³¨å†Œcuiæ’ä»¶æ”¯æŒçš„æ‰©å±•åã€èµ„æºæ”¾å…¥æ‰©å±•åã€å¤„ç†å›è°ƒå‡½æ•°å’Œå°åŒ…å±æ€§ */
 	if (callback->add_extension(callback->cui, _T(".DAT"), NULL, 
 		NULL, &J2WIN_DAT_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR | CUI_EXT_FLAG_LST))
 			return -1;
@@ -509,20 +509,21 @@ int CALLBACK J2WIN_register_cui(struct cui_register_callback *callback)
 		NULL, &J2WIN_exe_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_DIR))
 			return -1;
 
-	// type1 - ¿ÉÑ¹Ëõ¿É²»Ñ¹Ëõ£¨²»Ñ¹ËõÊ±Ã»ÓĞ8×Ö½ÚÑ¹ËõÍ·£©
+	// type1 - å¯å‹ç¼©å¯ä¸å‹ç¼©ï¼ˆä¸å‹ç¼©æ—¶æ²¡æœ‰8å­—èŠ‚å‹ç¼©å¤´ï¼‰
 	if (callback->add_extension(callback->cui, _T(".WA1"), NULL, 
 		NULL, &J2WIN_WA1_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_RES))
 			return -1;
 
-	// typeX£¨.SO4ÊÇ0£© - Ñ¹Ëõ
+	// typeXï¼ˆ.SO4æ˜¯0ï¼‰ - å‹ç¼©
 	if (callback->add_extension(callback->cui, _T(".SO4"), NULL, 
 		NULL, &J2WIN_SO4_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_RES))
 			return -1;
 
-	// type2 - ²»Ñ¹Ëõ
+	// type2 - ä¸å‹ç¼©
 //	if (callback->add_extension(callback->cui, _T(".PT1"), NULL, 
 //		NULL, &J2WIN_pt1_operation, CUI_EXT_FLAG_PKG | CUI_EXT_FLAG_RES))
 //			return -1;
 
 	return 0;
+}
 }

@@ -15,7 +15,7 @@ struct acui_information SystemNNN_cui_information = {
 	_T("System-NNN (Project NYANLIB)"),			/* system */
 	_T(".spt .fxf .vaw .wgq .dwq .gpk .gtb .vpk .vtb"),		/* package */
 	_T("1.2.1"),				/* revision */
-	_T("³Õh¹«Ù\"),				/* author */
+	_T("ç—´æ¼¢å…¬è³Š"),				/* author */
 	_T("2009-6-19 19:08"),		/* date */
 	NULL,						/* notion */
 	ACUI_ATTRIBUTE_LEVEL_UNSTABLE
@@ -182,9 +182,9 @@ static int SystemNNN_gpk_parse_resource_info(struct package *pkg,
 
 	my_gpk_entry = (my_gpk_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_gpk_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_gpk_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_gpk_entry->offset;
 
 	return 0;
@@ -220,7 +220,7 @@ static int SystemNNN_gpk_extract_resource(struct package *pkg,
 		pkg_res->flags |= PKG_RES_FLAG_REEXT;
 		pkg_res->replace_extension = _T(".dwq"); 
 	} else if (!strncmp((char *)compr, "IF PACKTYPE==0  ", 16) && (compr[0x39] == '0')) {
-		/* TODO: ·­Õý */
+		/* TODO: ç¿»æ­£ */
 		uncomprlen = comprlen - 64;
 		uncompr = (BYTE *)malloc(uncomprlen);
 		if (!uncompr) {
@@ -327,14 +327,14 @@ static int SystemNNN_dwq_extract_resource(struct package *pkg,
 	BYTE *m_pic, *m_dwqBuffer;
 	char m_dwq[64];
 	BOOL m_pngFlag = 0;					// @?? packtype==8
-	BOOL m_jpegFlag = 0;				// @58 packtype==5(jpeg) or 7(?) ²»ÊÇjpegÍ¼¾ÍÊÇbmpÍ¼
+	BOOL m_jpegFlag = 0;				// @58 packtype==5(jpeg) or 7(?) ä¸æ˜¯jpegå›¾å°±æ˜¯bmpå›¾
 	BOOL m_maskFlag = 0;				// @5c packtype==3(?) or packtype==2(?) or 7(?)
 	BOOL m_packFlag = 0;				// @60 packtype==3(?)
-	BOOL m_alreadyCutFlag = 0;			// @64 packtype==3A(packbmp+mask) or 2A(bmp+mask) or 7A(jpeg+mask) Ö¸µÄ¿ÉÄÜÊÇmaskÍ¼Ç°ÃæÒÑ¾­Ã»ÓÐÍ·²¿ÁË
+	BOOL m_alreadyCutFlag = 0;			// @64 packtype==3A(packbmp+mask) or 2A(bmp+mask) or 7A(jpeg+mask) æŒ‡çš„å¯èƒ½æ˜¯maskå›¾å‰é¢å·²ç»æ²¡æœ‰å¤´éƒ¨äº†
 	BOOL m_packFileFlag = 0;			// @68
 	DWORD m_dwqSize, m_picBufferSize;
 	int m_pictureSizeX, m_pictureSizeY;
-	int m_dy;							// @48 ²½³¤£¨height > 0: -1 else 1)
+	int m_dy;							// @48 æ­¥é•¿ï¼ˆheight > 0: -1 else 1)
 	u32 fsize;
 	
 	pkg->pio->length_of(pkg, &fsize);
@@ -1016,9 +1016,9 @@ static int SystemNNN_vpk_parse_resource_info(struct package *pkg,
 
 	my_vtb_entry = (my_vtb_entry_t *)pkg_res->actual_index_entry;
 	strcpy(pkg_res->name, my_vtb_entry->name);
-	pkg_res->name_length = -1;			/* -1±íÊ¾Ãû³ÆÒÔNULL½áÎ² */
+	pkg_res->name_length = -1;			/* -1è¡¨ç¤ºåç§°ä»¥NULLç»“å°¾ */
 	pkg_res->raw_data_length = my_vtb_entry->length;
-	pkg_res->actual_data_length = 0;	/* Êý¾Ý¶¼ÊÇÃ÷ÎÄ */
+	pkg_res->actual_data_length = 0;	/* æ•°æ®éƒ½æ˜¯æ˜Žæ–‡ */
 	pkg_res->offset = my_vtb_entry->offset;
 
 	return 0;
@@ -1214,4 +1214,5 @@ int CALLBACK SystemNNN_register_cui(struct cui_register_callback *callback)
 			return -1;
 	
 	return 0;
+}
 }
