@@ -36,6 +36,7 @@
     <PlatformToolset>v141</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -74,9 +75,11 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_MBCS;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
       <PrecompiledHeaderOutputFile>.\Release\crage.pch</PrecompiledHeaderOutputFile>
-      <PrecompiledHeader />
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <ObjectFileName>.\Release\</ObjectFileName>
       <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Midl>
       <TypeLibraryName>.\Release\crage.tlb</TypeLibraryName>
@@ -93,8 +96,18 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <SubSystem>Console</SubSystem>
       <OutputFile>.\Release\crage.exe</OutputFile>
-      <AdditionalDependencies>shlwapi.lib;utility.lib;acui_core.lib;package_core.lib;resource_core.lib;locale.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(ProjectDir)..\io_request\$(OutDir)io_request.dll" "$(OutDir)io_request.dll"
+copy /y "$(ProjectDir)..\acui_core\$(OutDir)acui_core.dll" "$(OutDir)acui_core.dll"
+copy /y "$(ProjectDir)..\package_core\$(OutDir)package_core.dll" "$(OutDir)package_core.dll"
+copy /y "$(ProjectDir)..\resource_core\$(OutDir)resource_core.dll" "$(OutDir)resource_core.dll"
+copy /y "$(ProjectDir)..\locale\$(OutDir)locale.dll" "$(OutDir)locale.dll"
+copy /y "$(ProjectDir)..\utility\$(OutDir)utility.dll" "$(OutDir)utility.dll"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -131,7 +144,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OutputFile>.\Debug\crage.exe</OutputFile>
-      <AdditionalDependencies>odbc32.lib;odbccp32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy /y "$(ProjectDir)..\io_request\$(OutDir)io_request.dll" "$(OutDir)io_request.dll"

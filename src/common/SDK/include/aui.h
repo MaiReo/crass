@@ -1,4 +1,5 @@
-﻿#ifndef AUI_H
+﻿#pragma once
+#ifndef AUI_H
 #define AUI_H
 
 #include "acui.h"

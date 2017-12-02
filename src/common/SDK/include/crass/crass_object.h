@@ -1,4 +1,5 @@
-﻿#ifndef CRASS_OBJECT
+﻿#pragma once
+#ifndef CRASS_OBJECT
 #define CRASS_OBJECT
 
 struct crass_object {

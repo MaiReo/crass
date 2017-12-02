@@ -51,7 +51,7 @@ static void print_issue(TCHAR * argv[])
 	locale_printf(LOC_ID_CRASS_DATE, CRAGE_RELEASE_TIME);
 	locale_printf(LOC_ID_CRASS_RELEASE, CRAGE_RELEASE);
 	locale_printf(LOC_ID_CRASS_SYNTAX, 
-		argv[0] ? argv[0] : _T("Crage.exe"), CRAGE_SYNTEX);
+		argv[0] ? argv[0] : _T("crage.exe"), CRAGE_SYNTEX);
 }
 
 // 针对日文系统中windows文件路径..。

@@ -1,4 +1,5 @@
-﻿#ifndef ACUI_CORE_H
+﻿#pragma once
+#ifndef ACUI_CORE_H
 #define ACUI_CORE_H
 
 #ifdef ACUI_CORE_EXPORTS

@@ -1,4 +1,5 @@
-﻿#ifndef AUI_ERROR_H
+﻿#pragma once
+#ifndef AUI_ERROR_H
 #define AUI_ERROR_H
 	
 #include "cui_error.h"

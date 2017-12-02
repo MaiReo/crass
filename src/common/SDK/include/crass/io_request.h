@@ -1,4 +1,5 @@
-﻿#ifndef IO_REQUEST_H
+﻿#pragma once
+#ifndef IO_REQUEST_H
 #define IO_REQUEST_H
 
 #ifdef IO_REQUEST_EXPORTS

@@ -1,4 +1,5 @@
-﻿#ifndef BITS_H
+﻿#pragma once
+#ifndef BITS_H
 #define BITS_H
 
 #include <my_common.h>

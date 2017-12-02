@@ -1,4 +1,5 @@
-﻿#ifndef UTILITY_H
+﻿#pragma once
+#ifndef UTILITY_H
 #define UTILITY_H
 
 #ifdef UTILITY_EXPORTS

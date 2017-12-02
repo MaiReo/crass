@@ -7,6 +7,11 @@
 #include "../common/SDK/include/crass/locale.h"
 #include "../common/SDK/include/utility.h"
 
+#if FALSE
+#ifndef FIRST_BUILD_UTILITY
+#define FIRST_BUILD_UTILITY
+#endif // !FIRST_BUILD_UTILITY
+#endif
 
 using namespace std;
 using std::vector;
@@ -106,18 +111,24 @@ static int locale_module_register(const TCHAR *path)
 
 	name = PathFindFileName(path);
 	if (!name) {
+#ifndef FIRST_BUILD_UTILITY
 		crass_printf(early_locale_string_table[1], loc_name);
+#endif
 		return -1;
 	}
 	_tcscpy(loc_name, name);
 	if (!PathRenameExtension(loc_name, _T(""))) {
+#ifndef FIRST_BUILD_UTILITY
 		crass_printf(early_locale_string_table[2], loc_name);
+#endif
 		return -1;
 	}
 
 	HMODULE loc_mod = LoadLibrary(path);
 	if (!loc_mod) {
+#ifndef FIRST_BUILD_UTILITY
 		crass_printf(early_locale_string_table[3], loc_name);
+#endif
 		return -1;
 	}
 
@@ -134,7 +145,9 @@ static int locale_module_register(const TCHAR *path)
 
 	if (!loc_cfg) {
 		FreeLibrary(loc_mod);
+#ifndef FIRST_BUILD_UTILITY
 		crass_printf(early_locale_string_table[3], loc_name);
+#endif // !FIRST_BUILD_UTILITY	
 		return -1;	
 	}
 
@@ -168,7 +181,9 @@ LOCALE_API int locale_init(void)
 	
 	find_file = FindFirstFile(_T("language\\*.loc"), &find_data);
 	if (find_file == INVALID_HANDLE_VALUE) {
+#ifndef FIRST_BUILD_UTILITY
 		locale_printf(0, NULL);
+#endif
 		return -1;
 	}
 
@@ -198,7 +213,9 @@ LOCALE_API int locale_init(void)
 	}
 out:
 	FindClose(find_file);
+#ifndef FIRST_BUILD_UTILITY
 	crass_printf(last_msg, count);
+#endif
 
 	return count;
 }

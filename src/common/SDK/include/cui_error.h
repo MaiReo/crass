@@ -1,4 +1,5 @@
-﻿#ifndef CUI_ERROR_H
+﻿#pragma once
+#ifndef CUI_ERROR_H
 #define CUI_ERROR_H
 
 #define CUI_EPARA			1	/* 参数错误 */

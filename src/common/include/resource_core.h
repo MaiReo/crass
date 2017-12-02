@@ -1,4 +1,5 @@
-﻿#ifndef RESOURCE_CORE_H
+﻿#pragma once
+#ifndef RESOURCE_CORE_H
 #define RESOURCE_CORE_H
 
 #ifdef RESOURCE_CORE_EXPORTS

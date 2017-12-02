@@ -1,4 +1,5 @@
-﻿#ifndef CRASS_H
+﻿#pragma once
+#ifndef CRASS_H
 #define CRASS_H
 
 #ifdef CRASS_EXPORTS

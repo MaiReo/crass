@@ -1,4 +1,5 @@
-﻿#ifndef PACKAGE_CORE_H
+﻿#pragma once
+#ifndef PACKAGE_CORE_H
 #define PACKAGE_CORE_H
 
 #ifdef PACKAGE_CORE_EXPORTS

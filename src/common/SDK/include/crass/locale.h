@@ -1,4 +1,5 @@
-﻿#ifndef LOCALE_H
+﻿#pragma once
+#ifndef LOCALE_H
 #define LOCALE_H
 
 #ifdef LOCALE_EXPORTS

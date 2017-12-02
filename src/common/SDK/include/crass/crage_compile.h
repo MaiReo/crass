@@ -1,4 +1,5 @@
-﻿#ifndef CRAGE_COMPILE_H
+﻿#pragma once
+#ifndef CRAGE_COMPILE_H
 #define CRAGE_COMPILE_H
 
 #define CRAGE_VERSION		_T("0.4.14.1")

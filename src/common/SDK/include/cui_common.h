@@ -1,4 +1,5 @@
-﻿#ifndef CUI_COMMON_H
+﻿#pragma once
+#ifndef CUI_COMMON_H
 #define CUI_COMMON_H
 	
 #include <resource.h>

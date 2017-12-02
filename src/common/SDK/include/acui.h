@@ -1,4 +1,5 @@
-﻿#ifndef ACUI_H
+﻿#pragma once
+#ifndef ACUI_H
 #define ACUI_H
 
 /* aui/cui导出信息 */
