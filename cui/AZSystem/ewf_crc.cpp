@@ -1,4 +1,4 @@
-/*
+﻿/*
  * EWF CRC handling
  *
  * Copyright (c) 2006, Joachim Metz <forensics@hoffmannbv.nl>,

@@ -1,4 +1,4 @@
-/* Declarations of functions and data types used for SHA256 and SHA224 sum
+﻿/* Declarations of functions and data types used for SHA256 and SHA224 sum
    library functions.
    Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 

@@ -1,4 +1,4 @@
-#ifndef CUI_COMMON_H
+﻿#ifndef CUI_COMMON_H
 #define CUI_COMMON_H
 	
 #include <resource.h>

@@ -1,4 +1,4 @@
-/* camellia.h	ver 1.0
+﻿/* camellia.h	ver 1.0
 
 Copyright (c) 2006
  NTT (Nippon Telegraph and Telephone Corporation) . All rights reserved.

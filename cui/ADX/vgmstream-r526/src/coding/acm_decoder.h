@@ -1,4 +1,4 @@
-/*
+﻿/*
  * libacm - Interplay ACM audio decoder.
  *
  * Copyright (c) 2004-2008, Marko Kreen

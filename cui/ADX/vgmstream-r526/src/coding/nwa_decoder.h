@@ -1,4 +1,4 @@
-/* originally from nwatowav.cc 2007.7.28 version, which read: */
+﻿/* originally from nwatowav.cc 2007.7.28 version, which read: */
 /*
  * Copyright 2001-2007  jagarl / Kazunori Ueno <jagarl@creator.club.ne.jp>
  * All Rights Reserved.

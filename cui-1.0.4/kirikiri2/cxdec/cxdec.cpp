@@ -1,4 +1,4 @@
-#include "..\xp3filter_decode.h"
+﻿#include "..\xp3filter_decode.h"
 #include "cxdec.h"
 
 DWORD xcode_rand(struct cxdec_xcode_status *xcode)

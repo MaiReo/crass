@@ -1,9 +1,10 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <stdio.h>
 #include <windows.h>
-#include <utility.h>
-#include <crass/locale.h>
+#include "../common/SDK/include/utility.h"
+#include "../common/SDK/include/crass/locale.h"
 
+__declspec(dllimport) TCHAR fmt_buf[1024];
 /******* JCrage *******/
 
 static SOCKET jcrage_sock = INVALID_SOCKET;
@@ -300,7 +301,7 @@ UTILITY_API int unicode2ansi(int loc, char *ansi, int ansi_len, const TCHAR *uni
 	BOOL flag = 0;
 
 	/* file name convert */
-	if (!WideCharToMultiByte(loc, 0, unicode, unicode_len, ansi, ansi_len, NULL, &flag))
+	if (!WideCharToMultiByte(loc, 0, (WCHAR*)unicode, unicode_len, ansi, ansi_len, NULL, &flag))
 		return -1;	
 
 	if (flag)
@@ -389,11 +390,11 @@ UTILITY_API int ansi2unicode(int loc, const char *ansi, int ansi_len, TCHAR *buf
 		GlobalFree(wide_str);
 		return NULL;
 	}
-	if (!WideCharToMultiByte(CP_ACP, 0, wide_str, -1, ansi, multi_chars, 
+	if (!WideCharToMultiByte(CP_ACP, 0, wide_str, -1, (LPSTR)ansi, multi_chars, 
 			"_", NULL)) {
 		_stprintf(fmt_buf, _T("Can't convert unicode filename to ANSI.\n"));
 		wcprintf_error(fmt_buf);
-		GlobalFree(ansi);
+		GlobalFree((HGLOBAL)ansi);
 		GlobalFree(wide_str);
 		return NULL;
 	}
@@ -401,7 +402,7 @@ UTILITY_API int ansi2unicode(int loc, const char *ansi, int ansi_len, TCHAR *buf
 
 	_mbsncpy((BYTE *)buf, (BYTE *)ansi, buf_len - 1);
 	buf[buf_len - 1] = 0;
-	GlobalFree(ansi);
+	GlobalFree((HGLOBAL)ansi);
 	return 0;
 }
 #endif
@@ -553,7 +554,7 @@ UTILITY_API const TCHAR *get_options2(const TCHAR *key)
 	return NULL;
 }
 
-UTILITY_API alpha_blending(BYTE *dib, DWORD width, DWORD height, DWORD bpp)
+UTILITY_API void alpha_blending(BYTE *dib, DWORD width, DWORD height, DWORD bpp)
 {
 	if (bpp == 32) {
 		BYTE *p = dib;
@@ -566,7 +567,7 @@ UTILITY_API alpha_blending(BYTE *dib, DWORD width, DWORD height, DWORD bpp)
 	}
 }
 
-UTILITY_API alpha_blending_reverse(BYTE *dib, DWORD width, DWORD height, DWORD bpp)
+UTILITY_API void alpha_blending_reverse(BYTE *dib, DWORD width, DWORD height, DWORD bpp)
 {
 	if (bpp == 32) {
 		BYTE *p = dib;
@@ -579,6 +580,3 @@ UTILITY_API alpha_blending_reverse(BYTE *dib, DWORD width, DWORD height, DWORD b
 		}
 	}
 }
-
-
-

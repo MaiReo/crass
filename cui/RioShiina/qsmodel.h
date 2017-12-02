@@ -1,4 +1,4 @@
-#ifndef QSMODEL_H
+﻿#ifndef QSMODEL_H
 #define QSMODEL_H
 
 /*

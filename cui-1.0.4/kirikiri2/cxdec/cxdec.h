@@ -1,4 +1,4 @@
-#ifndef CXDEC_H
+﻿#ifndef CXDEC_H
 #define CXDEC_H
 	
 #include <windows.h>

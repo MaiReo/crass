@@ -1,4 +1,4 @@
-/*
+﻿/*
 ** Copyright (C) 2006 Nullsoft, Inc.
 **
 ** This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held 

@@ -1,4 +1,4 @@
-/*
+﻿/*
    Lempel-Ziv-Arithmetic coding compression module for jffs2
    Based on the LZARI source included in LDS (lossless datacompression sources)
 */

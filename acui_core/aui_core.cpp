@@ -1,12 +1,15 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <windows.h>
 #include <shlwapi.h>
-#include <acui.h>
-#include <aui.h>
-#include <acui_core.h>
-#include <aui_error.h>
-#include <crass/locale.h>
-#include <utility.h>
+#include <stdio.h>
+
+#include "../common/include/acui_core.h"
+
+//#include "../common/SDK/include/acui.h"
+#include "../common/SDK/include/aui.h"
+#include "../common/SDK/include/aui_error.h"
+#include "../common/SDK/include/crass/locale.h"
+#include "../common/SDK/include/utility.h"
 
 struct aui_core {
 	struct aui root;	/* 根aui */
@@ -381,4 +384,4 @@ ACUI_CORE_API void aui_print_information(struct aui *aui)
 	if (info->notion)
 		locale_printf(LOC_ID_CRASS_CUI_NOTICE, info->notion);
 }
-}
+

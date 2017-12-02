@@ -1,10 +1,10 @@
-#ifndef RESOURCE_H
+﻿#ifndef RESOURCE_H
 #define RESOURCE_H
 
-#include <crass_types.h>
-#include <crass/io_request.h>
-#include <package.h>
-#include <resource.h>
+#include "crass_types.h"
+#include "crass/io_request.h"
+#include "package.h"
+#include "resource.h"
 
 /* io操作 */
 struct resource_io_operations {

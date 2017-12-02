@@ -1,4 +1,4 @@
-#include "out.h"
+﻿#include "out.h"
 
 // note: exported symbol is now winampGetInModule2.
 

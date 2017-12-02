@@ -1,10 +1,10 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <windows.h>
 #include <shlwapi.h>
-#include <utility.h>
 #include <stdio.h>
-#include <crass_types.h>
-#include <cui_error.h>
+#include "../common/SDK/include/utility.h"
+#include "../common/SDK/include/crass_types.h"
+#include "../common/SDK/include/cui_error.h"
 	
 UTILITY_API int MyCreatePath(const TCHAR *path)
 {
@@ -893,5 +893,4 @@ UTILITY_API int MySaveAsBMP(BYTE *dib, DWORD dib_length,
 	else
 		return MyBuildBMP16File(dib, dib_length, width, height,
 			ret, ret_length, 0, NULL, alloc);
-}
 }

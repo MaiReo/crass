@@ -1,10 +1,12 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <windows.h>
 #include <shlwapi.h>
 #include <stdio.h>
-#include <crass/locale.h>
-#include <utility.h>
 #include <vector>
+
+#include "../common/SDK/include/crass/locale.h"
+#include "../common/SDK/include/utility.h"
+
 
 using namespace std;
 using std::vector;
@@ -80,7 +82,8 @@ static void locale_init_early(void)
 		++config;
 	}
 	const TCHAR **tbl = locale_current_configuration.string_table;
-	for (DWORD k = 0; tbl[k]; ++k);
+	DWORD k;
+	for (k = 0; tbl[k]; ++k);
 	locale_current_configuration.max_id = k;
 }
 
@@ -145,7 +148,8 @@ static int locale_module_register(const TCHAR *path)
 		if (locale_current_configuration.module)
 			FreeLibrary(locale_current_configuration.module);
 		locale_current_configuration.string_table = loc_cfg->string_table;
-		for (DWORD k = 0; loc_cfg->string_table[k]; ++k);
+		DWORD k;
+		for (k = 0; loc_cfg->string_table[k]; ++k);
 		locale_current_configuration.max_id = k;
 		locale_current_configuration.module = loc_mod;
 	} else
@@ -222,7 +226,8 @@ LOCALE_API int locale_app_register(struct locale_configuration *config, DWORD co
 	def_config = NULL;
 	for (DWORD i = 0; i < count; ++i) {
 		if (!config->max_id) {
-			for (DWORD k = 0; config->string_table[k]; ++k);
+			DWORD k;
+			for (k = 0; config->string_table[k]; ++k);
 			config->max_id = k;
 		}
 		if (config->acp == GetACP()) {
@@ -236,5 +241,4 @@ LOCALE_API int locale_app_register(struct locale_configuration *config, DWORD co
 		locale_app_configurations.push_back(*def_config);
 out:
 	return locale_app_configurations.size() - 1;
-}
 }

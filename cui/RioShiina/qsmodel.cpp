@@ -1,4 +1,4 @@
-/*
+﻿/*
   qsmodel.c     headerfile for quasistatic probability model
 
   (c) Michael Schindler

@@ -1,4 +1,4 @@
-// swf.cpp : Defines the entry point for the DLL application.
+﻿// swf.cpp : Defines the entry point for the DLL application.
 //
 
 #include "stdafx.h"

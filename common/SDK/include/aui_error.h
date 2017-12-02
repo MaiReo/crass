@@ -1,4 +1,4 @@
-#ifndef AUI_ERROR_H
+﻿#ifndef AUI_ERROR_H
 #define AUI_ERROR_H
 	
 #include "cui_error.h"

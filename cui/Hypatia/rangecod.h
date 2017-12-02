@@ -1,4 +1,4 @@
-#ifndef rangecod_h
+﻿#ifndef rangecod_h
 #define rangecod_h
 
 /*

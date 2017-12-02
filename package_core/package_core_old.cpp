@@ -1,4 +1,4 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <windows.h>
 #include <shlwapi.h>
 #include <crass_types.h>

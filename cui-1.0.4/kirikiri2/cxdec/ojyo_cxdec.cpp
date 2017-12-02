@@ -1,4 +1,4 @@
-#include "cxdec.h"
+﻿#include "cxdec.h"
 
 static int xcode_building_stage0(struct cxdec_xcode_status *xcode, int stage);
 static int xcode_building_stage1(struct cxdec_xcode_status *xcode, int stage);

@@ -1,4 +1,4 @@
-#include "xp3filter_decode.h"
+﻿#include "xp3filter_decode.h"
 
 extern unsigned int CheckSum(BYTE *buf, unsigned int len);
 

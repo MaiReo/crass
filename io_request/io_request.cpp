@@ -1,10 +1,11 @@
-#include <windows.h>
+﻿#include <windows.h>
 #include <tchar.h>
 #include <shlwapi.h>
-#include <crass_types.h>
-#include <crass/io_request.h>
 #include <stdio.h>
-#include <utility.h>
+
+#include "../common/SDK/include/crass_types.h"
+#include "../common/SDK/include/crass/io_request.h"
+#include "../common/SDK/include/utility.h"
 
 static DWORD virtualalloc_length_aligned;
 
@@ -384,7 +385,8 @@ IO_REQUEST_API int fio_operation_write(struct fio_request *ior, void *buf, u32 b
 			mapping_size = virtualalloc_length_aligned;
 
 		DWORD max_blks = DWORD(mapping_length / mapping_size);
-		for (DWORD blk = 0; blk < max_blks; blk++) {
+		DWORD blk;
+		for (blk = 0; blk < max_blks; blk++) {
 			addr = MapViewOfFile(mapping, FILE_MAP_WRITE, QWORD_HIGH(mapping_start), 
 				QWORD_LOW(mapping_start), (u32)mapping_size);
 
@@ -579,5 +581,4 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 	virtualalloc_length_aligned = sys_info.dwAllocationGranularity;
 
 	return TRUE;
-}
 }

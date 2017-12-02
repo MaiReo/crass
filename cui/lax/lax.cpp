@@ -1,4 +1,4 @@
-// lax.cpp : Defines the entry point for the DLL application.
+﻿// lax.cpp : Defines the entry point for the DLL application.
 //
 
 #include "stdafx.h"

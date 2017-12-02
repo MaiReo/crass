@@ -1,4 +1,4 @@
-/*
+﻿/*
  * streamtypes.h - widely used type definitions
  */
 

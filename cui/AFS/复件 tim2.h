@@ -1,4 +1,4 @@
-#ifndef TIM2_H
+﻿#ifndef TIM2_H
 #define TIM2_H
 
 #pragma pack (1)

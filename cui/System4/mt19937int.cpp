@@ -1,4 +1,4 @@
-/* A C-program for MT19937: Integer version (1999/10/28)          */
+﻿/* A C-program for MT19937: Integer version (1999/10/28)          */
 /*  genrand() generates one pseudorandom unsigned integer (32bit) */
 /* which is uniformly distributed among 0 to 2^32-1  for each     */
 /* call. sgenrand(seed) sets initial values to the working area   */

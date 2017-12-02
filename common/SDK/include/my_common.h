@@ -1,4 +1,4 @@
-#ifndef MY_COMMON_H
+﻿#ifndef MY_COMMON_H
 #define MY_COMMON_H
 	
 #ifdef MY_EXPORTS

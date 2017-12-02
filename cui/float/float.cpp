@@ -1,4 +1,4 @@
-// float.cpp : Defines the entry point for the console application.
+﻿// float.cpp : Defines the entry point for the console application.
 //
 #include <windows.h>
 #include <stdio.h>

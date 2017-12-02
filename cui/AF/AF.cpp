@@ -1,4 +1,4 @@
-// 提取 BlueImpact 公司的游戏 Angel's Feather 资源文件的插件
+﻿// 提取 BlueImpact 公司的游戏 Angel's Feather 资源文件的插件
 
 #include <windows.h>
 #include <tchar.h>

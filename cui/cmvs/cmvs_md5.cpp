@@ -1,4 +1,4 @@
-#include "cmvs_md5.h"
+﻿#include "cmvs_md5.h"
 #include <string.h>
 
 /* The four core functions - F1 is optimized somewhat */

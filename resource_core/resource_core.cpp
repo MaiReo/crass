@@ -1,12 +1,16 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <windows.h>
 #include <shlwapi.h>
-#include <crass_types.h>
-#include <crass/io_request.h>
-#include <utility.h>
-#include <resource.h>
-#include <resource_core.h>
 #include <stdio.h>
+
+#include "../common/include/resource_core.h"
+
+#include "../common/SDK/include/crass_types.h"
+#include "../common/SDK/include/crass/io_request.h"
+#include "../common/SDK/include/utility.h"
+#include "../common/SDK/include/resource.h"
+
+
 
 struct resource_core {
 	struct resource root;
@@ -196,7 +200,8 @@ static int __resource_search_file(const TCHAR *path)
 
 	_stprintf(tmp_path, path);
 	name = PathFindFileName(tmp_path);
-	*name = _T('');
+	//*name = _T(''); //C2137
+	*name = _T(' ');
 	return resource_register(tmp_path, find_data.cFileName) ? -1 : 1;
 }
 
@@ -780,5 +785,4 @@ RESOURCE_CORE_API int resource_search_file(const TCHAR *path)
 RESOURCE_CORE_API int resource_search_directory(const TCHAR *base_dir, const TCHAR *sub_dir)
 {
 	return __resource_search_directory(base_dir, sub_dir);
-}
 }

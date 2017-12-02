@@ -1,4 +1,4 @@
-/* Circus cui 0.10
+﻿/* Circus cui 0.10
  * 痴汉公贼 (C) 2007.02.17
  *  
  * ChangeLog:

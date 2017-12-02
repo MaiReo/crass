@@ -1,4 +1,4 @@
-#include "xp3filter_decode.h"
+﻿#include "xp3filter_decode.h"
 	
 typedef struct TVPFunctionExporter {
 	BOOL (*QueryFunctions)(struct TVPFunctionExporter *, const char **name, void **function,

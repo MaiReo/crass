@@ -1,4 +1,4 @@
-#ifndef AUI_H
+﻿#ifndef AUI_H
 #define AUI_H
 
 #include "acui.h"

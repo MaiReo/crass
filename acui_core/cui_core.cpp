@@ -1,13 +1,15 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <windows.h>
 #include <shlwapi.h>
-#include <acui.h>
-#include <cui.h>
-#include <acui_core.h>
-#include <cui_error.h>
-#include <utility.h>
-#include <crass/locale.h>
 #include <stdio.h>
+
+#include "../common/include/acui_core.h"
+#include "../common/SDK/include/acui.h"
+#include "../common/SDK/include/cui.h"
+#include "../common/SDK/include/cui_error.h"
+#include "../common/SDK/include/utility.h"
+#include "../common/SDK/include/crass/locale.h"
+
 
 struct cui_core {
 	struct cui root;	/* 根cui */
@@ -407,5 +409,4 @@ ACUI_CORE_API void cui_print_information(struct cui *cui)
 		locale_printf(LOC_ID_CRASS_CUI_TIME, info->date);
 	if (info->notion)
 		locale_printf(LOC_ID_CRASS_CUI_NOTICE, info->notion);
-}
 }

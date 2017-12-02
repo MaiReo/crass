@@ -1,4 +1,4 @@
-#ifndef RESOURCE_H
+﻿#ifndef RESOURCE_H
 #define RESOURCE_H
 
 #define RES_FLAG_DIR		0x00000001UL

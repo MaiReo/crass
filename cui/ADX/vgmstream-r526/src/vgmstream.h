@@ -1,4 +1,4 @@
-/*
+﻿/*
  * vgmstream.h - definitions for VGMSTREAM, encapsulating a multi-channel, looped audio stream
  */
 

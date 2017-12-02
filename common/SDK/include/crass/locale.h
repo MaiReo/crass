@@ -1,4 +1,4 @@
-#ifndef LOCALE_H
+﻿#ifndef LOCALE_H
 #define LOCALE_H
 
 #ifdef LOCALE_EXPORTS

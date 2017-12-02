@@ -1,4 +1,4 @@
-/* Winamp plugin interface for vgmstream */
+﻿/* Winamp plugin interface for vgmstream */
 /* Based on: */
 /*
 ** Example Winamp .RAW input plug-in

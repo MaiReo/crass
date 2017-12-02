@@ -1,4 +1,4 @@
-#include <windows.h>
+﻿#include <windows.h>
 
 struct sha256_ctx {
 	unsigned int state[8];

@@ -1,4 +1,4 @@
-class node {
+﻿class node {
 	unsigned int key0;
 	unsigned int key1;
 	unsigned int key2;

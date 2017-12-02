@@ -1,4 +1,4 @@
-#ifndef CRASS_TYPES_H
+﻿#ifndef CRASS_TYPES_H
 #define CRASS_TYPES_H
 
 typedef char				s8;

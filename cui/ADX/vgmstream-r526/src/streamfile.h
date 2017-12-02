@@ -1,4 +1,4 @@
-/*
+﻿/*
 * streamfile.h - definitions for buffered file reading with STREAMFILE
 */
 

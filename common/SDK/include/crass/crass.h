@@ -1,4 +1,4 @@
-#ifndef CRASS_H
+﻿#ifndef CRASS_H
 #define CRASS_H
 
 #ifdef CRASS_EXPORTS

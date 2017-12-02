@@ -1,13 +1,16 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <windows.h>
 #include <shlwapi.h>
-#include <crass_types.h>
-#include <crass/io_request.h>
-#include <utility.h>
-#include <package.h>
-#include <package_core.h>
-#include <crass/locale.h>
 #include <stdio.h>
+
+#include "../common/include/package_core.h"
+
+#include "../common/SDK/include/crass_types.h"
+#include "../common/SDK/include/crass/io_request.h"
+#include "../common/SDK/include/utility.h"
+#include "../common/SDK/include/package.h"
+#include "../common/SDK/include/crass/locale.h"
+
 
 struct package_core {
 	struct package root;
@@ -243,7 +246,8 @@ static int __package_search_file(const TCHAR *path)
 
 	_tcsncpy(tmp_path, path, SOT(tmp_path));
 	name = PathFindFileName(tmp_path);
-	*name = _T('');
+	//*name = _T(''); //C2137
+	*name = _T(' ');
 
 	return package_register(tmp_path, find_data.cFileName) ? -1 : 1;
 }
@@ -1147,4 +1151,3 @@ PACKAGE_CORE_API int pkg_res_set_name(struct package_resource *pkg_res, char *na
 	}
 }
 #endif
-f

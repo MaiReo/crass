@@ -1,4 +1,4 @@
-/*
+﻿/*
   rangecod.c     range encoding
 
   (c) Michael Schindler

@@ -1,4 +1,4 @@
-#ifndef XP3FILTER_DECODE_H
+﻿#ifndef XP3FILTER_DECODE_H
 #define XP3FILTER_DECODE_H
 
 #include <windows.h>

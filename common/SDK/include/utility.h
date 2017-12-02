@@ -1,4 +1,4 @@
-#ifndef UTILITY_H
+﻿#ifndef UTILITY_H
 #define UTILITY_H
 
 #ifdef UTILITY_EXPORTS
@@ -96,8 +96,8 @@ UTILITY_API int MySaveAsBMP(BYTE *dib, DWORD dib_length,
 			DWORD width, DWORD height, DWORD bits_count, DWORD colors,
 			BYTE **ret, DWORD *ret_length, void *(*alloc)(DWORD));
 
-UTILITY_API alpha_blending(BYTE *dib, DWORD width, DWORD height, DWORD bpp);
-UTILITY_API alpha_blending_reverse(BYTE *dib, DWORD width, DWORD height, DWORD bpp);
+UTILITY_API void alpha_blending(BYTE *dib, DWORD width, DWORD height, DWORD bpp);
+UTILITY_API void alpha_blending_reverse(BYTE *dib, DWORD width, DWORD height, DWORD bpp);
 
 /*********** bits API **************/
 

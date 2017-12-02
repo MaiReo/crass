@@ -1,4 +1,4 @@
-#ifndef CUI_H
+﻿#ifndef CUI_H
 #define CUI_H
 
 struct cui_register_callback;

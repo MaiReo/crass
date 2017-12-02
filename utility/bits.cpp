@@ -1,6 +1,6 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <windows.h>
-#include <utility.h>
+#include "../common/SDK/include/utility.h"
 
 UTILITY_API void bits_init(struct bits *bits, unsigned char *stream, unsigned long stream_length)
 {
@@ -213,4 +213,3 @@ int bit_get_low(struct bits *bits, void *retval)
 	return 0;
 }
 #endif
-f

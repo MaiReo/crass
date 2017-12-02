@@ -1,4 +1,4 @@
-#ifndef CRASS_OBJECT
+﻿#ifndef CRASS_OBJECT
 #define CRASS_OBJECT
 
 struct crass_object {

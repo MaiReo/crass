@@ -1,4 +1,4 @@
-char *fami_xml = " \
+﻿char *fami_xml = " \
 <?xml version=\"1.0\" encoding=\"Shift_JIS\"?>	\
 <script src=\"main01.csx\">	\
 	<save_dir path=\"$(CURRENT)\\Save\"/>	\

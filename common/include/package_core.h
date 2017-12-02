@@ -1,4 +1,4 @@
-#ifndef PACKAGE_CORE_H
+﻿#ifndef PACKAGE_CORE_H
 #define PACKAGE_CORE_H
 
 #ifdef PACKAGE_CORE_EXPORTS

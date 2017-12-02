@@ -1,4 +1,4 @@
-
+﻿
 static DWORD cxdec_decode_first_stage(DWORD *pseed, DWORD hash)
 {
 	DWORD ret;

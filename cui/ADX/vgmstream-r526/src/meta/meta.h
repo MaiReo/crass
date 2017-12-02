@@ -1,4 +1,4 @@
-#ifndef _META_H
+﻿#ifndef _META_H
 #define _META_H
 
 #include "../vgmstream.h"

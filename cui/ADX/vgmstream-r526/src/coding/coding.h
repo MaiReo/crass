@@ -1,4 +1,4 @@
-#ifndef _CODING_H
+﻿#ifndef _CODING_H
 #define _CODING_H
 
 #include "../vgmstream.h"

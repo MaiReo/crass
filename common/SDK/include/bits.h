@@ -1,4 +1,4 @@
-#ifndef BITS_H
+﻿#ifndef BITS_H
 #define BITS_H
 
 #include <my_common.h>

@@ -1,4 +1,4 @@
-#define IDD_CONFIG                      101
+﻿#define IDD_CONFIG                      101
 #define IDC_LOOP_COUNT                  1000
 #define IDC_FADE_SECONDS                1001
 #define IDC_FADE_DELAY_SECONDS          1002

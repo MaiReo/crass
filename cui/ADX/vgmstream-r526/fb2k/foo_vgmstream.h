@@ -1,4 +1,4 @@
-#ifndef _FOO_VGMSTREAM_
+﻿#ifndef _FOO_VGMSTREAM_
 #define _FOO_VGMSTREAM_
 
 typedef struct _FOO_STREAMFILE {

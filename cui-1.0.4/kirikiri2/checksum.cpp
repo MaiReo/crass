@@ -1,4 +1,4 @@
-#include <windows.h>
+﻿#include <windows.h>
 #include <zlib.h>
 
 unsigned int CheckSum(BYTE *buf, unsigned int len)

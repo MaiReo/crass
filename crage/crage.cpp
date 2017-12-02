@@ -1,22 +1,25 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <windows.h>
 #include <shlwapi.h>
 #include <shlobj.h>
-#include <crass/crage_compile.h>
-#include <crass/locale.h>
-#include <crass_types.h>
-#include <crass/io_request.h>
-#include <crass/crass.h>
-#include <cui.h>
-#include <acui_core.h>
-#include <cui_error.h>
-#include <package.h>
-#include <resource.h>
-#include <package_core.h>
-#include <resource_core.h>
-#include <utility.h>
-#include <locale.h>
 #include <stdio.h>
+
+#include "../common/include/acui_core.h"
+#include "../common/include/package_core.h"
+#include "../common/include/resource_core.h"
+
+#include "../common/SDK/include/crass/crage_compile.h"
+#include "../common/SDK/include/crass/locale.h"
+#include "../common/SDK/include/crass_types.h"
+#include "../common/SDK/include/crass/io_request.h"
+#include "../common/SDK/include/crass/crass.h"
+#include "../common/SDK/include/cui.h"
+#include "../common/SDK/include/cui_error.h"
+#include "../common/SDK/include/package.h"
+#include "../common/SDK/include/resource.h"
+#include "../common/SDK/include/utility.h"
+#include "../common/SDK/include/crass/locale.h"
+
 
 static TCHAR status_ident[4] = { _T('|'), _T('/'), _T('-'), _T('\\') };
 
@@ -40,7 +43,7 @@ enum {
 	CUI_EXTRACT_RESOURCE
 };
 
-static void print_issue(TCHAR *__argv[])
+static void print_issue(TCHAR * argv[])
 {
 	locale_printf(LOC_ID_CRASS_PROGRAM);
 	locale_printf(LOC_ID_CRASS_AUTHOR, CRAGE_AUTHOR);
@@ -48,7 +51,7 @@ static void print_issue(TCHAR *__argv[])
 	locale_printf(LOC_ID_CRASS_DATE, CRAGE_RELEASE_TIME);
 	locale_printf(LOC_ID_CRASS_RELEASE, CRAGE_RELEASE);
 	locale_printf(LOC_ID_CRASS_SYNTAX, 
-		__argv[0] ? __argv[0] : _T("Crage.exe"), CRAGE_SYNTEX);
+		argv[0] ? argv[0] : _T("Crage.exe"), CRAGE_SYNTEX);
 }
 
 // 针对日文系统中windows文件路径..。
@@ -65,10 +68,10 @@ static void die(DWORD msg)
 	exit(-1);
 }
 
-static void early_parse_cmd(int __argc, TCHAR *__argv[])
+static void early_parse_cmd(int argc, TCHAR* argv[])
 {
-	for (int i = 0; i < __argc; ++i) {
-		if (!_tcscmp(__argv[i], _T("-wj"))) {
+	for (int i = 0; i < argc; ++i) {
+		if (!_tcscmp(argv[i], _T("-wj"))) {
 			use_jcrage_wrapper = 1;
 			atexit(jcrage_exit);
 			break;
@@ -76,142 +79,142 @@ static void early_parse_cmd(int __argc, TCHAR *__argv[])
 	}
 }
 
-static void parse_cmd(int __argc, TCHAR *__argv[])
+static void parse_cmd(int argc, TCHAR* argv[])
 {
 	int i;
 
-	for (i = 0; i < __argc; i++) {
-		if (!_tcscmp(__argv[i], _T("-p"))) {
-			if (!__argv[i + 1])
+	for (i = 0; i < argc; i++) {
+		if (!_tcscmp(argv[i], _T("-p"))) {
+			if (!argv[i + 1])
 				die(LOC_ID_CRASS_USAGE);
-			conver_backslash(__argv[i + 1]);
+			conver_backslash(argv[i + 1]);
 #ifndef UNICODE
 			acp2unicode(__argv[i + 1], -1, package_path, SOT(package_path));
 #else
-			_tcsncpy(package_path, __argv[i + 1], SOT(package_path));
+			_tcsncpy(package_path, argv[i + 1], SOT(package_path));
 #endif
 			i++;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-d"))) {
-			if (!__argv[i + 1])
+		if (!_tcscmp(argv[i], _T("-d"))) {
+			if (!argv[i + 1])
 				die(LOC_ID_CRASS_USAGE);
-			conver_backslash(__argv[i + 1]);
+			conver_backslash(argv[i + 1]);
 #ifndef UNICODE
 			acp2unicode(__argv[i + 1], -1, package_directory, SOT(package_directory));
 #else
-			_tcsncpy(package_directory, __argv[i + 1], SOT(package_directory));
+			_tcsncpy(package_directory, argv[i + 1], SOT(package_directory));
 #endif
 			i++;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-o"))) {
-			if (!__argv[i + 1])
+		if (!_tcscmp(argv[i], _T("-o"))) {
+			if (!argv[i + 1])
 				die(LOC_ID_CRASS_USAGE);
-			conver_backslash(__argv[i + 1]);
+			conver_backslash(argv[i + 1]);
 #ifndef UNICODE
 			acp2unicode(__argv[i + 1], -1, output_directory, SOT(output_directory));
 #else
-			_tcsncpy(output_directory, __argv[i + 1], SOT(output_directory));
+			_tcsncpy(output_directory, argv[i + 1], SOT(output_directory));
 #endif
 			i++;
 			continue;
 		}		
-		if (!_tcscmp(__argv[i], _T("-O")) || !_tcscmp(__argv[i], _T("-0"))) {
-			if (!__argv[i + 1])
+		if (!_tcscmp(argv[i], _T("-O")) || !_tcscmp(argv[i], _T("-0"))) {
+			if (!argv[i + 1])
 				die(LOC_ID_CRASS_USAGE);
 			specify_option = 1;
-			if (parse_options(__argv[i + 1]))
+			if (parse_options(argv[i + 1]))
 				exit(-1);
 			i++;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-w"))) {
+		if (!_tcscmp(argv[i], _T("-w"))) {
 			use_gui_wrapper = 1;
 			crass_printf(_T("Command line:\n"));
-			for (int n = 0; n < __argc; ++n)		
-				crass_printf(_T("%s "), __argv[n]);			
+			for (int n = 0; n < argc; ++n)		
+				crass_printf(_T("%s "), argv[n]);			
 			crass_printf(_T("\n\n"));			
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-wj"))) {
+		if (!_tcscmp(argv[i], _T("-wj"))) {
 			crass_printf(_T("Command line:\n\t"));
 			for (int n = 0; n < __argc; ++n)		
-				crass_printf(_T("%s "), __argv[n]);			
+				crass_printf(_T("%s "), argv[n]);			
 			crass_printf(_T("\n\n"));			
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-l"))) {
-			if (!__argv[i + 1])
+		if (!_tcscmp(argv[i], _T("-l"))) {
+			if (!argv[i + 1])
 				die(LOC_ID_CRASS_USAGE);
-			conver_backslash(__argv[i + 1]);
+			conver_backslash(argv[i + 1]);
 #ifndef UNICODE
-			acp2unicode(__argv[i + 1], -1, lst_filepath, SOT(lst_filepath));
+			acp2unicode(argv[i + 1], -1, lst_filepath, SOT(lst_filepath));
 #else
-			_tcsncpy(lst_filepath, __argv[i + 1], SOT(lst_filepath));
+			_tcsncpy(lst_filepath, argv[i + 1], SOT(lst_filepath));
 #endif
 			i++;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-n"))) {
+		if (!_tcscmp(argv[i], _T("-n"))) {
 			extract_null = 1;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-r"))) {
+		if (!_tcscmp(argv[i], _T("-r"))) {
 			extract_raw_resource = 1;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-i"))) {
+		if (!_tcscmp(argv[i], _T("-i"))) {
 			extract_idx = 1;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-I"))) {
-			if (!__argv[i + 1])
+		if (!_tcscmp(argv[i], _T("-I"))) {
+			if (!argv[i + 1])
 				cui_show_infomation = -1;	/* 显示所有插件的信息 */
 			else {
 				cui_show_infomation = 1;
 #ifndef UNICODE
-				acp2unicode(__argv[i + 1], -1, CUI_name, SOT(CUI_name));
+				acp2unicode(argv[i + 1], -1, CUI_name, SOT(CUI_name));
 #else
-				_tcsncpy(CUI_name, __argv[i + 1], SOT(CUI_name));
+				_tcsncpy(CUI_name, argv[i + 1], SOT(CUI_name));
 #endif
 				i++;
 			}
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-u"))) {
-			if (!__argv[i + 1])
+		if (!_tcscmp(argv[i], _T("-u"))) {
+			if (!argv[i + 1])
 				die(LOC_ID_CRASS_USAGE);
 			else {
 #ifdef UNICODE
-				_tcsncpy(CUI_name, __argv[i + 1], SOT(CUI_name));
+				_tcsncpy(CUI_name, argv[i + 1], SOT(CUI_name));
 #else
-				acp2unicode(__argv[i + 1], -1, CUI_name, SOT(CUI_name));
+				acp2unicode(argv[i + 1], -1, CUI_name, SOT(CUI_name));
 #endif
 				i++;
 			}
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-D"))) {
+		if (!_tcscmp(argv[i], _T("-D"))) {
 			warnning_verbose0 = 1;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-Q"))) {
+		if (!_tcscmp(argv[i], _T("-Q"))) {
 			warnning_exit = 1;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-v"))) {
+		if (!_tcscmp(argv[i], _T("-v"))) {
 			verbose_info = 1;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-F"))) {
+		if (!_tcscmp(argv[i], _T("-F"))) {
 			ignore_crage_error = 1;
 			continue;
 		}
-		if (!_tcscmp(__argv[i], _T("-f"))) {
-			if (!__argv[i + 1])
+		if (!_tcscmp(argv[i], _T("-f"))) {
+			if (!argv[i + 1])
 				die(LOC_ID_CRASS_USAGE);
-			specify_resource = __argv[i + 1];
+			specify_resource = argv[i + 1];
 			i++;
 			continue;
 		}
@@ -510,10 +513,10 @@ skip_lst_process:
 						break;
 					}
 #ifndef UNICODE
-					WCHAR specify_resource_u[MAX_PATH];
+					TCHAR specify_resource_u[MAX_PATH];
 					acp2unicode(specify_resource, -1, specify_resource_u, MAX_PATH);
 #endif
-					if (!lstrcmpi(specify_resource, (WCHAR *)pkg_res.name))
+					if (!lstrcmpi(specify_resource, (TCHAR *)pkg_res.name))
 						specify_resource_hit = 1;
 				} else if (!pkg_res.name[0]) {
 					locale_printf(LOC_ID_CRASS_INVAL_RES_NAME, pkg->name);
@@ -523,9 +526,9 @@ skip_lst_process:
 #ifdef UNICODE
 					char specify_resource_ansi[MAX_PATH];
 					unicode2sj(specify_resource_ansi, MAX_PATH, specify_resource, -1);
-					if (!strcmpi(specify_resource_ansi, pkg_res.name))
+					if (!_strcmpi(specify_resource_ansi, pkg_res.name))
 #else
-					if (!strcmpi(specify_resource, pkg_res.name))
+					if (!_strcmpi(specify_resource, pkg_res.name))
 #endif
 						specify_resource_hit = 1;
 				}
@@ -552,9 +555,9 @@ skip_lst_process:
 					}
 				} else {
 					if (pkg_res.name_length == -1)
-						wcscpy(pkg_res_name, (WCHAR *)pkg_res.name);
+						wcscpy((WCHAR *)pkg_res_name, (WCHAR *)pkg_res.name);
 					else
-						wcsncpy(pkg_res_name, (WCHAR *)pkg_res.name, pkg_res.name_length);
+						wcsncpy((WCHAR *)pkg_res_name, (WCHAR *)pkg_res.name, pkg_res.name_length);
 				}
 			} else {
 				/* 资源封包通常没有独立的文件名 */
@@ -636,9 +639,9 @@ skip_lst_process:
 		} else {
 			if (((WCHAR *)pkg_res.name)[0]) { 
 				if (pkg_res.name_length == -1)
-					wcscpy(pkg_res_name, (WCHAR *)pkg_res.name);
+					wcscpy((WCHAR *)pkg_res_name, (WCHAR *)pkg_res.name);
 				else
-					wcsncpy(pkg_res_name, (WCHAR *)pkg_res.name, pkg_res.name_length);
+					wcsncpy((WCHAR *)pkg_res_name, (WCHAR *)pkg_res.name, pkg_res.name_length);
 			}
 		}
 
@@ -1064,4 +1067,4 @@ int _tmain(int argc, TCHAR *argv[])
 
 	return 0;
 }
-}
+

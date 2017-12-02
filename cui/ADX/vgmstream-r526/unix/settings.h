@@ -1,4 +1,4 @@
-#ifndef __SETTINGS__
+﻿#ifndef __SETTINGS__
 #define __SETTINGS__
 
 typedef struct _SETTINGS

@@ -1,4 +1,4 @@
-#define OUT_VER 0x10
+﻿#define OUT_VER 0x10
 
 typedef struct 
 {

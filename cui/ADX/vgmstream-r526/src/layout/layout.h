@@ -1,4 +1,4 @@
-#ifndef _LAYOUT_H
+﻿#ifndef _LAYOUT_H
 #define _LAYOUT_H
 
 #include "../streamtypes.h"

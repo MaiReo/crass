@@ -1,4 +1,4 @@
-#ifndef MY_H
+﻿#ifndef MY_H
 #define MY_H
 
 #include <my_common.h>
