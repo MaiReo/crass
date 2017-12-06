@@ -247,7 +247,7 @@ static int __package_search_file(const TCHAR *path)
 	_tcsncpy(tmp_path, path, SOT(tmp_path));
 	name = PathFindFileName(tmp_path);
 	//*name = _T(''); //C2137
-	*name = _T(' ');
+	*name = _T('\0');
 
 	return package_register(tmp_path, find_data.cFileName) ? -1 : 1;
 }

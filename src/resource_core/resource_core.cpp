@@ -201,7 +201,7 @@ static int __resource_search_file(const TCHAR *path)
 	_stprintf(tmp_path, path);
 	name = PathFindFileName(tmp_path);
 	//*name = _T(''); //C2137
-	*name = _T(' ');
+	*name = _T('\0');
 	return resource_register(tmp_path, find_data.cFileName) ? -1 : 1;
 }
 

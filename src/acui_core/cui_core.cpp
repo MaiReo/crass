@@ -301,7 +301,7 @@ static void *cui_import(struct cui *cui, const TCHAR *function)
 	int cui_name_len = _tcslen(cui->name) + 1;
 
 	for (int i = 0, j = 0; i < cui_name_len; ++i, ++j) {
-		if (cui->name[i] == _T(' ') || cui->name[i] == _T('-'))
+		if (cui->name[i] == _T('\0') || cui->name[i] == _T('-'))
 			tchar_func_name[j] = _T('_');
 		else if (cui->name[i] == _T('+'))
 			tchar_func_name[j] = _T('p');
